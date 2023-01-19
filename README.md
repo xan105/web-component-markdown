@@ -129,20 +129,20 @@ N/A
 Related
 =======
 
-## Markdown to HTML
+### Markdown to HTML
 
 - [Marked](https://github.com/markedjs/marked)
 - [Markdown-it](https://github.com/markdown-it/markdown-it)
 - [Remark](https://github.com/remarkjs/remark)
 - [Micromark](https://github.com/micromark/micromark)
 
-## Web Component
+### Web Component
 
 - [wc-markdown](https://github.com/vanillawc/wc-markdown)
 - [zero-md](https://github.com/zerodevx/zero-md)
 - [md-block](https://github.com/LeaVerou/md-block)
 
-## Syntax Highlighting
+### Syntax Highlighting
 
 - [HighlightJS](https://github.com/highlightjs/highlight.js/)
 - [Prism.js](https://github.com/PrismJS/prism)
