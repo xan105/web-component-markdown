@@ -1,7 +1,7 @@
 About
 =====
 
-Web-component to load an external markdown (.md) file and render it into html.
+Web-component to load an external markdown (.md) file and render it into sanitized HTML.
 
 💡 Markdown is rendered into the light DOM without any predefined css styling.
 
@@ -36,8 +36,17 @@ Optional JavaScript API:
   el.addEventListener("failure", ({detail})=>{
     console.error(detail.error);
   });
-  el.integrity = "sha384-0xabcd...";
+
+  //auto rendering (default)
+  el.integrity = "sha384-0xABCD...";
   el.src = "/path/to/md";
+
+  //manual rendering
+  el.manual = true;
+  el.src = "/path/to/md";
+  el.render().catch((err)=>{
+    console.error(err);
+  });
 ```
 
 Install
@@ -47,7 +56,7 @@ Install
 npm i @xan105/markdown
 ```
 
-### Optional 
+### Optional
 
 Create an importmap:
 
@@ -90,9 +99,17 @@ N/A
 
 **Events**
 
+- `change()`
+
+  The source (src) attribute has changed.
+
 - `load()`
 
-  New markdown src path has been requested to be rendered.
+  Markdown is being load.
+  
+- `render()`
+
+  Markdown is being render.
 
 - `success()`
 
@@ -108,23 +125,34 @@ N/A
   }
 ```
 
-**Methods**
-
-N/A
-
 **Attribute / Property**
 
-- `src` 
+- `src` | string
   
-  Path/URL to the .md file to load.
+  Path/URL to the `.md` file to load.
   
-- `integrity` 
+- `integrity` | string
 
   Integrity hash passed to `fetch()`. See [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) for more details.
+
+- `manual` | boolean
+
+  If set markdown will not be rendered automatically and you will have to call the `render()` method yourself (see below).
   
-- `rendered` _(Read-only)_  
+- `rendered` _(Read-only)_ | boolean
 
   Whether the markdown was succesfuly rendered or not. You can use `:not([rendered])` in your CSS to style the element differently before rendering.
+
+**Methods**
+
+- `render(): <Promise>`
+
+  Load and render markdown into sanitized HTML.
+  
+  ✔️ Resolves when markdown has been sucesfully rendered.<br />
+  ❌ Rejects on error
+  
+  💡 Invoking this method still triggers related events.
   
 Related
 =======
