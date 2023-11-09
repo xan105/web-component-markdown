@@ -105,11 +105,11 @@ N/A
 
 - `load()`
 
-  Markdown is being load.
+  Markdown is being loaded.
   
 - `render()`
 
-  Markdown is being render.
+  Markdown is being rendered.
 
 - `success()`
 
