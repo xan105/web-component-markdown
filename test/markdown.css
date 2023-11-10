@@ -1,0 +1,98 @@
+mark-down ul, ol { padding-left: 2em; }
+mark-down ul li,
+mark-down ul li { list-style: disc; }
+mark-down ul ul li { list-style: circle; }
+mark-down ul ul ul li { list-style: square; }
+
+ol { 
+  margin: 0; 
+  padding: 0; 
+}
+
+ol[start] {
+  padding-left: 2em;
+}
+
+ol[start] li { 
+  list-style: decimal; 
+  margin: 4px 0;
+}
+
+ol:not([start]) li { 
+  counter-increment: step-counter;
+  list-style-type: none;
+  padding-left: 4rem;
+  position: relative;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+  display: list-item;
+  
+}
+ol:not([start]) li p{ 
+  margin: 0;
+  line-height: unset;
+}
+
+ol:not([start]) li::before {
+  content: counter(step-counter);
+  position: absolute;
+  top: .25rem;
+  left: 0;
+  width: 2rem;
+  height: 100%;
+  opacity: .15;
+  padding-right: 1em;
+  border-right: 1px solid;
+  text-align: right;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+
+mark-down h1 {
+  text-decoration: underline;
+  text-underline-offset: 10px;
+  text-decoration-thickness: 2px;
+}
+
+mark-down h2 {
+  text-decoration: underline;
+  text-underline-offset: 10px;
+  text-decoration-thickness: 2px;
+  text-decoration-style: dashed;
+}
+
+mark-down p {
+  line-height: 1.3em;
+  margin: 10px 0;
+}
+
+mark-down a {
+  color: inherit;
+}
+mark-down a:hover {
+  text-decoration: none;
+}
+
+mark-down code {
+  background: rgba(175,184,193,0.2);
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 0.3em;
+  margin: 4px 0;
+}
+
+mark-down pre { 
+  margin: 0;
+  white-space: pre;
+  tab-size: 2;
+}
+
+mark-down pre code {
+  display: block;
+  background: #f1f3f4;
+  border: 1px solid #bdbcbc;
+  padding: 1em 1.2em;
+  border-radius: 0.3em;
+  font-family: "Cascadia Mono";
+}

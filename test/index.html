@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Anthony Beaumont">
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src 'self' 'unsafe-inline';
+    ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="markdown.css">
+    <link rel="stylesheet" type="text/css" href="github.css">
+  </head>
+  <body>
+    <main>
+      <article>
+        <mark-down src="sample.md" manual></mark-down>
+      </article>
+    </main>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "@xan105/markdown": "../dist/md.js",
+          "@xan105/vanilla-query": "../node_modules/@xan105/vanilla-query/dist/vq.js"
+        }
+      }
+    </script>
+    <script src="index.js" type="module"></script>
+  </body>
+</html>
