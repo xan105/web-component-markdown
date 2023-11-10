@@ -56,22 +56,20 @@ Install
 npm i @xan105/markdown
 ```
 
-### Optional
+💡 The bundled library and its minified version can be found in the `./dist` folder.
 
-Create an importmap:
+### Via importmap
 
-```json
-{
-  "imports": {
-    "@xan105/markdown": "./path/to/node_modules/@xan105/markdown/dist/md.min.js"
-  }
-}
-```
-
-index.html:
+Create an importmap and add it to your html:
 
 ```html
-  <script src="./importmap.json" type="importmap"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "@xan105/markdown": "./path/to/node_modules/@xan105/markdown/dist/md.min.js"
+    }
+  }
+  </script>
   <script src="./index.js" type="module"></script>
   </body>
 </html>
@@ -145,7 +143,7 @@ N/A
 
 **Methods**
 
-- `render(): <Promise>`
+- `render(): Promise<void>`
 
   Load and render markdown into sanitized HTML.
   
