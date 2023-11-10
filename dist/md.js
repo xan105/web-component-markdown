@@ -24,984 +24,9 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// node_modules/dompurify/dist/purify.js
-var require_purify = __commonJS({
-  "node_modules/dompurify/dist/purify.js"(exports, module) {
-    (function(global, factory) {
-      typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define(factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, global.DOMPurify = factory());
-    })(exports, function() {
-      "use strict";
-      function _typeof(obj) {
-        "@babel/helpers - typeof";
-        return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj2) {
-          return typeof obj2;
-        } : function(obj2) {
-          return obj2 && "function" == typeof Symbol && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        }, _typeof(obj);
-      }
-      function _setPrototypeOf(o, p) {
-        _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf2(o2, p2) {
-          o2.__proto__ = p2;
-          return o2;
-        };
-        return _setPrototypeOf(o, p);
-      }
-      function _isNativeReflectConstruct() {
-        if (typeof Reflect === "undefined" || !Reflect.construct)
-          return false;
-        if (Reflect.construct.sham)
-          return false;
-        if (typeof Proxy === "function")
-          return true;
-        try {
-          Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-          }));
-          return true;
-        } catch (e) {
-          return false;
-        }
-      }
-      function _construct(Parent, args, Class) {
-        if (_isNativeReflectConstruct()) {
-          _construct = Reflect.construct;
-        } else {
-          _construct = function _construct2(Parent2, args2, Class2) {
-            var a = [null];
-            a.push.apply(a, args2);
-            var Constructor = Function.bind.apply(Parent2, a);
-            var instance = new Constructor();
-            if (Class2)
-              _setPrototypeOf(instance, Class2.prototype);
-            return instance;
-          };
-        }
-        return _construct.apply(null, arguments);
-      }
-      function _toConsumableArray(arr) {
-        return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-      }
-      function _arrayWithoutHoles(arr) {
-        if (Array.isArray(arr))
-          return _arrayLikeToArray(arr);
-      }
-      function _iterableToArray(iter) {
-        if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null)
-          return Array.from(iter);
-      }
-      function _unsupportedIterableToArray(o, minLen) {
-        if (!o)
-          return;
-        if (typeof o === "string")
-          return _arrayLikeToArray(o, minLen);
-        var n = Object.prototype.toString.call(o).slice(8, -1);
-        if (n === "Object" && o.constructor)
-          n = o.constructor.name;
-        if (n === "Map" || n === "Set")
-          return Array.from(o);
-        if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-          return _arrayLikeToArray(o, minLen);
-      }
-      function _arrayLikeToArray(arr, len) {
-        if (len == null || len > arr.length)
-          len = arr.length;
-        for (var i = 0, arr2 = new Array(len); i < len; i++)
-          arr2[i] = arr[i];
-        return arr2;
-      }
-      function _nonIterableSpread() {
-        throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      var hasOwnProperty = Object.hasOwnProperty, setPrototypeOf = Object.setPrototypeOf, isFrozen = Object.isFrozen, getPrototypeOf = Object.getPrototypeOf, getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-      var freeze = Object.freeze, seal = Object.seal, create = Object.create;
-      var _ref = typeof Reflect !== "undefined" && Reflect, apply = _ref.apply, construct = _ref.construct;
-      if (!apply) {
-        apply = function apply2(fun, thisValue, args) {
-          return fun.apply(thisValue, args);
-        };
-      }
-      if (!freeze) {
-        freeze = function freeze2(x) {
-          return x;
-        };
-      }
-      if (!seal) {
-        seal = function seal2(x) {
-          return x;
-        };
-      }
-      if (!construct) {
-        construct = function construct2(Func, args) {
-          return _construct(Func, _toConsumableArray(args));
-        };
-      }
-      var arrayForEach = unapply(Array.prototype.forEach);
-      var arrayPop = unapply(Array.prototype.pop);
-      var arrayPush = unapply(Array.prototype.push);
-      var stringToLowerCase = unapply(String.prototype.toLowerCase);
-      var stringToString = unapply(String.prototype.toString);
-      var stringMatch = unapply(String.prototype.match);
-      var stringReplace = unapply(String.prototype.replace);
-      var stringIndexOf = unapply(String.prototype.indexOf);
-      var stringTrim = unapply(String.prototype.trim);
-      var regExpTest = unapply(RegExp.prototype.test);
-      var typeErrorCreate = unconstruct(TypeError);
-      function unapply(func) {
-        return function(thisArg) {
-          for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-            args[_key - 1] = arguments[_key];
-          }
-          return apply(func, thisArg, args);
-        };
-      }
-      function unconstruct(func) {
-        return function() {
-          for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-            args[_key2] = arguments[_key2];
-          }
-          return construct(func, args);
-        };
-      }
-      function addToSet(set, array, transformCaseFunc) {
-        transformCaseFunc = transformCaseFunc ? transformCaseFunc : stringToLowerCase;
-        if (setPrototypeOf) {
-          setPrototypeOf(set, null);
-        }
-        var l = array.length;
-        while (l--) {
-          var element = array[l];
-          if (typeof element === "string") {
-            var lcElement = transformCaseFunc(element);
-            if (lcElement !== element) {
-              if (!isFrozen(array)) {
-                array[l] = lcElement;
-              }
-              element = lcElement;
-            }
-          }
-          set[element] = true;
-        }
-        return set;
-      }
-      function clone(object) {
-        var newObject = create(null);
-        var property;
-        for (property in object) {
-          if (apply(hasOwnProperty, object, [property]) === true) {
-            newObject[property] = object[property];
-          }
-        }
-        return newObject;
-      }
-      function lookupGetter(object, prop) {
-        while (object !== null) {
-          var desc = getOwnPropertyDescriptor(object, prop);
-          if (desc) {
-            if (desc.get) {
-              return unapply(desc.get);
-            }
-            if (typeof desc.value === "function") {
-              return unapply(desc.value);
-            }
-          }
-          object = getPrototypeOf(object);
-        }
-        function fallbackValue(element) {
-          console.warn("fallback value for", element);
-          return null;
-        }
-        return fallbackValue;
-      }
-      var html$1 = freeze(["a", "abbr", "acronym", "address", "area", "article", "aside", "audio", "b", "bdi", "bdo", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "content", "data", "datalist", "dd", "decorator", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "fieldset", "figcaption", "figure", "font", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "img", "input", "ins", "kbd", "label", "legend", "li", "main", "map", "mark", "marquee", "menu", "menuitem", "meter", "nav", "nobr", "ol", "optgroup", "option", "output", "p", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "section", "select", "shadow", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "tr", "track", "tt", "u", "ul", "var", "video", "wbr"]);
-      var svg$1 = freeze(["svg", "a", "altglyph", "altglyphdef", "altglyphitem", "animatecolor", "animatemotion", "animatetransform", "circle", "clippath", "defs", "desc", "ellipse", "filter", "font", "g", "glyph", "glyphref", "hkern", "image", "line", "lineargradient", "marker", "mask", "metadata", "mpath", "path", "pattern", "polygon", "polyline", "radialgradient", "rect", "stop", "style", "switch", "symbol", "text", "textpath", "title", "tref", "tspan", "view", "vkern"]);
-      var svgFilters = freeze(["feBlend", "feColorMatrix", "feComponentTransfer", "feComposite", "feConvolveMatrix", "feDiffuseLighting", "feDisplacementMap", "feDistantLight", "feFlood", "feFuncA", "feFuncB", "feFuncG", "feFuncR", "feGaussianBlur", "feImage", "feMerge", "feMergeNode", "feMorphology", "feOffset", "fePointLight", "feSpecularLighting", "feSpotLight", "feTile", "feTurbulence"]);
-      var svgDisallowed = freeze(["animate", "color-profile", "cursor", "discard", "fedropshadow", "font-face", "font-face-format", "font-face-name", "font-face-src", "font-face-uri", "foreignobject", "hatch", "hatchpath", "mesh", "meshgradient", "meshpatch", "meshrow", "missing-glyph", "script", "set", "solidcolor", "unknown", "use"]);
-      var mathMl$1 = freeze(["math", "menclose", "merror", "mfenced", "mfrac", "mglyph", "mi", "mlabeledtr", "mmultiscripts", "mn", "mo", "mover", "mpadded", "mphantom", "mroot", "mrow", "ms", "mspace", "msqrt", "mstyle", "msub", "msup", "msubsup", "mtable", "mtd", "mtext", "mtr", "munder", "munderover"]);
-      var mathMlDisallowed = freeze(["maction", "maligngroup", "malignmark", "mlongdiv", "mscarries", "mscarry", "msgroup", "mstack", "msline", "msrow", "semantics", "annotation", "annotation-xml", "mprescripts", "none"]);
-      var text = freeze(["#text"]);
-      var html = freeze(["accept", "action", "align", "alt", "autocapitalize", "autocomplete", "autopictureinpicture", "autoplay", "background", "bgcolor", "border", "capture", "cellpadding", "cellspacing", "checked", "cite", "class", "clear", "color", "cols", "colspan", "controls", "controlslist", "coords", "crossorigin", "datetime", "decoding", "default", "dir", "disabled", "disablepictureinpicture", "disableremoteplayback", "download", "draggable", "enctype", "enterkeyhint", "face", "for", "headers", "height", "hidden", "high", "href", "hreflang", "id", "inputmode", "integrity", "ismap", "kind", "label", "lang", "list", "loading", "loop", "low", "max", "maxlength", "media", "method", "min", "minlength", "multiple", "muted", "name", "nonce", "noshade", "novalidate", "nowrap", "open", "optimum", "pattern", "placeholder", "playsinline", "poster", "preload", "pubdate", "radiogroup", "readonly", "rel", "required", "rev", "reversed", "role", "rows", "rowspan", "spellcheck", "scope", "selected", "shape", "size", "sizes", "span", "srclang", "start", "src", "srcset", "step", "style", "summary", "tabindex", "title", "translate", "type", "usemap", "valign", "value", "width", "xmlns", "slot"]);
-      var svg = freeze(["accent-height", "accumulate", "additive", "alignment-baseline", "ascent", "attributename", "attributetype", "azimuth", "basefrequency", "baseline-shift", "begin", "bias", "by", "class", "clip", "clippathunits", "clip-path", "clip-rule", "color", "color-interpolation", "color-interpolation-filters", "color-profile", "color-rendering", "cx", "cy", "d", "dx", "dy", "diffuseconstant", "direction", "display", "divisor", "dur", "edgemode", "elevation", "end", "fill", "fill-opacity", "fill-rule", "filter", "filterunits", "flood-color", "flood-opacity", "font-family", "font-size", "font-size-adjust", "font-stretch", "font-style", "font-variant", "font-weight", "fx", "fy", "g1", "g2", "glyph-name", "glyphref", "gradientunits", "gradienttransform", "height", "href", "id", "image-rendering", "in", "in2", "k", "k1", "k2", "k3", "k4", "kerning", "keypoints", "keysplines", "keytimes", "lang", "lengthadjust", "letter-spacing", "kernelmatrix", "kernelunitlength", "lighting-color", "local", "marker-end", "marker-mid", "marker-start", "markerheight", "markerunits", "markerwidth", "maskcontentunits", "maskunits", "max", "mask", "media", "method", "mode", "min", "name", "numoctaves", "offset", "operator", "opacity", "order", "orient", "orientation", "origin", "overflow", "paint-order", "path", "pathlength", "patterncontentunits", "patterntransform", "patternunits", "points", "preservealpha", "preserveaspectratio", "primitiveunits", "r", "rx", "ry", "radius", "refx", "refy", "repeatcount", "repeatdur", "restart", "result", "rotate", "scale", "seed", "shape-rendering", "specularconstant", "specularexponent", "spreadmethod", "startoffset", "stddeviation", "stitchtiles", "stop-color", "stop-opacity", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke", "stroke-width", "style", "surfacescale", "systemlanguage", "tabindex", "targetx", "targety", "transform", "transform-origin", "text-anchor", "text-decoration", "text-rendering", "textlength", "type", "u1", "u2", "unicode", "values", "viewbox", "visibility", "version", "vert-adv-y", "vert-origin-x", "vert-origin-y", "width", "word-spacing", "wrap", "writing-mode", "xchannelselector", "ychannelselector", "x", "x1", "x2", "xmlns", "y", "y1", "y2", "z", "zoomandpan"]);
-      var mathMl = freeze(["accent", "accentunder", "align", "bevelled", "close", "columnsalign", "columnlines", "columnspan", "denomalign", "depth", "dir", "display", "displaystyle", "encoding", "fence", "frame", "height", "href", "id", "largeop", "length", "linethickness", "lspace", "lquote", "mathbackground", "mathcolor", "mathsize", "mathvariant", "maxsize", "minsize", "movablelimits", "notation", "numalign", "open", "rowalign", "rowlines", "rowspacing", "rowspan", "rspace", "rquote", "scriptlevel", "scriptminsize", "scriptsizemultiplier", "selection", "separator", "separators", "stretchy", "subscriptshift", "supscriptshift", "symmetric", "voffset", "width", "xmlns"]);
-      var xml = freeze(["xlink:href", "xml:id", "xlink:title", "xml:space", "xmlns:xlink"]);
-      var MUSTACHE_EXPR = seal(/\{\{[\w\W]*|[\w\W]*\}\}/gm);
-      var ERB_EXPR = seal(/<%[\w\W]*|[\w\W]*%>/gm);
-      var TMPLIT_EXPR = seal(/\${[\w\W]*}/gm);
-      var DATA_ATTR = seal(/^data-[\-\w.\u00B7-\uFFFF]/);
-      var ARIA_ATTR = seal(/^aria-[\-\w]+$/);
-      var IS_ALLOWED_URI = seal(
-        /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i
-        // eslint-disable-line no-useless-escape
-      );
-      var IS_SCRIPT_OR_DATA = seal(/^(?:\w+script|data):/i);
-      var ATTR_WHITESPACE = seal(
-        /[\u0000-\u0020\u00A0\u1680\u180E\u2000-\u2029\u205F\u3000]/g
-        // eslint-disable-line no-control-regex
-      );
-      var DOCTYPE_NAME = seal(/^html$/i);
-      var getGlobal = function getGlobal2() {
-        return typeof window === "undefined" ? null : window;
-      };
-      var _createTrustedTypesPolicy = function _createTrustedTypesPolicy2(trustedTypes, document2) {
-        if (_typeof(trustedTypes) !== "object" || typeof trustedTypes.createPolicy !== "function") {
-          return null;
-        }
-        var suffix = null;
-        var ATTR_NAME = "data-tt-policy-suffix";
-        if (document2.currentScript && document2.currentScript.hasAttribute(ATTR_NAME)) {
-          suffix = document2.currentScript.getAttribute(ATTR_NAME);
-        }
-        var policyName = "dompurify" + (suffix ? "#" + suffix : "");
-        try {
-          return trustedTypes.createPolicy(policyName, {
-            createHTML: function createHTML(html2) {
-              return html2;
-            },
-            createScriptURL: function createScriptURL(scriptUrl) {
-              return scriptUrl;
-            }
-          });
-        } catch (_) {
-          console.warn("TrustedTypes policy " + policyName + " could not be created.");
-          return null;
-        }
-      };
-      function createDOMPurify() {
-        var window2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : getGlobal();
-        var DOMPurify = function DOMPurify2(root) {
-          return createDOMPurify(root);
-        };
-        DOMPurify.version = "2.4.3";
-        DOMPurify.removed = [];
-        if (!window2 || !window2.document || window2.document.nodeType !== 9) {
-          DOMPurify.isSupported = false;
-          return DOMPurify;
-        }
-        var originalDocument = window2.document;
-        var document2 = window2.document;
-        var DocumentFragment = window2.DocumentFragment, HTMLTemplateElement = window2.HTMLTemplateElement, Node = window2.Node, Element = window2.Element, NodeFilter = window2.NodeFilter, _window$NamedNodeMap = window2.NamedNodeMap, NamedNodeMap = _window$NamedNodeMap === void 0 ? window2.NamedNodeMap || window2.MozNamedAttrMap : _window$NamedNodeMap, HTMLFormElement = window2.HTMLFormElement, DOMParser = window2.DOMParser, trustedTypes = window2.trustedTypes;
-        var ElementPrototype = Element.prototype;
-        var cloneNode = lookupGetter(ElementPrototype, "cloneNode");
-        var getNextSibling = lookupGetter(ElementPrototype, "nextSibling");
-        var getChildNodes = lookupGetter(ElementPrototype, "childNodes");
-        var getParentNode = lookupGetter(ElementPrototype, "parentNode");
-        if (typeof HTMLTemplateElement === "function") {
-          var template = document2.createElement("template");
-          if (template.content && template.content.ownerDocument) {
-            document2 = template.content.ownerDocument;
-          }
-        }
-        var trustedTypesPolicy = _createTrustedTypesPolicy(trustedTypes, originalDocument);
-        var emptyHTML = trustedTypesPolicy ? trustedTypesPolicy.createHTML("") : "";
-        var _document = document2, implementation = _document.implementation, createNodeIterator = _document.createNodeIterator, createDocumentFragment = _document.createDocumentFragment, getElementsByTagName = _document.getElementsByTagName;
-        var importNode = originalDocument.importNode;
-        var documentMode = {};
-        try {
-          documentMode = clone(document2).documentMode ? document2.documentMode : {};
-        } catch (_) {
-        }
-        var hooks = {};
-        DOMPurify.isSupported = typeof getParentNode === "function" && implementation && typeof implementation.createHTMLDocument !== "undefined" && documentMode !== 9;
-        var MUSTACHE_EXPR$1 = MUSTACHE_EXPR, ERB_EXPR$1 = ERB_EXPR, TMPLIT_EXPR$1 = TMPLIT_EXPR, DATA_ATTR$1 = DATA_ATTR, ARIA_ATTR$1 = ARIA_ATTR, IS_SCRIPT_OR_DATA$1 = IS_SCRIPT_OR_DATA, ATTR_WHITESPACE$1 = ATTR_WHITESPACE;
-        var IS_ALLOWED_URI$1 = IS_ALLOWED_URI;
-        var ALLOWED_TAGS = null;
-        var DEFAULT_ALLOWED_TAGS = addToSet({}, [].concat(_toConsumableArray(html$1), _toConsumableArray(svg$1), _toConsumableArray(svgFilters), _toConsumableArray(mathMl$1), _toConsumableArray(text)));
-        var ALLOWED_ATTR = null;
-        var DEFAULT_ALLOWED_ATTR = addToSet({}, [].concat(_toConsumableArray(html), _toConsumableArray(svg), _toConsumableArray(mathMl), _toConsumableArray(xml)));
-        var CUSTOM_ELEMENT_HANDLING = Object.seal(Object.create(null, {
-          tagNameCheck: {
-            writable: true,
-            configurable: false,
-            enumerable: true,
-            value: null
-          },
-          attributeNameCheck: {
-            writable: true,
-            configurable: false,
-            enumerable: true,
-            value: null
-          },
-          allowCustomizedBuiltInElements: {
-            writable: true,
-            configurable: false,
-            enumerable: true,
-            value: false
-          }
-        }));
-        var FORBID_TAGS = null;
-        var FORBID_ATTR = null;
-        var ALLOW_ARIA_ATTR = true;
-        var ALLOW_DATA_ATTR = true;
-        var ALLOW_UNKNOWN_PROTOCOLS = false;
-        var SAFE_FOR_TEMPLATES = false;
-        var WHOLE_DOCUMENT = false;
-        var SET_CONFIG = false;
-        var FORCE_BODY = false;
-        var RETURN_DOM = false;
-        var RETURN_DOM_FRAGMENT = false;
-        var RETURN_TRUSTED_TYPE = false;
-        var SANITIZE_DOM = true;
-        var SANITIZE_NAMED_PROPS = false;
-        var SANITIZE_NAMED_PROPS_PREFIX = "user-content-";
-        var KEEP_CONTENT = true;
-        var IN_PLACE = false;
-        var USE_PROFILES = {};
-        var FORBID_CONTENTS = null;
-        var DEFAULT_FORBID_CONTENTS = addToSet({}, ["annotation-xml", "audio", "colgroup", "desc", "foreignobject", "head", "iframe", "math", "mi", "mn", "mo", "ms", "mtext", "noembed", "noframes", "noscript", "plaintext", "script", "style", "svg", "template", "thead", "title", "video", "xmp"]);
-        var DATA_URI_TAGS = null;
-        var DEFAULT_DATA_URI_TAGS = addToSet({}, ["audio", "video", "img", "source", "image", "track"]);
-        var URI_SAFE_ATTRIBUTES = null;
-        var DEFAULT_URI_SAFE_ATTRIBUTES = addToSet({}, ["alt", "class", "for", "id", "label", "name", "pattern", "placeholder", "role", "summary", "title", "value", "style", "xmlns"]);
-        var MATHML_NAMESPACE = "http://www.w3.org/1998/Math/MathML";
-        var SVG_NAMESPACE = "http://www.w3.org/2000/svg";
-        var HTML_NAMESPACE = "http://www.w3.org/1999/xhtml";
-        var NAMESPACE = HTML_NAMESPACE;
-        var IS_EMPTY_INPUT = false;
-        var ALLOWED_NAMESPACES = null;
-        var DEFAULT_ALLOWED_NAMESPACES = addToSet({}, [MATHML_NAMESPACE, SVG_NAMESPACE, HTML_NAMESPACE], stringToString);
-        var PARSER_MEDIA_TYPE;
-        var SUPPORTED_PARSER_MEDIA_TYPES = ["application/xhtml+xml", "text/html"];
-        var DEFAULT_PARSER_MEDIA_TYPE = "text/html";
-        var transformCaseFunc;
-        var CONFIG = null;
-        var formElement = document2.createElement("form");
-        var isRegexOrFunction = function isRegexOrFunction2(testValue) {
-          return testValue instanceof RegExp || testValue instanceof Function;
-        };
-        var _parseConfig = function _parseConfig2(cfg) {
-          if (CONFIG && CONFIG === cfg) {
-            return;
-          }
-          if (!cfg || _typeof(cfg) !== "object") {
-            cfg = {};
-          }
-          cfg = clone(cfg);
-          PARSER_MEDIA_TYPE = // eslint-disable-next-line unicorn/prefer-includes
-          SUPPORTED_PARSER_MEDIA_TYPES.indexOf(cfg.PARSER_MEDIA_TYPE) === -1 ? PARSER_MEDIA_TYPE = DEFAULT_PARSER_MEDIA_TYPE : PARSER_MEDIA_TYPE = cfg.PARSER_MEDIA_TYPE;
-          transformCaseFunc = PARSER_MEDIA_TYPE === "application/xhtml+xml" ? stringToString : stringToLowerCase;
-          ALLOWED_TAGS = "ALLOWED_TAGS" in cfg ? addToSet({}, cfg.ALLOWED_TAGS, transformCaseFunc) : DEFAULT_ALLOWED_TAGS;
-          ALLOWED_ATTR = "ALLOWED_ATTR" in cfg ? addToSet({}, cfg.ALLOWED_ATTR, transformCaseFunc) : DEFAULT_ALLOWED_ATTR;
-          ALLOWED_NAMESPACES = "ALLOWED_NAMESPACES" in cfg ? addToSet({}, cfg.ALLOWED_NAMESPACES, stringToString) : DEFAULT_ALLOWED_NAMESPACES;
-          URI_SAFE_ATTRIBUTES = "ADD_URI_SAFE_ATTR" in cfg ? addToSet(
-            clone(DEFAULT_URI_SAFE_ATTRIBUTES),
-            // eslint-disable-line indent
-            cfg.ADD_URI_SAFE_ATTR,
-            // eslint-disable-line indent
-            transformCaseFunc
-            // eslint-disable-line indent
-          ) : DEFAULT_URI_SAFE_ATTRIBUTES;
-          DATA_URI_TAGS = "ADD_DATA_URI_TAGS" in cfg ? addToSet(
-            clone(DEFAULT_DATA_URI_TAGS),
-            // eslint-disable-line indent
-            cfg.ADD_DATA_URI_TAGS,
-            // eslint-disable-line indent
-            transformCaseFunc
-            // eslint-disable-line indent
-          ) : DEFAULT_DATA_URI_TAGS;
-          FORBID_CONTENTS = "FORBID_CONTENTS" in cfg ? addToSet({}, cfg.FORBID_CONTENTS, transformCaseFunc) : DEFAULT_FORBID_CONTENTS;
-          FORBID_TAGS = "FORBID_TAGS" in cfg ? addToSet({}, cfg.FORBID_TAGS, transformCaseFunc) : {};
-          FORBID_ATTR = "FORBID_ATTR" in cfg ? addToSet({}, cfg.FORBID_ATTR, transformCaseFunc) : {};
-          USE_PROFILES = "USE_PROFILES" in cfg ? cfg.USE_PROFILES : false;
-          ALLOW_ARIA_ATTR = cfg.ALLOW_ARIA_ATTR !== false;
-          ALLOW_DATA_ATTR = cfg.ALLOW_DATA_ATTR !== false;
-          ALLOW_UNKNOWN_PROTOCOLS = cfg.ALLOW_UNKNOWN_PROTOCOLS || false;
-          SAFE_FOR_TEMPLATES = cfg.SAFE_FOR_TEMPLATES || false;
-          WHOLE_DOCUMENT = cfg.WHOLE_DOCUMENT || false;
-          RETURN_DOM = cfg.RETURN_DOM || false;
-          RETURN_DOM_FRAGMENT = cfg.RETURN_DOM_FRAGMENT || false;
-          RETURN_TRUSTED_TYPE = cfg.RETURN_TRUSTED_TYPE || false;
-          FORCE_BODY = cfg.FORCE_BODY || false;
-          SANITIZE_DOM = cfg.SANITIZE_DOM !== false;
-          SANITIZE_NAMED_PROPS = cfg.SANITIZE_NAMED_PROPS || false;
-          KEEP_CONTENT = cfg.KEEP_CONTENT !== false;
-          IN_PLACE = cfg.IN_PLACE || false;
-          IS_ALLOWED_URI$1 = cfg.ALLOWED_URI_REGEXP || IS_ALLOWED_URI$1;
-          NAMESPACE = cfg.NAMESPACE || HTML_NAMESPACE;
-          if (cfg.CUSTOM_ELEMENT_HANDLING && isRegexOrFunction(cfg.CUSTOM_ELEMENT_HANDLING.tagNameCheck)) {
-            CUSTOM_ELEMENT_HANDLING.tagNameCheck = cfg.CUSTOM_ELEMENT_HANDLING.tagNameCheck;
-          }
-          if (cfg.CUSTOM_ELEMENT_HANDLING && isRegexOrFunction(cfg.CUSTOM_ELEMENT_HANDLING.attributeNameCheck)) {
-            CUSTOM_ELEMENT_HANDLING.attributeNameCheck = cfg.CUSTOM_ELEMENT_HANDLING.attributeNameCheck;
-          }
-          if (cfg.CUSTOM_ELEMENT_HANDLING && typeof cfg.CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements === "boolean") {
-            CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements = cfg.CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements;
-          }
-          if (SAFE_FOR_TEMPLATES) {
-            ALLOW_DATA_ATTR = false;
-          }
-          if (RETURN_DOM_FRAGMENT) {
-            RETURN_DOM = true;
-          }
-          if (USE_PROFILES) {
-            ALLOWED_TAGS = addToSet({}, _toConsumableArray(text));
-            ALLOWED_ATTR = [];
-            if (USE_PROFILES.html === true) {
-              addToSet(ALLOWED_TAGS, html$1);
-              addToSet(ALLOWED_ATTR, html);
-            }
-            if (USE_PROFILES.svg === true) {
-              addToSet(ALLOWED_TAGS, svg$1);
-              addToSet(ALLOWED_ATTR, svg);
-              addToSet(ALLOWED_ATTR, xml);
-            }
-            if (USE_PROFILES.svgFilters === true) {
-              addToSet(ALLOWED_TAGS, svgFilters);
-              addToSet(ALLOWED_ATTR, svg);
-              addToSet(ALLOWED_ATTR, xml);
-            }
-            if (USE_PROFILES.mathMl === true) {
-              addToSet(ALLOWED_TAGS, mathMl$1);
-              addToSet(ALLOWED_ATTR, mathMl);
-              addToSet(ALLOWED_ATTR, xml);
-            }
-          }
-          if (cfg.ADD_TAGS) {
-            if (ALLOWED_TAGS === DEFAULT_ALLOWED_TAGS) {
-              ALLOWED_TAGS = clone(ALLOWED_TAGS);
-            }
-            addToSet(ALLOWED_TAGS, cfg.ADD_TAGS, transformCaseFunc);
-          }
-          if (cfg.ADD_ATTR) {
-            if (ALLOWED_ATTR === DEFAULT_ALLOWED_ATTR) {
-              ALLOWED_ATTR = clone(ALLOWED_ATTR);
-            }
-            addToSet(ALLOWED_ATTR, cfg.ADD_ATTR, transformCaseFunc);
-          }
-          if (cfg.ADD_URI_SAFE_ATTR) {
-            addToSet(URI_SAFE_ATTRIBUTES, cfg.ADD_URI_SAFE_ATTR, transformCaseFunc);
-          }
-          if (cfg.FORBID_CONTENTS) {
-            if (FORBID_CONTENTS === DEFAULT_FORBID_CONTENTS) {
-              FORBID_CONTENTS = clone(FORBID_CONTENTS);
-            }
-            addToSet(FORBID_CONTENTS, cfg.FORBID_CONTENTS, transformCaseFunc);
-          }
-          if (KEEP_CONTENT) {
-            ALLOWED_TAGS["#text"] = true;
-          }
-          if (WHOLE_DOCUMENT) {
-            addToSet(ALLOWED_TAGS, ["html", "head", "body"]);
-          }
-          if (ALLOWED_TAGS.table) {
-            addToSet(ALLOWED_TAGS, ["tbody"]);
-            delete FORBID_TAGS.tbody;
-          }
-          if (freeze) {
-            freeze(cfg);
-          }
-          CONFIG = cfg;
-        };
-        var MATHML_TEXT_INTEGRATION_POINTS = addToSet({}, ["mi", "mo", "mn", "ms", "mtext"]);
-        var HTML_INTEGRATION_POINTS = addToSet({}, ["foreignobject", "desc", "title", "annotation-xml"]);
-        var COMMON_SVG_AND_HTML_ELEMENTS = addToSet({}, ["title", "style", "font", "a", "script"]);
-        var ALL_SVG_TAGS = addToSet({}, svg$1);
-        addToSet(ALL_SVG_TAGS, svgFilters);
-        addToSet(ALL_SVG_TAGS, svgDisallowed);
-        var ALL_MATHML_TAGS = addToSet({}, mathMl$1);
-        addToSet(ALL_MATHML_TAGS, mathMlDisallowed);
-        var _checkValidNamespace = function _checkValidNamespace2(element) {
-          var parent = getParentNode(element);
-          if (!parent || !parent.tagName) {
-            parent = {
-              namespaceURI: NAMESPACE,
-              tagName: "template"
-            };
-          }
-          var tagName = stringToLowerCase(element.tagName);
-          var parentTagName = stringToLowerCase(parent.tagName);
-          if (!ALLOWED_NAMESPACES[element.namespaceURI]) {
-            return false;
-          }
-          if (element.namespaceURI === SVG_NAMESPACE) {
-            if (parent.namespaceURI === HTML_NAMESPACE) {
-              return tagName === "svg";
-            }
-            if (parent.namespaceURI === MATHML_NAMESPACE) {
-              return tagName === "svg" && (parentTagName === "annotation-xml" || MATHML_TEXT_INTEGRATION_POINTS[parentTagName]);
-            }
-            return Boolean(ALL_SVG_TAGS[tagName]);
-          }
-          if (element.namespaceURI === MATHML_NAMESPACE) {
-            if (parent.namespaceURI === HTML_NAMESPACE) {
-              return tagName === "math";
-            }
-            if (parent.namespaceURI === SVG_NAMESPACE) {
-              return tagName === "math" && HTML_INTEGRATION_POINTS[parentTagName];
-            }
-            return Boolean(ALL_MATHML_TAGS[tagName]);
-          }
-          if (element.namespaceURI === HTML_NAMESPACE) {
-            if (parent.namespaceURI === SVG_NAMESPACE && !HTML_INTEGRATION_POINTS[parentTagName]) {
-              return false;
-            }
-            if (parent.namespaceURI === MATHML_NAMESPACE && !MATHML_TEXT_INTEGRATION_POINTS[parentTagName]) {
-              return false;
-            }
-            return !ALL_MATHML_TAGS[tagName] && (COMMON_SVG_AND_HTML_ELEMENTS[tagName] || !ALL_SVG_TAGS[tagName]);
-          }
-          if (PARSER_MEDIA_TYPE === "application/xhtml+xml" && ALLOWED_NAMESPACES[element.namespaceURI]) {
-            return true;
-          }
-          return false;
-        };
-        var _forceRemove = function _forceRemove2(node) {
-          arrayPush(DOMPurify.removed, {
-            element: node
-          });
-          try {
-            node.parentNode.removeChild(node);
-          } catch (_) {
-            try {
-              node.outerHTML = emptyHTML;
-            } catch (_2) {
-              node.remove();
-            }
-          }
-        };
-        var _removeAttribute = function _removeAttribute2(name, node) {
-          try {
-            arrayPush(DOMPurify.removed, {
-              attribute: node.getAttributeNode(name),
-              from: node
-            });
-          } catch (_) {
-            arrayPush(DOMPurify.removed, {
-              attribute: null,
-              from: node
-            });
-          }
-          node.removeAttribute(name);
-          if (name === "is" && !ALLOWED_ATTR[name]) {
-            if (RETURN_DOM || RETURN_DOM_FRAGMENT) {
-              try {
-                _forceRemove(node);
-              } catch (_) {
-              }
-            } else {
-              try {
-                node.setAttribute(name, "");
-              } catch (_) {
-              }
-            }
-          }
-        };
-        var _initDocument = function _initDocument2(dirty) {
-          var doc;
-          var leadingWhitespace;
-          if (FORCE_BODY) {
-            dirty = "<remove></remove>" + dirty;
-          } else {
-            var matches = stringMatch(dirty, /^[\r\n\t ]+/);
-            leadingWhitespace = matches && matches[0];
-          }
-          if (PARSER_MEDIA_TYPE === "application/xhtml+xml" && NAMESPACE === HTML_NAMESPACE) {
-            dirty = '<html xmlns="http://www.w3.org/1999/xhtml"><head></head><body>' + dirty + "</body></html>";
-          }
-          var dirtyPayload = trustedTypesPolicy ? trustedTypesPolicy.createHTML(dirty) : dirty;
-          if (NAMESPACE === HTML_NAMESPACE) {
-            try {
-              doc = new DOMParser().parseFromString(dirtyPayload, PARSER_MEDIA_TYPE);
-            } catch (_) {
-            }
-          }
-          if (!doc || !doc.documentElement) {
-            doc = implementation.createDocument(NAMESPACE, "template", null);
-            try {
-              doc.documentElement.innerHTML = IS_EMPTY_INPUT ? emptyHTML : dirtyPayload;
-            } catch (_) {
-            }
-          }
-          var body = doc.body || doc.documentElement;
-          if (dirty && leadingWhitespace) {
-            body.insertBefore(document2.createTextNode(leadingWhitespace), body.childNodes[0] || null);
-          }
-          if (NAMESPACE === HTML_NAMESPACE) {
-            return getElementsByTagName.call(doc, WHOLE_DOCUMENT ? "html" : "body")[0];
-          }
-          return WHOLE_DOCUMENT ? doc.documentElement : body;
-        };
-        var _createIterator = function _createIterator2(root) {
-          return createNodeIterator.call(
-            root.ownerDocument || root,
-            root,
-            // eslint-disable-next-line no-bitwise
-            NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_TEXT,
-            null,
-            false
-          );
-        };
-        var _isClobbered = function _isClobbered2(elm) {
-          return elm instanceof HTMLFormElement && (typeof elm.nodeName !== "string" || typeof elm.textContent !== "string" || typeof elm.removeChild !== "function" || !(elm.attributes instanceof NamedNodeMap) || typeof elm.removeAttribute !== "function" || typeof elm.setAttribute !== "function" || typeof elm.namespaceURI !== "string" || typeof elm.insertBefore !== "function" || typeof elm.hasChildNodes !== "function");
-        };
-        var _isNode = function _isNode2(object) {
-          return _typeof(Node) === "object" ? object instanceof Node : object && _typeof(object) === "object" && typeof object.nodeType === "number" && typeof object.nodeName === "string";
-        };
-        var _executeHook = function _executeHook2(entryPoint, currentNode, data) {
-          if (!hooks[entryPoint]) {
-            return;
-          }
-          arrayForEach(hooks[entryPoint], function(hook) {
-            hook.call(DOMPurify, currentNode, data, CONFIG);
-          });
-        };
-        var _sanitizeElements = function _sanitizeElements2(currentNode) {
-          var content;
-          _executeHook("beforeSanitizeElements", currentNode, null);
-          if (_isClobbered(currentNode)) {
-            _forceRemove(currentNode);
-            return true;
-          }
-          if (regExpTest(/[\u0080-\uFFFF]/, currentNode.nodeName)) {
-            _forceRemove(currentNode);
-            return true;
-          }
-          var tagName = transformCaseFunc(currentNode.nodeName);
-          _executeHook("uponSanitizeElement", currentNode, {
-            tagName,
-            allowedTags: ALLOWED_TAGS
-          });
-          if (currentNode.hasChildNodes() && !_isNode(currentNode.firstElementChild) && (!_isNode(currentNode.content) || !_isNode(currentNode.content.firstElementChild)) && regExpTest(/<[/\w]/g, currentNode.innerHTML) && regExpTest(/<[/\w]/g, currentNode.textContent)) {
-            _forceRemove(currentNode);
-            return true;
-          }
-          if (tagName === "select" && regExpTest(/<template/i, currentNode.innerHTML)) {
-            _forceRemove(currentNode);
-            return true;
-          }
-          if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
-            if (!FORBID_TAGS[tagName] && _basicCustomElementTest(tagName)) {
-              if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, tagName))
-                return false;
-              if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(tagName))
-                return false;
-            }
-            if (KEEP_CONTENT && !FORBID_CONTENTS[tagName]) {
-              var parentNode = getParentNode(currentNode) || currentNode.parentNode;
-              var childNodes = getChildNodes(currentNode) || currentNode.childNodes;
-              if (childNodes && parentNode) {
-                var childCount = childNodes.length;
-                for (var i = childCount - 1; i >= 0; --i) {
-                  parentNode.insertBefore(cloneNode(childNodes[i], true), getNextSibling(currentNode));
-                }
-              }
-            }
-            _forceRemove(currentNode);
-            return true;
-          }
-          if (currentNode instanceof Element && !_checkValidNamespace(currentNode)) {
-            _forceRemove(currentNode);
-            return true;
-          }
-          if ((tagName === "noscript" || tagName === "noembed") && regExpTest(/<\/no(script|embed)/i, currentNode.innerHTML)) {
-            _forceRemove(currentNode);
-            return true;
-          }
-          if (SAFE_FOR_TEMPLATES && currentNode.nodeType === 3) {
-            content = currentNode.textContent;
-            content = stringReplace(content, MUSTACHE_EXPR$1, " ");
-            content = stringReplace(content, ERB_EXPR$1, " ");
-            content = stringReplace(content, TMPLIT_EXPR$1, " ");
-            if (currentNode.textContent !== content) {
-              arrayPush(DOMPurify.removed, {
-                element: currentNode.cloneNode()
-              });
-              currentNode.textContent = content;
-            }
-          }
-          _executeHook("afterSanitizeElements", currentNode, null);
-          return false;
-        };
-        var _isValidAttribute = function _isValidAttribute2(lcTag, lcName, value) {
-          if (SANITIZE_DOM && (lcName === "id" || lcName === "name") && (value in document2 || value in formElement)) {
-            return false;
-          }
-          if (ALLOW_DATA_ATTR && !FORBID_ATTR[lcName] && regExpTest(DATA_ATTR$1, lcName))
-            ;
-          else if (ALLOW_ARIA_ATTR && regExpTest(ARIA_ATTR$1, lcName))
-            ;
-          else if (!ALLOWED_ATTR[lcName] || FORBID_ATTR[lcName]) {
-            if (
-              // First condition does a very basic check if a) it's basically a valid custom element tagname AND
-              // b) if the tagName passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
-              // and c) if the attribute name passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.attributeNameCheck
-              _basicCustomElementTest(lcTag) && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, lcTag) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(lcTag)) && (CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.attributeNameCheck, lcName) || CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.attributeNameCheck(lcName)) || // Alternative, second condition checks if it's an `is`-attribute, AND
-              // the value passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
-              lcName === "is" && CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, value) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(value))
-            )
-              ;
-            else {
-              return false;
-            }
-          } else if (URI_SAFE_ATTRIBUTES[lcName])
-            ;
-          else if (regExpTest(IS_ALLOWED_URI$1, stringReplace(value, ATTR_WHITESPACE$1, "")))
-            ;
-          else if ((lcName === "src" || lcName === "xlink:href" || lcName === "href") && lcTag !== "script" && stringIndexOf(value, "data:") === 0 && DATA_URI_TAGS[lcTag])
-            ;
-          else if (ALLOW_UNKNOWN_PROTOCOLS && !regExpTest(IS_SCRIPT_OR_DATA$1, stringReplace(value, ATTR_WHITESPACE$1, "")))
-            ;
-          else if (!value)
-            ;
-          else {
-            return false;
-          }
-          return true;
-        };
-        var _basicCustomElementTest = function _basicCustomElementTest2(tagName) {
-          return tagName.indexOf("-") > 0;
-        };
-        var _sanitizeAttributes = function _sanitizeAttributes2(currentNode) {
-          var attr;
-          var value;
-          var lcName;
-          var l;
-          _executeHook("beforeSanitizeAttributes", currentNode, null);
-          var attributes = currentNode.attributes;
-          if (!attributes) {
-            return;
-          }
-          var hookEvent = {
-            attrName: "",
-            attrValue: "",
-            keepAttr: true,
-            allowedAttributes: ALLOWED_ATTR
-          };
-          l = attributes.length;
-          while (l--) {
-            attr = attributes[l];
-            var _attr = attr, name = _attr.name, namespaceURI = _attr.namespaceURI;
-            value = name === "value" ? attr.value : stringTrim(attr.value);
-            lcName = transformCaseFunc(name);
-            hookEvent.attrName = lcName;
-            hookEvent.attrValue = value;
-            hookEvent.keepAttr = true;
-            hookEvent.forceKeepAttr = void 0;
-            _executeHook("uponSanitizeAttribute", currentNode, hookEvent);
-            value = hookEvent.attrValue;
-            if (hookEvent.forceKeepAttr) {
-              continue;
-            }
-            _removeAttribute(name, currentNode);
-            if (!hookEvent.keepAttr) {
-              continue;
-            }
-            if (regExpTest(/\/>/i, value)) {
-              _removeAttribute(name, currentNode);
-              continue;
-            }
-            if (SAFE_FOR_TEMPLATES) {
-              value = stringReplace(value, MUSTACHE_EXPR$1, " ");
-              value = stringReplace(value, ERB_EXPR$1, " ");
-              value = stringReplace(value, TMPLIT_EXPR$1, " ");
-            }
-            var lcTag = transformCaseFunc(currentNode.nodeName);
-            if (!_isValidAttribute(lcTag, lcName, value)) {
-              continue;
-            }
-            if (SANITIZE_NAMED_PROPS && (lcName === "id" || lcName === "name")) {
-              _removeAttribute(name, currentNode);
-              value = SANITIZE_NAMED_PROPS_PREFIX + value;
-            }
-            if (trustedTypesPolicy && _typeof(trustedTypes) === "object" && typeof trustedTypes.getAttributeType === "function") {
-              if (namespaceURI)
-                ;
-              else {
-                switch (trustedTypes.getAttributeType(lcTag, lcName)) {
-                  case "TrustedHTML":
-                    value = trustedTypesPolicy.createHTML(value);
-                    break;
-                  case "TrustedScriptURL":
-                    value = trustedTypesPolicy.createScriptURL(value);
-                    break;
-                }
-              }
-            }
-            try {
-              if (namespaceURI) {
-                currentNode.setAttributeNS(namespaceURI, name, value);
-              } else {
-                currentNode.setAttribute(name, value);
-              }
-              arrayPop(DOMPurify.removed);
-            } catch (_) {
-            }
-          }
-          _executeHook("afterSanitizeAttributes", currentNode, null);
-        };
-        var _sanitizeShadowDOM = function _sanitizeShadowDOM2(fragment) {
-          var shadowNode;
-          var shadowIterator = _createIterator(fragment);
-          _executeHook("beforeSanitizeShadowDOM", fragment, null);
-          while (shadowNode = shadowIterator.nextNode()) {
-            _executeHook("uponSanitizeShadowNode", shadowNode, null);
-            if (_sanitizeElements(shadowNode)) {
-              continue;
-            }
-            if (shadowNode.content instanceof DocumentFragment) {
-              _sanitizeShadowDOM2(shadowNode.content);
-            }
-            _sanitizeAttributes(shadowNode);
-          }
-          _executeHook("afterSanitizeShadowDOM", fragment, null);
-        };
-        DOMPurify.sanitize = function(dirty) {
-          var cfg = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-          var body;
-          var importedNode;
-          var currentNode;
-          var oldNode;
-          var returnNode;
-          IS_EMPTY_INPUT = !dirty;
-          if (IS_EMPTY_INPUT) {
-            dirty = "<!-->";
-          }
-          if (typeof dirty !== "string" && !_isNode(dirty)) {
-            if (typeof dirty.toString !== "function") {
-              throw typeErrorCreate("toString is not a function");
-            } else {
-              dirty = dirty.toString();
-              if (typeof dirty !== "string") {
-                throw typeErrorCreate("dirty is not a string, aborting");
-              }
-            }
-          }
-          if (!DOMPurify.isSupported) {
-            if (_typeof(window2.toStaticHTML) === "object" || typeof window2.toStaticHTML === "function") {
-              if (typeof dirty === "string") {
-                return window2.toStaticHTML(dirty);
-              }
-              if (_isNode(dirty)) {
-                return window2.toStaticHTML(dirty.outerHTML);
-              }
-            }
-            return dirty;
-          }
-          if (!SET_CONFIG) {
-            _parseConfig(cfg);
-          }
-          DOMPurify.removed = [];
-          if (typeof dirty === "string") {
-            IN_PLACE = false;
-          }
-          if (IN_PLACE) {
-            if (dirty.nodeName) {
-              var tagName = transformCaseFunc(dirty.nodeName);
-              if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
-                throw typeErrorCreate("root node is forbidden and cannot be sanitized in-place");
-              }
-            }
-          } else if (dirty instanceof Node) {
-            body = _initDocument("<!---->");
-            importedNode = body.ownerDocument.importNode(dirty, true);
-            if (importedNode.nodeType === 1 && importedNode.nodeName === "BODY") {
-              body = importedNode;
-            } else if (importedNode.nodeName === "HTML") {
-              body = importedNode;
-            } else {
-              body.appendChild(importedNode);
-            }
-          } else {
-            if (!RETURN_DOM && !SAFE_FOR_TEMPLATES && !WHOLE_DOCUMENT && // eslint-disable-next-line unicorn/prefer-includes
-            dirty.indexOf("<") === -1) {
-              return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML(dirty) : dirty;
-            }
-            body = _initDocument(dirty);
-            if (!body) {
-              return RETURN_DOM ? null : RETURN_TRUSTED_TYPE ? emptyHTML : "";
-            }
-          }
-          if (body && FORCE_BODY) {
-            _forceRemove(body.firstChild);
-          }
-          var nodeIterator = _createIterator(IN_PLACE ? dirty : body);
-          while (currentNode = nodeIterator.nextNode()) {
-            if (currentNode.nodeType === 3 && currentNode === oldNode) {
-              continue;
-            }
-            if (_sanitizeElements(currentNode)) {
-              continue;
-            }
-            if (currentNode.content instanceof DocumentFragment) {
-              _sanitizeShadowDOM(currentNode.content);
-            }
-            _sanitizeAttributes(currentNode);
-            oldNode = currentNode;
-          }
-          oldNode = null;
-          if (IN_PLACE) {
-            return dirty;
-          }
-          if (RETURN_DOM) {
-            if (RETURN_DOM_FRAGMENT) {
-              returnNode = createDocumentFragment.call(body.ownerDocument);
-              while (body.firstChild) {
-                returnNode.appendChild(body.firstChild);
-              }
-            } else {
-              returnNode = body;
-            }
-            if (ALLOWED_ATTR.shadowroot) {
-              returnNode = importNode.call(originalDocument, returnNode, true);
-            }
-            return returnNode;
-          }
-          var serializedHTML = WHOLE_DOCUMENT ? body.outerHTML : body.innerHTML;
-          if (WHOLE_DOCUMENT && ALLOWED_TAGS["!doctype"] && body.ownerDocument && body.ownerDocument.doctype && body.ownerDocument.doctype.name && regExpTest(DOCTYPE_NAME, body.ownerDocument.doctype.name)) {
-            serializedHTML = "<!DOCTYPE " + body.ownerDocument.doctype.name + ">\n" + serializedHTML;
-          }
-          if (SAFE_FOR_TEMPLATES) {
-            serializedHTML = stringReplace(serializedHTML, MUSTACHE_EXPR$1, " ");
-            serializedHTML = stringReplace(serializedHTML, ERB_EXPR$1, " ");
-            serializedHTML = stringReplace(serializedHTML, TMPLIT_EXPR$1, " ");
-          }
-          return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML(serializedHTML) : serializedHTML;
-        };
-        DOMPurify.setConfig = function(cfg) {
-          _parseConfig(cfg);
-          SET_CONFIG = true;
-        };
-        DOMPurify.clearConfig = function() {
-          CONFIG = null;
-          SET_CONFIG = false;
-        };
-        DOMPurify.isValidAttribute = function(tag, attr, value) {
-          if (!CONFIG) {
-            _parseConfig({});
-          }
-          var lcTag = transformCaseFunc(tag);
-          var lcName = transformCaseFunc(attr);
-          return _isValidAttribute(lcTag, lcName, value);
-        };
-        DOMPurify.addHook = function(entryPoint, hookFunction) {
-          if (typeof hookFunction !== "function") {
-            return;
-          }
-          hooks[entryPoint] = hooks[entryPoint] || [];
-          arrayPush(hooks[entryPoint], hookFunction);
-        };
-        DOMPurify.removeHook = function(entryPoint) {
-          if (hooks[entryPoint]) {
-            return arrayPop(hooks[entryPoint]);
-          }
-        };
-        DOMPurify.removeHooks = function(entryPoint) {
-          if (hooks[entryPoint]) {
-            hooks[entryPoint] = [];
-          }
-        };
-        DOMPurify.removeAllHooks = function() {
-          hooks = {};
-        };
-        return DOMPurify;
-      }
-      var purify = createDOMPurify();
-      return purify;
-    });
-  }
-});
-
 // node_modules/highlight.js/lib/core.js
 var require_core = __commonJS({
   "node_modules/highlight.js/lib/core.js"(exports, module) {
-    var deepFreezeEs6 = { exports: {} };
     function deepFreeze(obj) {
       if (obj instanceof Map) {
         obj.clear = obj.delete = obj.set = function() {
@@ -1013,16 +38,15 @@ var require_core = __commonJS({
         };
       }
       Object.freeze(obj);
-      Object.getOwnPropertyNames(obj).forEach(function(name) {
-        var prop = obj[name];
-        if (typeof prop == "object" && !Object.isFrozen(prop)) {
+      Object.getOwnPropertyNames(obj).forEach((name) => {
+        const prop = obj[name];
+        const type = typeof prop;
+        if ((type === "object" || type === "function") && !Object.isFrozen(prop)) {
           deepFreeze(prop);
         }
       });
       return obj;
     }
-    deepFreezeEs6.exports = deepFreeze;
-    deepFreezeEs6.exports.default = deepFreeze;
     var Response = class {
       /**
        * @param {CompiledMode} mode
@@ -1057,9 +81,12 @@ var require_core = __commonJS({
     }
     var SPAN_CLOSE = "</span>";
     var emitsWrappingTags = (node) => {
-      return !!node.scope || node.sublanguage && node.language;
+      return !!node.scope;
     };
     var scopeToCSSClass = (name, { prefix }) => {
+      if (name.startsWith("language:")) {
+        return name.replace("language:", "language-");
+      }
       if (name.includes(".")) {
         const pieces = name.split(".");
         return [
@@ -1095,12 +122,10 @@ var require_core = __commonJS({
       openNode(node) {
         if (!emitsWrappingTags(node))
           return;
-        let className = "";
-        if (node.sublanguage) {
-          className = `language-${node.language}`;
-        } else {
-          className = scopeToCSSClass(node.scope, { prefix: this.classPrefix });
-        }
+        const className = scopeToCSSClass(
+          node.scope,
+          { prefix: this.classPrefix }
+        );
         this.span(className);
       }
       /**
@@ -1132,7 +157,7 @@ var require_core = __commonJS({
       Object.assign(result, opts);
       return result;
     };
-    var TokenTree = class {
+    var TokenTree = class _TokenTree {
       constructor() {
         this.rootNode = newNode();
         this.stack = [this.rootNode];
@@ -1199,7 +224,7 @@ var require_core = __commonJS({
           node.children = [node.children.join("")];
         } else {
           node.children.forEach((child) => {
-            TokenTree._collapse(child);
+            _TokenTree._collapse(child);
           });
         }
       }
@@ -1214,18 +239,6 @@ var require_core = __commonJS({
       }
       /**
        * @param {string} text
-       * @param {string} scope
-       */
-      addKeyword(text, scope) {
-        if (text === "") {
-          return;
-        }
-        this.openNode(scope);
-        this.addText(text);
-        this.closeNode();
-      }
-      /**
-       * @param {string} text
        */
       addText(text) {
         if (text === "") {
@@ -1233,14 +246,21 @@ var require_core = __commonJS({
         }
         this.add(text);
       }
+      /** @param {string} scope */
+      startScope(scope) {
+        this.openNode(scope);
+      }
+      endScope() {
+        this.closeNode();
+      }
       /**
        * @param {Emitter & {root: DataNode}} emitter
        * @param {string} name
        */
-      addSublanguage(emitter, name) {
+      __addSublanguage(emitter, name) {
         const node = emitter.root;
-        node.sublanguage = true;
-        node.language = name;
+        if (name)
+          node.scope = `language:${name}`;
         this.add(node);
       }
       toHTML() {
@@ -1248,6 +268,7 @@ var require_core = __commonJS({
         return renderer.value();
       }
       finalize() {
+        this.closeAllNodes();
         return true;
       }
     };
@@ -1457,28 +478,18 @@ var require_core = __commonJS({
       relevance: 0
     };
     var REGEXP_MODE = {
-      // this outer rule makes sure we actually have a WHOLE regex and not simply
-      // an expression such as:
-      //
-      //     3 / something
-      //
-      // (which will then blow up when regex's `illegal` sees the newline)
-      begin: /(?=\/[^/\n]*\/)/,
-      contains: [{
-        scope: "regexp",
-        begin: /\//,
-        end: /\/[gimuy]*/,
-        illegal: /\n/,
-        contains: [
-          BACKSLASH_ESCAPE,
-          {
-            begin: /\[/,
-            end: /\]/,
-            relevance: 0,
-            contains: [BACKSLASH_ESCAPE]
-          }
-        ]
-      }]
+      scope: "regexp",
+      begin: /\/(?=[^/\n]*\/)/,
+      end: /\/[gimuy]*/,
+      contains: [
+        BACKSLASH_ESCAPE,
+        {
+          begin: /\[/,
+          end: /\]/,
+          relevance: 0,
+          contains: [BACKSLASH_ESCAPE]
+        }
+      ]
     };
     var TITLE_MODE = {
       scope: "title",
@@ -1513,30 +524,30 @@ var require_core = __commonJS({
     };
     var MODES = /* @__PURE__ */ Object.freeze({
       __proto__: null,
-      MATCH_NOTHING_RE,
-      IDENT_RE,
-      UNDERSCORE_IDENT_RE,
-      NUMBER_RE,
-      C_NUMBER_RE,
+      APOS_STRING_MODE,
+      BACKSLASH_ESCAPE,
+      BINARY_NUMBER_MODE,
       BINARY_NUMBER_RE,
+      COMMENT,
+      C_BLOCK_COMMENT_MODE,
+      C_LINE_COMMENT_MODE,
+      C_NUMBER_MODE,
+      C_NUMBER_RE,
+      END_SAME_AS_BEGIN,
+      HASH_COMMENT_MODE,
+      IDENT_RE,
+      MATCH_NOTHING_RE,
+      METHOD_GUARD,
+      NUMBER_MODE,
+      NUMBER_RE,
+      PHRASAL_WORDS_MODE,
+      QUOTE_STRING_MODE,
+      REGEXP_MODE,
       RE_STARTERS_RE,
       SHEBANG,
-      BACKSLASH_ESCAPE,
-      APOS_STRING_MODE,
-      QUOTE_STRING_MODE,
-      PHRASAL_WORDS_MODE,
-      COMMENT,
-      C_LINE_COMMENT_MODE,
-      C_BLOCK_COMMENT_MODE,
-      HASH_COMMENT_MODE,
-      NUMBER_MODE,
-      C_NUMBER_MODE,
-      BINARY_NUMBER_MODE,
-      REGEXP_MODE,
       TITLE_MODE,
-      UNDERSCORE_TITLE_MODE,
-      METHOD_GUARD,
-      END_SAME_AS_BEGIN
+      UNDERSCORE_IDENT_RE,
+      UNDERSCORE_TITLE_MODE
     });
     function skipIfHasPrecedingDot(match, response) {
       const before = match.input[match.index - 1];
@@ -1935,7 +946,7 @@ var require_core = __commonJS({
       }
       return mode;
     }
-    var version = "11.7.0";
+    var version = "11.9.0";
     var HTMLInjectionError = class extends Error {
       constructor(reason, html) {
         super(reason);
@@ -1943,7 +954,7 @@ var require_core = __commonJS({
         this.html = html;
       }
     };
-    var escape2 = escapeHTML;
+    var escape3 = escapeHTML;
     var inherit = inherit$1;
     var NO_MATCH = Symbol("nomatch");
     var MAX_KEYWORD_HITS = 7;
@@ -2038,7 +1049,7 @@ var require_core = __commonJS({
                 buf += match[0];
               } else {
                 const cssClass = language.classNameAliases[kind] || kind;
-                emitter.addKeyword(match[0], cssClass);
+                emitKeyword(match[0], cssClass);
               }
             } else {
               buf += match[0];
@@ -2067,7 +1078,7 @@ var require_core = __commonJS({
           if (top.relevance > 0) {
             relevance += result2.relevance;
           }
-          emitter.addSublanguage(result2._emitter, result2.language);
+          emitter.__addSublanguage(result2._emitter, result2.language);
         }
         function processBuffer() {
           if (top.subLanguage != null) {
@@ -2076,6 +1087,13 @@ var require_core = __commonJS({
             processKeywords();
           }
           modeBuffer = "";
+        }
+        function emitKeyword(keyword, scope) {
+          if (keyword === "")
+            return;
+          emitter.startScope(scope);
+          emitter.addText(keyword);
+          emitter.endScope();
         }
         function emitMultiClass(scope, match) {
           let i = 1;
@@ -2088,7 +1106,7 @@ var require_core = __commonJS({
             const klass = language.classNameAliases[scope[i]] || scope[i];
             const text = match[i];
             if (klass) {
-              emitter.addKeyword(text, klass);
+              emitKeyword(text, klass);
             } else {
               modeBuffer = text;
               processKeywords();
@@ -2103,7 +1121,7 @@ var require_core = __commonJS({
           }
           if (mode.beginScope) {
             if (mode.beginScope._wrap) {
-              emitter.addKeyword(modeBuffer, language.classNameAliases[mode.beginScope._wrap] || mode.beginScope._wrap);
+              emitKeyword(modeBuffer, language.classNameAliases[mode.beginScope._wrap] || mode.beginScope._wrap);
               modeBuffer = "";
             } else if (mode.beginScope._multi) {
               emitMultiClass(mode.beginScope, match);
@@ -2178,7 +1196,7 @@ var require_core = __commonJS({
           const origin = top;
           if (top.endScope && top.endScope._wrap) {
             processBuffer();
-            emitter.addKeyword(lexeme, top.endScope._wrap);
+            emitKeyword(lexeme, top.endScope._wrap);
           } else if (top.endScope && top.endScope._multi) {
             processBuffer();
             emitMultiClass(top.endScope, match);
@@ -2274,24 +1292,27 @@ var require_core = __commonJS({
         let iterations = 0;
         let resumeScanAtSamePosition = false;
         try {
-          top.matcher.considerAll();
-          for (; ; ) {
-            iterations++;
-            if (resumeScanAtSamePosition) {
-              resumeScanAtSamePosition = false;
-            } else {
-              top.matcher.considerAll();
+          if (!language.__emitTokens) {
+            top.matcher.considerAll();
+            for (; ; ) {
+              iterations++;
+              if (resumeScanAtSamePosition) {
+                resumeScanAtSamePosition = false;
+              } else {
+                top.matcher.considerAll();
+              }
+              top.matcher.lastIndex = index;
+              const match = top.matcher.exec(codeToHighlight);
+              if (!match)
+                break;
+              const beforeMatch = codeToHighlight.substring(index, match.index);
+              const processedCount = processLexeme(beforeMatch, match);
+              index = match.index + processedCount;
             }
-            top.matcher.lastIndex = index;
-            const match = top.matcher.exec(codeToHighlight);
-            if (!match)
-              break;
-            const beforeMatch = codeToHighlight.substring(index, match.index);
-            const processedCount = processLexeme(beforeMatch, match);
-            index = match.index + processedCount;
+            processLexeme(codeToHighlight.substring(index));
+          } else {
+            language.__emitTokens(codeToHighlight, emitter);
           }
-          processLexeme(codeToHighlight.substring(index));
-          emitter.closeAllNodes();
           emitter.finalize();
           result = emitter.toHTML();
           return {
@@ -2306,7 +1327,7 @@ var require_core = __commonJS({
           if (err.message && err.message.includes("Illegal")) {
             return {
               language: languageName,
-              value: escape2(codeToHighlight),
+              value: escape3(codeToHighlight),
               illegal: true,
               relevance: 0,
               _illegalBy: {
@@ -2321,7 +1342,7 @@ var require_core = __commonJS({
           } else if (SAFE_MODE) {
             return {
               language: languageName,
-              value: escape2(codeToHighlight),
+              value: escape3(codeToHighlight),
               illegal: false,
               relevance: 0,
               errorRaised: err,
@@ -2335,7 +1356,7 @@ var require_core = __commonJS({
       }
       function justTextHighlightResult(code) {
         const result = {
-          value: escape2(code),
+          value: escape3(code),
           illegal: false,
           relevance: 0,
           _top: PLAINTEXT_LANGUAGE,
@@ -2382,6 +1403,10 @@ var require_core = __commonJS({
           "before:highlightElement",
           { el: element, language }
         );
+        if (element.dataset.highlighted) {
+          console.log("Element previously highlighted. To highlight again, first unset `dataset.highlighted`.", element);
+          return;
+        }
         if (element.children.length > 0) {
           if (!options2.ignoreUnescapedHTML) {
             console.warn("One of your code blocks includes unescaped HTML. This is a potentially serious security risk.");
@@ -2401,6 +1426,7 @@ var require_core = __commonJS({
         const text = node.textContent;
         const result = language ? highlight2(text, { language, ignoreIllegals: true }) : highlightAuto(text);
         element.innerHTML = result.value;
+        element.dataset.highlighted = "yes";
         updateClassName(element, language, result.language);
         element.result = {
           language: result.language,
@@ -2511,6 +1537,12 @@ var require_core = __commonJS({
         upgradePluginAPI(plugin);
         plugins.push(plugin);
       }
+      function removePlugin(plugin) {
+        const index = plugins.indexOf(plugin);
+        if (index !== -1) {
+          plugins.splice(index, 1);
+        }
+      }
       function fire(event, args) {
         const cb = event;
         plugins.forEach(function(plugin) {
@@ -2541,7 +1573,8 @@ var require_core = __commonJS({
         registerAliases,
         autoDetection,
         inherit,
-        addPlugin
+        addPlugin,
+        removePlugin
       });
       hljs.debugMode = function() {
         SAFE_MODE = false;
@@ -2559,13 +1592,14 @@ var require_core = __commonJS({
       };
       for (const key in MODES) {
         if (typeof MODES[key] === "object") {
-          deepFreezeEs6.exports(MODES[key]);
+          deepFreeze(MODES[key]);
         }
       }
       Object.assign(hljs, MODES);
       return hljs;
     };
     var highlight = HLJS({});
+    highlight.newInstance = () => HLJS({});
     module.exports = highlight;
     highlight.HighlightJS = highlight;
     highlight.default = highlight;
@@ -4952,7 +3986,7 @@ var require_armasm = __commonJS({
             // GNU preprocs
             ".2byte .4byte .align .ascii .asciz .balign .byte .code .data .else .end .endif .endm .endr .equ .err .exitm .extern .global .hword .if .ifdef .ifndef .include .irp .long .macro .rept .req .section .set .skip .space .text .word .arm .thumb .code16 .code32 .force_thumb .thumb_func .ltorg ALIAS ALIGN ARM AREA ASSERT ATTR CN CODE CODE16 CODE32 COMMON CP DATA DCB DCD DCDU DCDO DCFD DCFDU DCI DCQ DCQU DCW DCWU DN ELIF ELSE END ENDFUNC ENDIF ENDP ENTRY EQU EXPORT EXPORTAS EXTERN FIELD FILL FUNCTION GBLA GBLL GBLS GET GLOBAL IF IMPORT INCBIN INCLUDE INFO KEEP LCLA LCLL LCLS LTORG MACRO MAP MEND MEXIT NOFP OPT PRESERVE8 PROC QN READONLY RELOC REQUIRE REQUIRE8 RLIST FN ROUT SETA SETL SETS SN SPACE SUBT THUMB THUMBX TTL WHILE WEND "
           ),
-          built_in: "r0 r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 r13 r14 r15 pc lr sp ip sl sb fp a1 a2 a3 a4 v1 v2 v3 v4 v5 v6 v7 v8 f0 f1 f2 f3 f4 f5 f6 f7 p0 p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12 p13 p14 p15 c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 c11 c12 c13 c14 c15 q0 q1 q2 q3 q4 q5 q6 q7 q8 q9 q10 q11 q12 q13 q14 q15 cpsr_c cpsr_x cpsr_s cpsr_f cpsr_cx cpsr_cxs cpsr_xs cpsr_xsf cpsr_sf cpsr_cxsf spsr_c spsr_x spsr_s spsr_f spsr_cx spsr_cxs spsr_xs spsr_xsf spsr_sf spsr_cxsf s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13 s14 s15 s16 s17 s18 s19 s20 s21 s22 s23 s24 s25 s26 s27 s28 s29 s30 s31 d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 d10 d11 d12 d13 d14 d15 d16 d17 d18 d19 d20 d21 d22 d23 d24 d25 d26 d27 d28 d29 d30 d31 {PC} {VAR} {TRUE} {FALSE} {OPT} {CONFIG} {ENDIAN} {CODESIZE} {CPU} {FPU} {ARCHITECTURE} {PCSTOREOFFSET} {ARMASM_VERSION} {INTER} {ROPI} {RWPI} {SWST} {NOSWST} . @"
+          built_in: "r0 r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 r13 r14 r15 w0 w1 w2 w3 w4 w5 w6 w7 w8 w9 w10 w11 w12 w13 w14 w15 w16 w17 w18 w19 w20 w21 w22 w23 w24 w25 w26 w27 w28 w29 w30 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 pc lr sp ip sl sb fp a1 a2 a3 a4 v1 v2 v3 v4 v5 v6 v7 v8 f0 f1 f2 f3 f4 f5 f6 f7 p0 p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12 p13 p14 p15 c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 c11 c12 c13 c14 c15 q0 q1 q2 q3 q4 q5 q6 q7 q8 q9 q10 q11 q12 q13 q14 q15 cpsr_c cpsr_x cpsr_s cpsr_f cpsr_cx cpsr_cxs cpsr_xs cpsr_xsf cpsr_sf cpsr_cxsf spsr_c spsr_x spsr_s spsr_f spsr_cx spsr_cxs spsr_xs spsr_xsf spsr_sf spsr_cxsf s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13 s14 s15 s16 s17 s18 s19 s20 s21 s22 s23 s24 s25 s26 s27 s28 s29 s30 s31 d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 d10 d11 d12 d13 d14 d15 d16 d17 d18 d19 d20 d21 d22 d23 d24 d25 d26 d27 d28 d29 d30 d31 {PC} {VAR} {TRUE} {FALSE} {OPT} {CONFIG} {ENDIAN} {CODESIZE} {CPU} {FPU} {ARCHITECTURE} {PCSTOREOFFSET} {ARMASM_VERSION} {INTER} {ROPI} {RWPI} {SWST} {NOSWST} . @"
         },
         contains: [
           {
@@ -6326,13 +5360,15 @@ var require_bash = __commonJS({
       };
       SUBST.contains.push(QUOTE_STRING);
       const ESCAPED_QUOTE = {
-        className: "",
-        begin: /\\"/
+        match: /\\"/
       };
       const APOS_STRING = {
         className: "string",
         begin: /'/,
         end: /'/
+      };
+      const ESCAPED_APOS = {
+        match: /\\'/
       };
       const ARITHMETIC = {
         begin: /\$?\(\(/,
@@ -6376,12 +5412,14 @@ var require_bash = __commonJS({
         "fi",
         "for",
         "while",
+        "until",
         "in",
         "do",
         "done",
         "case",
         "esac",
-        "function"
+        "function",
+        "select"
       ];
       const LITERALS = [
         "true",
@@ -6636,6 +5674,7 @@ var require_bash = __commonJS({
           QUOTE_STRING,
           ESCAPED_QUOTE,
           APOS_STRING,
+          ESCAPED_APOS,
           VAR
         ]
       };
@@ -10203,7 +9242,7 @@ var require_css = __commonJS({
         },
         CSS_VARIABLE: {
           className: "attr",
-          begin: /--[A-Za-z][A-Za-z0-9_-]*/
+          begin: /--[A-Za-z_][A-Za-z0-9_-]*/
         }
       };
     };
@@ -11372,6 +10411,7 @@ var require_dart = __commonJS({
         "assert",
         "async",
         "await",
+        "base",
         "break",
         "case",
         "catch",
@@ -11401,7 +10441,7 @@ var require_dart = __commonJS({
         "implements",
         "import",
         "in",
-        "inferface",
+        "interface",
         "is",
         "late",
         "library",
@@ -11414,6 +10454,7 @@ var require_dart = __commonJS({
         "required",
         "rethrow",
         "return",
+        "sealed",
         "set",
         "show",
         "static",
@@ -11427,6 +10468,7 @@ var require_dart = __commonJS({
         "typedef",
         "var",
         "void",
+        "when",
         "while",
         "with",
         "yield"
@@ -14712,7 +13754,7 @@ var require_fortran = __commonJS({
 // node_modules/highlight.js/lib/languages/fsharp.js
 var require_fsharp = __commonJS({
   "node_modules/highlight.js/lib/languages/fsharp.js"(exports, module) {
-    function escape2(value) {
+    function escape3(value) {
       return new RegExp(value.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&"), "m");
     }
     function source(re) {
@@ -14969,7 +14011,7 @@ var require_fsharp = __commonJS({
         else
           allOperatorChars = "!%&*+-/<>@^|~?";
         const OPERATOR_CHARS = Array.from(allOperatorChars);
-        const OPERATOR_CHAR_RE = concat("[", ...OPERATOR_CHARS.map(escape2), "]");
+        const OPERATOR_CHAR_RE = concat("[", ...OPERATOR_CHARS.map(escape3), "]");
         const OPERATOR_CHAR_OR_DOT_RE = either(OPERATOR_CHAR_RE, /\./);
         const OPERATOR_FIRST_CHAR_OF_MULTIPLE_RE = concat(OPERATOR_CHAR_OR_DOT_RE, lookahead(OPERATOR_CHAR_OR_DOT_RE));
         const SYMBOLIC_OPERATOR_RE = either(
@@ -19142,7 +18184,7 @@ var require_groovy = __commonJS({
       );
       const CLASS_DEFINITION = {
         match: [
-          /(class|interface|trait|enum|extends|implements)/,
+          /(class|interface|trait|enum|record|extends|implements)/,
           /\s+/,
           hljs.UNDERSCORE_IDENT_RE
         ],
@@ -19202,7 +18244,8 @@ var require_groovy = __commonJS({
         "import",
         "package",
         "return",
-        "instanceof"
+        "instanceof",
+        "var"
       ];
       return {
         name: "Groovy",
@@ -19611,8 +18654,24 @@ var require_handlebars = __commonJS({
 var require_haskell = __commonJS({
   "node_modules/highlight.js/lib/languages/haskell.js"(exports, module) {
     function haskell(hljs) {
+      const decimalDigits = "([0-9]_*)+";
+      const hexDigits = "([0-9a-fA-F]_*)+";
+      const binaryDigits = "([01]_*)+";
+      const octalDigits = "([0-7]_*)+";
+      const ascSymbol = "[!#$%&*+.\\/<=>?@\\\\^~-]";
+      const uniSymbol = "(\\p{S}|\\p{P})";
+      const special = "[(),;\\[\\]`|{}]";
+      const symbol = `(${ascSymbol}|(?!(${special}|[_:"']))${uniSymbol})`;
       const COMMENT = { variants: [
-        hljs.COMMENT("--", "$"),
+        // Double dash forms a valid comment only if it's not part of legal lexeme.
+        // See: Haskell 98 report: https://www.haskell.org/onlinereport/lexemes.html
+        //
+        // The commented code does the job, but we can't use negative lookbehind,
+        // due to poor support by Safari browser.
+        // > hljs.COMMENT(`(?<!${symbol})--+(?!${symbol})`, '$'),
+        // So instead, we'll add a no-markup rule before the COMMENT rule in the rules list
+        // to match the problematic infix operators that contain double dash.
+        hljs.COMMENT("--+", "$"),
         hljs.COMMENT(
           /\{-/,
           /-\}/,
@@ -19655,10 +18714,6 @@ var require_haskell = __commonJS({
         end: /\}/,
         contains: LIST.contains
       };
-      const decimalDigits = "([0-9]_*)+";
-      const hexDigits = "([0-9a-fA-F]_*)+";
-      const binaryDigits = "([01]_*)+";
-      const octalDigits = "([0-7]_*)+";
       const NUMBER = {
         className: "number",
         relevance: 0,
@@ -19677,6 +18732,7 @@ var require_haskell = __commonJS({
         name: "Haskell",
         aliases: ["hs"],
         keywords: "let in if then else case of where do module import hiding qualified type data newtype deriving class instance as default infix infixl infixr foreign export ccall stdcall cplusplus jvm dotnet safe unsafe family forall mdo proc rec",
+        unicodeRegex: true,
         contains: [
           // Top-level constructions.
           {
@@ -19759,11 +18815,24 @@ var require_haskell = __commonJS({
           PRAGMA,
           PREPROCESSOR,
           // Literals and names.
-          // TODO: characters.
+          // Single characters.
+          {
+            scope: "string",
+            begin: /'(?=\\?.')/,
+            end: /'/,
+            contains: [
+              {
+                scope: "char.escape",
+                match: /\\./
+              }
+            ]
+          },
           hljs.QUOTE_STRING_MODE,
           NUMBER,
           CONSTRUCTOR,
           hljs.inherit(hljs.TITLE_MODE, { begin: "^[_a-z][\\w']*" }),
+          // No markup, prevents infix operators from being recognized as comments.
+          { begin: `(?!-)${symbol}--+|--+(?!-)${symbol}` },
           COMMENT,
           {
             // No markup, relevance booster
@@ -19780,12 +18849,14 @@ var require_haskell = __commonJS({
 var require_haxe = __commonJS({
   "node_modules/highlight.js/lib/languages/haxe.js"(exports, module) {
     function haxe(hljs) {
+      const IDENT_RE = "[a-zA-Z_$][a-zA-Z0-9_$]*";
+      const HAXE_NUMBER_RE = /(-?)(\b0[xX][a-fA-F0-9_]+|(\b\d+(\.[\d_]*)?|\.[\d_]+)(([eE][-+]?\d+)|i32|u32|i64|f64)?)/;
       const HAXE_BASIC_TYPES = "Int Float String Bool Dynamic Void Array ";
       return {
         name: "Haxe",
         aliases: ["hx"],
         keywords: {
-          keyword: "break case cast catch continue default do dynamic else enum extern for function here if import in inline never new override package private get set public return static super switch this throw trace try typedef untyped using var while " + HAXE_BASIC_TYPES,
+          keyword: "abstract break case cast catch continue default do dynamic else enum extern final for function here if import in inline is macro never new override package private get set public return static super switch this throw trace try typedef untyped using var while " + HAXE_BASIC_TYPES,
           built_in: "trace this",
           literal: "true false null _"
         },
@@ -19800,13 +18871,13 @@ var require_haxe = __commonJS({
               {
                 className: "subst",
                 // interpolation
-                begin: "\\$\\{",
-                end: "\\}"
+                begin: /\$\{/,
+                end: /\}/
               },
               {
                 className: "subst",
                 // interpolation
-                begin: "\\$",
+                begin: /\$/,
                 end: /\W\}/
               }
             ]
@@ -19814,12 +18885,21 @@ var require_haxe = __commonJS({
           hljs.QUOTE_STRING_MODE,
           hljs.C_LINE_COMMENT_MODE,
           hljs.C_BLOCK_COMMENT_MODE,
-          hljs.C_NUMBER_MODE,
+          {
+            className: "number",
+            begin: HAXE_NUMBER_RE,
+            relevance: 0
+          },
+          {
+            className: "variable",
+            begin: "\\$" + IDENT_RE
+          },
           {
             className: "meta",
             // compiler meta
-            begin: "@:",
-            end: "$"
+            begin: /@:?/,
+            end: /\(|$/,
+            excludeEnd: true
           },
           {
             className: "meta",
@@ -19831,8 +18911,8 @@ var require_haxe = __commonJS({
           {
             className: "type",
             // function types
-            begin: ":[ 	]*",
-            end: "[^A-Za-z0-9_ 	\\->]",
+            begin: /:[ \t]*/,
+            end: /[^A-Za-z0-9_ \t\->]/,
             excludeBegin: true,
             excludeEnd: true,
             relevance: 0
@@ -19840,50 +18920,50 @@ var require_haxe = __commonJS({
           {
             className: "type",
             // types
-            begin: ":[ 	]*",
-            end: "\\W",
+            begin: /:[ \t]*/,
+            end: /\W/,
             excludeBegin: true,
             excludeEnd: true
           },
           {
             className: "type",
             // instantiation
-            begin: "new *",
-            end: "\\W",
+            begin: /new */,
+            end: /\W/,
             excludeBegin: true,
             excludeEnd: true
           },
           {
-            className: "class",
+            className: "title.class",
             // enums
             beginKeywords: "enum",
-            end: "\\{",
+            end: /\{/,
             contains: [hljs.TITLE_MODE]
           },
           {
-            className: "class",
+            className: "title.class",
             // abstracts
-            beginKeywords: "abstract",
-            end: "[\\{$]",
+            begin: "\\babstract\\b(?=\\s*" + hljs.IDENT_RE + "\\s*\\()",
+            end: /[\{$]/,
             contains: [
               {
                 className: "type",
-                begin: "\\(",
-                end: "\\)",
+                begin: /\(/,
+                end: /\)/,
                 excludeBegin: true,
                 excludeEnd: true
               },
               {
                 className: "type",
-                begin: "from +",
-                end: "\\W",
+                begin: /from +/,
+                end: /\W/,
                 excludeBegin: true,
                 excludeEnd: true
               },
               {
                 className: "type",
-                begin: "to +",
-                end: "\\W",
+                begin: /to +/,
+                end: /\W/,
                 excludeBegin: true,
                 excludeEnd: true
               },
@@ -19892,16 +18972,16 @@ var require_haxe = __commonJS({
             keywords: { keyword: "abstract from to" }
           },
           {
-            className: "class",
+            className: "title.class",
             // classes
-            begin: "\\b(class|interface) +",
-            end: "[\\{$]",
+            begin: /\b(class|interface) +/,
+            end: /[\{$]/,
             excludeEnd: true,
             keywords: "class interface",
             contains: [
               {
                 className: "keyword",
-                begin: "\\b(extends|implements) +",
+                begin: /\b(extends|implements) +/,
                 keywords: "extends implements",
                 contains: [
                   {
@@ -19915,11 +18995,11 @@ var require_haxe = __commonJS({
             ]
           },
           {
-            className: "function",
+            className: "title.function",
             beginKeywords: "function",
-            end: "\\(",
+            end: /\(/,
             excludeEnd: true,
-            illegal: "\\S",
+            illegal: /\S/,
             contains: [hljs.TITLE_MODE]
           }
         ],
@@ -19987,7 +19067,7 @@ var require_http = __commonJS({
   "node_modules/highlight.js/lib/languages/http.js"(exports, module) {
     function http(hljs) {
       const regex = hljs.regex;
-      const VERSION = "HTTP/(2|1\\.[01])";
+      const VERSION = "HTTP/([32]|1\\.[01])";
       const HEADER_NAME = /[A-Za-z][A-Za-z0-9-]*/;
       const HEADER = {
         className: "attribute",
@@ -21084,6 +20164,7 @@ var require_javascript = __commonJS({
       "window",
       "document",
       "localStorage",
+      "sessionStorage",
       "module",
       "global"
       // Node.js
@@ -21208,6 +20289,19 @@ var require_javascript = __commonJS({
           subLanguage: "css"
         }
       };
+      const GRAPHQL_TEMPLATE = {
+        begin: "gql`",
+        end: "",
+        starts: {
+          end: "`",
+          returnEnd: false,
+          contains: [
+            hljs.BACKSLASH_ESCAPE,
+            SUBST
+          ],
+          subLanguage: "graphql"
+        }
+      };
       const TEMPLATE_STRING = {
         className: "string",
         begin: "`",
@@ -21269,6 +20363,7 @@ var require_javascript = __commonJS({
         hljs.QUOTE_STRING_MODE,
         HTML_TEMPLATE,
         CSS_TEMPLATE,
+        GRAPHQL_TEMPLATE,
         TEMPLATE_STRING,
         // Skip numbers when they are part of a variable name
         { match: /\$\d+/ },
@@ -21470,7 +20565,7 @@ var require_javascript = __commonJS({
         ]
       };
       return {
-        name: "Javascript",
+        name: "JavaScript",
         aliases: ["js", "jsx", "mjs", "cjs"],
         keywords: KEYWORDS$1,
         // this will be extended by TypeScript
@@ -21487,6 +20582,7 @@ var require_javascript = __commonJS({
           hljs.QUOTE_STRING_MODE,
           HTML_TEMPLATE,
           CSS_TEMPLATE,
+          GRAPHQL_TEMPLATE,
           TEMPLATE_STRING,
           COMMENT,
           // Skip numbers when they are part of a variable name
@@ -22851,42 +21947,89 @@ var require_ldif = __commonJS({
 var require_leaf = __commonJS({
   "node_modules/highlight.js/lib/languages/leaf.js"(exports, module) {
     function leaf(hljs) {
+      const IDENT = /([A-Za-z_][A-Za-z_0-9]*)?/;
+      const LITERALS = [
+        "true",
+        "false",
+        "in"
+      ];
+      const PARAMS = {
+        scope: "params",
+        begin: /\(/,
+        end: /\)(?=\:?)/,
+        endsParent: true,
+        relevance: 7,
+        contains: [
+          {
+            scope: "string",
+            begin: '"',
+            end: '"'
+          },
+          {
+            scope: "keyword",
+            match: LITERALS.join("|")
+          },
+          {
+            scope: "variable",
+            match: /[A-Za-z_][A-Za-z_0-9]*/
+          },
+          {
+            scope: "operator",
+            match: /\+|\-|\*|\/|\%|\=\=|\=|\!|\>|\<|\&\&|\|\|/
+          }
+        ]
+      };
+      const INSIDE_DISPATCH = {
+        match: [
+          IDENT,
+          /(?=\()/
+        ],
+        scope: {
+          1: "keyword"
+        },
+        contains: [PARAMS]
+      };
+      PARAMS.contains.unshift(INSIDE_DISPATCH);
       return {
         name: "Leaf",
         contains: [
+          // #ident():
           {
-            className: "function",
-            begin: "#+[A-Za-z_0-9]*\\(",
-            end: / \{/,
-            returnBegin: true,
-            excludeEnd: true,
+            match: [
+              /#+/,
+              IDENT,
+              /(?=\()/
+            ],
+            scope: {
+              1: "punctuation",
+              2: "keyword"
+            },
+            // will start up after the ending `)` match from line ~44
+            // just to grab the trailing `:` if we can match it
+            starts: {
+              contains: [
+                {
+                  match: /\:/,
+                  scope: "punctuation"
+                }
+              ]
+            },
             contains: [
-              {
-                className: "keyword",
-                begin: "#+"
-              },
-              {
-                className: "title",
-                begin: "[A-Za-z_][A-Za-z_0-9]*"
-              },
-              {
-                className: "params",
-                begin: "\\(",
-                end: "\\)",
-                endsParent: true,
-                contains: [
-                  {
-                    className: "string",
-                    begin: '"',
-                    end: '"'
-                  },
-                  {
-                    className: "variable",
-                    begin: "[A-Za-z_][A-Za-z_0-9]*"
-                  }
-                ]
-              }
+              PARAMS
             ]
+          },
+          // #ident or #ident:
+          {
+            match: [
+              /#+/,
+              IDENT,
+              /:?/
+            ],
+            scope: {
+              1: "punctuation",
+              2: "keyword",
+              3: "punctuation"
+            }
           }
         ]
       };
@@ -22930,7 +22073,7 @@ var require_less = __commonJS({
         },
         CSS_VARIABLE: {
           className: "attr",
-          begin: /--[A-Za-z][A-Za-z0-9_-]*/
+          begin: /--[A-Za-z_][A-Za-z0-9_-]*/
         }
       };
     };
@@ -24638,6 +23781,14 @@ var require_mathematica = __commonJS({
       "Accumulate",
       "Accuracy",
       "AccuracyGoal",
+      "AcousticAbsorbingValue",
+      "AcousticImpedanceValue",
+      "AcousticNormalVelocityValue",
+      "AcousticPDEComponent",
+      "AcousticPressureCondition",
+      "AcousticRadiationValue",
+      "AcousticSoundHardValue",
+      "AcousticSoundSoftCondition",
       "ActionDelay",
       "ActionMenu",
       "ActionMenuBox",
@@ -24660,6 +23811,7 @@ var require_mathematica = __commonJS({
       "AdjacencyList",
       "AdjacencyMatrix",
       "AdjacentMeshCells",
+      "Adjugate",
       "AdjustmentBox",
       "AdjustmentBoxOptions",
       "AdjustTimeSeriesForecast",
@@ -24674,6 +23826,7 @@ var require_mathematica = __commonJS({
       "AircraftData",
       "AirportData",
       "AirPressureData",
+      "AirSoundAttenuation",
       "AirTemperatureData",
       "AiryAi",
       "AiryAiPrime",
@@ -24696,6 +23849,7 @@ var require_mathematica = __commonJS({
       "AlignmentPoint",
       "All",
       "AllowAdultContent",
+      "AllowChatServices",
       "AllowedCloudExtraParameters",
       "AllowedCloudParameterExtensions",
       "AllowedDimensions",
@@ -24740,6 +23894,7 @@ var require_mathematica = __commonJS({
       "AngleVector",
       "AngularGauge",
       "Animate",
+      "AnimatedImage",
       "AnimationCycleOffset",
       "AnimationCycleRepetitions",
       "AnimationDirection",
@@ -24749,6 +23904,7 @@ var require_mathematica = __commonJS({
       "AnimationRunning",
       "AnimationRunTime",
       "AnimationTimeIndex",
+      "AnimationVideo",
       "Animator",
       "AnimatorBox",
       "AnimatorBoxOptions",
@@ -24767,6 +23923,7 @@ var require_mathematica = __commonJS({
       "AnomalyDetectorFunction",
       "Anonymous",
       "Antialiasing",
+      "Antihermitian",
       "AntihermitianMatrixQ",
       "Antisymmetric",
       "AntisymmetricMatrixQ",
@@ -24785,8 +23942,11 @@ var require_mathematica = __commonJS({
       "AppendCheck",
       "AppendLayer",
       "AppendTo",
+      "Application",
       "Apply",
+      "ApplyReaction",
       "ApplySides",
+      "ApplyTo",
       "ArcCos",
       "ArcCosh",
       "ArcCot",
@@ -24808,6 +23968,7 @@ var require_mathematica = __commonJS({
       "ArgMax",
       "ArgMin",
       "ArgumentCountQ",
+      "ArgumentsOptions",
       "ARIMAProcess",
       "ArithmeticGeometricMean",
       "ARMAProcess",
@@ -24822,7 +23983,9 @@ var require_mathematica = __commonJS({
       "ArrayMesh",
       "ArrayPad",
       "ArrayPlot",
+      "ArrayPlot3D",
       "ArrayQ",
+      "ArrayReduce",
       "ArrayResample",
       "ArrayReshape",
       "ArrayRules",
@@ -24844,6 +24007,8 @@ var require_mathematica = __commonJS({
       "AspectRatio",
       "AspectRatioFixed",
       "Assert",
+      "AssessmentFunction",
+      "AssessmentResultObject",
       "AssociateTo",
       "Association",
       "AssociationFormat",
@@ -24853,17 +24018,33 @@ var require_mathematica = __commonJS({
       "AssumeDeterministic",
       "Assuming",
       "Assumptions",
+      "AstroAngularSeparation",
+      "AstroBackground",
+      "AstroCenter",
+      "AstroDistance",
+      "AstroGraphics",
+      "AstroGridLines",
+      "AstroGridLinesStyle",
       "AstronomicalData",
+      "AstroPosition",
+      "AstroProjection",
+      "AstroRange",
+      "AstroRangePadding",
+      "AstroReferenceFrame",
+      "AstroStyling",
+      "AstroZoomLevel",
       "Asymptotic",
       "AsymptoticDSolveValue",
       "AsymptoticEqual",
       "AsymptoticEquivalent",
+      "AsymptoticExpectation",
       "AsymptoticGreater",
       "AsymptoticGreaterEqual",
       "AsymptoticIntegrate",
       "AsymptoticLess",
       "AsymptoticLessEqual",
       "AsymptoticOutputTracker",
+      "AsymptoticProbability",
       "AsymptoticProduct",
       "AsymptoticRSolveValue",
       "AsymptoticSolve",
@@ -24875,8 +24056,12 @@ var require_mathematica = __commonJS({
       "AtomCoordinates",
       "AtomCount",
       "AtomDiagramCoordinates",
+      "AtomLabels",
+      "AtomLabelStyle",
       "AtomList",
       "AtomQ",
+      "AttachCell",
+      "AttachedCell",
       "AttentionLayer",
       "Attributes",
       "Audio",
@@ -24935,7 +24120,8 @@ var require_mathematica = __commonJS({
       "AudioStream",
       "AudioStreams",
       "AudioTimeStretch",
-      "AudioTracks",
+      "AudioTrackApply",
+      "AudioTrackSelection",
       "AudioTrim",
       "AudioType",
       "AugmentedPolyhedron",
@@ -24962,6 +24148,7 @@ var require_mathematica = __commonJS({
       "AutoNumberFormatting",
       "AutoOpenNotebooks",
       "AutoOpenPalettes",
+      "AutoOperatorRenderings",
       "AutoQuoteCharacters",
       "AutoRefreshed",
       "AutoRemove",
@@ -24979,8 +24166,22 @@ var require_mathematica = __commonJS({
       "AxesStyle",
       "AxiomaticTheory",
       "Axis",
+      "Axis3DBox",
+      "Axis3DBoxOptions",
+      "AxisBox",
+      "AxisBoxOptions",
+      "AxisLabel",
+      "AxisObject",
+      "AxisStyle",
       "BabyMonsterGroupB",
       "Back",
+      "BackFaceColor",
+      "BackFaceGlowColor",
+      "BackFaceOpacity",
+      "BackFaceSpecularColor",
+      "BackFaceSpecularExponent",
+      "BackFaceSurfaceAppearance",
+      "BackFaceTexture",
       "Background",
       "BackgroundAppearance",
       "BackgroundTasksSettings",
@@ -25025,7 +24226,6 @@ var require_mathematica = __commonJS({
       "Before",
       "Begin",
       "BeginDialogPacket",
-      "BeginFrontEndInteractionPacket",
       "BeginPackage",
       "BellB",
       "BellY",
@@ -25039,6 +24239,7 @@ var require_mathematica = __commonJS({
       "BernoulliGraphDistribution",
       "BernoulliProcess",
       "BernsteinBasis",
+      "BesagL",
       "BesselFilterModel",
       "BesselI",
       "BesselJ",
@@ -25054,6 +24255,7 @@ var require_mathematica = __commonJS({
       "BetaRegularized",
       "Between",
       "BetweennessCentrality",
+      "Beveled",
       "BeveledPolyhedron",
       "BezierCurve",
       "BezierCurve3DBox",
@@ -25062,6 +24264,8 @@ var require_mathematica = __commonJS({
       "BezierCurveBoxOptions",
       "BezierFunction",
       "BilateralFilter",
+      "BilateralLaplaceTransform",
+      "BilateralZTransform",
       "Binarize",
       "BinaryDeserialize",
       "BinaryDistance",
@@ -25073,11 +24277,23 @@ var require_mathematica = __commonJS({
       "BinaryWrite",
       "BinCounts",
       "BinLists",
+      "BinnedVariogramList",
       "Binomial",
       "BinomialDistribution",
+      "BinomialPointProcess",
       "BinomialProcess",
       "BinormalDistribution",
       "BiorthogonalSplineWavelet",
+      "BioSequence",
+      "BioSequenceBackTranslateList",
+      "BioSequenceComplement",
+      "BioSequenceInstances",
+      "BioSequenceModify",
+      "BioSequencePlot",
+      "BioSequenceQ",
+      "BioSequenceReverseComplement",
+      "BioSequenceTranscribe",
+      "BioSequenceTranslate",
       "BipartiteGraphQ",
       "BiquadraticFilterModel",
       "BirnbaumImportance",
@@ -25088,6 +24304,7 @@ var require_mathematica = __commonJS({
       "BitLength",
       "BitNot",
       "BitOr",
+      "BitRate",
       "BitSet",
       "BitShiftLeft",
       "BitShiftRight",
@@ -25117,17 +24334,23 @@ var require_mathematica = __commonJS({
       "BlockchainTransactionData",
       "BlockchainTransactionSign",
       "BlockchainTransactionSubmit",
+      "BlockDiagonalMatrix",
+      "BlockLowerTriangularMatrix",
       "BlockMap",
       "BlockRandom",
+      "BlockUpperTriangularMatrix",
       "BlomqvistBeta",
       "BlomqvistBetaTest",
       "Blue",
       "Blur",
+      "Blurring",
       "BodePlot",
       "BohmanWindow",
       "Bold",
       "Bond",
       "BondCount",
+      "BondLabels",
+      "BondLabelStyle",
       "BondList",
       "BondQ",
       "Bookmarks",
@@ -25204,6 +24427,8 @@ var require_mathematica = __commonJS({
       "BubbleChart3D",
       "BubbleScale",
       "BubbleSizes",
+      "BuckyballGraph",
+      "BuildCompiledComponent",
       "BuildingData",
       "BulletGauge",
       "BusinessDayQ",
@@ -25230,6 +24455,7 @@ var require_mathematica = __commonJS({
       "Byte",
       "ByteArray",
       "ByteArrayFormat",
+      "ByteArrayFormatQ",
       "ByteArrayQ",
       "ByteArrayToString",
       "ByteCount",
@@ -25252,25 +24478,37 @@ var require_mathematica = __commonJS({
       "CanonicalGraph",
       "CanonicalizePolygon",
       "CanonicalizePolyhedron",
+      "CanonicalizeRegion",
       "CanonicalName",
       "CanonicalWarpingCorrespondence",
       "CanonicalWarpingDistance",
       "CantorMesh",
       "CantorStaircase",
+      "Canvas",
       "Cap",
       "CapForm",
       "CapitalDifferentialD",
       "Capitalize",
       "CapsuleShape",
       "CaptureRunning",
+      "CaputoD",
       "CardinalBSplineBasis",
       "CarlemanLinearize",
+      "CarlsonRC",
+      "CarlsonRD",
+      "CarlsonRE",
+      "CarlsonRF",
+      "CarlsonRG",
+      "CarlsonRJ",
+      "CarlsonRK",
+      "CarlsonRM",
       "CarmichaelLambda",
       "CaseOrdering",
       "Cases",
       "CaseSensitive",
       "Cashflow",
       "Casoratian",
+      "Cast",
       "Catalan",
       "CatalanNumber",
       "Catch",
@@ -25278,6 +24516,8 @@ var require_mathematica = __commonJS({
       "Catenate",
       "CatenateLayer",
       "CauchyDistribution",
+      "CauchyMatrix",
+      "CauchyPointProcess",
       "CauchyWindow",
       "CayleyGraph",
       "CDF",
@@ -25295,6 +24535,7 @@ var require_mathematica = __commonJS({
       "CellContents",
       "CellContext",
       "CellDingbat",
+      "CellDingbatMargin",
       "CellDynamicExpression",
       "CellEditDuplicate",
       "CellElementsBoundingBox",
@@ -25309,12 +24550,14 @@ var require_mathematica = __commonJS({
       "CellFrameLabelMargins",
       "CellFrameLabels",
       "CellFrameMargins",
+      "CellFrameStyle",
       "CellGroup",
       "CellGroupData",
       "CellGrouping",
       "CellGroupingRules",
       "CellHorizontalScrolling",
       "CellID",
+      "CellInsertionPointCell",
       "CellLabel",
       "CellLabelAutoDelete",
       "CellLabelMargins",
@@ -25330,12 +24573,15 @@ var require_mathematica = __commonJS({
       "CellSize",
       "CellStyle",
       "CellTags",
+      "CellTrayPosition",
+      "CellTrayWidgets",
       "CellularAutomaton",
       "CensoredDistribution",
       "Censoring",
       "Center",
       "CenterArray",
       "CenterDot",
+      "CenteredInterval",
       "CentralFeature",
       "CentralMoment",
       "CentralMomentGeneratingFunction",
@@ -25386,11 +24632,16 @@ var require_mathematica = __commonJS({
       "Check",
       "CheckAbort",
       "CheckAll",
+      "CheckArguments",
       "Checkbox",
       "CheckboxBar",
       "CheckboxBox",
       "CheckboxBoxOptions",
+      "ChemicalConvert",
       "ChemicalData",
+      "ChemicalFormula",
+      "ChemicalInstance",
+      "ChemicalReaction",
       "ChessboardDistance",
       "ChiDistribution",
       "ChineseRemainder",
@@ -25411,6 +24662,7 @@ var require_mathematica = __commonJS({
       "CircleThrough",
       "CircleTimes",
       "CirculantGraph",
+      "CircularArcThrough",
       "CircularOrthogonalMatrixDistribution",
       "CircularQuaternionMatrixDistribution",
       "CircularRealMatrixDistribution",
@@ -25432,6 +24684,8 @@ var require_mathematica = __commonJS({
       "ClearSystemCache",
       "ClebschGordan",
       "ClickPane",
+      "ClickToCopy",
+      "ClickToCopyEnabled",
       "Clip",
       "ClipboardNotebook",
       "ClipFill",
@@ -25449,7 +24703,6 @@ var require_mathematica = __commonJS({
       "Closing",
       "ClosingAutoSave",
       "ClosingEvent",
-      "ClosingSaveDialog",
       "CloudAccountData",
       "CloudBase",
       "CloudConnect",
@@ -25483,6 +24736,7 @@ var require_mathematica = __commonJS({
       "ClusterClassify",
       "ClusterDissimilarityFunction",
       "ClusteringComponents",
+      "ClusteringMeasurements",
       "ClusteringTree",
       "CMYKColor",
       "Coarse",
@@ -25494,6 +24748,7 @@ var require_mathematica = __commonJS({
       "CoefficientRules",
       "CoifletWavelet",
       "Collect",
+      "CollinearPoints",
       "Colon",
       "ColonForm",
       "ColorBalance",
@@ -25505,6 +24760,7 @@ var require_mathematica = __commonJS({
       "ColorDetect",
       "ColorDistance",
       "ColorFunction",
+      "ColorFunctionBinning",
       "ColorFunctionScaling",
       "Colorize",
       "ColorNegate",
@@ -25531,6 +24787,13 @@ var require_mathematica = __commonJS({
       "ColumnsEqual",
       "ColumnSpacings",
       "ColumnWidths",
+      "CombinatorB",
+      "CombinatorC",
+      "CombinatorI",
+      "CombinatorK",
+      "CombinatorS",
+      "CombinatorW",
+      "CombinatorY",
       "CombinedEntityClass",
       "CombinerFunction",
       "CometData",
@@ -25550,15 +24813,25 @@ var require_mathematica = __commonJS({
       "Compile",
       "Compiled",
       "CompiledCodeFunction",
+      "CompiledComponent",
+      "CompiledExpressionDeclaration",
       "CompiledFunction",
+      "CompiledLayer",
+      "CompilerCallback",
+      "CompilerEnvironment",
+      "CompilerEnvironmentAppend",
+      "CompilerEnvironmentAppendTo",
+      "CompilerEnvironmentObject",
       "CompilerOptions",
       "Complement",
       "ComplementedEntityClass",
       "CompleteGraph",
       "CompleteGraphQ",
+      "CompleteIntegral",
       "CompleteKaryTree",
       "CompletionsListPacket",
       "Complex",
+      "ComplexArrayPlot",
       "ComplexContourPlot",
       "Complexes",
       "ComplexExpand",
@@ -25586,6 +24859,7 @@ var require_mathematica = __commonJS({
       "CompressedData",
       "CompressionLevel",
       "ComputeUncertainty",
+      "ConcaveHullMesh",
       "Condition",
       "ConditionalExpression",
       "Conditioned",
@@ -25595,12 +24869,21 @@ var require_mathematica = __commonJS({
       "ConfidenceRange",
       "ConfidenceTransform",
       "ConfigurationPath",
+      "Confirm",
+      "ConfirmAssert",
+      "ConfirmBy",
+      "ConfirmMatch",
+      "ConfirmQuiet",
+      "ConformationMethod",
       "ConformAudio",
       "ConformImages",
       "Congruent",
+      "ConicGradientFilling",
       "ConicHullRegion",
       "ConicHullRegion3DBox",
+      "ConicHullRegion3DBoxOptions",
       "ConicHullRegionBox",
+      "ConicHullRegionBoxOptions",
       "ConicOptimization",
       "Conjugate",
       "ConjugateTranspose",
@@ -25615,10 +24898,11 @@ var require_mathematica = __commonJS({
       "ConnectionSettings",
       "ConnectLibraryCallbackFunction",
       "ConnectSystemModelComponents",
+      "ConnectSystemModelController",
       "ConnesWindow",
       "ConoverTest",
+      "ConservativeConvectionPDETerm",
       "ConsoleMessage",
-      "ConsoleMessagePacket",
       "Constant",
       "ConstantArray",
       "ConstantArrayLayer",
@@ -25637,6 +24921,7 @@ var require_mathematica = __commonJS({
       "ContainsExactly",
       "ContainsNone",
       "ContainsOnly",
+      "ContentDetectorFunction",
       "ContentFieldOptions",
       "ContentLocationFunction",
       "ContentObject",
@@ -25690,15 +24975,18 @@ var require_mathematica = __commonJS({
       "ControlPlacement",
       "ControlsRendering",
       "ControlType",
+      "ConvectionPDETerm",
       "Convergents",
       "ConversionOptions",
       "ConversionRules",
-      "ConvertToBitmapPacket",
       "ConvertToPostScript",
       "ConvertToPostScriptPacket",
       "ConvexHullMesh",
+      "ConvexHullRegion",
+      "ConvexOptimization",
       "ConvexPolygonQ",
       "ConvexPolyhedronQ",
+      "ConvexRegionQ",
       "ConvolutionLayer",
       "Convolve",
       "ConwayGroupCo1",
@@ -25714,6 +25002,7 @@ var require_mathematica = __commonJS({
       "CoordinatesToolOptions",
       "CoordinateTransform",
       "CoordinateTransformData",
+      "CoplanarPoints",
       "CoprimeQ",
       "Coproduct",
       "CopulaDistribution",
@@ -25721,8 +25010,10 @@ var require_mathematica = __commonJS({
       "CopyDatabin",
       "CopyDirectory",
       "CopyFile",
+      "CopyFunction",
       "CopyTag",
       "CopyToClipboard",
+      "CoreNilpotentDecomposition",
       "CornerFilter",
       "CornerNeighbors",
       "Correlation",
@@ -25737,6 +25028,10 @@ var require_mathematica = __commonJS({
       "CosIntegral",
       "Cot",
       "Coth",
+      "CoulombF",
+      "CoulombG",
+      "CoulombH1",
+      "CoulombH2",
       "Count",
       "CountDistinct",
       "CountDistinctBy",
@@ -25765,6 +25060,7 @@ var require_mathematica = __commonJS({
       "CreateCellID",
       "CreateChannel",
       "CreateCloudExpression",
+      "CreateCompilerEnvironment",
       "CreateDatabin",
       "CreateDataStructure",
       "CreateDataSystemModel",
@@ -25773,16 +25069,17 @@ var require_mathematica = __commonJS({
       "CreateDocument",
       "CreateFile",
       "CreateIntermediateDirectories",
+      "CreateLicenseEntitlement",
       "CreateManagedLibraryExpression",
       "CreateNotebook",
       "CreatePacletArchive",
       "CreatePalette",
-      "CreatePalettePacket",
       "CreatePermissionsGroup",
       "CreateScheduledTask",
       "CreateSearchIndex",
       "CreateSystemModel",
       "CreateTemporary",
+      "CreateTypeInstance",
       "CreateUUID",
       "CreateWindow",
       "CriterionFunction",
@@ -25797,14 +25094,19 @@ var require_mathematica = __commonJS({
       "CrossMatrix",
       "Csc",
       "Csch",
+      "CSGRegion",
+      "CSGRegionQ",
+      "CSGRegionTree",
       "CTCLossLayer",
       "Cube",
       "CubeRoot",
       "Cubics",
       "Cuboid",
       "CuboidBox",
+      "CuboidBoxOptions",
       "Cumulant",
       "CumulantGeneratingFunction",
+      "CumulativeFeatureImpactPlot",
       "Cup",
       "CupCap",
       "Curl",
@@ -25813,7 +25115,6 @@ var require_mathematica = __commonJS({
       "CurrencyConvert",
       "CurrentDate",
       "CurrentImage",
-      "CurrentlySpeakingPacket",
       "CurrentNotebookImage",
       "CurrentScreenImage",
       "CurrentValue",
@@ -25829,7 +25130,9 @@ var require_mathematica = __commonJS({
       "Cyclotomic",
       "Cylinder",
       "CylinderBox",
+      "CylinderBoxOptions",
       "CylindricalDecomposition",
+      "CylindricalDecompositionFunction",
       "D",
       "DagumDistribution",
       "DamData",
@@ -25845,6 +25148,7 @@ var require_mathematica = __commonJS({
       "DatabinAdd",
       "DatabinRemove",
       "Databins",
+      "DatabinSubmit",
       "DatabinUpload",
       "DataCompression",
       "DataDistribution",
@@ -25852,6 +25156,7 @@ var require_mathematica = __commonJS({
       "DataReversed",
       "Dataset",
       "DatasetDisplayPanel",
+      "DatasetTheme",
       "DataStructure",
       "DataStructureQ",
       "Date",
@@ -25862,6 +25167,7 @@ var require_mathematica = __commonJS({
       "DatedUnit",
       "DateFormat",
       "DateFunction",
+      "DateGranularity",
       "DateHistogram",
       "DateInterval",
       "DateList",
@@ -25875,6 +25181,8 @@ var require_mathematica = __commonJS({
       "DatePlus",
       "DateRange",
       "DateReduction",
+      "DateScale",
+      "DateSelect",
       "DateString",
       "DateTicksFormat",
       "DateValue",
@@ -25899,6 +25207,7 @@ var require_mathematica = __commonJS({
       "Decapitalize",
       "Decimal",
       "DecimalForm",
+      "DeclareCompiledComponent",
       "DeclareKnownSymbols",
       "DeclarePackage",
       "Decompose",
@@ -25909,12 +25218,16 @@ var require_mathematica = __commonJS({
       "DedekindEta",
       "DeepSpaceProbeData",
       "Default",
+      "Default2DTool",
+      "Default3DTool",
+      "DefaultAttachedCellStyle",
       "DefaultAxesStyle",
       "DefaultBaseStyle",
       "DefaultBoxStyle",
       "DefaultButton",
       "DefaultColor",
       "DefaultControlPlacement",
+      "DefaultDockedCellStyle",
       "DefaultDuplicateCellStyle",
       "DefaultDuration",
       "DefaultElement",
@@ -25923,7 +25236,6 @@ var require_mathematica = __commonJS({
       "DefaultFont",
       "DefaultFontProperties",
       "DefaultFormatType",
-      "DefaultFormatTypeForStyle",
       "DefaultFrameStyle",
       "DefaultFrameTicksStyle",
       "DefaultGridLinesStyle",
@@ -25965,6 +25277,7 @@ var require_mathematica = __commonJS({
       "Delayed",
       "Deletable",
       "Delete",
+      "DeleteAdjacentDuplicates",
       "DeleteAnomalies",
       "DeleteBorderComponents",
       "DeleteCases",
@@ -25974,6 +25287,7 @@ var require_mathematica = __commonJS({
       "DeleteDirectory",
       "DeleteDuplicates",
       "DeleteDuplicatesBy",
+      "DeleteElements",
       "DeleteFile",
       "DeleteMissing",
       "DeleteObject",
@@ -25986,6 +25300,7 @@ var require_mathematica = __commonJS({
       "DelimitedArray",
       "DelimitedSequence",
       "Delimiter",
+      "DelimiterAutoMatching",
       "DelimiterFlashTime",
       "DelimiterMatching",
       "Delimiters",
@@ -26003,6 +25318,7 @@ var require_mathematica = __commonJS({
       "DepthFirstScan",
       "Derivative",
       "DerivativeFilter",
+      "DerivativePDETerm",
       "DerivedKey",
       "DescriptorStateSpace",
       "DesignMatrix",
@@ -26053,6 +25369,9 @@ var require_mathematica = __commonJS({
       "DifferentialRoot",
       "DifferentialRootReduce",
       "DifferentiatorFilter",
+      "DiffusionPDETerm",
+      "DiggleGatesPointProcess",
+      "DiggleGrattonPointProcess",
       "DigitalSignature",
       "DigitBlock",
       "DigitBlockMinimum",
@@ -26076,6 +25395,7 @@ var require_mathematica = __commonJS({
       "DirectedGraphQ",
       "DirectedInfinity",
       "Direction",
+      "DirectionalLight",
       "Directive",
       "Directory",
       "DirectoryName",
@@ -26099,6 +25419,7 @@ var require_mathematica = __commonJS({
       "DiscreteDelta",
       "DiscreteHadamardTransform",
       "DiscreteIndicator",
+      "DiscreteInputOutputModel",
       "DiscreteLimit",
       "DiscreteLQEstimatorGains",
       "DiscreteLQRegulatorGains",
@@ -26124,6 +25445,7 @@ var require_mathematica = __commonJS({
       "Disjunction",
       "Disk",
       "DiskBox",
+      "DiskBoxOptions",
       "DiskMatrix",
       "DiskSegment",
       "Dispatch",
@@ -26132,12 +25454,10 @@ var require_mathematica = __commonJS({
       "Display",
       "DisplayAllSteps",
       "DisplayEndPacket",
-      "DisplayFlushImagePacket",
       "DisplayForm",
       "DisplayFunction",
       "DisplayPacket",
       "DisplayRules",
-      "DisplaySetSizePacket",
       "DisplayString",
       "DisplayTemporary",
       "DisplayWith",
@@ -26169,6 +25489,7 @@ var require_mathematica = __commonJS({
       "DMSList",
       "DMSString",
       "Do",
+      "DockedCell",
       "DockedCells",
       "DocumentGenerator",
       "DocumentGeneratorInformation",
@@ -26179,6 +25500,8 @@ var require_mathematica = __commonJS({
       "Dodecahedron",
       "DomainRegistrationInformation",
       "DominantColors",
+      "DominatorTreeGraph",
+      "DominatorVertexList",
       "DOSTextFormat",
       "Dot",
       "DotDashed",
@@ -26216,16 +25539,22 @@ var require_mathematica = __commonJS({
       "DownTee",
       "DownTeeArrow",
       "DownValues",
+      "DownValuesFunction",
       "DragAndDrop",
+      "DrawBackFaces",
       "DrawEdges",
       "DrawFrontFaces",
       "DrawHighlighted",
+      "DrazinInverse",
       "Drop",
       "DropoutLayer",
+      "DropShadowing",
       "DSolve",
+      "DSolveChangeVariables",
       "DSolveValue",
       "Dt",
       "DualLinearProgramming",
+      "DualPlanarGraph",
       "DualPolyhedron",
       "DualSystemsModel",
       "DumpGet",
@@ -26257,12 +25586,16 @@ var require_mathematica = __commonJS({
       "EarthquakeData",
       "EccentricityCentrality",
       "Echo",
+      "EchoEvaluation",
       "EchoFunction",
+      "EchoLabel",
+      "EchoTiming",
       "EclipseType",
       "EdgeAdd",
       "EdgeBetweennessCentrality",
       "EdgeCapacity",
       "EdgeCapForm",
+      "EdgeChromaticNumber",
       "EdgeColor",
       "EdgeConnectivity",
       "EdgeContract",
@@ -26290,6 +25623,9 @@ var require_mathematica = __commonJS({
       "EdgeTaggedGraphQ",
       "EdgeTags",
       "EdgeThickness",
+      "EdgeTransitiveGraphQ",
+      "EdgeValueRange",
+      "EdgeValueSizes",
       "EdgeWeight",
       "EdgeWeightedGraphQ",
       "Editable",
@@ -26323,6 +25659,8 @@ var require_mathematica = __commonJS({
       "EmbedCode",
       "EmbeddedHTML",
       "EmbeddedService",
+      "EmbeddedSQLEntityClass",
+      "EmbeddedSQLExpression",
       "EmbeddingLayer",
       "EmbeddingObject",
       "EmitSound",
@@ -26331,8 +25669,10 @@ var require_mathematica = __commonJS({
       "Empty",
       "EmptyGraphQ",
       "EmptyRegion",
+      "EmptySpaceF",
       "EnableConsolePrintPacket",
       "Enabled",
+      "Enclose",
       "Encode",
       "Encrypt",
       "EncryptedObject",
@@ -26340,7 +25680,6 @@ var require_mathematica = __commonJS({
       "End",
       "EndAdd",
       "EndDialogPacket",
-      "EndFrontEndInteractionPacket",
       "EndOfBuffer",
       "EndOfFile",
       "EndOfLine",
@@ -26398,7 +25737,10 @@ var require_mathematica = __commonJS({
       "EscapeRadius",
       "EstimatedBackground",
       "EstimatedDistribution",
+      "EstimatedPointNormals",
+      "EstimatedPointProcess",
       "EstimatedProcess",
+      "EstimatedVariogramModel",
       "EstimatorGains",
       "EstimatorRegulator",
       "EuclideanDistance",
@@ -26425,6 +25767,8 @@ var require_mathematica = __commonJS({
       "EvaluationNotebook",
       "EvaluationObject",
       "EvaluationOrder",
+      "EvaluationPrivileges",
+      "EvaluationRateLimit",
       "Evaluator",
       "EvaluatorNames",
       "EvenQ",
@@ -26439,6 +25783,7 @@ var require_mathematica = __commonJS({
       "ExactRootIsolation",
       "ExampleData",
       "Except",
+      "ExcludedContexts",
       "ExcludedForms",
       "ExcludedLines",
       "ExcludedPhysicalQuantities",
@@ -26481,6 +25826,7 @@ var require_mathematica = __commonJS({
       "ExpressionCell",
       "ExpressionGraph",
       "ExpressionPacket",
+      "ExpressionTree",
       "ExpressionUUID",
       "ExpToTrig",
       "ExtendedEntityClass",
@@ -26517,6 +25863,7 @@ var require_mathematica = __commonJS({
       "FaceForm",
       "FaceGrids",
       "FaceGridsStyle",
+      "FaceRecognize",
       "FacialFeatures",
       "Factor",
       "FactorComplete",
@@ -26544,11 +25891,14 @@ var require_mathematica = __commonJS({
       "FeatureExtraction",
       "FeatureExtractor",
       "FeatureExtractorFunction",
+      "FeatureImpactPlot",
       "FeatureNames",
       "FeatureNearest",
       "FeatureSpacePlot",
       "FeatureSpacePlot3D",
       "FeatureTypes",
+      "FeatureValueDependencyPlot",
+      "FeatureValueImpactPlot",
       "FEDisableConsolePrintPacket",
       "FeedbackLinearize",
       "FeedbackSector",
@@ -26571,6 +25921,8 @@ var require_mathematica = __commonJS({
       "FileExistsQ",
       "FileExtension",
       "FileFormat",
+      "FileFormatProperties",
+      "FileFormatQ",
       "FileHandler",
       "FileHash",
       "FileInformation",
@@ -26584,16 +25936,20 @@ var require_mathematica = __commonJS({
       "FileNameSetter",
       "FileNameSplit",
       "FileNameTake",
+      "FileNameToFormatList",
       "FilePrint",
       "FileSize",
       "FileSystemMap",
       "FileSystemScan",
+      "FileSystemTree",
       "FileTemplate",
       "FileTemplateApply",
       "FileType",
       "FilledCurve",
       "FilledCurveBox",
       "FilledCurveBoxOptions",
+      "FilledTorus",
+      "FillForm",
       "Filling",
       "FillingStyle",
       "FillingTransform",
@@ -26617,6 +25973,7 @@ var require_mathematica = __commonJS({
       "FindDistribution",
       "FindDistributionParameters",
       "FindDivisions",
+      "FindEdgeColoring",
       "FindEdgeCover",
       "FindEdgeCut",
       "FindEdgeIndependentPaths",
@@ -26643,6 +26000,8 @@ var require_mathematica = __commonJS({
       "FindIndependentVertexSet",
       "FindInstance",
       "FindIntegerNullVector",
+      "FindIsomers",
+      "FindIsomorphicSubgraph",
       "FindKClan",
       "FindKClique",
       "FindKClub",
@@ -26664,8 +26023,11 @@ var require_mathematica = __commonJS({
       "FindPath",
       "FindPeaks",
       "FindPermutation",
+      "FindPlanarColoring",
+      "FindPointProcessParameters",
       "FindPostmanTour",
       "FindProcessParameters",
+      "FindRegionTransform",
       "FindRepeat",
       "FindRoot",
       "FindSequenceFunction",
@@ -26673,10 +26035,12 @@ var require_mathematica = __commonJS({
       "FindShortestPath",
       "FindShortestTour",
       "FindSpanningTree",
+      "FindSubgraphIsomorphism",
       "FindSystemModelEquilibrium",
       "FindTextualAnswer",
       "FindThreshold",
       "FindTransientRepeat",
+      "FindVertexColoring",
       "FindVertexCover",
       "FindVertexCut",
       "FindVertexIndependentPaths",
@@ -26704,18 +26068,21 @@ var require_mathematica = __commonJS({
       "FixedPointList",
       "FlashSelection",
       "Flat",
+      "FlatShading",
       "Flatten",
       "FlattenAt",
       "FlattenLayer",
       "FlatTopWindow",
+      "FlightData",
       "FlipView",
       "Floor",
       "FlowPolynomial",
-      "FlushPrintOutputPacket",
       "Fold",
       "FoldList",
       "FoldPair",
       "FoldPairList",
+      "FoldWhile",
+      "FoldWhileList",
       "FollowRedirects",
       "Font",
       "FontColor",
@@ -26734,6 +26101,7 @@ var require_mathematica = __commonJS({
       "FontWeight",
       "For",
       "ForAll",
+      "ForAllType",
       "ForceVersionInstall",
       "Format",
       "FormatRules",
@@ -26747,12 +26115,14 @@ var require_mathematica = __commonJS({
       "FormLayoutFunction",
       "FormObject",
       "FormPage",
+      "FormProtectionMethod",
       "FormTheme",
       "FormulaData",
       "FormulaLookup",
       "FortranForm",
       "Forward",
       "ForwardBackward",
+      "ForwardCloudCredentials",
       "Fourier",
       "FourierCoefficient",
       "FourierCosCoefficient",
@@ -26772,7 +26142,10 @@ var require_mathematica = __commonJS({
       "FourierSinTransform",
       "FourierTransform",
       "FourierTrigSeries",
+      "FoxH",
+      "FoxHReduce",
       "FractionalBrownianMotionProcess",
+      "FractionalD",
       "FractionalGaussianNoiseProcess",
       "FractionalPart",
       "FractionBox",
@@ -26785,6 +26158,7 @@ var require_mathematica = __commonJS({
       "FrameInset",
       "FrameLabel",
       "Frameless",
+      "FrameListVideo",
       "FrameMargins",
       "FrameRate",
       "FrameStyle",
@@ -26807,12 +26181,14 @@ var require_mathematica = __commonJS({
       "FromCoefficientRules",
       "FromContinuedFraction",
       "FromDate",
+      "FromDateString",
       "FromDigits",
       "FromDMS",
       "FromEntity",
       "FromJulianDate",
       "FromLetterNumber",
       "FromPolarCoordinates",
+      "FromRawPointer",
       "FromRomanNumeral",
       "FromSphericalCoordinates",
       "FromUnixTime",
@@ -26829,7 +26205,12 @@ var require_mathematica = __commonJS({
       "FrontEndValueCache",
       "FrontEndVersion",
       "FrontFaceColor",
+      "FrontFaceGlowColor",
       "FrontFaceOpacity",
+      "FrontFaceSpecularColor",
+      "FrontFaceSpecularExponent",
+      "FrontFaceSurfaceAppearance",
+      "FrontFaceTexture",
       "Full",
       "FullAxes",
       "FullDefinition",
@@ -26840,17 +26221,31 @@ var require_mathematica = __commonJS({
       "FullRegion",
       "FullSimplify",
       "Function",
+      "FunctionAnalytic",
+      "FunctionBijective",
       "FunctionCompile",
       "FunctionCompileExport",
       "FunctionCompileExportByteArray",
       "FunctionCompileExportLibrary",
       "FunctionCompileExportString",
+      "FunctionContinuous",
+      "FunctionConvexity",
+      "FunctionDeclaration",
+      "FunctionDiscontinuities",
       "FunctionDomain",
       "FunctionExpand",
+      "FunctionInjective",
       "FunctionInterpolation",
+      "FunctionLayer",
+      "FunctionMeromorphic",
+      "FunctionMonotonicity",
       "FunctionPeriod",
+      "FunctionPoles",
       "FunctionRange",
+      "FunctionSign",
+      "FunctionSingularities",
       "FunctionSpace",
+      "FunctionSurjective",
       "FussellVeselyImportance",
       "GaborFilter",
       "GaborMatrix",
@@ -26888,7 +26283,10 @@ var require_mathematica = __commonJS({
       "GeneralizedLinearModelFit",
       "GenerateAsymmetricKeyPair",
       "GenerateConditions",
+      "GeneratedAssetFormat",
+      "GeneratedAssetLocation",
       "GeneratedCell",
+      "GeneratedCellStyles",
       "GeneratedDocumentBinding",
       "GenerateDerivedKey",
       "GenerateDigitalSignature",
@@ -26911,9 +26309,11 @@ var require_mathematica = __commonJS({
       "GeoArea",
       "GeoArraySize",
       "GeoBackground",
+      "GeoBoundary",
       "GeoBoundingBox",
       "GeoBounds",
       "GeoBoundsRegion",
+      "GeoBoundsRegionBoundary",
       "GeoBubbleChart",
       "GeoCenter",
       "GeoCircle",
@@ -26923,6 +26323,7 @@ var require_mathematica = __commonJS({
       "GeodesicDilation",
       "GeodesicErosion",
       "GeodesicOpening",
+      "GeodesicPolyhedron",
       "GeoDestination",
       "GeodesyData",
       "GeoDirection",
@@ -26933,6 +26334,8 @@ var require_mathematica = __commonJS({
       "GeoElevationData",
       "GeoEntities",
       "GeoGraphics",
+      "GeoGraphPlot",
+      "GeoGraphValuePlot",
       "GeogravityModelData",
       "GeoGridDirectionDifference",
       "GeoGridLines",
@@ -26963,6 +26366,9 @@ var require_mathematica = __commonJS({
       "GeometricMeanFilter",
       "GeometricOptimization",
       "GeometricScene",
+      "GeometricStep",
+      "GeometricStylingRules",
+      "GeometricTest",
       "GeometricTransformation",
       "GeometricTransformation3DBox",
       "GeometricTransformation3DBoxOptions",
@@ -26970,7 +26376,9 @@ var require_mathematica = __commonJS({
       "GeometricTransformationBoxOptions",
       "GeoModel",
       "GeoNearest",
+      "GeoOrientationData",
       "GeoPath",
+      "GeoPolygon",
       "GeoPosition",
       "GeoPositionENU",
       "GeoPositionXYZ",
@@ -26998,14 +26406,11 @@ var require_mathematica = __commonJS({
       "GestureHandler",
       "GestureHandlerTag",
       "Get",
-      "GetBoundingBoxSizePacket",
       "GetContext",
       "GetEnvironment",
       "GetFileName",
-      "GetFrontEndOptionsDataPacket",
       "GetLinebreakInformationPacket",
-      "GetMenusPacket",
-      "GetPageBreakInformationPacket",
+      "GibbsPointProcess",
       "Glaisher",
       "GlobalClusteringCoefficient",
       "GlobalPreferences",
@@ -27018,9 +26423,11 @@ var require_mathematica = __commonJS({
       "GoodmanKruskalGamma",
       "GoodmanKruskalGammaTest",
       "Goto",
+      "GouraudShading",
       "Grad",
       "Gradient",
       "GradientFilter",
+      "GradientFittedMesh",
       "GradientOrientationFilter",
       "GrammarApply",
       "GrammarRules",
@@ -27038,7 +26445,6 @@ var require_mathematica = __commonJS({
       "GraphDisjointUnion",
       "GraphDistance",
       "GraphDistanceMatrix",
-      "GraphElementData",
       "GraphEmbedding",
       "GraphHighlight",
       "GraphHighlightStyle",
@@ -27073,18 +26479,25 @@ var require_mathematica = __commonJS({
       "GraphicsSpacing",
       "GraphicsStyle",
       "GraphIntersection",
+      "GraphJoin",
+      "GraphLayerLabels",
+      "GraphLayers",
+      "GraphLayerStyle",
       "GraphLayout",
       "GraphLinkEfficiency",
       "GraphPeriphery",
       "GraphPlot",
       "GraphPlot3D",
       "GraphPower",
+      "GraphProduct",
       "GraphPropertyDistribution",
       "GraphQ",
       "GraphRadius",
       "GraphReciprocity",
       "GraphRoot",
       "GraphStyle",
+      "GraphSum",
+      "GraphTree",
       "GraphUnion",
       "Gray",
       "GrayLevel",
@@ -27098,6 +26511,7 @@ var require_mathematica = __commonJS({
       "GreaterSlantEqual",
       "GreaterThan",
       "GreaterTilde",
+      "GreekStyle",
       "Green",
       "GreenFunction",
       "Grid",
@@ -27119,6 +26533,7 @@ var require_mathematica = __commonJS({
       "GridGraph",
       "GridLines",
       "GridLinesStyle",
+      "GridVideo",
       "GroebnerBasis",
       "GroupActionBase",
       "GroupBy",
@@ -27131,6 +26546,8 @@ var require_mathematica = __commonJS({
       "GroupGenerators",
       "Groupings",
       "GroupMultiplicationTable",
+      "GroupOpenerColor",
+      "GroupOpenerInsideFrame",
       "GroupOrbits",
       "GroupOrder",
       "GroupPageBreakWithin",
@@ -27163,6 +26580,7 @@ var require_mathematica = __commonJS({
       "HannWindow",
       "HaradaNortonGroupHN",
       "HararyGraph",
+      "HardcorePointProcess",
       "HarmonicMean",
       "HarmonicMeanFilter",
       "HarmonicNumber",
@@ -27177,20 +26595,32 @@ var require_mathematica = __commonJS({
       "HeaderBackground",
       "HeaderDisplayFunction",
       "HeaderLines",
+      "Headers",
       "HeaderSize",
       "HeaderStyle",
       "Heads",
+      "HeatFluxValue",
+      "HeatInsulationValue",
+      "HeatOutflowValue",
+      "HeatRadiationValue",
+      "HeatSymmetryValue",
+      "HeatTemperatureCondition",
+      "HeatTransferPDEComponent",
+      "HeatTransferValue",
       "HeavisideLambda",
       "HeavisidePi",
       "HeavisideTheta",
       "HeldGroupHe",
       "HeldPart",
+      "HelmholtzPDEComponent",
       "HelpBrowserLookup",
       "HelpBrowserNotebook",
       "HelpBrowserSettings",
+      "HelpViewerSettings",
       "Here",
       "HermiteDecomposition",
       "HermiteH",
+      "Hermitian",
       "HermitianMatrixQ",
       "HessenbergDecomposition",
       "Hessian",
@@ -27215,6 +26645,7 @@ var require_mathematica = __commonJS({
       "HighlightGraph",
       "HighlightImage",
       "HighlightMesh",
+      "HighlightString",
       "HighpassFilter",
       "HigmanSimsGroupHS",
       "HilbertCurve",
@@ -27224,6 +26655,7 @@ var require_mathematica = __commonJS({
       "Histogram3D",
       "HistogramDistribution",
       "HistogramList",
+      "HistogramPointDensity",
       "HistogramTransform",
       "HistogramTransformInterpolation",
       "HistoricalPeriodData",
@@ -27295,10 +26727,13 @@ var require_mathematica = __commonJS({
       "Identity",
       "IdentityMatrix",
       "If",
+      "IfCompiled",
       "IgnoreCase",
       "IgnoreDiacritics",
+      "IgnoreIsotopes",
       "IgnorePunctuation",
       "IgnoreSpellCheck",
+      "IgnoreStereochemistry",
       "IgnoringInactive",
       "Im",
       "Image",
@@ -27340,6 +26775,7 @@ var require_mathematica = __commonJS({
       "ImageDimensions",
       "ImageDisplacements",
       "ImageDistance",
+      "ImageEditMode",
       "ImageEffect",
       "ImageExposureCombine",
       "ImageFeatureTrack",
@@ -27394,6 +26830,7 @@ var require_mathematica = __commonJS({
       "ImageSizeCache",
       "ImageSizeMultipliers",
       "ImageSizeRaw",
+      "ImageStitch",
       "ImageSubtract",
       "ImageTake",
       "ImageTransformation",
@@ -27401,23 +26838,29 @@ var require_mathematica = __commonJS({
       "ImageType",
       "ImageValue",
       "ImageValuePositions",
+      "ImageVectorscopePlot",
+      "ImageWaveformPlot",
       "ImagingDevice",
+      "ImplicitD",
       "ImplicitRegion",
       "Implies",
       "Import",
       "ImportAutoReplacements",
       "ImportByteArray",
+      "ImportedObject",
       "ImportOptions",
       "ImportString",
       "ImprovementImportance",
       "In",
       "Inactivate",
       "Inactive",
+      "InactiveStyle",
       "IncidenceGraph",
       "IncidenceList",
       "IncidenceMatrix",
       "IncludeAromaticBonds",
       "IncludeConstantBasis",
+      "IncludedContexts",
       "IncludeDefinitions",
       "IncludeDirectories",
       "IncludeFileExtension",
@@ -27428,6 +26871,7 @@ var require_mathematica = __commonJS({
       "IncludePods",
       "IncludeQuantities",
       "IncludeRelatedTables",
+      "IncludeSingularSolutions",
       "IncludeSingularTerm",
       "IncludeWindowTimes",
       "Increment",
@@ -27449,10 +26893,13 @@ var require_mathematica = __commonJS({
       "IndexGraph",
       "IndexTag",
       "Inequality",
+      "InertEvaluate",
+      "InertExpression",
       "InexactNumberQ",
       "InexactNumbers",
       "InfiniteFuture",
       "InfiniteLine",
+      "InfiniteLineThrough",
       "InfinitePast",
       "InfinitePlane",
       "Infinity",
@@ -27464,12 +26911,14 @@ var require_mathematica = __commonJS({
       "InformationDataGrid",
       "Inherited",
       "InheritScope",
+      "InhomogeneousPoissonPointProcess",
       "InhomogeneousPoissonProcess",
       "InitialEvaluationHistory",
       "Initialization",
       "InitializationCell",
       "InitializationCellEvaluation",
       "InitializationCellWarning",
+      "InitializationObject",
       "InitializationObjects",
       "InitializationValue",
       "Initialize",
@@ -27493,6 +26942,7 @@ var require_mathematica = __commonJS({
       "InputNamePacket",
       "InputNotebook",
       "InputPacket",
+      "InputPorts",
       "InputSettings",
       "InputStream",
       "InputString",
@@ -27526,8 +26976,10 @@ var require_mathematica = __commonJS({
       "IntegerString",
       "Integral",
       "Integrate",
+      "IntegrateChangeVariables",
       "Interactive",
       "InteractiveTradingChart",
+      "InterfaceSwitched",
       "Interlaced",
       "Interleaving",
       "InternallyBalancedDecomposition",
@@ -27559,6 +27011,8 @@ var require_mathematica = __commonJS({
       "Into",
       "Inverse",
       "InverseBetaRegularized",
+      "InverseBilateralLaplaceTransform",
+      "InverseBilateralZTransform",
       "InverseCDF",
       "InverseChiSquareDistribution",
       "InverseContinuousWaveletTransform",
@@ -27614,6 +27068,7 @@ var require_mathematica = __commonJS({
       "IslandData",
       "IsolatingInterval",
       "IsomorphicGraphQ",
+      "IsomorphicSubgraphQ",
       "IsotopeData",
       "Italic",
       "Item",
@@ -27633,6 +27088,7 @@ var require_mathematica = __commonJS({
       "JacobiDC",
       "JacobiDN",
       "JacobiDS",
+      "JacobiEpsilon",
       "JacobiNC",
       "JacobiND",
       "JacobiNS",
@@ -27642,6 +27098,7 @@ var require_mathematica = __commonJS({
       "JacobiSN",
       "JacobiSymbol",
       "JacobiZeta",
+      "JacobiZN",
       "JankoGroupJ1",
       "JankoGroupJ2",
       "JankoGroupJ3",
@@ -27682,6 +27139,7 @@ var require_mathematica = __commonJS({
       "KelvinKer",
       "KendallTau",
       "KendallTauTest",
+      "KernelConfiguration",
       "KernelExecute",
       "KernelFunction",
       "KernelMixtureDistribution",
@@ -27740,6 +27198,12 @@ var require_mathematica = __commonJS({
       "LakeData",
       "LambdaComponents",
       "LambertW",
+      "LameC",
+      "LameCPrime",
+      "LameEigenvalueA",
+      "LameEigenvalueB",
+      "LameS",
+      "LameSPrime",
       "LaminaData",
       "LanczosWindow",
       "LandauDistribution",
@@ -27753,6 +27217,7 @@ var require_mathematica = __commonJS({
       "Laplacian",
       "LaplacianFilter",
       "LaplacianGaussianFilter",
+      "LaplacianPDETerm",
       "Large",
       "Larger",
       "Last",
@@ -27763,12 +27228,14 @@ var require_mathematica = __commonJS({
       "Launch",
       "LaunchKernels",
       "LayeredGraphPlot",
+      "LayeredGraphPlot3D",
       "LayerSizeFunction",
       "LayoutInformation",
       "LCHColor",
       "LCM",
       "LeaderSize",
       "LeafCount",
+      "LeapVariant",
       "LeapYearQ",
       "LearnDistribution",
       "LearnedDistribution",
@@ -27830,15 +27297,21 @@ var require_mathematica = __commonJS({
       "LeviCivitaTensor",
       "LevyDistribution",
       "Lexicographic",
+      "LexicographicOrder",
+      "LexicographicSort",
       "LibraryDataType",
       "LibraryFunction",
+      "LibraryFunctionDeclaration",
       "LibraryFunctionError",
       "LibraryFunctionInformation",
       "LibraryFunctionLoad",
       "LibraryFunctionUnload",
       "LibraryLoad",
       "LibraryUnload",
+      "LicenseEntitlementObject",
+      "LicenseEntitlements",
       "LicenseID",
+      "LicensingSettings",
       "LiftingFilterData",
       "LiftingWaveletTransform",
       "LightBlue",
@@ -27867,6 +27340,7 @@ var require_mathematica = __commonJS({
       "LinearFilter",
       "LinearFractionalOptimization",
       "LinearFractionalTransform",
+      "LinearGradientFilling",
       "LinearGradientImage",
       "LinearizingTransformationData",
       "LinearLayer",
@@ -27937,6 +27411,7 @@ var require_mathematica = __commonJS({
       "ListInterpolation",
       "ListLineIntegralConvolutionPlot",
       "ListLinePlot",
+      "ListLinePlot3D",
       "ListLogLinearPlot",
       "ListLogLogPlot",
       "ListLogPlot",
@@ -27956,16 +27431,22 @@ var require_mathematica = __commonJS({
       "ListStepPlot",
       "ListStreamDensityPlot",
       "ListStreamPlot",
+      "ListStreamPlot3D",
       "ListSurfacePlot3D",
       "ListVectorDensityPlot",
+      "ListVectorDisplacementPlot",
+      "ListVectorDisplacementPlot3D",
       "ListVectorPlot",
       "ListVectorPlot3D",
       "ListZTransform",
       "Literal",
       "LiteralSearch",
+      "LiteralType",
+      "LoadCompiledComponent",
       "LocalAdaptiveBinarize",
       "LocalCache",
       "LocalClusteringCoefficient",
+      "LocalEvaluate",
       "LocalizeDefinitions",
       "LocalizeVariables",
       "LocalObject",
@@ -28030,6 +27511,7 @@ var require_mathematica = __commonJS({
       "LowerLeftArrow",
       "LowerRightArrow",
       "LowerTriangularize",
+      "LowerTriangularMatrix",
       "LowerTriangularMatrixQ",
       "LowpassFilter",
       "LQEstimatorGains",
@@ -28085,6 +27567,7 @@ var require_mathematica = __commonJS({
       "Manual",
       "Map",
       "MapAll",
+      "MapApply",
       "MapAt",
       "MapIndexed",
       "MAProcess",
@@ -28097,11 +27580,20 @@ var require_mathematica = __commonJS({
       "MarginalDistribution",
       "MarkovProcessProperties",
       "Masking",
+      "MassConcentrationCondition",
+      "MassFluxValue",
+      "MassImpermeableBoundaryValue",
+      "MassOutflowValue",
+      "MassSymmetryValue",
+      "MassTransferValue",
+      "MassTransportPDEComponent",
       "MatchingDissimilarity",
       "MatchLocalNameQ",
       "MatchLocalNames",
       "MatchQ",
       "Material",
+      "MaterialShading",
+      "MaternPointProcess",
       "MathematicalFunctionData",
       "MathematicaNotation",
       "MathieuC",
@@ -28136,6 +27628,7 @@ var require_mathematica = __commonJS({
       "MaxColorDistance",
       "MaxDate",
       "MaxDetect",
+      "MaxDisplayedChildren",
       "MaxDuration",
       "MaxExtraBandwidths",
       "MaxExtraConditions",
@@ -28171,6 +27664,7 @@ var require_mathematica = __commonJS({
       "MeanFilter",
       "MeanGraphDistance",
       "MeanNeighborDegree",
+      "MeanPointDensity",
       "MeanShift",
       "MeanShiftFilter",
       "MeanSquaredLossLayer",
@@ -28245,6 +27739,7 @@ var require_mathematica = __commonJS({
       "MexicanHatWavelet",
       "MeyerWavelet",
       "Midpoint",
+      "MIMETypeToFormatList",
       "Min",
       "MinColorDistance",
       "MinDate",
@@ -28262,6 +27757,7 @@ var require_mathematica = __commonJS({
       "MinMax",
       "MinorPlanetData",
       "Minors",
+      "MinPointSeparation",
       "MinRecursion",
       "MinSize",
       "MinStableDistribution",
@@ -28276,6 +27772,7 @@ var require_mathematica = __commonJS({
       "MissingString",
       "MissingStyle",
       "MissingValuePattern",
+      "MissingValueSynthesis",
       "MittagLefflerE",
       "MixedFractionParts",
       "MixedGraphQ",
@@ -28287,6 +27784,7 @@ var require_mathematica = __commonJS({
       "Mod",
       "Modal",
       "Mode",
+      "ModelPredictiveController",
       "Modular",
       "ModularInverse",
       "ModularLambda",
@@ -28294,19 +27792,25 @@ var require_mathematica = __commonJS({
       "Modulus",
       "MoebiusMu",
       "Molecule",
+      "MoleculeAlign",
       "MoleculeContainsQ",
+      "MoleculeDraw",
       "MoleculeEquivalentQ",
+      "MoleculeFreeQ",
       "MoleculeGraph",
+      "MoleculeMatchQ",
+      "MoleculeMaximumCommonSubstructure",
       "MoleculeModify",
+      "MoleculeName",
       "MoleculePattern",
       "MoleculePlot",
       "MoleculePlot3D",
       "MoleculeProperty",
       "MoleculeQ",
       "MoleculeRecognize",
+      "MoleculeSubstructureCount",
       "MoleculeValue",
       "Moment",
-      "Momentary",
       "MomentConvert",
       "MomentEvaluate",
       "MomentGeneratingFunction",
@@ -28341,6 +27845,7 @@ var require_mathematica = __commonJS({
       "MovingMap",
       "MovingMedian",
       "MoyalDistribution",
+      "MultiaxisArrangement",
       "Multicolumn",
       "MultiedgeStyle",
       "MultigraphQ",
@@ -28354,6 +27859,7 @@ var require_mathematica = __commonJS({
       "MultiplicativeOrder",
       "Multiplicity",
       "MultiplySides",
+      "MultiscriptBoxOptions",
       "Multiselection",
       "MultivariateHypergeometricDistribution",
       "MultivariatePoissonDistribution",
@@ -28371,6 +27877,7 @@ var require_mathematica = __commonJS({
       "NBodySimulation",
       "NBodySimulationData",
       "NCache",
+      "NCaputoD",
       "NDEigensystem",
       "NDEigenvalues",
       "NDSolve",
@@ -28378,17 +27885,17 @@ var require_mathematica = __commonJS({
       "Nearest",
       "NearestFunction",
       "NearestMeshCells",
+      "NearestNeighborG",
       "NearestNeighborGraph",
       "NearestTo",
       "NebulaData",
-      "NeedCurrentFrontEndPackagePacket",
-      "NeedCurrentFrontEndSymbolsPacket",
       "NeedlemanWunschSimilarity",
       "Needs",
       "Negative",
       "NegativeBinomialDistribution",
       "NegativeDefiniteMatrixQ",
       "NegativeIntegers",
+      "NegativelyOrientedPoints",
       "NegativeMultinomialDistribution",
       "NegativeRationals",
       "NegativeReals",
@@ -28401,9 +27908,12 @@ var require_mathematica = __commonJS({
       "NestedScriptRules",
       "NestGraph",
       "NestList",
+      "NestTree",
       "NestWhile",
       "NestWhileList",
       "NetAppend",
+      "NetArray",
+      "NetArrayLayer",
       "NetBidirectionalOperator",
       "NetChain",
       "NetDecoder",
@@ -28411,6 +27921,7 @@ var require_mathematica = __commonJS({
       "NetDrop",
       "NetEncoder",
       "NetEvaluationMode",
+      "NetExternalObject",
       "NetExtract",
       "NetFlatten",
       "NetFoldOperator",
@@ -28438,6 +27949,7 @@ var require_mathematica = __commonJS({
       "NetTake",
       "NetTrain",
       "NetTrainResultsObject",
+      "NetUnfold",
       "NetworkPacketCapture",
       "NetworkPacketRecording",
       "NetworkPacketRecordingDuring",
@@ -28454,6 +27966,8 @@ var require_mathematica = __commonJS({
       "NextDate",
       "NextPrime",
       "NextScheduledTaskTime",
+      "NeymanScottPointProcess",
+      "NFractionalD",
       "NHoldAll",
       "NHoldFirst",
       "NHoldRest",
@@ -28465,6 +27979,7 @@ var require_mathematica = __commonJS({
       "NMaxValue",
       "NMinimize",
       "NMinValue",
+      "NominalScale",
       "NominalVariables",
       "NonAssociative",
       "NoncentralBetaDistribution",
@@ -28507,10 +28022,10 @@ var require_mathematica = __commonJS({
       "Notebook",
       "NotebookApply",
       "NotebookAutoSave",
+      "NotebookBrowseDirectory",
       "NotebookClose",
       "NotebookConvertSettings",
       "NotebookCreate",
-      "NotebookCreateReturnObject",
       "NotebookDefault",
       "NotebookDelete",
       "NotebookDirectory",
@@ -28519,28 +28034,20 @@ var require_mathematica = __commonJS({
       "NotebookEventActions",
       "NotebookFileName",
       "NotebookFind",
-      "NotebookFindReturnObject",
       "NotebookGet",
-      "NotebookGetLayoutInformationPacket",
-      "NotebookGetMisspellingsPacket",
       "NotebookImport",
       "NotebookInformation",
       "NotebookInterfaceObject",
       "NotebookLocate",
       "NotebookObject",
       "NotebookOpen",
-      "NotebookOpenReturnObject",
       "NotebookPath",
       "NotebookPrint",
       "NotebookPut",
-      "NotebookPutReturnObject",
       "NotebookRead",
-      "NotebookResetGeneratedCells",
       "Notebooks",
       "NotebookSave",
-      "NotebookSaveAs",
       "NotebookSelection",
-      "NotebookSetupLayoutInformationPacket",
       "NotebooksMenu",
       "NotebookTemplate",
       "NotebookWrite",
@@ -28602,6 +28109,7 @@ var require_mathematica = __commonJS({
       "NProductFactors",
       "NRoots",
       "NSolve",
+      "NSolveValues",
       "NSum",
       "NSumTerms",
       "NuclearExplosionData",
@@ -28613,6 +28121,7 @@ var require_mathematica = __commonJS({
       "Number",
       "NumberCompose",
       "NumberDecompose",
+      "NumberDigit",
       "NumberExpand",
       "NumberFieldClassNumber",
       "NumberFieldDiscriminant",
@@ -28647,6 +28156,7 @@ var require_mathematica = __commonJS({
       "NyquistGridLines",
       "NyquistPlot",
       "O",
+      "ObjectExistsQ",
       "ObservabilityGramian",
       "ObservabilityMatrix",
       "ObservableDecomposition",
@@ -28700,6 +28210,7 @@ var require_mathematica = __commonJS({
       "OrderingLayer",
       "Orderless",
       "OrderlessPatternSequence",
+      "OrdinalScale",
       "OrnsteinUhlenbeckProcess",
       "Orthogonalize",
       "OrthogonalMatrixQ",
@@ -28715,6 +28226,7 @@ var require_mathematica = __commonJS({
       "OutputGrouping",
       "OutputMathEditExpression",
       "OutputNamePacket",
+      "OutputPorts",
       "OutputResponse",
       "OutputSizeLimit",
       "OutputStream",
@@ -28727,6 +28239,7 @@ var require_mathematica = __commonJS({
       "Overlay",
       "OverlayBox",
       "OverlayBoxOptions",
+      "OverlayVideo",
       "Overscript",
       "OverscriptBox",
       "OverscriptBoxOptions",
@@ -28759,6 +28272,7 @@ var require_mathematica = __commonJS({
       "PacletSites",
       "PacletSiteUnregister",
       "PacletSiteUpdate",
+      "PacletSymbol",
       "PacletUninstall",
       "PacletUpdate",
       "PaddedForm",
@@ -28780,6 +28294,7 @@ var require_mathematica = __commonJS({
       "PageTheme",
       "PageWidth",
       "Pagination",
+      "PairCorrelationG",
       "PairedBarChart",
       "PairedHistogram",
       "PairedSmoothHistogram",
@@ -28787,6 +28302,7 @@ var require_mathematica = __commonJS({
       "PairedZTest",
       "PaletteNotebook",
       "PalettePath",
+      "PalettesMenuSettings",
       "PalindromeQ",
       "Pane",
       "PaneBox",
@@ -28803,12 +28319,14 @@ var require_mathematica = __commonJS({
       "ParagraphIndent",
       "ParagraphSpacing",
       "ParallelArray",
+      "ParallelAxisPlot",
       "ParallelCombine",
       "ParallelDo",
       "Parallelepiped",
       "ParallelEvaluate",
       "Parallelization",
       "Parallelize",
+      "ParallelKernels",
       "ParallelMap",
       "ParallelNeeds",
       "Parallelogram",
@@ -28821,6 +28339,7 @@ var require_mathematica = __commonJS({
       "ParameterEstimator",
       "ParameterMixtureDistribution",
       "ParameterVariables",
+      "ParametricConvexOptimization",
       "ParametricFunction",
       "ParametricNDSolve",
       "ParametricNDSolveValue",
@@ -28832,6 +28351,12 @@ var require_mathematica = __commonJS({
       "ParentCell",
       "ParentConnect",
       "ParentDirectory",
+      "ParentEdgeLabel",
+      "ParentEdgeLabelFunction",
+      "ParentEdgeLabelStyle",
+      "ParentEdgeShapeFunction",
+      "ParentEdgeStyle",
+      "ParentEdgeStyleFunction",
       "ParentForm",
       "Parenthesize",
       "ParentList",
@@ -28865,6 +28390,7 @@ var require_mathematica = __commonJS({
       "PathGraphQ",
       "Pattern",
       "PatternFilling",
+      "PatternReaction",
       "PatternSequence",
       "PatternTest",
       "PauliMatrix",
@@ -28877,6 +28403,7 @@ var require_mathematica = __commonJS({
       "PearsonChiSquareTest",
       "PearsonCorrelationTest",
       "PearsonDistribution",
+      "PenttinenPointProcess",
       "PercentForm",
       "PerfectNumber",
       "PerfectNumberQ",
@@ -28899,6 +28426,7 @@ var require_mathematica = __commonJS({
       "PermutationLength",
       "PermutationList",
       "PermutationListQ",
+      "PermutationMatrix",
       "PermutationMax",
       "PermutationMin",
       "PermutationOrder",
@@ -28915,15 +28443,19 @@ var require_mathematica = __commonJS({
       "PersistenceTime",
       "PersistentObject",
       "PersistentObjects",
+      "PersistentSymbol",
       "PersistentValue",
       "PersonData",
       "PERTDistribution",
       "PetersenGraph",
       "PhaseMargins",
       "PhaseRange",
+      "PhongShading",
       "PhysicalSystemData",
       "Pi",
       "Pick",
+      "PickedElements",
+      "PickMode",
       "PIDData",
       "PIDDerivativeFilter",
       "PIDFeedforward",
@@ -28943,9 +28475,11 @@ var require_mathematica = __commonJS({
       "PixelValuePositions",
       "Placed",
       "Placeholder",
+      "PlaceholderLayer",
       "PlaceholderReplace",
       "Plain",
       "PlanarAngle",
+      "PlanarFaceList",
       "PlanarGraph",
       "PlanarGraphQ",
       "PlanckRadiationLaw",
@@ -28954,6 +28488,7 @@ var require_mathematica = __commonJS({
       "PlanetData",
       "PlantData",
       "Play",
+      "PlaybackSettings",
       "PlayRange",
       "Plot",
       "Plot3D",
@@ -28984,11 +28519,23 @@ var require_mathematica = __commonJS({
       "Point3DBoxOptions",
       "PointBox",
       "PointBoxOptions",
+      "PointCountDistribution",
+      "PointDensity",
+      "PointDensityFunction",
       "PointFigureChart",
       "PointLegend",
+      "PointLight",
+      "PointProcessEstimator",
+      "PointProcessFitTest",
+      "PointProcessParameterAssumptions",
+      "PointProcessParameterQ",
       "PointSize",
+      "PointStatisticFunction",
+      "PointValuePlot",
       "PoissonConsulDistribution",
       "PoissonDistribution",
+      "PoissonPDEComponent",
+      "PoissonPointProcess",
       "PoissonProcess",
       "PoissonWindow",
       "PolarAxes",
@@ -29013,11 +28560,14 @@ var require_mathematica = __commonJS({
       "PolygonScale",
       "Polyhedron",
       "PolyhedronAngle",
+      "PolyhedronBox",
+      "PolyhedronBoxOptions",
       "PolyhedronCoordinates",
       "PolyhedronData",
       "PolyhedronDecomposition",
       "PolyhedronGenus",
       "PolyLog",
+      "PolynomialExpressionQ",
       "PolynomialExtendedGCD",
       "PolynomialForm",
       "PolynomialGCD",
@@ -29029,6 +28579,7 @@ var require_mathematica = __commonJS({
       "PolynomialReduce",
       "PolynomialRemainder",
       "Polynomials",
+      "PolynomialSumOfSquaresList",
       "PoolingLayer",
       "PopupMenu",
       "PopupMenuBox",
@@ -29037,9 +28588,12 @@ var require_mathematica = __commonJS({
       "PopupWindow",
       "Position",
       "PositionIndex",
+      "PositionLargest",
+      "PositionSmallest",
       "Positive",
       "PositiveDefiniteMatrixQ",
       "PositiveIntegers",
+      "PositivelyOrientedPoints",
       "PositiveRationals",
       "PositiveReals",
       "PositiveSemidefiniteMatrixQ",
@@ -29072,6 +28626,7 @@ var require_mathematica = __commonJS({
       "PredictorMeasurementsObject",
       "PreemptProtect",
       "PreferencesPath",
+      "PreferencesSettings",
       "Prefix",
       "PreIncrement",
       "Prepend",
@@ -29145,10 +28700,12 @@ var require_mathematica = __commonJS({
       "ProgressIndicator",
       "ProgressIndicatorBox",
       "ProgressIndicatorBoxOptions",
+      "ProgressReporting",
       "Projection",
       "Prolog",
       "PromptForm",
       "ProofObject",
+      "PropagateAborts",
       "Properties",
       "Property",
       "PropertyList",
@@ -29200,13 +28757,20 @@ var require_mathematica = __commonJS({
       "Quartiles",
       "QuartileSkewness",
       "Query",
+      "QuestionGenerator",
+      "QuestionInterface",
+      "QuestionObject",
+      "QuestionSelector",
       "QueueingNetworkProcess",
       "QueueingProcess",
       "QueueProperties",
       "Quiet",
+      "QuietEcho",
       "Quit",
       "Quotient",
       "QuotientRemainder",
+      "RadialAxisPlot",
+      "RadialGradientFilling",
       "RadialGradientImage",
       "RadialityCentrality",
       "RadicalBox",
@@ -29223,11 +28787,14 @@ var require_mathematica = __commonJS({
       "RamanujanTauZ",
       "Ramp",
       "Random",
+      "RandomArrayLayer",
       "RandomChoice",
       "RandomColor",
       "RandomComplex",
+      "RandomDate",
       "RandomEntity",
       "RandomFunction",
+      "RandomGeneratorState",
       "RandomGeoPosition",
       "RandomGraph",
       "RandomImage",
@@ -29235,6 +28802,7 @@ var require_mathematica = __commonJS({
       "RandomInteger",
       "RandomPermutation",
       "RandomPoint",
+      "RandomPointConfiguration",
       "RandomPolygon",
       "RandomPolyhedron",
       "RandomPrime",
@@ -29242,6 +28810,8 @@ var require_mathematica = __commonJS({
       "RandomSample",
       "RandomSeed",
       "RandomSeeding",
+      "RandomTime",
+      "RandomTree",
       "RandomVariate",
       "RandomWalkProcess",
       "RandomWord",
@@ -29261,6 +28831,7 @@ var require_mathematica = __commonJS({
       "Rasterize",
       "RasterSize",
       "Rational",
+      "RationalExpressionQ",
       "RationalFunctions",
       "Rationalize",
       "Rationals",
@@ -29271,6 +28842,9 @@ var require_mathematica = __commonJS({
       "RawMedium",
       "RayleighDistribution",
       "Re",
+      "ReactionBalance",
+      "ReactionBalancedQ",
+      "ReactionPDETerm",
       "Read",
       "ReadByteArray",
       "ReadLine",
@@ -29286,8 +28860,10 @@ var require_mathematica = __commonJS({
       "RealSign",
       "Reap",
       "RebuildPacletData",
+      "RecalibrationFunction",
       "RecognitionPrior",
       "RecognitionThreshold",
+      "ReconstructionMesh",
       "Record",
       "RecordLists",
       "RecordSeparators",
@@ -29317,14 +28893,19 @@ var require_mathematica = __commonJS({
       "RegionBoundaryStyle",
       "RegionBounds",
       "RegionCentroid",
+      "RegionCongruent",
+      "RegionConvert",
       "RegionDifference",
+      "RegionDilation",
       "RegionDimension",
       "RegionDisjoint",
       "RegionDistance",
       "RegionDistanceFunction",
       "RegionEmbeddingDimension",
       "RegionEqual",
+      "RegionErosion",
       "RegionFillingStyle",
+      "RegionFit",
       "RegionFunction",
       "RegionImage",
       "RegionIntersection",
@@ -29339,6 +28920,7 @@ var require_mathematica = __commonJS({
       "RegionProduct",
       "RegionQ",
       "RegionResize",
+      "RegionSimilar",
       "RegionSize",
       "RegionSymmetricDifference",
       "RegionUnion",
@@ -29361,11 +28943,22 @@ var require_mathematica = __commonJS({
       "ReliefImage",
       "ReliefPlot",
       "RemoteAuthorizationCaching",
+      "RemoteBatchJobAbort",
+      "RemoteBatchJobObject",
+      "RemoteBatchJobs",
+      "RemoteBatchMapSubmit",
+      "RemoteBatchSubmissionEnvironment",
+      "RemoteBatchSubmit",
       "RemoteConnect",
       "RemoteConnectionObject",
+      "RemoteEvaluate",
       "RemoteFile",
+      "RemoteInputFiles",
+      "RemoteKernelObject",
+      "RemoteProviderSettings",
       "RemoteRun",
       "RemoteRunProcess",
+      "RemovalConditions",
       "Remove",
       "RemoveAlphaChannel",
       "RemoveAsynchronousTask",
@@ -29395,6 +28988,7 @@ var require_mathematica = __commonJS({
       "RepeatingElement",
       "Replace",
       "ReplaceAll",
+      "ReplaceAt",
       "ReplaceHeldPart",
       "ReplaceImageValue",
       "ReplaceList",
@@ -29409,12 +29003,13 @@ var require_mathematica = __commonJS({
       "Rescale",
       "RescalingTransform",
       "ResetDirectory",
-      "ResetMenusPacket",
       "ResetScheduledTask",
       "ReshapeLayer",
       "Residue",
+      "ResidueSum",
       "ResizeLayer",
       "Resolve",
+      "ResolveContextAliases",
       "ResourceAcquire",
       "ResourceData",
       "ResourceFunction",
@@ -29435,6 +29030,7 @@ var require_mathematica = __commonJS({
       "Resultant",
       "ResumePacket",
       "Return",
+      "ReturnCreatesNewCell",
       "ReturnEntersInput",
       "ReturnExpressionPacket",
       "ReturnInputFormPacket",
@@ -29482,8 +29078,11 @@ var require_mathematica = __commonJS({
       "RightUpVectorBar",
       "RightVector",
       "RightVectorBar",
+      "RipleyK",
+      "RipleyRassonRegion",
       "RiskAchievementImportance",
       "RiskReductionImportance",
+      "RobustConvexOptimization",
       "RogersTanimotoDissimilarity",
       "RollPitchYawAngles",
       "RollPitchYawMatrix",
@@ -29497,6 +29096,7 @@ var require_mathematica = __commonJS({
       "RootReduce",
       "Roots",
       "RootSum",
+      "RootTree",
       "Rotate",
       "RotateLabel",
       "RotateLeft",
@@ -29529,6 +29129,7 @@ var require_mathematica = __commonJS({
       "RuleForm",
       "RulePlot",
       "RulerUnits",
+      "RulesTree",
       "Run",
       "RunProcess",
       "RunScheduledTask",
@@ -29536,6 +29137,7 @@ var require_mathematica = __commonJS({
       "RuntimeAttributes",
       "RuntimeOptions",
       "RussellRaoDissimilarity",
+      "SameAs",
       "SameQ",
       "SameTest",
       "SameTestProperties",
@@ -29612,6 +29214,7 @@ var require_mathematica = __commonJS({
       "SectorSpacing",
       "SecuredAuthenticationKey",
       "SecuredAuthenticationKeys",
+      "SecurityCertificate",
       "SeedRandom",
       "Select",
       "Selectable",
@@ -29627,12 +29230,10 @@ var require_mathematica = __commonJS({
       "SelectionCellParentStyle",
       "SelectionCreateCell",
       "SelectionDebuggerTag",
-      "SelectionDuplicateCell",
       "SelectionEvaluate",
       "SelectionEvaluateCreateCell",
       "SelectionMove",
       "SelectionPlaceholder",
-      "SelectionSetStyle",
       "SelectWithContents",
       "SelfLoops",
       "SelfLoopStyle",
@@ -29652,6 +29253,7 @@ var require_mathematica = __commonJS({
       "SequenceFoldList",
       "SequenceForm",
       "SequenceHold",
+      "SequenceIndicesLayer",
       "SequenceLastLayer",
       "SequenceMostLayer",
       "SequencePosition",
@@ -29679,16 +29281,13 @@ var require_mathematica = __commonJS({
       "SetAlphaChannel",
       "SetAttributes",
       "Setbacks",
-      "SetBoxFormNamesPacket",
       "SetCloudDirectory",
       "SetCookies",
       "SetDelayed",
       "SetDirectory",
       "SetEnvironment",
-      "SetEvaluationNotebook",
       "SetFileDate",
-      "SetFileLoadingContext",
-      "SetNotebookStatusLine",
+      "SetFileFormatProperties",
       "SetOptions",
       "SetOptionsPacket",
       "SetPermissions",
@@ -29698,7 +29297,6 @@ var require_mathematica = __commonJS({
       "SetSelectedNotebook",
       "SetSharedFunction",
       "SetSharedVariable",
-      "SetSpeechParametersPacket",
       "SetStreamPosition",
       "SetSystemModel",
       "SetSystemOptions",
@@ -29708,7 +29306,6 @@ var require_mathematica = __commonJS({
       "SetterBoxOptions",
       "Setting",
       "SetUsers",
-      "SetValue",
       "Shading",
       "Shallow",
       "ShannonWavelet",
@@ -29806,6 +29403,7 @@ var require_mathematica = __commonJS({
       "Slider2DBoxOptions",
       "SliderBox",
       "SliderBoxOptions",
+      "SlideShowVideo",
       "SlideView",
       "Slot",
       "SlotSequence",
@@ -29819,8 +29417,10 @@ var require_mathematica = __commonJS({
       "SmoothHistogram",
       "SmoothHistogram3D",
       "SmoothKernelDistribution",
+      "SmoothPointDensity",
       "SnDispersion",
       "Snippet",
+      "SnippetsVideo",
       "SnubPolyhedron",
       "SocialMediaData",
       "Socket",
@@ -29838,12 +29438,20 @@ var require_mathematica = __commonJS({
       "SokalSneathDissimilarity",
       "SolarEclipse",
       "SolarSystemFeatureData",
+      "SolarTime",
       "SolidAngle",
+      "SolidBoundaryLoadValue",
       "SolidData",
+      "SolidDisplacementCondition",
+      "SolidFixedCondition",
+      "SolidMechanicsPDEComponent",
+      "SolidMechanicsStrain",
+      "SolidMechanicsStress",
       "SolidRegionQ",
       "Solve",
       "SolveAlways",
       "SolveDelayed",
+      "SolveValues",
       "Sort",
       "SortBy",
       "SortedBy",
@@ -29853,6 +29461,7 @@ var require_mathematica = __commonJS({
       "SoundNote",
       "SoundVolume",
       "SourceLink",
+      "SourcePDETerm",
       "Sow",
       "Space",
       "SpaceCurveData",
@@ -29871,12 +29480,23 @@ var require_mathematica = __commonJS({
       "SpanningCharacters",
       "SpanSymmetric",
       "SparseArray",
+      "SparseArrayQ",
+      "SpatialBinnedPointData",
+      "SpatialBoundaryCorrection",
+      "SpatialEstimate",
+      "SpatialEstimatorFunction",
       "SpatialGraphDistribution",
+      "SpatialJ",
       "SpatialMedian",
+      "SpatialNoiseLevel",
+      "SpatialObservationRegionQ",
+      "SpatialPointData",
+      "SpatialPointSelect",
+      "SpatialRandomnessTest",
       "SpatialTransformationLayer",
+      "SpatialTrendFunction",
       "Speak",
       "SpeakerMatchQ",
-      "SpeakTextPacket",
       "SpearmanRankTest",
       "SpearmanRho",
       "SpeciesData",
@@ -29894,9 +29514,9 @@ var require_mathematica = __commonJS({
       "SpellingDictionaries",
       "SpellingDictionariesPath",
       "SpellingOptions",
-      "SpellingSuggestionsPacket",
       "Sphere",
       "SphereBox",
+      "SphereBoxOptions",
       "SpherePoints",
       "SphericalBesselJ",
       "SphericalBesselY",
@@ -29926,6 +29546,7 @@ var require_mathematica = __commonJS({
       "Split",
       "SplitBy",
       "SpokenString",
+      "SpotLight",
       "Sqrt",
       "SqrtBox",
       "SqrtBoxOptions",
@@ -29998,16 +29619,20 @@ var require_mathematica = __commonJS({
       "StopScheduledTask",
       "StrataVariables",
       "StratonovichProcess",
+      "StraussHardcorePointProcess",
+      "StraussPointProcess",
       "StreamColorFunction",
       "StreamColorFunctionScaling",
       "StreamDensityPlot",
       "StreamMarkers",
       "StreamPlot",
+      "StreamPlot3D",
       "StreamPoints",
       "StreamPosition",
       "Streams",
       "StreamScale",
       "StreamStyle",
+      "StrictInequalities",
       "String",
       "StringBreak",
       "StringByteCount",
@@ -30021,6 +29646,7 @@ var require_mathematica = __commonJS({
       "StringExtract",
       "StringForm",
       "StringFormat",
+      "StringFormatQ",
       "StringFreeQ",
       "StringInsert",
       "StringJoin",
@@ -30044,14 +29670,17 @@ var require_mathematica = __commonJS({
       "StringSplit",
       "StringStartsQ",
       "StringTake",
+      "StringTakeDrop",
       "StringTemplate",
       "StringToByteArray",
       "StringToStream",
       "StringTrim",
       "StripBoxes",
       "StripOnInput",
+      "StripStyleOnPaste",
       "StripWrapperBoxes",
       "StrokeForm",
+      "Struckthrough",
       "StructuralImportance",
       "StructuredArray",
       "StructuredArrayHeadQ",
@@ -30101,7 +29730,7 @@ var require_mathematica = __commonJS({
       "SubsuperscriptBox",
       "SubsuperscriptBoxOptions",
       "SubtitleEncoding",
-      "SubtitleTracks",
+      "SubtitleTrackSelection",
       "Subtract",
       "SubtractFrom",
       "SubtractSides",
@@ -30149,6 +29778,7 @@ var require_mathematica = __commonJS({
       "SymbolName",
       "SymletWavelet",
       "Symmetric",
+      "SymmetricDifference",
       "SymmetricGroup",
       "SymmetricKey",
       "SymmetricMatrixQ",
@@ -30186,6 +29816,7 @@ var require_mathematica = __commonJS({
       "SystemModeler",
       "SystemModelExamples",
       "SystemModelLinearize",
+      "SystemModelMeasurements",
       "SystemModelParametricSimulate",
       "SystemModelPlot",
       "SystemModelProgressReporting",
@@ -30199,6 +29830,7 @@ var require_mathematica = __commonJS({
       "SystemProcessData",
       "SystemProcesses",
       "SystemsConnectionsModel",
+      "SystemsModelControllerData",
       "SystemsModelDelay",
       "SystemsModelDelayApproximate",
       "SystemsModelDelete",
@@ -30226,8 +29858,11 @@ var require_mathematica = __commonJS({
       "TableSpacing",
       "TableView",
       "TableViewBox",
+      "TableViewBoxAlignment",
       "TableViewBoxBackground",
+      "TableViewBoxHeaders",
       "TableViewBoxItemSize",
+      "TableViewBoxItemStyle",
       "TableViewBoxOptions",
       "TabSpacings",
       "TabView",
@@ -30294,6 +29929,9 @@ var require_mathematica = __commonJS({
       "TensorSymmetry",
       "TensorTranspose",
       "TensorWedge",
+      "TerminatedEvaluation",
+      "TernaryListPlot",
+      "TernaryPlotCorners",
       "TestID",
       "TestReport",
       "TestReportObject",
@@ -30343,8 +29981,10 @@ var require_mathematica = __commonJS({
       "Thin",
       "Thinning",
       "ThisLink",
+      "ThomasPointProcess",
       "ThompsonGroupTh",
       "Thread",
+      "Threaded",
       "ThreadingLayer",
       "ThreeJSymbol",
       "Threshold",
@@ -30353,6 +29993,12 @@ var require_mathematica = __commonJS({
       "ThueMorse",
       "Thumbnail",
       "Thursday",
+      "TickDirection",
+      "TickLabelOrientation",
+      "TickLabelPositioning",
+      "TickLabels",
+      "TickLengths",
+      "TickPositions",
       "Ticks",
       "TicksStyle",
       "TideData",
@@ -30385,6 +30031,8 @@ var require_mathematica = __commonJS({
       "TimeSeriesShift",
       "TimeSeriesThread",
       "TimeSeriesWindow",
+      "TimeSystem",
+      "TimeSystemConvert",
       "TimeUsed",
       "TimeValue",
       "TimeWarpingCorrespondence",
@@ -30433,7 +30081,10 @@ var require_mathematica = __commonJS({
       "ToPolarCoordinates",
       "TopologicalSort",
       "ToRadicals",
+      "ToRawPointer",
       "ToRules",
+      "Torus",
+      "TorusGraph",
       "ToSphericalCoordinates",
       "ToString",
       "Total",
@@ -30445,6 +30096,7 @@ var require_mathematica = __commonJS({
       "TouchscreenAutoZoom",
       "TouchscreenControlPlacement",
       "ToUpperCase",
+      "TourVideo",
       "Tr",
       "Trace",
       "TraceAbove",
@@ -30460,6 +30112,7 @@ var require_mathematica = __commonJS({
       "TraceOriginal",
       "TracePrint",
       "TraceScan",
+      "TrackCellChangeTimes",
       "TrackedSymbols",
       "TrackingFunction",
       "TracyWidomDistribution",
@@ -30468,12 +30121,14 @@ var require_mathematica = __commonJS({
       "TraditionalFunctionNotation",
       "TraditionalNotation",
       "TraditionalOrder",
+      "TrainImageContentDetector",
       "TrainingProgressCheckpointing",
       "TrainingProgressFunction",
       "TrainingProgressMeasurements",
       "TrainingProgressReporting",
       "TrainingStoppingCriterion",
       "TrainingUpdateSchedule",
+      "TrainTextContentDetector",
       "TransferFunctionCancel",
       "TransferFunctionExpand",
       "TransferFunctionFactor",
@@ -30502,6 +30157,7 @@ var require_mathematica = __commonJS({
       "TransparentColor",
       "Transpose",
       "TransposeLayer",
+      "TrapEnterKey",
       "TrapSelection",
       "TravelDirections",
       "TravelDirectionsData",
@@ -30509,10 +30165,47 @@ var require_mathematica = __commonJS({
       "TravelDistanceList",
       "TravelMethod",
       "TravelTime",
+      "Tree",
+      "TreeCases",
+      "TreeChildren",
+      "TreeCount",
+      "TreeData",
+      "TreeDelete",
+      "TreeDepth",
+      "TreeElementCoordinates",
+      "TreeElementLabel",
+      "TreeElementLabelFunction",
+      "TreeElementLabelStyle",
+      "TreeElementShape",
+      "TreeElementShapeFunction",
+      "TreeElementSize",
+      "TreeElementSizeFunction",
+      "TreeElementStyle",
+      "TreeElementStyleFunction",
+      "TreeExpression",
+      "TreeExtract",
+      "TreeFold",
       "TreeForm",
       "TreeGraph",
       "TreeGraphQ",
+      "TreeInsert",
+      "TreeLayout",
+      "TreeLeafCount",
+      "TreeLeafQ",
+      "TreeLeaves",
+      "TreeLevel",
+      "TreeMap",
+      "TreeMapAt",
+      "TreeOutline",
       "TreePlot",
+      "TreePosition",
+      "TreeQ",
+      "TreeReplacePart",
+      "TreeRules",
+      "TreeScan",
+      "TreeSelect",
+      "TreeSize",
+      "TreeTraversalOrder",
       "TrendStyle",
       "Triangle",
       "TriangleCenter",
@@ -30555,6 +30248,10 @@ var require_mathematica = __commonJS({
       "TuttePolynomial",
       "TwoWayRule",
       "Typed",
+      "TypeDeclaration",
+      "TypeEvaluate",
+      "TypeHint",
+      "TypeOf",
       "TypeSpecifier",
       "UnateQ",
       "Uncompress",
@@ -30587,6 +30284,7 @@ var require_mathematica = __commonJS({
       "UnionedEntityClass",
       "UnionPlus",
       "Unique",
+      "UniqueElements",
       "UnitaryMatrixQ",
       "UnitBox",
       "UnitConvert",
@@ -30603,12 +30301,15 @@ var require_mathematica = __commonJS({
       "UniverseModelData",
       "UniversityData",
       "UnixTime",
+      "UnlabeledTree",
+      "UnmanageObject",
       "Unprotect",
       "UnregisterExternalEvaluator",
       "UnsameQ",
       "UnsavedVariables",
       "Unset",
       "UnsetShared",
+      "Until",
       "UntrackedVariables",
       "Up",
       "UpArrow",
@@ -30626,6 +30327,7 @@ var require_mathematica = __commonJS({
       "UpperLeftArrow",
       "UpperRightArrow",
       "UpperTriangularize",
+      "UpperTriangularMatrix",
       "UpperTriangularMatrixQ",
       "Upsample",
       "UpSet",
@@ -30654,6 +30356,7 @@ var require_mathematica = __commonJS({
       "URLSaveAsynchronous",
       "URLShorten",
       "URLSubmit",
+      "UseEmbeddedLibrary",
       "UseGraphicsRange",
       "UserDefinedWavelet",
       "Using",
@@ -30661,9 +30364,9 @@ var require_mathematica = __commonJS({
       "UtilityFunction",
       "V2Get",
       "ValenceErrorHandling",
+      "ValenceFilling",
       "ValidationLength",
       "ValidationSet",
-      "Value",
       "ValueBox",
       "ValueBoxOptions",
       "ValueDimensions",
@@ -30672,18 +30375,24 @@ var require_mathematica = __commonJS({
       "ValueQ",
       "Values",
       "ValuesData",
+      "VandermondeMatrix",
       "Variables",
       "Variance",
       "VarianceEquivalenceTest",
       "VarianceEstimatorFunction",
       "VarianceGammaDistribution",
+      "VarianceGammaPointProcess",
       "VarianceTest",
+      "VariogramFunction",
+      "VariogramModel",
       "VectorAngle",
       "VectorAround",
       "VectorAspectRatio",
       "VectorColorFunction",
       "VectorColorFunctionScaling",
       "VectorDensityPlot",
+      "VectorDisplacementPlot",
+      "VectorDisplacementPlot3D",
       "VectorGlyphData",
       "VectorGreater",
       "VectorGreaterEqual",
@@ -30703,7 +30412,6 @@ var require_mathematica = __commonJS({
       "Vee",
       "Verbatim",
       "Verbose",
-      "VerboseConvertToPostScriptPacket",
       "VerificationTest",
       "VerifyConvergence",
       "VerifyDerivedKey",
@@ -30713,11 +30421,10 @@ var require_mathematica = __commonJS({
       "VerifySecurityCertificates",
       "VerifySolutions",
       "VerifyTestAssumptions",
-      "Version",
       "VersionedPreferences",
-      "VersionNumber",
       "VertexAdd",
       "VertexCapacity",
+      "VertexChromaticNumber",
       "VertexColors",
       "VertexComponent",
       "VertexConnectivity",
@@ -30734,6 +30441,7 @@ var require_mathematica = __commonJS({
       "VertexDiceSimilarity",
       "VertexEccentricity",
       "VertexInComponent",
+      "VertexInComponentGraph",
       "VertexInDegree",
       "VertexIndex",
       "VertexJaccardSimilarity",
@@ -30743,6 +30451,7 @@ var require_mathematica = __commonJS({
       "VertexList",
       "VertexNormals",
       "VertexOutComponent",
+      "VertexOutComponentGraph",
       "VertexOutDegree",
       "VertexQ",
       "VertexRenderingFunction",
@@ -30752,6 +30461,7 @@ var require_mathematica = __commonJS({
       "VertexSize",
       "VertexStyle",
       "VertexTextureCoordinates",
+      "VertexTransitiveGraphQ",
       "VertexWeight",
       "VertexWeightedGraphQ",
       "Vertical",
@@ -30762,18 +30472,35 @@ var require_mathematica = __commonJS({
       "VerticalSlider",
       "VerticalTilde",
       "Video",
+      "VideoCapture",
+      "VideoCombine",
+      "VideoDelete",
       "VideoEncoding",
       "VideoExtractFrames",
       "VideoFrameList",
       "VideoFrameMap",
+      "VideoGenerator",
+      "VideoInsert",
+      "VideoIntervals",
+      "VideoJoin",
+      "VideoMap",
+      "VideoMapList",
+      "VideoMapTimeSeries",
+      "VideoPadding",
       "VideoPause",
       "VideoPlay",
       "VideoQ",
+      "VideoRecord",
+      "VideoReplace",
+      "VideoScreenCapture",
+      "VideoSplit",
       "VideoStop",
       "VideoStream",
       "VideoStreams",
-      "VideoTimeSeries",
-      "VideoTracks",
+      "VideoTimeStretch",
+      "VideoTrackSelection",
+      "VideoTranscode",
+      "VideoTransparency",
       "VideoTrim",
       "ViewAngle",
       "ViewCenter",
@@ -30817,6 +30544,7 @@ var require_mathematica = __commonJS({
       "WaveletScale",
       "WaveletScalogram",
       "WaveletThreshold",
+      "WavePDEComponent",
       "WeaklyConnectedComponents",
       "WeaklyConnectedGraphComponents",
       "WeaklyConnectedGraphQ",
@@ -30824,11 +30552,15 @@ var require_mathematica = __commonJS({
       "WeatherData",
       "WeatherForecastData",
       "WebAudioSearch",
+      "WebColumn",
       "WebElementObject",
       "WeberE",
       "WebExecute",
       "WebImage",
       "WebImageSearch",
+      "WebItem",
+      "WebPageMetaInformation",
+      "WebRow",
       "WebSearch",
       "WebSessionObject",
       "WebSessions",
@@ -30870,6 +30602,7 @@ var require_mathematica = __commonJS({
       "WhitespaceCharacter",
       "WhittakerM",
       "WhittakerW",
+      "WholeCellGroupOpener",
       "WienerFilter",
       "WienerProcess",
       "WignerD",
@@ -30904,10 +30637,13 @@ var require_mathematica = __commonJS({
       "WinsorizedVariance",
       "WishartMatrixDistribution",
       "With",
+      "WithCleanup",
+      "WithLock",
       "WolframAlpha",
       "WolframAlphaDate",
       "WolframAlphaQuantity",
       "WolframAlphaResult",
+      "WolframCloudSettings",
       "WolframLanguageData",
       "Word",
       "WordBoundary",
@@ -30999,14 +30735,17 @@ var require_mathematica = __commonJS({
       "$CloudWolframEngineVersionNumber",
       "$CommandLine",
       "$CompilationTarget",
+      "$CompilerEnvironment",
       "$ConditionHold",
       "$ConfiguredKernels",
       "$Context",
+      "$ContextAliases",
       "$ContextPath",
       "$ControlActiveSetting",
       "$Cookies",
       "$CookieStore",
       "$CreationDate",
+      "$CryptographicEllipticCurveNames",
       "$CurrentLink",
       "$CurrentTask",
       "$CurrentWebSession",
@@ -31017,11 +30756,15 @@ var require_mathematica = __commonJS({
       "$DefaultFont",
       "$DefaultFrontEnd",
       "$DefaultImagingDevice",
+      "$DefaultKernels",
       "$DefaultLocalBase",
+      "$DefaultLocalKernel",
       "$DefaultMailbox",
       "$DefaultNetworkInterface",
       "$DefaultPath",
       "$DefaultProxyRules",
+      "$DefaultRemoteBatchSubmissionEnvironment",
+      "$DefaultRemoteKernel",
       "$DefaultSystemCredentialStore",
       "$Display",
       "$DisplayFunction",
@@ -31044,6 +30787,7 @@ var require_mathematica = __commonJS({
       "$FormatType",
       "$FrontEnd",
       "$FrontEndSession",
+      "$GeneratedAssetLocation",
       "$GeoEntityTypes",
       "$GeoLocation",
       "$GeoLocationCity",
@@ -31099,6 +30843,7 @@ var require_mathematica = __commonJS({
       "$MachineName",
       "$MachinePrecision",
       "$MachineType",
+      "$MaxDisplayedChildren",
       "$MaxExtraPrecision",
       "$MaxLicenseProcesses",
       "$MaxLicenseSubprocesses",
@@ -31160,15 +30905,21 @@ var require_mathematica = __commonJS({
       "$ProcessorType",
       "$ProductInformation",
       "$ProgramName",
+      "$ProgressReporting",
       "$PublisherID",
+      "$RandomGeneratorState",
       "$RandomState",
       "$RecursionLimit",
       "$RegisteredDeviceClasses",
       "$RegisteredUserName",
       "$ReleaseNumber",
       "$RequesterAddress",
+      "$RequesterCloudUserID",
+      "$RequesterCloudUserUUID",
       "$RequesterWolframID",
       "$RequesterWolframUUID",
+      "$ResourceSystemBase",
+      "$ResourceSystemPath",
       "$RootDirectory",
       "$ScheduledTask",
       "$ScriptCommandLine",
@@ -31198,6 +30949,7 @@ var require_mathematica = __commonJS({
       "$SystemShell",
       "$SystemTimeZone",
       "$SystemWordLength",
+      "$TargetSystems",
       "$TemplatePath",
       "$TemporaryDirectory",
       "$TemporaryPrefix",
@@ -33494,6 +33246,7 @@ var require_nsis = __commonJS({
         "addincludedir",
         "addplugindir",
         "appendfile",
+        "assert",
         "cd",
         "define",
         "delfile",
@@ -34810,10 +34563,21 @@ var require_php = __commonJS({
         illegal: null,
         contains: hljs.QUOTE_STRING_MODE.contains.concat(SUBST)
       });
-      const HEREDOC = hljs.END_SAME_AS_BEGIN({
-        begin: /<<<[ \t]*(\w+)\n/,
+      const HEREDOC = {
+        begin: /<<<[ \t]*(?:(\w+)|"(\w+)")\n/,
         end: /[ \t]*(\w+)\b/,
-        contains: hljs.QUOTE_STRING_MODE.contains.concat(SUBST)
+        contains: hljs.QUOTE_STRING_MODE.contains.concat(SUBST),
+        "on:begin": (m, resp) => {
+          resp.data._beginMatch = m[1] || m[2];
+        },
+        "on:end": (m, resp) => {
+          if (resp.data._beginMatch !== m[1])
+            resp.ignoreMatch();
+        }
+      };
+      const NOWDOC = hljs.END_SAME_AS_BEGIN({
+        begin: /<<<[ \t]*'(\w+)'\n/,
+        end: /[ \t]*(\w+)\b/
       });
       const WHITESPACE = "[ 	\n]";
       const STRING = {
@@ -34821,7 +34585,8 @@ var require_php = __commonJS({
         variants: [
           DOUBLE_QUOTED,
           SINGLE_QUOTED,
-          HEREDOC
+          HEREDOC,
+          NOWDOC
         ]
       };
       const NUMBER = {
@@ -36395,6 +36160,7 @@ var require_protobuf = __commonJS({
       };
       return {
         name: "Protocol Buffers",
+        aliases: ["proto"],
         keywords: {
           keyword: KEYWORDS,
           type: TYPES,
@@ -36953,7 +36719,7 @@ var require_python = __commonJS({
         ],
         unicodeRegex: true,
         keywords: KEYWORDS,
-        illegal: /(<\/|->|\?)|=>/,
+        illegal: /(<\/|\?)|=>/,
         contains: [
           PROMPT,
           NUMBER,
@@ -37457,272 +37223,139 @@ var require_r = __commonJS({
 var require_reasonml = __commonJS({
   "node_modules/highlight.js/lib/languages/reasonml.js"(exports, module) {
     function reasonml(hljs) {
-      function orReValues(ops) {
-        return ops.map(function(op) {
-          return op.split("").map(function(char) {
-            return "\\" + char;
-          }).join("");
-        }).join("|");
-      }
-      const RE_IDENT = "~?[a-z$_][0-9a-zA-Z$_]*";
-      const RE_MODULE_IDENT = "`?[A-Z$_][0-9a-zA-Z$_]*";
-      const RE_PARAM_TYPEPARAM = "'?[a-z$_][0-9a-z$_]*";
-      const RE_PARAM_TYPE = "\\s*:\\s*[a-z$_][0-9a-z$_]*(\\(\\s*(" + RE_PARAM_TYPEPARAM + "\\s*(," + RE_PARAM_TYPEPARAM + "\\s*)*)?\\))?";
-      const RE_PARAM = RE_IDENT + "(" + RE_PARAM_TYPE + "){0,2}";
-      const RE_OPERATOR = "(" + orReValues([
-        "||",
-        "++",
-        "**",
-        "+.",
-        "*",
-        "/",
-        "*.",
-        "/.",
-        "..."
-      ]) + "|\\|>|&&|==|===)";
-      const RE_OPERATOR_SPACED = "\\s+" + RE_OPERATOR + "\\s+";
-      const KEYWORDS = {
-        keyword: "and as asr assert begin class constraint do done downto else end exception external for fun function functor if in include inherit initializer land lazy let lor lsl lsr lxor match method mod module mutable new nonrec object of open or private rec sig struct then to try type val virtual when while with",
-        built_in: "array bool bytes char exn|5 float int int32 int64 list lazy_t|5 nativeint|5 ref string unit ",
-        literal: "true false"
-      };
-      const RE_NUMBER = "\\b(0[xX][a-fA-F0-9_]+[Lln]?|0[oO][0-7_]+[Lln]?|0[bB][01_]+[Lln]?|[0-9][0-9_]*([Lln]|(\\.[0-9_]*)?([eE][-+]?[0-9_]+)?)?)";
-      const NUMBER_MODE = {
-        className: "number",
-        relevance: 0,
-        variants: [
-          { begin: RE_NUMBER },
-          { begin: "\\(-" + RE_NUMBER + "\\)" }
-        ]
-      };
-      const OPERATOR_MODE = {
-        className: "operator",
-        relevance: 0,
-        begin: RE_OPERATOR
-      };
-      const LIST_CONTENTS_MODES = [
-        {
-          className: "identifier",
-          relevance: 0,
-          begin: RE_IDENT
-        },
-        OPERATOR_MODE,
-        NUMBER_MODE
+      const BUILT_IN_TYPES = [
+        "array",
+        "bool",
+        "bytes",
+        "char",
+        "exn|5",
+        "float",
+        "int",
+        "int32",
+        "int64",
+        "list",
+        "lazy_t|5",
+        "nativeint|5",
+        "ref",
+        "string",
+        "unit"
       ];
-      const MODULE_ACCESS_CONTENTS = [
-        hljs.QUOTE_STRING_MODE,
-        OPERATOR_MODE,
-        {
-          className: "module",
-          begin: "\\b" + RE_MODULE_IDENT,
-          returnBegin: true,
-          relevance: 0,
-          end: ".",
-          contains: [
-            {
-              className: "identifier",
-              begin: RE_MODULE_IDENT,
-              relevance: 0
-            }
-          ]
-        }
-      ];
-      const PARAMS_CONTENTS = [
-        {
-          className: "module",
-          begin: "\\b" + RE_MODULE_IDENT,
-          returnBegin: true,
-          end: ".",
-          relevance: 0,
-          contains: [
-            {
-              className: "identifier",
-              begin: RE_MODULE_IDENT,
-              relevance: 0
-            }
-          ]
-        }
-      ];
-      const PARAMS_MODE = {
-        begin: RE_IDENT,
-        end: "(,|\\n|\\))",
-        relevance: 0,
-        contains: [
-          OPERATOR_MODE,
-          {
-            className: "typing",
-            begin: ":",
-            end: "(,|\\n)",
-            returnBegin: true,
-            relevance: 0,
-            contains: PARAMS_CONTENTS
-          }
-        ]
-      };
-      const FUNCTION_BLOCK_MODE = {
-        className: "function",
-        relevance: 0,
-        keywords: KEYWORDS,
-        variants: [
-          {
-            begin: "\\s(\\(\\.?.*?\\)|" + RE_IDENT + ")\\s*=>",
-            end: "\\s*=>",
-            returnBegin: true,
-            relevance: 0,
-            contains: [
-              {
-                className: "params",
-                variants: [
-                  { begin: RE_IDENT },
-                  { begin: RE_PARAM },
-                  { begin: /\(\s*\)/ }
-                ]
-              }
-            ]
-          },
-          {
-            begin: "\\s\\(\\.?[^;\\|]*\\)\\s*=>",
-            end: "\\s=>",
-            returnBegin: true,
-            relevance: 0,
-            contains: [
-              {
-                className: "params",
-                relevance: 0,
-                variants: [PARAMS_MODE]
-              }
-            ]
-          },
-          { begin: "\\(\\.\\s" + RE_IDENT + "\\)\\s*=>" }
-        ]
-      };
-      MODULE_ACCESS_CONTENTS.push(FUNCTION_BLOCK_MODE);
-      const CONSTRUCTOR_MODE = {
-        className: "constructor",
-        begin: RE_MODULE_IDENT + "\\(",
-        end: "\\)",
-        illegal: "\\n",
-        keywords: KEYWORDS,
-        contains: [
-          hljs.QUOTE_STRING_MODE,
-          OPERATOR_MODE,
-          {
-            className: "params",
-            begin: "\\b" + RE_IDENT
-          }
-        ]
-      };
-      const PATTERN_MATCH_BLOCK_MODE = {
-        className: "pattern-match",
-        begin: "\\|",
-        returnBegin: true,
-        keywords: KEYWORDS,
-        end: "=>",
-        relevance: 0,
-        contains: [
-          CONSTRUCTOR_MODE,
-          OPERATOR_MODE,
-          {
-            relevance: 0,
-            className: "constructor",
-            begin: RE_MODULE_IDENT
-          }
-        ]
-      };
-      const MODULE_ACCESS_MODE = {
-        className: "module-access",
-        keywords: KEYWORDS,
-        returnBegin: true,
-        variants: [
-          { begin: "\\b(" + RE_MODULE_IDENT + "\\.)+" + RE_IDENT },
-          {
-            begin: "\\b(" + RE_MODULE_IDENT + "\\.)+\\(",
-            end: "\\)",
-            returnBegin: true,
-            contains: [
-              FUNCTION_BLOCK_MODE,
-              {
-                begin: "\\(",
-                end: "\\)",
-                relevance: 0,
-                skip: true
-              }
-            ].concat(MODULE_ACCESS_CONTENTS)
-          },
-          {
-            begin: "\\b(" + RE_MODULE_IDENT + "\\.)+\\{",
-            end: /\}/
-          }
-        ],
-        contains: MODULE_ACCESS_CONTENTS
-      };
-      PARAMS_CONTENTS.push(MODULE_ACCESS_MODE);
       return {
         name: "ReasonML",
         aliases: ["re"],
-        keywords: KEYWORDS,
-        illegal: "(:-|:=|\\$\\{|\\+=)",
+        keywords: {
+          $pattern: /[a-z_]\w*!?/,
+          keyword: [
+            "and",
+            "as",
+            "asr",
+            "assert",
+            "begin",
+            "class",
+            "constraint",
+            "do",
+            "done",
+            "downto",
+            "else",
+            "end",
+            "esfun",
+            "exception",
+            "external",
+            "for",
+            "fun",
+            "function",
+            "functor",
+            "if",
+            "in",
+            "include",
+            "inherit",
+            "initializer",
+            "land",
+            "lazy",
+            "let",
+            "lor",
+            "lsl",
+            "lsr",
+            "lxor",
+            "mod",
+            "module",
+            "mutable",
+            "new",
+            "nonrec",
+            "object",
+            "of",
+            "open",
+            "or",
+            "pri",
+            "pub",
+            "rec",
+            "sig",
+            "struct",
+            "switch",
+            "then",
+            "to",
+            "try",
+            "type",
+            "val",
+            "virtual",
+            "when",
+            "while",
+            "with"
+          ],
+          built_in: BUILT_IN_TYPES,
+          literal: ["true", "false"]
+        },
+        illegal: /(:-|:=|\$\{|\+=)/,
         contains: [
-          hljs.COMMENT("/\\*", "\\*/", { illegal: "^(#,\\/\\/)" }),
           {
-            className: "character",
-            begin: "'(\\\\[^']+|[^'])'",
-            illegal: "\\n",
+            scope: "literal",
+            match: /\[(\|\|)?\]|\(\)/,
             relevance: 0
           },
-          hljs.QUOTE_STRING_MODE,
-          {
-            className: "literal",
-            begin: "\\(\\)",
-            relevance: 0
-          },
-          {
-            className: "literal",
-            begin: "\\[\\|",
-            end: "\\|\\]",
-            relevance: 0,
-            contains: LIST_CONTENTS_MODES
-          },
-          {
-            className: "literal",
-            begin: "\\[",
-            end: "\\]",
-            relevance: 0,
-            contains: LIST_CONTENTS_MODES
-          },
-          CONSTRUCTOR_MODE,
-          {
-            className: "operator",
-            begin: RE_OPERATOR_SPACED,
-            illegal: "-->",
-            relevance: 0
-          },
-          NUMBER_MODE,
           hljs.C_LINE_COMMENT_MODE,
-          PATTERN_MATCH_BLOCK_MODE,
-          FUNCTION_BLOCK_MODE,
+          hljs.COMMENT(/\/\*/, /\*\//, { illegal: /^(#,\/\/)/ }),
           {
-            className: "module-def",
-            begin: "\\bmodule\\s+" + RE_IDENT + "\\s+" + RE_MODULE_IDENT + "\\s+=\\s+\\{",
-            end: /\}/,
-            returnBegin: true,
-            keywords: KEYWORDS,
-            relevance: 0,
-            contains: [
-              {
-                className: "module",
-                relevance: 0,
-                begin: RE_MODULE_IDENT
-              },
-              {
-                begin: /\{/,
-                end: /\}/,
-                relevance: 0,
-                skip: true
-              }
-            ].concat(MODULE_ACCESS_CONTENTS)
+            /* type variable */
+            scope: "symbol",
+            match: /\'[A-Za-z_](?!\')[\w\']*/
+            /* the grammar is ambiguous on how 'a'b should be interpreted but not the compiler */
           },
-          MODULE_ACCESS_MODE
+          {
+            /* polymorphic variant */
+            scope: "type",
+            match: /`[A-Z][\w\']*/
+          },
+          {
+            /* module or constructor */
+            scope: "type",
+            match: /\b[A-Z][\w\']*/,
+            relevance: 0
+          },
+          {
+            /* don't color identifiers, but safely catch all identifiers with ' */
+            match: /[a-z_]\w*\'[\w\']*/,
+            relevance: 0
+          },
+          {
+            scope: "operator",
+            match: /\s+(\|\||\+[\+\.]?|\*[\*\/\.]?|\/[\.]?|\.\.\.|\|>|&&|===?)\s+/,
+            relevance: 0
+          },
+          hljs.inherit(hljs.APOS_STRING_MODE, {
+            scope: "string",
+            relevance: 0
+          }),
+          hljs.inherit(hljs.QUOTE_STRING_MODE, { illegal: null }),
+          {
+            scope: "number",
+            variants: [
+              { match: /\b0[xX][a-fA-F0-9_]+[Lln]?/ },
+              { match: /\b0[oO][0-7_]+[Lln]?/ },
+              { match: /\b0[bB][01_]+[Lln]?/ },
+              { match: /\b[0-9][0-9_]*([Lln]|(\.[0-9_]*)?([eE][-+]?[0-9_]+)?)/ }
+            ],
+            relevance: 0
+          }
         ]
       };
     }
@@ -38161,7 +37794,7 @@ var require_rust = __commonJS({
         relevance: 0,
         begin: regex.concat(
           /\b/,
-          /(?!let\b)/,
+          /(?!let|for|while|if|else|match\b)/,
           hljs.IDENT_RE,
           regex.lookahead(/\s*\(/)
         )
@@ -38271,6 +37904,7 @@ var require_rust = __commonJS({
         "debug_assert!",
         "debug_assert_eq!",
         "env!",
+        "eprintln!",
         "panic!",
         "file!",
         "format!",
@@ -39077,7 +38711,11 @@ var require_scala = __commonJS({
             excludeBegin: true,
             excludeEnd: true,
             relevance: 0,
-            contains: [TYPE]
+            contains: [
+              TYPE,
+              hljs.C_LINE_COMMENT_MODE,
+              hljs.C_BLOCK_COMMENT_MODE
+            ]
           },
           {
             className: "params",
@@ -39086,7 +38724,11 @@ var require_scala = __commonJS({
             excludeBegin: true,
             excludeEnd: true,
             relevance: 0,
-            contains: [TYPE]
+            contains: [
+              TYPE,
+              hljs.C_LINE_COMMENT_MODE,
+              hljs.C_BLOCK_COMMENT_MODE
+            ]
           },
           NAME
         ]
@@ -39138,6 +38780,28 @@ var require_scala = __commonJS({
         ],
         beginScope: { 2: "keyword" }
       };
+      const DIRECTIVE_VALUE = {
+        className: "string",
+        begin: /\S+/
+      };
+      const USING_DIRECTIVE = {
+        begin: [
+          "//>",
+          /\s+/,
+          /using/,
+          /\s+/,
+          /\S+/
+        ],
+        beginScope: {
+          1: "comment",
+          3: "keyword",
+          5: "type"
+        },
+        end: /$/,
+        contains: [
+          DIRECTIVE_VALUE
+        ]
+      };
       return {
         name: "Scala",
         keywords: {
@@ -39145,6 +38809,7 @@ var require_scala = __commonJS({
           keyword: "type yield lazy override def with val var sealed abstract private trait object if then forSome for while do throw finally protected extends import final return else break new catch super class case package default try this match continue throws implicit export enum given transparent"
         },
         contains: [
+          USING_DIRECTIVE,
           hljs.C_LINE_COMMENT_MODE,
           hljs.C_BLOCK_COMMENT_MODE,
           STRING,
@@ -39406,7 +39071,7 @@ var require_scss = __commonJS({
         },
         CSS_VARIABLE: {
           className: "attr",
-          begin: /--[A-Za-z][A-Za-z0-9_-]*/
+          begin: /--[A-Za-z_][A-Za-z0-9_-]*/
         }
       };
     };
@@ -40393,7 +40058,7 @@ var require_sqf = __commonJS({
       };
       const FUNCTION = {
         className: "title",
-        begin: /[a-zA-Z]\w+_fnc_\w+/
+        begin: /[a-zA-Z][a-zA-Z_0-9]*_fnc_[a-zA-Z_0-9]+/
       };
       const STRINGS = {
         className: "string",
@@ -40421,8 +40086,14 @@ var require_sqf = __commonJS({
         ]
       };
       const KEYWORDS = [
+        "break",
+        "breakWith",
+        "breakOut",
+        "breakTo",
         "case",
         "catch",
+        "continue",
+        "continueWith",
         "default",
         "do",
         "else",
@@ -40432,8 +40103,10 @@ var require_sqf = __commonJS({
         "forEach",
         "from",
         "if",
+        "local",
         "private",
         "switch",
+        "step",
         "then",
         "throw",
         "to",
@@ -40448,6 +40121,7 @@ var require_sqf = __commonJS({
         "configNull",
         "controlNull",
         "displayNull",
+        "diaryRecordNull",
         "east",
         "endl",
         "false",
@@ -40463,6 +40137,8 @@ var require_sqf = __commonJS({
         "scriptNull",
         "sideAmbientLife",
         "sideEmpty",
+        "sideEnemy",
+        "sideFriendly",
         "sideLogic",
         "sideUnknown",
         "taskNull",
@@ -40477,6 +40153,7 @@ var require_sqf = __commonJS({
         "action",
         "actionIDs",
         "actionKeys",
+        "actionKeysEx",
         "actionKeysImages",
         "actionKeysNames",
         "actionKeysNamesArray",
@@ -40485,6 +40162,7 @@ var require_sqf = __commonJS({
         "activateAddons",
         "activatedAddons",
         "activateKey",
+        "activeTitleEffectParams",
         "add3DENConnection",
         "add3DENEventHandler",
         "add3DENLayer",
@@ -40544,6 +40222,7 @@ var require_sqf = __commonJS({
         "addToRemainsCollector",
         "addTorque",
         "addUniform",
+        "addUserActionEventHandler",
         "addVehicle",
         "addVest",
         "addWaypoint",
@@ -40577,20 +40256,26 @@ var require_sqf = __commonJS({
         "allCutLayers",
         "allDead",
         "allDeadMen",
+        "allDiaryRecords",
         "allDiarySubjects",
         "allDisplays",
+        "allEnv3DSoundSources",
         "allGroups",
+        "allLODs",
         "allMapMarkers",
         "allMines",
         "allMissionObjects",
+        "allObjects",
         "allow3DMode",
         "allowCrewInImmobile",
         "allowCuratorLogicIgnoreAreas",
         "allowDamage",
         "allowDammage",
+        "allowedService",
         "allowFileOperations",
         "allowFleeing",
         "allowGetIn",
+        "allowService",
         "allowSprint",
         "allPlayers",
         "allSimpleObjects",
@@ -40598,7 +40283,9 @@ var require_sqf = __commonJS({
         "allTurrets",
         "allUnits",
         "allUnitsUAV",
+        "allUsers",
         "allVariables",
+        "ambientTemperature",
         "ammo",
         "ammoOnPylon",
         "and",
@@ -40630,12 +40317,14 @@ var require_sqf = __commonJS({
         "assignedCargo",
         "assignedCommander",
         "assignedDriver",
+        "assignedGroup",
         "assignedGunner",
         "assignedItems",
         "assignedTarget",
         "assignedTeam",
         "assignedVehicle",
         "assignedVehicleRole",
+        "assignedVehicles",
         "assignItem",
         "assignTeam",
         "assignToAirport",
@@ -40649,13 +40338,13 @@ var require_sqf = __commonJS({
         "attachObject",
         "attachTo",
         "attackEnabled",
+        "awake",
         "backpack",
         "backpackCargo",
         "backpackContainer",
         "backpackItems",
         "backpackMagazines",
         "backpackSpaceFor",
-        "batteryChargeRTD",
         "behaviour",
         "benchmark",
         "bezierInterpolation",
@@ -40665,10 +40354,7 @@ var require_sqf = __commonJS({
         "boundingBox",
         "boundingBoxReal",
         "boundingCenter",
-        "break",
-        "breakOut",
-        "breakTo",
-        "breakWith",
+        "brakesDisabled",
         "briefingName",
         "buildingExit",
         "buildingPos",
@@ -40723,6 +40409,7 @@ var require_sqf = __commonJS({
         "canAddItemToUniform",
         "canAddItemToVest",
         "cancelSimpleTaskDestination",
+        "canDeployWeapon",
         "canFire",
         "canMove",
         "canSlingLoad",
@@ -40756,7 +40443,6 @@ var require_sqf = __commonJS({
         "clearMagazinePool",
         "clearOverlay",
         "clearRadio",
-        "clearVehicleInit",
         "clearWeaponCargo",
         "clearWeaponCargoGlobal",
         "clearWeaponPool",
@@ -40767,6 +40453,7 @@ var require_sqf = __commonJS({
         "collapseObjectTree",
         "collect3DENHistory",
         "collectiveRTD",
+        "collisionDisabledWith",
         "combatBehaviour",
         "combatMode",
         "commandArtilleryFire",
@@ -40785,6 +40472,8 @@ var require_sqf = __commonJS({
         "commandWatch",
         "comment",
         "commitOverlay",
+        "compatibleItems",
+        "compatibleMagazines",
         "compile",
         "compileFinal",
         "compileScript",
@@ -40802,9 +40491,8 @@ var require_sqf = __commonJS({
         "confirmSensorTarget",
         "connectTerminalToUAV",
         "connectToServer",
-        "continue",
-        "continueWith",
         "controlsGroupCtrl",
+        "conversationDisabled",
         "copyFromClipboard",
         "copyToClipboard",
         "copyWaypoints",
@@ -40840,7 +40528,6 @@ var require_sqf = __commonJS({
         "createSimpleTask",
         "createSite",
         "createSoundSource",
-        "createTarget",
         "createTask",
         "createTeam",
         "createTrigger",
@@ -40865,9 +40552,11 @@ var require_sqf = __commonJS({
         "ctrlAngle",
         "ctrlAnimateModel",
         "ctrlAnimationPhaseModel",
+        "ctrlAt",
         "ctrlAutoScrollDelay",
         "ctrlAutoScrollRewind",
         "ctrlAutoScrollSpeed",
+        "ctrlBackgroundColor",
         "ctrlChecked",
         "ctrlClassName",
         "ctrlCommit",
@@ -40878,6 +40567,7 @@ var require_sqf = __commonJS({
         "ctrlEnabled",
         "ctrlFade",
         "ctrlFontHeight",
+        "ctrlForegroundColor",
         "ctrlHTMLLoaded",
         "ctrlIDC",
         "ctrlIDD",
@@ -40887,8 +40577,10 @@ var require_sqf = __commonJS({
         "ctrlMapAnimDone",
         "ctrlMapCursor",
         "ctrlMapMouseOver",
+        "ctrlMapPosition",
         "ctrlMapScale",
         "ctrlMapScreenToWorld",
+        "ctrlMapSetPosition",
         "ctrlMapWorldToScreen",
         "ctrlModel",
         "ctrlModelDirAndUp",
@@ -40949,6 +40641,7 @@ var require_sqf = __commonJS({
         "ctrlSetPositionY",
         "ctrlSetScale",
         "ctrlSetScrollValues",
+        "ctrlSetShadow",
         "ctrlSetStructuredText",
         "ctrlSetText",
         "ctrlSetTextColor",
@@ -40959,7 +40652,10 @@ var require_sqf = __commonJS({
         "ctrlSetTooltipColorBox",
         "ctrlSetTooltipColorShade",
         "ctrlSetTooltipColorText",
+        "ctrlSetTooltipMaxWidth",
         "ctrlSetURL",
+        "ctrlSetURLOverlayMode",
+        "ctrlShadow",
         "ctrlShow",
         "ctrlShown",
         "ctrlStyle",
@@ -40972,6 +40668,7 @@ var require_sqf = __commonJS({
         "ctrlTooltip",
         "ctrlType",
         "ctrlURL",
+        "ctrlURLOverlayMode",
         "ctrlVisible",
         "ctRowControls",
         "ctRowCount",
@@ -41025,7 +40722,7 @@ var require_sqf = __commonJS({
         "damage",
         "date",
         "dateToNumber",
-        "daytime",
+        "dayTime",
         "deActivateKey",
         "debriefingText",
         "debugFSM",
@@ -41047,7 +40744,6 @@ var require_sqf = __commonJS({
         "deleteResources",
         "deleteSite",
         "deleteStatus",
-        "deleteTarget",
         "deleteTeam",
         "deleteVehicle",
         "deleteVehicleCrew",
@@ -41056,39 +40752,42 @@ var require_sqf = __commonJS({
         "detectedMines",
         "diag_activeMissionFSMs",
         "diag_activeScripts",
-        "diag_activeSQSScripts",
-        "diag_captureFrameToFile",
-        "diag_captureSlowFrame",
-        "diag_deltaTime",
-        "diag_drawMode",
-        "diag_enable",
-        "diag_enabled",
-        "diag_fps",
-        "diag_fpsMin",
-        "diag_frameNo",
-        "diag_list",
-        "diag_mergeConfigFile",
-        "diag_scope",
         "diag_activeSQFScripts",
+        "diag_activeSQSScripts",
         "diag_allMissionEventHandlers",
         "diag_captureFrame",
+        "diag_captureFrameToFile",
+        "diag_captureSlowFrame",
         "diag_codePerformance",
+        "diag_deltaTime",
+        "diag_drawmode",
         "diag_dumpCalltraceToLog",
+        "diag_dumpScriptAssembly",
         "diag_dumpTerrainSynth",
         "diag_dynamicSimulationEnd",
+        "diag_enable",
+        "diag_enabled",
         "diag_exportConfig",
         "diag_exportTerrainSVG",
+        "diag_fps",
+        "diag_fpsmin",
+        "diag_frameno",
+        "diag_getTerrainSegmentOffset",
         "diag_lightNewLoad",
+        "diag_list",
         "diag_localized",
         "diag_log",
         "diag_logSlowFrame",
+        "diag_mergeConfigFile",
         "diag_recordTurretLimits",
-        "diag_resetShapes",
+        "diag_resetFSM",
+        "diag_resetshapes",
+        "diag_scope",
         "diag_setLightNew",
+        "diag_stacktrace",
         "diag_tickTime",
         "diag_toggle",
         "dialog",
-        "diaryRecordNull",
         "diarySubjectExists",
         "didJIP",
         "didJIPOwner",
@@ -41097,8 +40796,10 @@ var require_sqf = __commonJS({
         "difficultyEnabledRTD",
         "difficultyOption",
         "direction",
+        "directionStabilizationEnabled",
         "directSay",
         "disableAI",
+        "disableBrakes",
         "disableCollisionWith",
         "disableConversation",
         "disableDebriefingStats",
@@ -41110,11 +40811,14 @@ var require_sqf = __commonJS({
         "disableUAVConnectability",
         "disableUserInput",
         "displayAddEventHandler",
+        "displayChild",
         "displayCtrl",
         "displayParent",
         "displayRemoveAllEventHandlers",
         "displayRemoveEventHandler",
         "displaySetEventHandler",
+        "displayUniqueName",
+        "displayUpdate",
         "dissolveTeam",
         "distance",
         "distance2D",
@@ -41136,6 +40840,7 @@ var require_sqf = __commonJS({
         "drawEllipse",
         "drawIcon",
         "drawIcon3D",
+        "drawLaser",
         "drawLine",
         "drawLine3D",
         "drawLink",
@@ -41170,6 +40875,7 @@ var require_sqf = __commonJS({
         "enableCopilot",
         "enableDebriefingStats",
         "enableDiagLegend",
+        "enableDirectionStabilization",
         "enableDynamicSimulation",
         "enableDynamicSimulationSystem",
         "enableEndDialog",
@@ -41200,7 +40906,6 @@ var require_sqf = __commonJS({
         "enableWeaponDisassembly",
         "endLoadingScreen",
         "endMission",
-        "enemy",
         "engineOn",
         "enginesIsOnRTD",
         "enginesPowerRTD",
@@ -41209,6 +40914,7 @@ var require_sqf = __commonJS({
         "entities",
         "environmentEnabled",
         "environmentVolume",
+        "equipmentDisabled",
         "estimatedEndServerTime",
         "estimatedTimeLeft",
         "evalObjectArgument",
@@ -41221,7 +40927,6 @@ var require_sqf = __commonJS({
         "exp",
         "expectedDestination",
         "exportJIPMessages",
-        "exportLandscapeXYZ",
         "eyeDirection",
         "eyePos",
         "face",
@@ -41235,6 +40940,7 @@ var require_sqf = __commonJS({
         "fileExists",
         "fillWeaponsFromPool",
         "find",
+        "findAny",
         "findCover",
         "findDisplay",
         "findEditorObject",
@@ -41289,14 +40995,15 @@ var require_sqf = __commonJS({
         "formationTask",
         "formatText",
         "formLeader",
+        "freeExtension",
         "freeLook",
-        "friendly",
         "fromEditor",
         "fuel",
         "fullCrew",
         "gearIDCAmmoCount",
         "gearSlotAmmoCount",
         "gearSlotData",
+        "gestureState",
         "get",
         "get3DENActionState",
         "get3DENAttribute",
@@ -41312,6 +41019,7 @@ var require_sqf = __commonJS({
         "get3DENMouseOver",
         "get3DENSelected",
         "getAimingCoef",
+        "getAllEnv3DSoundControllers",
         "getAllEnvSoundControllers",
         "getAllHitPointsDamage",
         "getAllOwnedMines",
@@ -41341,12 +41049,16 @@ var require_sqf = __commonJS({
         "getClientStateNumber",
         "getCompatiblePylonMagazines",
         "getConnectedUAV",
+        "getConnectedUAVUnit",
         "getContainerMaxLoad",
+        "getCorpse",
+        "getCruiseControl",
         "getCursorObjectParams",
         "getCustomAimCoef",
         "getCustomSoundController",
         "getCustomSoundControllerCount",
         "getDammage",
+        "getDebriefingText",
         "getDescription",
         "getDir",
         "getDirVisual",
@@ -41359,10 +41071,14 @@ var require_sqf = __commonJS({
         "getEditorMode",
         "getEditorObjectScope",
         "getElevationOffset",
+        "getEngineTargetRPMRTD",
+        "getEnv3DSoundController",
         "getEnvSoundController",
+        "getEventHandlerInfo",
         "getFatigue",
         "getFieldManualStartPage",
         "getForcedFlagTexture",
+        "getForcedSpeed",
         "getFriend",
         "getFSMVariable",
         "getFuelCargo",
@@ -41398,25 +41114,28 @@ var require_sqf = __commonJS({
         "getObjectChildren",
         "getObjectDLC",
         "getObjectFOV",
+        "getObjectID",
         "getObjectMaterials",
         "getObjectProxy",
         "getObjectScale",
         "getObjectTextures",
         "getObjectType",
         "getObjectViewDistance",
+        "getOpticsMode",
         "getOrDefault",
+        "getOrDefaultCall",
         "getOxygenRemaining",
         "getPersonUsedDLCs",
         "getPilotCameraDirection",
         "getPilotCameraPosition",
         "getPilotCameraRotation",
         "getPilotCameraTarget",
+        "getPiPViewDistance",
         "getPlateNumber",
         "getPlayerChannel",
         "getPlayerID",
         "getPlayerScores",
         "getPlayerUID",
-        "getPlayerUIDOld",
         "getPlayerVoNVolume",
         "getPos",
         "getPosASL",
@@ -41435,6 +41154,8 @@ var require_sqf = __commonJS({
         "getResolution",
         "getRoadInfo",
         "getRotorBrakeRTD",
+        "getSensorTargets",
+        "getSensorThreats",
         "getShadowDistance",
         "getShotParents",
         "getSlingLoad",
@@ -41447,24 +41168,32 @@ var require_sqf = __commonJS({
         "getSubtitleOptions",
         "getSuppression",
         "getTerrainGrid",
+        "getTerrainHeight",
         "getTerrainHeightASL",
+        "getTerrainInfo",
         "getText",
         "getTextRaw",
+        "getTextureInfo",
         "getTextWidth",
+        "getTiParameters",
         "getTotalDLCUsageTime",
         "getTrimOffsetRTD",
+        "getTurretLimits",
+        "getTurretOpticsMode",
+        "getUnitFreefallInfo",
         "getUnitLoadout",
         "getUnitTrait",
+        "getUnloadInCombat",
+        "getUserInfo",
         "getUserMFDText",
         "getUserMFDValue",
         "getVariable",
         "getVehicleCargo",
-        "getVehicleTIPars",
+        "getVehicleTiPars",
         "getWeaponCargo",
         "getWeaponSway",
         "getWingsOrientationRTD",
         "getWingsPositionRTD",
-        "getWorld",
         "getWPPos",
         "glanceAt",
         "globalChat",
@@ -41476,9 +41205,10 @@ var require_sqf = __commonJS({
         "groupFromNetId",
         "groupIconSelectable",
         "groupIconsVisible",
-        "groupId",
+        "groupID",
         "groupOwner",
         "groupRadio",
+        "groups",
         "groupSelectedUnits",
         "groupSelectUnit",
         "gunner",
@@ -41488,6 +41218,7 @@ var require_sqf = __commonJS({
         "handgunMagazine",
         "handgunWeapon",
         "handsHit",
+        "hashValue",
         "hasInterface",
         "hasPilotCamera",
         "hasWeapon",
@@ -41502,12 +41233,10 @@ var require_sqf = __commonJS({
         "hcShowBar",
         "hcShownBar",
         "headgear",
-        "hideBehindScripted",
         "hideBody",
         "hideObject",
         "hideObjectGlobal",
         "hideSelection",
-        "hierarchyObjectsCount",
         "hint",
         "hintC",
         "hintCadet",
@@ -41535,6 +41264,8 @@ var require_sqf = __commonJS({
         "initAmbientLife",
         "inPolygon",
         "inputAction",
+        "inputController",
+        "inputMouse",
         "inRangeOfArtillery",
         "insert",
         "insertEditorObject",
@@ -41546,12 +41277,14 @@ var require_sqf = __commonJS({
         "isActionMenuVisible",
         "isAgent",
         "isAimPrecisionEnabled",
+        "isAllowedCrewInImmobile",
         "isArray",
         "isAutoHoverOn",
         "isAutonomous",
         "isAutoStartUpEnabledRTD",
         "isAutotest",
         "isAutoTrimOnRTD",
+        "isAwake",
         "isBleeding",
         "isBurning",
         "isClass",
@@ -41561,6 +41294,7 @@ var require_sqf = __commonJS({
         "isDedicated",
         "isDLCAvailable",
         "isEngineOn",
+        "isEqualRef",
         "isEqualTo",
         "isEqualType",
         "isEqualTypeAll",
@@ -41577,7 +41311,6 @@ var require_sqf = __commonJS({
         "isGamePaused",
         "isGroupDeletedWhenEmpty",
         "isHidden",
-        "isHideBehindScripted",
         "isInRemainsCollector",
         "isInstructorFigureEnabled",
         "isIRLaserOn",
@@ -41588,9 +41321,11 @@ var require_sqf = __commonJS({
         "isLocalized",
         "isManualFire",
         "isMarkedForCollection",
+        "isMissionProfileNamespaceLoaded",
         "isMultiplayer",
         "isMultiplayerSolo",
         "isNil",
+        "isNotEqualRef",
         "isNotEqualTo",
         "isNull",
         "isNumber",
@@ -41602,6 +41337,7 @@ var require_sqf = __commonJS({
         "isRealTime",
         "isRemoteExecuted",
         "isRemoteExecutedJIP",
+        "isSaving",
         "isSensorTargetConfirmed",
         "isServer",
         "isShowing3DIcons",
@@ -41609,6 +41345,7 @@ var require_sqf = __commonJS({
         "isSprintAllowed",
         "isStaminaEnabled",
         "isSteamMission",
+        "isSteamOverlayEnabled",
         "isStreamFriendlyUIEnabled",
         "isStressDamageEnabled",
         "isText",
@@ -41682,9 +41419,11 @@ var require_sqf = __commonJS({
         "lbSetValue",
         "lbSize",
         "lbSort",
+        "lbSortBy",
         "lbSortByValue",
         "lbText",
         "lbTextRight",
+        "lbTooltip",
         "lbValue",
         "leader",
         "leaderboardDeInit",
@@ -41746,6 +41485,7 @@ var require_sqf = __commonJS({
         "lnbSetValue",
         "lnbSize",
         "lnbSort",
+        "lnbSortBy",
         "lnbSortByValue",
         "lnbText",
         "lnbTextRight",
@@ -41753,6 +41493,7 @@ var require_sqf = __commonJS({
         "load",
         "loadAbs",
         "loadBackpack",
+        "loadConfig",
         "loadFile",
         "loadGame",
         "loadIdentity",
@@ -41761,7 +41502,6 @@ var require_sqf = __commonJS({
         "loadStatus",
         "loadUniform",
         "loadVest",
-        "local",
         "localize",
         "localNamespace",
         "locationPosition",
@@ -41770,6 +41510,7 @@ var require_sqf = __commonJS({
         "lockCargo",
         "lockDriver",
         "locked",
+        "lockedCameraTo",
         "lockedCargo",
         "lockedDriver",
         "lockedInventory",
@@ -41777,7 +41518,7 @@ var require_sqf = __commonJS({
         "lockIdentity",
         "lockInventory",
         "lockTurret",
-        "lockWP",
+        "lockWp",
         "log",
         "logEntities",
         "logNetwork",
@@ -41818,6 +41559,7 @@ var require_sqf = __commonJS({
         "matrixMultiply",
         "matrixTranspose",
         "max",
+        "maxLoad",
         "members",
         "menuAction",
         "menuAdd",
@@ -41854,9 +41596,11 @@ var require_sqf = __commonJS({
         "missileTargetPos",
         "missionConfigFile",
         "missionDifficulty",
+        "missionEnd",
         "missionName",
         "missionNameSource",
         "missionNamespace",
+        "missionProfileNamespace",
         "missionStart",
         "missionVersion",
         "mod",
@@ -41878,7 +41622,6 @@ var require_sqf = __commonJS({
         "moveInTurret",
         "moveObjectToEnd",
         "moveOut",
-        "moveTarget",
         "moveTime",
         "moveTo",
         "moveToCompleted",
@@ -41892,6 +41635,7 @@ var require_sqf = __commonJS({
         "nearestLocation",
         "nearestLocations",
         "nearestLocationWithDubbing",
+        "nearestMines",
         "nearestObject",
         "nearestObjects",
         "nearestTerrainObjects",
@@ -41901,6 +41645,7 @@ var require_sqf = __commonJS({
         "nearSupplies",
         "nearTargets",
         "needReload",
+        "needService",
         "netId",
         "netObjNull",
         "newOverlay",
@@ -41910,12 +41655,10 @@ var require_sqf = __commonJS({
         "not",
         "numberOfEnginesRTD",
         "numberToDate",
-        "object",
         "objectCurators",
         "objectFromNetId",
         "objectParent",
         "objStatus",
-        "onBriefingGear",
         "onBriefingGroup",
         "onBriefingNotes",
         "onBriefingPlan",
@@ -41936,7 +41679,6 @@ var require_sqf = __commonJS({
         "onTeamSwitch",
         "openCuratorInterface",
         "openDLCPage",
-        "openDSInterface",
         "openGPS",
         "openMap",
         "openSteamApp",
@@ -41977,6 +41719,8 @@ var require_sqf = __commonJS({
         "playScriptedMission",
         "playSound",
         "playSound3D",
+        "playSoundUI",
+        "pose",
         "position",
         "positionCameraToWorld",
         "posScreenToWorld",
@@ -42002,7 +41746,6 @@ var require_sqf = __commonJS({
         "primaryWeaponMagazine",
         "priority",
         "processDiaryLink",
-        "processInitCommands",
         "productVersion",
         "profileName",
         "profileNamespace",
@@ -42026,14 +41769,19 @@ var require_sqf = __commonJS({
         "radioChannelRemove",
         "radioChannelSetCallSign",
         "radioChannelSetLabel",
+        "radioEnabled",
         "radioVolume",
         "rain",
         "rainbow",
+        "rainParams",
         "random",
         "rank",
         "rankId",
         "rating",
         "rectangular",
+        "regexFind",
+        "regexMatch",
+        "regexReplace",
         "registeredTasks",
         "registerTask",
         "reload",
@@ -42064,11 +41812,11 @@ var require_sqf = __commonJS({
         "removeAllOwnedMines",
         "removeAllPrimaryWeaponItems",
         "removeAllSecondaryWeaponItems",
+        "removeAllUserActionEventHandlers",
         "removeAllWeapons",
         "removeBackpack",
         "removeBackpackGlobal",
         "removeBinocularItem",
-        "removeClothing",
         "removeCuratorAddons",
         "removeCuratorCameraArea",
         "removeCuratorEditableObjects",
@@ -42104,6 +41852,7 @@ var require_sqf = __commonJS({
         "removeSwitchableUnit",
         "removeTeamMember",
         "removeUniform",
+        "removeUserActionEventHandler",
         "removeVest",
         "removeWeapon",
         "removeWeaponAttachmentCargo",
@@ -42136,8 +41885,8 @@ var require_sqf = __commonJS({
         "ropeEndPosition",
         "ropeLength",
         "ropes",
+        "ropesAttachedTo",
         "ropeSegments",
-        "ropeSetCargoMass",
         "ropeUnwind",
         "ropeUnwound",
         "rotorsForcesRTD",
@@ -42154,6 +41903,7 @@ var require_sqf = __commonJS({
         "saveGame",
         "saveIdentity",
         "saveJoysticks",
+        "saveMissionProfileNamespace",
         "saveOverlay",
         "saveProfileNamespace",
         "saveStatus",
@@ -42180,6 +41930,7 @@ var require_sqf = __commonJS({
         "selectEditorObject",
         "selectionNames",
         "selectionPosition",
+        "selectionVectorDirAndUp",
         "selectLeader",
         "selectMax",
         "selectMin",
@@ -42194,10 +41945,12 @@ var require_sqf = __commonJS({
         "sendTask",
         "sendTaskResult",
         "sendUDPMessage",
+        "sentencesEnabled",
         "serverCommand",
         "serverCommandAvailable",
         "serverCommandExecutable",
         "serverName",
+        "serverNamespace",
         "serverTime",
         "set",
         "set3DENAttribute",
@@ -42222,21 +41975,17 @@ var require_sqf = __commonJS({
         "setAnimSpeedCoef",
         "setAperture",
         "setApertureNew",
-        "setAPURTD",
         "setArmoryPoints",
         "setAttributes",
         "setAutonomous",
-        "setBatteryChargeRTD",
-        "setBatteryRTD",
         "setBehaviour",
         "setBehaviourStrong",
         "setBleedingRemaining",
         "setBrakesRTD",
-        "setCameraEffect",
         "setCameraInterest",
         "setCamShakeDefParams",
         "setCamShakeParams",
-        "setCamUseTI",
+        "setCamUseTi",
         "setCaptive",
         "setCenterOfMass",
         "setCollisionLight",
@@ -42244,6 +41993,7 @@ var require_sqf = __commonJS({
         "setCombatMode",
         "setCompassOscillation",
         "setConvoySeparation",
+        "setCruiseControl",
         "setCuratorCameraAreaCeiling",
         "setCuratorCoef",
         "setCuratorEditingAreaType",
@@ -42252,7 +42002,7 @@ var require_sqf = __commonJS({
         "setCurrentTask",
         "setCurrentWaypoint",
         "setCustomAimCoef",
-        "setCustomMissionData",
+        "SetCustomMissionData",
         "setCustomSoundController",
         "setCustomWeightRTD",
         "setDamage",
@@ -42275,10 +42025,9 @@ var require_sqf = __commonJS({
         "setEditorObjectScope",
         "setEffectCondition",
         "setEffectiveCommander",
-        "setEngineRPMRTD",
         "setEngineRpmRTD",
         "setFace",
-        "setFaceAnimation",
+        "setFaceanimation",
         "setFatigue",
         "setFeatureType",
         "setFlagAnimationPhase",
@@ -42299,7 +42048,7 @@ var require_sqf = __commonJS({
         "setGroupIconParams",
         "setGroupIconsSelectable",
         "setGroupIconsVisible",
-        "setGroupId",
+        "setGroupid",
         "setGroupIdGlobal",
         "setGroupOwner",
         "setGusts",
@@ -42309,6 +42058,7 @@ var require_sqf = __commonJS({
         "setHitPointDamage",
         "setHorizonParallaxCoef",
         "setHUDMovementLevels",
+        "setHumidity",
         "setIdentity",
         "setImportance",
         "setInfoPanel",
@@ -42317,12 +42067,15 @@ var require_sqf = __commonJS({
         "setLightAttenuation",
         "setLightBrightness",
         "setLightColor",
+        "setLightConePars",
         "setLightDayLight",
         "setLightFlareMaxDistance",
         "setLightFlareSize",
         "setLightIntensity",
+        "setLightIR",
         "setLightnings",
         "setLightUseFlare",
+        "setLightVolumeShape",
         "setLocalWindParams",
         "setMagazineTurretAmmo",
         "setMarkerAlpha",
@@ -42348,6 +42101,7 @@ var require_sqf = __commonJS({
         "setMarkerType",
         "setMarkerTypeLocal",
         "setMass",
+        "setMaxLoad",
         "setMimic",
         "setMissileTarget",
         "setMissileTargetPos",
@@ -42364,6 +42118,7 @@ var require_sqf = __commonJS({
         "setObjectTexture",
         "setObjectTextureGlobal",
         "setObjectViewDistance",
+        "setOpticsMode",
         "setOvercast",
         "setOwner",
         "setOxygenRemaining",
@@ -42377,6 +42132,7 @@ var require_sqf = __commonJS({
         "setPilotCameraTarget",
         "setPilotLight",
         "setPiPEffect",
+        "setPiPViewDistance",
         "setPitch",
         "setPlateNumber",
         "setPlayable",
@@ -42418,7 +42174,6 @@ var require_sqf = __commonJS({
         "setSpeedMode",
         "setStamina",
         "setStaminaScheme",
-        "setStarterRTD",
         "setStatValue",
         "setSuppression",
         "setSystemOfUnits",
@@ -42427,12 +42182,12 @@ var require_sqf = __commonJS({
         "setTaskResult",
         "setTaskState",
         "setTerrainGrid",
+        "setTerrainHeight",
         "setText",
-        "setThrottleRTD",
         "setTimeMultiplier",
+        "setTiParameter",
         "setTitleEffect",
-        "setToneMapping",
-        "setToneMappingParams",
+        "setTowParent",
         "setTrafficDensity",
         "setTrafficDistance",
         "setTrafficGap",
@@ -42444,10 +42199,13 @@ var require_sqf = __commonJS({
         "setTriggerText",
         "setTriggerTimeout",
         "setTriggerType",
+        "setTurretLimits",
+        "setTurretOpticsMode",
         "setType",
         "setUnconscious",
         "setUnitAbility",
         "setUnitCombatMode",
+        "setUnitFreefallHeight",
         "setUnitLoadout",
         "setUnitPos",
         "setUnitPosWeak",
@@ -42467,14 +42225,13 @@ var require_sqf = __commonJS({
         "setVehicleArmor",
         "setVehicleCargo",
         "setVehicleId",
-        "setVehicleInit",
         "setVehicleLock",
         "setVehiclePosition",
         "setVehicleRadar",
         "setVehicleReceiveRemoteTargets",
         "setVehicleReportOwnPosition",
         "setVehicleReportRemoteTargets",
-        "setVehicleTIPars",
+        "setVehicleTiPars",
         "setVehicleVarName",
         "setVelocity",
         "setVelocityModelSpace",
@@ -42515,7 +42272,7 @@ var require_sqf = __commonJS({
         "showCommandingMenu",
         "showCompass",
         "showCuratorCompass",
-        "showGPS",
+        "showGps",
         "showHUD",
         "showLegend",
         "showMap",
@@ -42524,12 +42281,13 @@ var require_sqf = __commonJS({
         "shownCompass",
         "shownCuratorCompass",
         "showNewEditorObject",
-        "shownGPS",
+        "shownGps",
         "shownHUD",
         "shownMap",
         "shownPad",
         "shownRadio",
         "shownScoretable",
+        "shownSubtitles",
         "shownUAVFeed",
         "shownWarrant",
         "shownWatch",
@@ -42544,16 +42302,12 @@ var require_sqf = __commonJS({
         "showWaypoints",
         "side",
         "sideChat",
-        "sideEmpty",
-        "sideEnemy",
-        "sideFriendly",
         "sideRadio",
         "simpleTasks",
         "simulationEnabled",
         "simulCloudDensity",
         "simulCloudOcclusion",
         "simulInClouds",
-        "simulSetHumidity",
         "simulWeatherSync",
         "sin",
         "size",
@@ -42583,7 +42337,6 @@ var require_sqf = __commonJS({
         "squadParams",
         "stance",
         "startLoadingScreen",
-        "step",
         "stop",
         "stopEngineRTD",
         "stopped",
@@ -42645,7 +42398,6 @@ var require_sqf = __commonJS({
         "textLog",
         "textLogFormat",
         "tg",
-        "throttleRTD",
         "time",
         "timeMultiplier",
         "titleCut",
@@ -42730,6 +42482,7 @@ var require_sqf = __commonJS({
         "uniformContainer",
         "uniformItems",
         "uniformMagazines",
+        "uniqueUnitItems",
         "unitAddons",
         "unitAimPosition",
         "unitAimPositionVisual",
@@ -42752,6 +42505,7 @@ var require_sqf = __commonJS({
         "useAISteeringComponent",
         "useAudioTimeForMoves",
         "userInputDisabled",
+        "values",
         "vectorAdd",
         "vectorCos",
         "vectorCrossProduct",
@@ -42792,7 +42546,7 @@ var require_sqf = __commonJS({
         "vestMagazines",
         "viewDistance",
         "visibleCompass",
-        "visibleGPS",
+        "visibleGps",
         "visibleMap",
         "visiblePosition",
         "visiblePositionASL",
@@ -42831,7 +42585,9 @@ var require_sqf = __commonJS({
         "weaponDirection",
         "weaponInertia",
         "weaponLowered",
+        "weaponReloadingTime",
         "weapons",
+        "weaponsInfo",
         "weaponsItems",
         "weaponsItemsCargo",
         "weaponState",
@@ -42853,7 +42609,7 @@ var require_sqf = __commonJS({
         className: "meta",
         begin: /#\s*[a-z]+\b/,
         end: /$/,
-        keywords: { keyword: "define undef ifdef ifndef else endif include" },
+        keywords: "define undef ifdef ifndef else endif include if",
         contains: [
           {
             begin: /\\\n/,
@@ -42861,7 +42617,6 @@ var require_sqf = __commonJS({
           },
           hljs.inherit(STRINGS, { className: "string" }),
           {
-            className: "string",
             begin: /<[^\n>]*>/,
             end: /$/,
             illegal: "\\n"
@@ -42887,7 +42642,21 @@ var require_sqf = __commonJS({
           STRINGS,
           PREPROCESSOR
         ],
-        illegal: /#|^\$ /
+        illegal: [
+          //$ is only valid when used with Hex numbers (e.g. $FF)
+          /\$[^a-fA-F0-9]/,
+          /\w\$/,
+          /\?/,
+          //There's no ? in SQF
+          /@/,
+          //There's no @ in SQF
+          // Brute-force-fixing the build error. See https://github.com/highlightjs/highlight.js/pull/3193#issuecomment-843088729
+          / \| /,
+          // . is only used in numbers
+          /[a-zA-Z_]\./,
+          /\:\=/,
+          /\[\:/
+        ]
       };
     }
     module.exports = sqf;
@@ -43467,7 +43236,7 @@ var require_sql = __commonJS({
       });
       const VARIABLE = {
         className: "variable",
-        begin: /@[a-z0-9]+/
+        begin: /@[a-z0-9][a-z0-9_]*/
       };
       const OPERATOR = {
         className: "operator",
@@ -43563,16 +43332,20 @@ var require_stan = __commonJS({
       ];
       const TYPES = [
         "array",
+        "tuple",
         "complex",
         "int",
         "real",
         "vector",
+        "complex_vector",
         "ordered",
         "positive_ordered",
         "simplex",
         "unit_vector",
         "row_vector",
+        "complex_row_vector",
         "matrix",
+        "complex_matrix",
         "cholesky_factor_corr|10",
         "cholesky_factor_cov|10",
         "corr_matrix|10",
@@ -43580,8 +43353,6 @@ var require_stan = __commonJS({
         "void"
       ];
       const FUNCTIONS = [
-        "Phi",
-        "Phi_approx",
         "abs",
         "acos",
         "acosh",
@@ -43599,7 +43370,6 @@ var require_stan = __commonJS({
         "bessel_first_kind",
         "bessel_second_kind",
         "binary_log_loss",
-        "binomial_coefficient_log",
         "block",
         "cbrt",
         "ceil",
@@ -43610,37 +43380,48 @@ var require_stan = __commonJS({
         "cols",
         "columns_dot_product",
         "columns_dot_self",
+        "complex_schur_decompose",
+        "complex_schur_decompose_t",
+        "complex_schur_decompose_u",
         "conj",
         "cos",
         "cosh",
         "cov_exp_quad",
         "crossprod",
+        "csr_extract",
         "csr_extract_u",
         "csr_extract_v",
         "csr_extract_w",
         "csr_matrix_times_vector",
         "csr_to_dense_matrix",
         "cumulative_sum",
+        "dae",
+        "dae_tol",
         "determinant",
         "diag_matrix",
+        "diagonal",
         "diag_post_multiply",
         "diag_pre_multiply",
-        "diagonal",
         "digamma",
         "dims",
         "distance",
         "dot_product",
         "dot_self",
+        "eigendecompose",
+        "eigendecompose_sym",
+        "eigenvalues",
         "eigenvalues_sym",
+        "eigenvectors",
         "eigenvectors_sym",
         "erf",
         "erfc",
         "exp",
         "exp2",
         "expm1",
-        "fabs",
         "falling_factorial",
         "fdim",
+        "fft",
+        "fft2",
         "floor",
         "fma",
         "fmax",
@@ -43650,7 +43431,6 @@ var require_stan = __commonJS({
         "gamma_q",
         "generalized_inverse",
         "get_imag",
-        "get_lp",
         "get_real",
         "head",
         "hmm_hidden_state_prob",
@@ -43658,20 +43438,24 @@ var require_stan = __commonJS({
         "hypot",
         "identity_matrix",
         "inc_beta",
-        "int_step",
         "integrate_1d",
         "integrate_ode",
         "integrate_ode_adams",
         "integrate_ode_bdf",
         "integrate_ode_rk45",
+        "int_step",
         "inv",
-        "inv_Phi",
         "inv_cloglog",
-        "inv_logit",
-        "inv_sqrt",
-        "inv_square",
+        "inv_erfc",
         "inverse",
         "inverse_spd",
+        "inv_fft",
+        "inv_fft2",
+        "inv_inc_beta",
+        "inv_logit",
+        "inv_Phi",
+        "inv_sqrt",
+        "inv_square",
         "is_inf",
         "is_nan",
         "lambert_w0",
@@ -43697,12 +43481,12 @@ var require_stan = __commonJS({
         "log_falling_factorial",
         "log_inv_logit",
         "log_inv_logit_diff",
+        "logit",
         "log_mix",
         "log_modified_bessel_first_kind",
         "log_rising_factorial",
         "log_softmax",
         "log_sum_exp",
-        "logit",
         "machine_precision",
         "map_rect",
         "matrix_exp",
@@ -43717,10 +43501,11 @@ var require_stan = __commonJS({
         "min",
         "modified_bessel_first_kind",
         "modified_bessel_second_kind",
-        "multiply_log",
         "multiply_lower_tri_self_transpose",
         "negative_infinity",
         "norm",
+        "norm1",
+        "norm2",
         "not_a_number",
         "num_elements",
         "ode_adams",
@@ -43741,14 +43526,18 @@ var require_stan = __commonJS({
         "ones_row_vector",
         "ones_vector",
         "owens_t",
+        "Phi",
+        "Phi_approx",
         "polar",
         "positive_infinity",
         "pow",
         "print",
         "prod",
         "proj",
+        "qr",
         "qr_Q",
         "qr_R",
+        "qr_thin",
         "qr_thin_Q",
         "qr_thin_R",
         "quad_form",
@@ -43788,6 +43577,7 @@ var require_stan = __commonJS({
         "sub_col",
         "sub_row",
         "sum",
+        "svd",
         "svd_U",
         "svd_V",
         "symmetrize_from_lower_tri",
@@ -43800,6 +43590,7 @@ var require_stan = __commonJS({
         "to_array_1d",
         "to_array_2d",
         "to_complex",
+        "to_int",
         "to_matrix",
         "to_row_vector",
         "to_vector",
@@ -43842,18 +43633,22 @@ var require_stan = __commonJS({
         "inv_chi_square",
         "inv_gamma",
         "inv_wishart",
+        "inv_wishart_cholesky",
         "lkj_corr",
         "lkj_corr_cholesky",
         "logistic",
+        "loglogistic",
         "lognormal",
         "multi_gp",
         "multi_gp_cholesky",
+        "multinomial",
+        "multinomial_logit",
         "multi_normal",
         "multi_normal_cholesky",
         "multi_normal_prec",
+        "multi_student_cholesky_t",
         "multi_student_t",
-        "multinomial",
-        "multinomial_logit",
+        "multi_student_t_cholesky",
         "neg_binomial",
         "neg_binomial_2",
         "neg_binomial_2_log",
@@ -43873,12 +43668,14 @@ var require_stan = __commonJS({
         "skew_double_exponential",
         "skew_normal",
         "std_normal",
+        "std_normal_log",
         "student_t",
         "uniform",
         "von_mises",
         "weibull",
         "wiener",
-        "wishart"
+        "wishart",
+        "wishart_cholesky"
       ];
       const BLOCK_COMMENT = hljs.COMMENT(
         /\/\*/,
@@ -44151,7 +43948,7 @@ var require_stylus = __commonJS({
         },
         CSS_VARIABLE: {
           className: "attr",
-          begin: /--[A-Za-z][A-Za-z0-9_-]*/
+          begin: /--[A-Za-z_][A-Za-z0-9_-]*/
         }
       };
     };
@@ -44994,12 +44791,20 @@ var require_swift = __commonJS({
       // operator
       "as",
       // operator
+      "borrowing",
+      // contextual
       "break",
       "case",
       "catch",
       "class",
+      "consume",
+      // contextual
+      "consuming",
+      // contextual
       "continue",
       "convenience",
+      // contextual
+      "copy",
       // contextual
       "default",
       "defer",
@@ -45010,6 +44815,7 @@ var require_swift = __commonJS({
       "do",
       "dynamic",
       // contextual
+      "each",
       "else",
       "enum",
       "extension",
@@ -45044,6 +44850,7 @@ var require_swift = __commonJS({
       "lazy",
       // contextual
       "let",
+      "macro",
       "mutating",
       // contextual
       "nonmutating",
@@ -45137,7 +44944,6 @@ var require_swift = __commonJS({
       "#line",
       "#selector",
       "#sourceLocation",
-      "#warn_unqualified_access",
       "#warning"
     ];
     var builtIns = [
@@ -45234,12 +45040,14 @@ var require_swift = __commonJS({
     var identifier = concat(identifierHead, identifierCharacter, "*");
     var typeIdentifier = concat(/[A-Z]/, identifierCharacter, "*");
     var keywordAttributes = [
+      "attached",
       "autoclosure",
       concat(/convention\(/, either("swift", "block", "c"), /\)/),
       "discardableResult",
       "dynamicCallable",
       "dynamicMemberLookup",
       "escaping",
+      "freestanding",
       "frozen",
       "GKInspectable",
       "IBAction",
@@ -45259,10 +45067,13 @@ var require_swift = __commonJS({
       "propertyWrapper",
       "requires_stored_property_inits",
       "resultBuilder",
+      "Sendable",
       "testable",
       "UIApplicationMain",
+      "unchecked",
       "unknown",
-      "usableFromInline"
+      "usableFromInline",
+      "warn_unqualified_access"
     ];
     var availabilityKeywords = [
       "iOS",
@@ -45424,6 +45235,45 @@ var require_swift = __commonJS({
           SINGLE_LINE_STRING("###")
         ]
       };
+      const REGEXP_CONTENTS = [
+        hljs.BACKSLASH_ESCAPE,
+        {
+          begin: /\[/,
+          end: /\]/,
+          relevance: 0,
+          contains: [hljs.BACKSLASH_ESCAPE]
+        }
+      ];
+      const BARE_REGEXP_LITERAL = {
+        begin: /\/[^\s](?=[^/\n]*\/)/,
+        end: /\//,
+        contains: REGEXP_CONTENTS
+      };
+      const EXTENDED_REGEXP_LITERAL = (rawDelimiter) => {
+        const begin = concat(rawDelimiter, /\//);
+        const end = concat(/\//, rawDelimiter);
+        return {
+          begin,
+          end,
+          contains: [
+            ...REGEXP_CONTENTS,
+            {
+              scope: "comment",
+              begin: `#(?!.*${end})`,
+              end: /$/
+            }
+          ]
+        };
+      };
+      const REGEXP = {
+        scope: "regexp",
+        variants: [
+          EXTENDED_REGEXP_LITERAL("###"),
+          EXTENDED_REGEXP_LITERAL("##"),
+          EXTENDED_REGEXP_LITERAL("#"),
+          BARE_REGEXP_LITERAL
+        ]
+      };
       const QUOTED_IDENTIFIER = { match: concat(/`/, identifier, /`/) };
       const IMPLICIT_PARAMETER = {
         className: "variable",
@@ -45440,7 +45290,7 @@ var require_swift = __commonJS({
       ];
       const AVAILABLE_ATTRIBUTE = {
         match: /(@|#(un)?)available/,
-        className: "keyword",
+        scope: "keyword",
         starts: { contains: [
           {
             begin: /\(/,
@@ -45455,11 +45305,11 @@ var require_swift = __commonJS({
         ] }
       };
       const KEYWORD_ATTRIBUTE = {
-        className: "keyword",
+        scope: "keyword",
         match: concat(/@/, either(...keywordAttributes))
       };
       const USER_DEFINED_ATTRIBUTE = {
-        className: "meta",
+        scope: "meta",
         match: concat(/@/, identifier)
       };
       const ATTRIBUTES = [
@@ -45526,6 +45376,7 @@ var require_swift = __commonJS({
           "self",
           TUPLE_ELEMENT_NAME,
           ...COMMENTS,
+          REGEXP,
           ...KEYWORD_MODES,
           ...BUILT_INS,
           ...OPERATORS,
@@ -45539,6 +45390,7 @@ var require_swift = __commonJS({
       const GENERIC_PARAMETERS = {
         begin: /</,
         end: />/,
+        keywords: "repeat each",
         contains: [
           ...COMMENTS,
           TYPE
@@ -45580,9 +45432,9 @@ var require_swift = __commonJS({
         endsParent: true,
         illegal: /["']/
       };
-      const FUNCTION = {
+      const FUNCTION_OR_MACRO = {
         match: [
-          /func/,
+          /(func|macro)/,
           /\s+/,
           either(QUOTED_IDENTIFIER.match, identifier, operator)
         ],
@@ -45669,7 +45521,7 @@ var require_swift = __commonJS({
         keywords: KEYWORDS,
         contains: [
           ...COMMENTS,
-          FUNCTION,
+          FUNCTION_OR_MACRO,
           INIT_SUBSCRIPT,
           {
             beginKeywords: "struct protocol class extension enum actor",
@@ -45692,6 +45544,7 @@ var require_swift = __commonJS({
             contains: [...COMMENTS],
             relevance: 0
           },
+          REGEXP,
           ...KEYWORD_MODES,
           ...BUILT_INS,
           ...OPERATORS,
@@ -46810,6 +46663,7 @@ var require_typescript = __commonJS({
       "window",
       "document",
       "localStorage",
+      "sessionStorage",
       "module",
       "global"
       // Node.js
@@ -46934,6 +46788,19 @@ var require_typescript = __commonJS({
           subLanguage: "css"
         }
       };
+      const GRAPHQL_TEMPLATE = {
+        begin: "gql`",
+        end: "",
+        starts: {
+          end: "`",
+          returnEnd: false,
+          contains: [
+            hljs.BACKSLASH_ESCAPE,
+            SUBST
+          ],
+          subLanguage: "graphql"
+        }
+      };
       const TEMPLATE_STRING = {
         className: "string",
         begin: "`",
@@ -46995,6 +46862,7 @@ var require_typescript = __commonJS({
         hljs.QUOTE_STRING_MODE,
         HTML_TEMPLATE,
         CSS_TEMPLATE,
+        GRAPHQL_TEMPLATE,
         TEMPLATE_STRING,
         // Skip numbers when they are part of a variable name
         { match: /\$\d+/ },
@@ -47196,7 +47064,7 @@ var require_typescript = __commonJS({
         ]
       };
       return {
-        name: "Javascript",
+        name: "JavaScript",
         aliases: ["js", "jsx", "mjs", "cjs"],
         keywords: KEYWORDS$1,
         // this will be extended by TypeScript
@@ -47213,6 +47081,7 @@ var require_typescript = __commonJS({
           hljs.QUOTE_STRING_MODE,
           HTML_TEMPLATE,
           CSS_TEMPLATE,
+          GRAPHQL_TEMPLATE,
           TEMPLATE_STRING,
           COMMENT,
           // Skip numbers when they are part of a variable name
@@ -47431,7 +47300,9 @@ var require_typescript = __commonJS({
         name: "TypeScript",
         aliases: [
           "ts",
-          "tsx"
+          "tsx",
+          "mts",
+          "cts"
         ]
       });
       return tsLanguage;
@@ -49701,7 +49572,8 @@ var require_xquery = __commonJS({
         name: "XQuery",
         aliases: [
           "xpath",
-          "xq"
+          "xq",
+          "xqm"
         ],
         case_insensitive: false,
         illegal: /(proc)|(abstract)|(extends)|(until)|(#)/,
@@ -50024,33 +49896,965 @@ var require_lib = __commonJS({
   }
 });
 
+// node_modules/dompurify/dist/purify.js
+var require_purify = __commonJS({
+  "node_modules/dompurify/dist/purify.js"(exports, module) {
+    (function(global, factory) {
+      typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define(factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, global.DOMPurify = factory());
+    })(exports, function() {
+      "use strict";
+      const {
+        entries,
+        setPrototypeOf,
+        isFrozen,
+        getPrototypeOf,
+        getOwnPropertyDescriptor
+      } = Object;
+      let {
+        freeze,
+        seal,
+        create
+      } = Object;
+      let {
+        apply,
+        construct
+      } = typeof Reflect !== "undefined" && Reflect;
+      if (!freeze) {
+        freeze = function freeze2(x) {
+          return x;
+        };
+      }
+      if (!seal) {
+        seal = function seal2(x) {
+          return x;
+        };
+      }
+      if (!apply) {
+        apply = function apply2(fun, thisValue, args) {
+          return fun.apply(thisValue, args);
+        };
+      }
+      if (!construct) {
+        construct = function construct2(Func, args) {
+          return new Func(...args);
+        };
+      }
+      const arrayForEach = unapply(Array.prototype.forEach);
+      const arrayPop = unapply(Array.prototype.pop);
+      const arrayPush = unapply(Array.prototype.push);
+      const stringToLowerCase = unapply(String.prototype.toLowerCase);
+      const stringToString = unapply(String.prototype.toString);
+      const stringMatch = unapply(String.prototype.match);
+      const stringReplace = unapply(String.prototype.replace);
+      const stringIndexOf = unapply(String.prototype.indexOf);
+      const stringTrim = unapply(String.prototype.trim);
+      const regExpTest = unapply(RegExp.prototype.test);
+      const typeErrorCreate = unconstruct(TypeError);
+      function unapply(func) {
+        return function(thisArg) {
+          for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+            args[_key - 1] = arguments[_key];
+          }
+          return apply(func, thisArg, args);
+        };
+      }
+      function unconstruct(func) {
+        return function() {
+          for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            args[_key2] = arguments[_key2];
+          }
+          return construct(func, args);
+        };
+      }
+      function addToSet(set, array) {
+        let transformCaseFunc = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : stringToLowerCase;
+        if (setPrototypeOf) {
+          setPrototypeOf(set, null);
+        }
+        let l = array.length;
+        while (l--) {
+          let element = array[l];
+          if (typeof element === "string") {
+            const lcElement = transformCaseFunc(element);
+            if (lcElement !== element) {
+              if (!isFrozen(array)) {
+                array[l] = lcElement;
+              }
+              element = lcElement;
+            }
+          }
+          set[element] = true;
+        }
+        return set;
+      }
+      function clone(object) {
+        const newObject = create(null);
+        for (const [property, value] of entries(object)) {
+          if (getOwnPropertyDescriptor(object, property) !== void 0) {
+            newObject[property] = value;
+          }
+        }
+        return newObject;
+      }
+      function lookupGetter(object, prop) {
+        while (object !== null) {
+          const desc = getOwnPropertyDescriptor(object, prop);
+          if (desc) {
+            if (desc.get) {
+              return unapply(desc.get);
+            }
+            if (typeof desc.value === "function") {
+              return unapply(desc.value);
+            }
+          }
+          object = getPrototypeOf(object);
+        }
+        function fallbackValue(element) {
+          console.warn("fallback value for", element);
+          return null;
+        }
+        return fallbackValue;
+      }
+      const html$1 = freeze(["a", "abbr", "acronym", "address", "area", "article", "aside", "audio", "b", "bdi", "bdo", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "content", "data", "datalist", "dd", "decorator", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "fieldset", "figcaption", "figure", "font", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "img", "input", "ins", "kbd", "label", "legend", "li", "main", "map", "mark", "marquee", "menu", "menuitem", "meter", "nav", "nobr", "ol", "optgroup", "option", "output", "p", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "section", "select", "shadow", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "tr", "track", "tt", "u", "ul", "var", "video", "wbr"]);
+      const svg$1 = freeze(["svg", "a", "altglyph", "altglyphdef", "altglyphitem", "animatecolor", "animatemotion", "animatetransform", "circle", "clippath", "defs", "desc", "ellipse", "filter", "font", "g", "glyph", "glyphref", "hkern", "image", "line", "lineargradient", "marker", "mask", "metadata", "mpath", "path", "pattern", "polygon", "polyline", "radialgradient", "rect", "stop", "style", "switch", "symbol", "text", "textpath", "title", "tref", "tspan", "view", "vkern"]);
+      const svgFilters = freeze(["feBlend", "feColorMatrix", "feComponentTransfer", "feComposite", "feConvolveMatrix", "feDiffuseLighting", "feDisplacementMap", "feDistantLight", "feDropShadow", "feFlood", "feFuncA", "feFuncB", "feFuncG", "feFuncR", "feGaussianBlur", "feImage", "feMerge", "feMergeNode", "feMorphology", "feOffset", "fePointLight", "feSpecularLighting", "feSpotLight", "feTile", "feTurbulence"]);
+      const svgDisallowed = freeze(["animate", "color-profile", "cursor", "discard", "font-face", "font-face-format", "font-face-name", "font-face-src", "font-face-uri", "foreignobject", "hatch", "hatchpath", "mesh", "meshgradient", "meshpatch", "meshrow", "missing-glyph", "script", "set", "solidcolor", "unknown", "use"]);
+      const mathMl$1 = freeze(["math", "menclose", "merror", "mfenced", "mfrac", "mglyph", "mi", "mlabeledtr", "mmultiscripts", "mn", "mo", "mover", "mpadded", "mphantom", "mroot", "mrow", "ms", "mspace", "msqrt", "mstyle", "msub", "msup", "msubsup", "mtable", "mtd", "mtext", "mtr", "munder", "munderover", "mprescripts"]);
+      const mathMlDisallowed = freeze(["maction", "maligngroup", "malignmark", "mlongdiv", "mscarries", "mscarry", "msgroup", "mstack", "msline", "msrow", "semantics", "annotation", "annotation-xml", "mprescripts", "none"]);
+      const text = freeze(["#text"]);
+      const html = freeze(["accept", "action", "align", "alt", "autocapitalize", "autocomplete", "autopictureinpicture", "autoplay", "background", "bgcolor", "border", "capture", "cellpadding", "cellspacing", "checked", "cite", "class", "clear", "color", "cols", "colspan", "controls", "controlslist", "coords", "crossorigin", "datetime", "decoding", "default", "dir", "disabled", "disablepictureinpicture", "disableremoteplayback", "download", "draggable", "enctype", "enterkeyhint", "face", "for", "headers", "height", "hidden", "high", "href", "hreflang", "id", "inputmode", "integrity", "ismap", "kind", "label", "lang", "list", "loading", "loop", "low", "max", "maxlength", "media", "method", "min", "minlength", "multiple", "muted", "name", "nonce", "noshade", "novalidate", "nowrap", "open", "optimum", "pattern", "placeholder", "playsinline", "poster", "preload", "pubdate", "radiogroup", "readonly", "rel", "required", "rev", "reversed", "role", "rows", "rowspan", "spellcheck", "scope", "selected", "shape", "size", "sizes", "span", "srclang", "start", "src", "srcset", "step", "style", "summary", "tabindex", "title", "translate", "type", "usemap", "valign", "value", "width", "xmlns", "slot"]);
+      const svg = freeze(["accent-height", "accumulate", "additive", "alignment-baseline", "ascent", "attributename", "attributetype", "azimuth", "basefrequency", "baseline-shift", "begin", "bias", "by", "class", "clip", "clippathunits", "clip-path", "clip-rule", "color", "color-interpolation", "color-interpolation-filters", "color-profile", "color-rendering", "cx", "cy", "d", "dx", "dy", "diffuseconstant", "direction", "display", "divisor", "dur", "edgemode", "elevation", "end", "fill", "fill-opacity", "fill-rule", "filter", "filterunits", "flood-color", "flood-opacity", "font-family", "font-size", "font-size-adjust", "font-stretch", "font-style", "font-variant", "font-weight", "fx", "fy", "g1", "g2", "glyph-name", "glyphref", "gradientunits", "gradienttransform", "height", "href", "id", "image-rendering", "in", "in2", "k", "k1", "k2", "k3", "k4", "kerning", "keypoints", "keysplines", "keytimes", "lang", "lengthadjust", "letter-spacing", "kernelmatrix", "kernelunitlength", "lighting-color", "local", "marker-end", "marker-mid", "marker-start", "markerheight", "markerunits", "markerwidth", "maskcontentunits", "maskunits", "max", "mask", "media", "method", "mode", "min", "name", "numoctaves", "offset", "operator", "opacity", "order", "orient", "orientation", "origin", "overflow", "paint-order", "path", "pathlength", "patterncontentunits", "patterntransform", "patternunits", "points", "preservealpha", "preserveaspectratio", "primitiveunits", "r", "rx", "ry", "radius", "refx", "refy", "repeatcount", "repeatdur", "restart", "result", "rotate", "scale", "seed", "shape-rendering", "specularconstant", "specularexponent", "spreadmethod", "startoffset", "stddeviation", "stitchtiles", "stop-color", "stop-opacity", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke", "stroke-width", "style", "surfacescale", "systemlanguage", "tabindex", "targetx", "targety", "transform", "transform-origin", "text-anchor", "text-decoration", "text-rendering", "textlength", "type", "u1", "u2", "unicode", "values", "viewbox", "visibility", "version", "vert-adv-y", "vert-origin-x", "vert-origin-y", "width", "word-spacing", "wrap", "writing-mode", "xchannelselector", "ychannelselector", "x", "x1", "x2", "xmlns", "y", "y1", "y2", "z", "zoomandpan"]);
+      const mathMl = freeze(["accent", "accentunder", "align", "bevelled", "close", "columnsalign", "columnlines", "columnspan", "denomalign", "depth", "dir", "display", "displaystyle", "encoding", "fence", "frame", "height", "href", "id", "largeop", "length", "linethickness", "lspace", "lquote", "mathbackground", "mathcolor", "mathsize", "mathvariant", "maxsize", "minsize", "movablelimits", "notation", "numalign", "open", "rowalign", "rowlines", "rowspacing", "rowspan", "rspace", "rquote", "scriptlevel", "scriptminsize", "scriptsizemultiplier", "selection", "separator", "separators", "stretchy", "subscriptshift", "supscriptshift", "symmetric", "voffset", "width", "xmlns"]);
+      const xml = freeze(["xlink:href", "xml:id", "xlink:title", "xml:space", "xmlns:xlink"]);
+      const MUSTACHE_EXPR = seal(/\{\{[\w\W]*|[\w\W]*\}\}/gm);
+      const ERB_EXPR = seal(/<%[\w\W]*|[\w\W]*%>/gm);
+      const TMPLIT_EXPR = seal(/\${[\w\W]*}/gm);
+      const DATA_ATTR = seal(/^data-[\-\w.\u00B7-\uFFFF]/);
+      const ARIA_ATTR = seal(/^aria-[\-\w]+$/);
+      const IS_ALLOWED_URI = seal(
+        /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i
+        // eslint-disable-line no-useless-escape
+      );
+      const IS_SCRIPT_OR_DATA = seal(/^(?:\w+script|data):/i);
+      const ATTR_WHITESPACE = seal(
+        /[\u0000-\u0020\u00A0\u1680\u180E\u2000-\u2029\u205F\u3000]/g
+        // eslint-disable-line no-control-regex
+      );
+      const DOCTYPE_NAME = seal(/^html$/i);
+      var EXPRESSIONS = /* @__PURE__ */ Object.freeze({
+        __proto__: null,
+        MUSTACHE_EXPR,
+        ERB_EXPR,
+        TMPLIT_EXPR,
+        DATA_ATTR,
+        ARIA_ATTR,
+        IS_ALLOWED_URI,
+        IS_SCRIPT_OR_DATA,
+        ATTR_WHITESPACE,
+        DOCTYPE_NAME
+      });
+      const getGlobal = function getGlobal2() {
+        return typeof window === "undefined" ? null : window;
+      };
+      const _createTrustedTypesPolicy = function _createTrustedTypesPolicy2(trustedTypes, purifyHostElement) {
+        if (typeof trustedTypes !== "object" || typeof trustedTypes.createPolicy !== "function") {
+          return null;
+        }
+        let suffix = null;
+        const ATTR_NAME = "data-tt-policy-suffix";
+        if (purifyHostElement && purifyHostElement.hasAttribute(ATTR_NAME)) {
+          suffix = purifyHostElement.getAttribute(ATTR_NAME);
+        }
+        const policyName = "dompurify" + (suffix ? "#" + suffix : "");
+        try {
+          return trustedTypes.createPolicy(policyName, {
+            createHTML(html2) {
+              return html2;
+            },
+            createScriptURL(scriptUrl) {
+              return scriptUrl;
+            }
+          });
+        } catch (_) {
+          console.warn("TrustedTypes policy " + policyName + " could not be created.");
+          return null;
+        }
+      };
+      function createDOMPurify() {
+        let window2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : getGlobal();
+        const DOMPurify = (root) => createDOMPurify(root);
+        DOMPurify.version = "3.0.6";
+        DOMPurify.removed = [];
+        if (!window2 || !window2.document || window2.document.nodeType !== 9) {
+          DOMPurify.isSupported = false;
+          return DOMPurify;
+        }
+        let {
+          document: document2
+        } = window2;
+        const originalDocument = document2;
+        const currentScript = originalDocument.currentScript;
+        const {
+          DocumentFragment,
+          HTMLTemplateElement,
+          Node,
+          Element,
+          NodeFilter,
+          NamedNodeMap = window2.NamedNodeMap || window2.MozNamedAttrMap,
+          HTMLFormElement,
+          DOMParser,
+          trustedTypes
+        } = window2;
+        const ElementPrototype = Element.prototype;
+        const cloneNode = lookupGetter(ElementPrototype, "cloneNode");
+        const getNextSibling = lookupGetter(ElementPrototype, "nextSibling");
+        const getChildNodes = lookupGetter(ElementPrototype, "childNodes");
+        const getParentNode = lookupGetter(ElementPrototype, "parentNode");
+        if (typeof HTMLTemplateElement === "function") {
+          const template = document2.createElement("template");
+          if (template.content && template.content.ownerDocument) {
+            document2 = template.content.ownerDocument;
+          }
+        }
+        let trustedTypesPolicy;
+        let emptyHTML = "";
+        const {
+          implementation,
+          createNodeIterator,
+          createDocumentFragment,
+          getElementsByTagName
+        } = document2;
+        const {
+          importNode
+        } = originalDocument;
+        let hooks = {};
+        DOMPurify.isSupported = typeof entries === "function" && typeof getParentNode === "function" && implementation && implementation.createHTMLDocument !== void 0;
+        const {
+          MUSTACHE_EXPR: MUSTACHE_EXPR2,
+          ERB_EXPR: ERB_EXPR2,
+          TMPLIT_EXPR: TMPLIT_EXPR2,
+          DATA_ATTR: DATA_ATTR2,
+          ARIA_ATTR: ARIA_ATTR2,
+          IS_SCRIPT_OR_DATA: IS_SCRIPT_OR_DATA2,
+          ATTR_WHITESPACE: ATTR_WHITESPACE2
+        } = EXPRESSIONS;
+        let {
+          IS_ALLOWED_URI: IS_ALLOWED_URI$1
+        } = EXPRESSIONS;
+        let ALLOWED_TAGS = null;
+        const DEFAULT_ALLOWED_TAGS = addToSet({}, [...html$1, ...svg$1, ...svgFilters, ...mathMl$1, ...text]);
+        let ALLOWED_ATTR = null;
+        const DEFAULT_ALLOWED_ATTR = addToSet({}, [...html, ...svg, ...mathMl, ...xml]);
+        let CUSTOM_ELEMENT_HANDLING = Object.seal(create(null, {
+          tagNameCheck: {
+            writable: true,
+            configurable: false,
+            enumerable: true,
+            value: null
+          },
+          attributeNameCheck: {
+            writable: true,
+            configurable: false,
+            enumerable: true,
+            value: null
+          },
+          allowCustomizedBuiltInElements: {
+            writable: true,
+            configurable: false,
+            enumerable: true,
+            value: false
+          }
+        }));
+        let FORBID_TAGS = null;
+        let FORBID_ATTR = null;
+        let ALLOW_ARIA_ATTR = true;
+        let ALLOW_DATA_ATTR = true;
+        let ALLOW_UNKNOWN_PROTOCOLS = false;
+        let ALLOW_SELF_CLOSE_IN_ATTR = true;
+        let SAFE_FOR_TEMPLATES = false;
+        let WHOLE_DOCUMENT = false;
+        let SET_CONFIG = false;
+        let FORCE_BODY = false;
+        let RETURN_DOM = false;
+        let RETURN_DOM_FRAGMENT = false;
+        let RETURN_TRUSTED_TYPE = false;
+        let SANITIZE_DOM = true;
+        let SANITIZE_NAMED_PROPS = false;
+        const SANITIZE_NAMED_PROPS_PREFIX = "user-content-";
+        let KEEP_CONTENT = true;
+        let IN_PLACE = false;
+        let USE_PROFILES = {};
+        let FORBID_CONTENTS = null;
+        const DEFAULT_FORBID_CONTENTS = addToSet({}, ["annotation-xml", "audio", "colgroup", "desc", "foreignobject", "head", "iframe", "math", "mi", "mn", "mo", "ms", "mtext", "noembed", "noframes", "noscript", "plaintext", "script", "style", "svg", "template", "thead", "title", "video", "xmp"]);
+        let DATA_URI_TAGS = null;
+        const DEFAULT_DATA_URI_TAGS = addToSet({}, ["audio", "video", "img", "source", "image", "track"]);
+        let URI_SAFE_ATTRIBUTES = null;
+        const DEFAULT_URI_SAFE_ATTRIBUTES = addToSet({}, ["alt", "class", "for", "id", "label", "name", "pattern", "placeholder", "role", "summary", "title", "value", "style", "xmlns"]);
+        const MATHML_NAMESPACE = "http://www.w3.org/1998/Math/MathML";
+        const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
+        const HTML_NAMESPACE = "http://www.w3.org/1999/xhtml";
+        let NAMESPACE = HTML_NAMESPACE;
+        let IS_EMPTY_INPUT = false;
+        let ALLOWED_NAMESPACES = null;
+        const DEFAULT_ALLOWED_NAMESPACES = addToSet({}, [MATHML_NAMESPACE, SVG_NAMESPACE, HTML_NAMESPACE], stringToString);
+        let PARSER_MEDIA_TYPE = null;
+        const SUPPORTED_PARSER_MEDIA_TYPES = ["application/xhtml+xml", "text/html"];
+        const DEFAULT_PARSER_MEDIA_TYPE = "text/html";
+        let transformCaseFunc = null;
+        let CONFIG = null;
+        const formElement = document2.createElement("form");
+        const isRegexOrFunction = function isRegexOrFunction2(testValue) {
+          return testValue instanceof RegExp || testValue instanceof Function;
+        };
+        const _parseConfig = function _parseConfig2() {
+          let cfg = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
+          if (CONFIG && CONFIG === cfg) {
+            return;
+          }
+          if (!cfg || typeof cfg !== "object") {
+            cfg = {};
+          }
+          cfg = clone(cfg);
+          PARSER_MEDIA_TYPE = // eslint-disable-next-line unicorn/prefer-includes
+          SUPPORTED_PARSER_MEDIA_TYPES.indexOf(cfg.PARSER_MEDIA_TYPE) === -1 ? PARSER_MEDIA_TYPE = DEFAULT_PARSER_MEDIA_TYPE : PARSER_MEDIA_TYPE = cfg.PARSER_MEDIA_TYPE;
+          transformCaseFunc = PARSER_MEDIA_TYPE === "application/xhtml+xml" ? stringToString : stringToLowerCase;
+          ALLOWED_TAGS = "ALLOWED_TAGS" in cfg ? addToSet({}, cfg.ALLOWED_TAGS, transformCaseFunc) : DEFAULT_ALLOWED_TAGS;
+          ALLOWED_ATTR = "ALLOWED_ATTR" in cfg ? addToSet({}, cfg.ALLOWED_ATTR, transformCaseFunc) : DEFAULT_ALLOWED_ATTR;
+          ALLOWED_NAMESPACES = "ALLOWED_NAMESPACES" in cfg ? addToSet({}, cfg.ALLOWED_NAMESPACES, stringToString) : DEFAULT_ALLOWED_NAMESPACES;
+          URI_SAFE_ATTRIBUTES = "ADD_URI_SAFE_ATTR" in cfg ? addToSet(
+            clone(DEFAULT_URI_SAFE_ATTRIBUTES),
+            // eslint-disable-line indent
+            cfg.ADD_URI_SAFE_ATTR,
+            // eslint-disable-line indent
+            transformCaseFunc
+            // eslint-disable-line indent
+          ) : DEFAULT_URI_SAFE_ATTRIBUTES;
+          DATA_URI_TAGS = "ADD_DATA_URI_TAGS" in cfg ? addToSet(
+            clone(DEFAULT_DATA_URI_TAGS),
+            // eslint-disable-line indent
+            cfg.ADD_DATA_URI_TAGS,
+            // eslint-disable-line indent
+            transformCaseFunc
+            // eslint-disable-line indent
+          ) : DEFAULT_DATA_URI_TAGS;
+          FORBID_CONTENTS = "FORBID_CONTENTS" in cfg ? addToSet({}, cfg.FORBID_CONTENTS, transformCaseFunc) : DEFAULT_FORBID_CONTENTS;
+          FORBID_TAGS = "FORBID_TAGS" in cfg ? addToSet({}, cfg.FORBID_TAGS, transformCaseFunc) : {};
+          FORBID_ATTR = "FORBID_ATTR" in cfg ? addToSet({}, cfg.FORBID_ATTR, transformCaseFunc) : {};
+          USE_PROFILES = "USE_PROFILES" in cfg ? cfg.USE_PROFILES : false;
+          ALLOW_ARIA_ATTR = cfg.ALLOW_ARIA_ATTR !== false;
+          ALLOW_DATA_ATTR = cfg.ALLOW_DATA_ATTR !== false;
+          ALLOW_UNKNOWN_PROTOCOLS = cfg.ALLOW_UNKNOWN_PROTOCOLS || false;
+          ALLOW_SELF_CLOSE_IN_ATTR = cfg.ALLOW_SELF_CLOSE_IN_ATTR !== false;
+          SAFE_FOR_TEMPLATES = cfg.SAFE_FOR_TEMPLATES || false;
+          WHOLE_DOCUMENT = cfg.WHOLE_DOCUMENT || false;
+          RETURN_DOM = cfg.RETURN_DOM || false;
+          RETURN_DOM_FRAGMENT = cfg.RETURN_DOM_FRAGMENT || false;
+          RETURN_TRUSTED_TYPE = cfg.RETURN_TRUSTED_TYPE || false;
+          FORCE_BODY = cfg.FORCE_BODY || false;
+          SANITIZE_DOM = cfg.SANITIZE_DOM !== false;
+          SANITIZE_NAMED_PROPS = cfg.SANITIZE_NAMED_PROPS || false;
+          KEEP_CONTENT = cfg.KEEP_CONTENT !== false;
+          IN_PLACE = cfg.IN_PLACE || false;
+          IS_ALLOWED_URI$1 = cfg.ALLOWED_URI_REGEXP || IS_ALLOWED_URI;
+          NAMESPACE = cfg.NAMESPACE || HTML_NAMESPACE;
+          CUSTOM_ELEMENT_HANDLING = cfg.CUSTOM_ELEMENT_HANDLING || {};
+          if (cfg.CUSTOM_ELEMENT_HANDLING && isRegexOrFunction(cfg.CUSTOM_ELEMENT_HANDLING.tagNameCheck)) {
+            CUSTOM_ELEMENT_HANDLING.tagNameCheck = cfg.CUSTOM_ELEMENT_HANDLING.tagNameCheck;
+          }
+          if (cfg.CUSTOM_ELEMENT_HANDLING && isRegexOrFunction(cfg.CUSTOM_ELEMENT_HANDLING.attributeNameCheck)) {
+            CUSTOM_ELEMENT_HANDLING.attributeNameCheck = cfg.CUSTOM_ELEMENT_HANDLING.attributeNameCheck;
+          }
+          if (cfg.CUSTOM_ELEMENT_HANDLING && typeof cfg.CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements === "boolean") {
+            CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements = cfg.CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements;
+          }
+          if (SAFE_FOR_TEMPLATES) {
+            ALLOW_DATA_ATTR = false;
+          }
+          if (RETURN_DOM_FRAGMENT) {
+            RETURN_DOM = true;
+          }
+          if (USE_PROFILES) {
+            ALLOWED_TAGS = addToSet({}, [...text]);
+            ALLOWED_ATTR = [];
+            if (USE_PROFILES.html === true) {
+              addToSet(ALLOWED_TAGS, html$1);
+              addToSet(ALLOWED_ATTR, html);
+            }
+            if (USE_PROFILES.svg === true) {
+              addToSet(ALLOWED_TAGS, svg$1);
+              addToSet(ALLOWED_ATTR, svg);
+              addToSet(ALLOWED_ATTR, xml);
+            }
+            if (USE_PROFILES.svgFilters === true) {
+              addToSet(ALLOWED_TAGS, svgFilters);
+              addToSet(ALLOWED_ATTR, svg);
+              addToSet(ALLOWED_ATTR, xml);
+            }
+            if (USE_PROFILES.mathMl === true) {
+              addToSet(ALLOWED_TAGS, mathMl$1);
+              addToSet(ALLOWED_ATTR, mathMl);
+              addToSet(ALLOWED_ATTR, xml);
+            }
+          }
+          if (cfg.ADD_TAGS) {
+            if (ALLOWED_TAGS === DEFAULT_ALLOWED_TAGS) {
+              ALLOWED_TAGS = clone(ALLOWED_TAGS);
+            }
+            addToSet(ALLOWED_TAGS, cfg.ADD_TAGS, transformCaseFunc);
+          }
+          if (cfg.ADD_ATTR) {
+            if (ALLOWED_ATTR === DEFAULT_ALLOWED_ATTR) {
+              ALLOWED_ATTR = clone(ALLOWED_ATTR);
+            }
+            addToSet(ALLOWED_ATTR, cfg.ADD_ATTR, transformCaseFunc);
+          }
+          if (cfg.ADD_URI_SAFE_ATTR) {
+            addToSet(URI_SAFE_ATTRIBUTES, cfg.ADD_URI_SAFE_ATTR, transformCaseFunc);
+          }
+          if (cfg.FORBID_CONTENTS) {
+            if (FORBID_CONTENTS === DEFAULT_FORBID_CONTENTS) {
+              FORBID_CONTENTS = clone(FORBID_CONTENTS);
+            }
+            addToSet(FORBID_CONTENTS, cfg.FORBID_CONTENTS, transformCaseFunc);
+          }
+          if (KEEP_CONTENT) {
+            ALLOWED_TAGS["#text"] = true;
+          }
+          if (WHOLE_DOCUMENT) {
+            addToSet(ALLOWED_TAGS, ["html", "head", "body"]);
+          }
+          if (ALLOWED_TAGS.table) {
+            addToSet(ALLOWED_TAGS, ["tbody"]);
+            delete FORBID_TAGS.tbody;
+          }
+          if (cfg.TRUSTED_TYPES_POLICY) {
+            if (typeof cfg.TRUSTED_TYPES_POLICY.createHTML !== "function") {
+              throw typeErrorCreate('TRUSTED_TYPES_POLICY configuration option must provide a "createHTML" hook.');
+            }
+            if (typeof cfg.TRUSTED_TYPES_POLICY.createScriptURL !== "function") {
+              throw typeErrorCreate('TRUSTED_TYPES_POLICY configuration option must provide a "createScriptURL" hook.');
+            }
+            trustedTypesPolicy = cfg.TRUSTED_TYPES_POLICY;
+            emptyHTML = trustedTypesPolicy.createHTML("");
+          } else {
+            if (trustedTypesPolicy === void 0) {
+              trustedTypesPolicy = _createTrustedTypesPolicy(trustedTypes, currentScript);
+            }
+            if (trustedTypesPolicy !== null && typeof emptyHTML === "string") {
+              emptyHTML = trustedTypesPolicy.createHTML("");
+            }
+          }
+          if (freeze) {
+            freeze(cfg);
+          }
+          CONFIG = cfg;
+        };
+        const MATHML_TEXT_INTEGRATION_POINTS = addToSet({}, ["mi", "mo", "mn", "ms", "mtext"]);
+        const HTML_INTEGRATION_POINTS = addToSet({}, ["foreignobject", "desc", "title", "annotation-xml"]);
+        const COMMON_SVG_AND_HTML_ELEMENTS = addToSet({}, ["title", "style", "font", "a", "script"]);
+        const ALL_SVG_TAGS = addToSet({}, svg$1);
+        addToSet(ALL_SVG_TAGS, svgFilters);
+        addToSet(ALL_SVG_TAGS, svgDisallowed);
+        const ALL_MATHML_TAGS = addToSet({}, mathMl$1);
+        addToSet(ALL_MATHML_TAGS, mathMlDisallowed);
+        const _checkValidNamespace = function _checkValidNamespace2(element) {
+          let parent = getParentNode(element);
+          if (!parent || !parent.tagName) {
+            parent = {
+              namespaceURI: NAMESPACE,
+              tagName: "template"
+            };
+          }
+          const tagName = stringToLowerCase(element.tagName);
+          const parentTagName = stringToLowerCase(parent.tagName);
+          if (!ALLOWED_NAMESPACES[element.namespaceURI]) {
+            return false;
+          }
+          if (element.namespaceURI === SVG_NAMESPACE) {
+            if (parent.namespaceURI === HTML_NAMESPACE) {
+              return tagName === "svg";
+            }
+            if (parent.namespaceURI === MATHML_NAMESPACE) {
+              return tagName === "svg" && (parentTagName === "annotation-xml" || MATHML_TEXT_INTEGRATION_POINTS[parentTagName]);
+            }
+            return Boolean(ALL_SVG_TAGS[tagName]);
+          }
+          if (element.namespaceURI === MATHML_NAMESPACE) {
+            if (parent.namespaceURI === HTML_NAMESPACE) {
+              return tagName === "math";
+            }
+            if (parent.namespaceURI === SVG_NAMESPACE) {
+              return tagName === "math" && HTML_INTEGRATION_POINTS[parentTagName];
+            }
+            return Boolean(ALL_MATHML_TAGS[tagName]);
+          }
+          if (element.namespaceURI === HTML_NAMESPACE) {
+            if (parent.namespaceURI === SVG_NAMESPACE && !HTML_INTEGRATION_POINTS[parentTagName]) {
+              return false;
+            }
+            if (parent.namespaceURI === MATHML_NAMESPACE && !MATHML_TEXT_INTEGRATION_POINTS[parentTagName]) {
+              return false;
+            }
+            return !ALL_MATHML_TAGS[tagName] && (COMMON_SVG_AND_HTML_ELEMENTS[tagName] || !ALL_SVG_TAGS[tagName]);
+          }
+          if (PARSER_MEDIA_TYPE === "application/xhtml+xml" && ALLOWED_NAMESPACES[element.namespaceURI]) {
+            return true;
+          }
+          return false;
+        };
+        const _forceRemove = function _forceRemove2(node) {
+          arrayPush(DOMPurify.removed, {
+            element: node
+          });
+          try {
+            node.parentNode.removeChild(node);
+          } catch (_) {
+            node.remove();
+          }
+        };
+        const _removeAttribute = function _removeAttribute2(name, node) {
+          try {
+            arrayPush(DOMPurify.removed, {
+              attribute: node.getAttributeNode(name),
+              from: node
+            });
+          } catch (_) {
+            arrayPush(DOMPurify.removed, {
+              attribute: null,
+              from: node
+            });
+          }
+          node.removeAttribute(name);
+          if (name === "is" && !ALLOWED_ATTR[name]) {
+            if (RETURN_DOM || RETURN_DOM_FRAGMENT) {
+              try {
+                _forceRemove(node);
+              } catch (_) {
+              }
+            } else {
+              try {
+                node.setAttribute(name, "");
+              } catch (_) {
+              }
+            }
+          }
+        };
+        const _initDocument = function _initDocument2(dirty) {
+          let doc = null;
+          let leadingWhitespace = null;
+          if (FORCE_BODY) {
+            dirty = "<remove></remove>" + dirty;
+          } else {
+            const matches = stringMatch(dirty, /^[\r\n\t ]+/);
+            leadingWhitespace = matches && matches[0];
+          }
+          if (PARSER_MEDIA_TYPE === "application/xhtml+xml" && NAMESPACE === HTML_NAMESPACE) {
+            dirty = '<html xmlns="http://www.w3.org/1999/xhtml"><head></head><body>' + dirty + "</body></html>";
+          }
+          const dirtyPayload = trustedTypesPolicy ? trustedTypesPolicy.createHTML(dirty) : dirty;
+          if (NAMESPACE === HTML_NAMESPACE) {
+            try {
+              doc = new DOMParser().parseFromString(dirtyPayload, PARSER_MEDIA_TYPE);
+            } catch (_) {
+            }
+          }
+          if (!doc || !doc.documentElement) {
+            doc = implementation.createDocument(NAMESPACE, "template", null);
+            try {
+              doc.documentElement.innerHTML = IS_EMPTY_INPUT ? emptyHTML : dirtyPayload;
+            } catch (_) {
+            }
+          }
+          const body = doc.body || doc.documentElement;
+          if (dirty && leadingWhitespace) {
+            body.insertBefore(document2.createTextNode(leadingWhitespace), body.childNodes[0] || null);
+          }
+          if (NAMESPACE === HTML_NAMESPACE) {
+            return getElementsByTagName.call(doc, WHOLE_DOCUMENT ? "html" : "body")[0];
+          }
+          return WHOLE_DOCUMENT ? doc.documentElement : body;
+        };
+        const _createNodeIterator = function _createNodeIterator2(root) {
+          return createNodeIterator.call(
+            root.ownerDocument || root,
+            root,
+            // eslint-disable-next-line no-bitwise
+            NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_TEXT,
+            null
+          );
+        };
+        const _isClobbered = function _isClobbered2(elm) {
+          return elm instanceof HTMLFormElement && (typeof elm.nodeName !== "string" || typeof elm.textContent !== "string" || typeof elm.removeChild !== "function" || !(elm.attributes instanceof NamedNodeMap) || typeof elm.removeAttribute !== "function" || typeof elm.setAttribute !== "function" || typeof elm.namespaceURI !== "string" || typeof elm.insertBefore !== "function" || typeof elm.hasChildNodes !== "function");
+        };
+        const _isNode = function _isNode2(object) {
+          return typeof Node === "function" && object instanceof Node;
+        };
+        const _executeHook = function _executeHook2(entryPoint, currentNode, data) {
+          if (!hooks[entryPoint]) {
+            return;
+          }
+          arrayForEach(hooks[entryPoint], (hook) => {
+            hook.call(DOMPurify, currentNode, data, CONFIG);
+          });
+        };
+        const _sanitizeElements = function _sanitizeElements2(currentNode) {
+          let content = null;
+          _executeHook("beforeSanitizeElements", currentNode, null);
+          if (_isClobbered(currentNode)) {
+            _forceRemove(currentNode);
+            return true;
+          }
+          const tagName = transformCaseFunc(currentNode.nodeName);
+          _executeHook("uponSanitizeElement", currentNode, {
+            tagName,
+            allowedTags: ALLOWED_TAGS
+          });
+          if (currentNode.hasChildNodes() && !_isNode(currentNode.firstElementChild) && regExpTest(/<[/\w]/g, currentNode.innerHTML) && regExpTest(/<[/\w]/g, currentNode.textContent)) {
+            _forceRemove(currentNode);
+            return true;
+          }
+          if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
+            if (!FORBID_TAGS[tagName] && _isBasicCustomElement(tagName)) {
+              if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, tagName)) {
+                return false;
+              }
+              if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(tagName)) {
+                return false;
+              }
+            }
+            if (KEEP_CONTENT && !FORBID_CONTENTS[tagName]) {
+              const parentNode = getParentNode(currentNode) || currentNode.parentNode;
+              const childNodes = getChildNodes(currentNode) || currentNode.childNodes;
+              if (childNodes && parentNode) {
+                const childCount = childNodes.length;
+                for (let i = childCount - 1; i >= 0; --i) {
+                  parentNode.insertBefore(cloneNode(childNodes[i], true), getNextSibling(currentNode));
+                }
+              }
+            }
+            _forceRemove(currentNode);
+            return true;
+          }
+          if (currentNode instanceof Element && !_checkValidNamespace(currentNode)) {
+            _forceRemove(currentNode);
+            return true;
+          }
+          if ((tagName === "noscript" || tagName === "noembed" || tagName === "noframes") && regExpTest(/<\/no(script|embed|frames)/i, currentNode.innerHTML)) {
+            _forceRemove(currentNode);
+            return true;
+          }
+          if (SAFE_FOR_TEMPLATES && currentNode.nodeType === 3) {
+            content = currentNode.textContent;
+            arrayForEach([MUSTACHE_EXPR2, ERB_EXPR2, TMPLIT_EXPR2], (expr) => {
+              content = stringReplace(content, expr, " ");
+            });
+            if (currentNode.textContent !== content) {
+              arrayPush(DOMPurify.removed, {
+                element: currentNode.cloneNode()
+              });
+              currentNode.textContent = content;
+            }
+          }
+          _executeHook("afterSanitizeElements", currentNode, null);
+          return false;
+        };
+        const _isValidAttribute = function _isValidAttribute2(lcTag, lcName, value) {
+          if (SANITIZE_DOM && (lcName === "id" || lcName === "name") && (value in document2 || value in formElement)) {
+            return false;
+          }
+          if (ALLOW_DATA_ATTR && !FORBID_ATTR[lcName] && regExpTest(DATA_ATTR2, lcName))
+            ;
+          else if (ALLOW_ARIA_ATTR && regExpTest(ARIA_ATTR2, lcName))
+            ;
+          else if (!ALLOWED_ATTR[lcName] || FORBID_ATTR[lcName]) {
+            if (
+              // First condition does a very basic check if a) it's basically a valid custom element tagname AND
+              // b) if the tagName passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
+              // and c) if the attribute name passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.attributeNameCheck
+              _isBasicCustomElement(lcTag) && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, lcTag) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(lcTag)) && (CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.attributeNameCheck, lcName) || CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.attributeNameCheck(lcName)) || // Alternative, second condition checks if it's an `is`-attribute, AND
+              // the value passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
+              lcName === "is" && CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, value) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(value))
+            )
+              ;
+            else {
+              return false;
+            }
+          } else if (URI_SAFE_ATTRIBUTES[lcName])
+            ;
+          else if (regExpTest(IS_ALLOWED_URI$1, stringReplace(value, ATTR_WHITESPACE2, "")))
+            ;
+          else if ((lcName === "src" || lcName === "xlink:href" || lcName === "href") && lcTag !== "script" && stringIndexOf(value, "data:") === 0 && DATA_URI_TAGS[lcTag])
+            ;
+          else if (ALLOW_UNKNOWN_PROTOCOLS && !regExpTest(IS_SCRIPT_OR_DATA2, stringReplace(value, ATTR_WHITESPACE2, "")))
+            ;
+          else if (value) {
+            return false;
+          } else
+            ;
+          return true;
+        };
+        const _isBasicCustomElement = function _isBasicCustomElement2(tagName) {
+          return tagName.indexOf("-") > 0;
+        };
+        const _sanitizeAttributes = function _sanitizeAttributes2(currentNode) {
+          _executeHook("beforeSanitizeAttributes", currentNode, null);
+          const {
+            attributes
+          } = currentNode;
+          if (!attributes) {
+            return;
+          }
+          const hookEvent = {
+            attrName: "",
+            attrValue: "",
+            keepAttr: true,
+            allowedAttributes: ALLOWED_ATTR
+          };
+          let l = attributes.length;
+          while (l--) {
+            const attr = attributes[l];
+            const {
+              name,
+              namespaceURI,
+              value: attrValue
+            } = attr;
+            const lcName = transformCaseFunc(name);
+            let value = name === "value" ? attrValue : stringTrim(attrValue);
+            hookEvent.attrName = lcName;
+            hookEvent.attrValue = value;
+            hookEvent.keepAttr = true;
+            hookEvent.forceKeepAttr = void 0;
+            _executeHook("uponSanitizeAttribute", currentNode, hookEvent);
+            value = hookEvent.attrValue;
+            if (hookEvent.forceKeepAttr) {
+              continue;
+            }
+            _removeAttribute(name, currentNode);
+            if (!hookEvent.keepAttr) {
+              continue;
+            }
+            if (!ALLOW_SELF_CLOSE_IN_ATTR && regExpTest(/\/>/i, value)) {
+              _removeAttribute(name, currentNode);
+              continue;
+            }
+            if (SAFE_FOR_TEMPLATES) {
+              arrayForEach([MUSTACHE_EXPR2, ERB_EXPR2, TMPLIT_EXPR2], (expr) => {
+                value = stringReplace(value, expr, " ");
+              });
+            }
+            const lcTag = transformCaseFunc(currentNode.nodeName);
+            if (!_isValidAttribute(lcTag, lcName, value)) {
+              continue;
+            }
+            if (SANITIZE_NAMED_PROPS && (lcName === "id" || lcName === "name")) {
+              _removeAttribute(name, currentNode);
+              value = SANITIZE_NAMED_PROPS_PREFIX + value;
+            }
+            if (trustedTypesPolicy && typeof trustedTypes === "object" && typeof trustedTypes.getAttributeType === "function") {
+              if (namespaceURI)
+                ;
+              else {
+                switch (trustedTypes.getAttributeType(lcTag, lcName)) {
+                  case "TrustedHTML": {
+                    value = trustedTypesPolicy.createHTML(value);
+                    break;
+                  }
+                  case "TrustedScriptURL": {
+                    value = trustedTypesPolicy.createScriptURL(value);
+                    break;
+                  }
+                }
+              }
+            }
+            try {
+              if (namespaceURI) {
+                currentNode.setAttributeNS(namespaceURI, name, value);
+              } else {
+                currentNode.setAttribute(name, value);
+              }
+              arrayPop(DOMPurify.removed);
+            } catch (_) {
+            }
+          }
+          _executeHook("afterSanitizeAttributes", currentNode, null);
+        };
+        const _sanitizeShadowDOM = function _sanitizeShadowDOM2(fragment) {
+          let shadowNode = null;
+          const shadowIterator = _createNodeIterator(fragment);
+          _executeHook("beforeSanitizeShadowDOM", fragment, null);
+          while (shadowNode = shadowIterator.nextNode()) {
+            _executeHook("uponSanitizeShadowNode", shadowNode, null);
+            if (_sanitizeElements(shadowNode)) {
+              continue;
+            }
+            if (shadowNode.content instanceof DocumentFragment) {
+              _sanitizeShadowDOM2(shadowNode.content);
+            }
+            _sanitizeAttributes(shadowNode);
+          }
+          _executeHook("afterSanitizeShadowDOM", fragment, null);
+        };
+        DOMPurify.sanitize = function(dirty) {
+          let cfg = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+          let body = null;
+          let importedNode = null;
+          let currentNode = null;
+          let returnNode = null;
+          IS_EMPTY_INPUT = !dirty;
+          if (IS_EMPTY_INPUT) {
+            dirty = "<!-->";
+          }
+          if (typeof dirty !== "string" && !_isNode(dirty)) {
+            if (typeof dirty.toString === "function") {
+              dirty = dirty.toString();
+              if (typeof dirty !== "string") {
+                throw typeErrorCreate("dirty is not a string, aborting");
+              }
+            } else {
+              throw typeErrorCreate("toString is not a function");
+            }
+          }
+          if (!DOMPurify.isSupported) {
+            return dirty;
+          }
+          if (!SET_CONFIG) {
+            _parseConfig(cfg);
+          }
+          DOMPurify.removed = [];
+          if (typeof dirty === "string") {
+            IN_PLACE = false;
+          }
+          if (IN_PLACE) {
+            if (dirty.nodeName) {
+              const tagName = transformCaseFunc(dirty.nodeName);
+              if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
+                throw typeErrorCreate("root node is forbidden and cannot be sanitized in-place");
+              }
+            }
+          } else if (dirty instanceof Node) {
+            body = _initDocument("<!---->");
+            importedNode = body.ownerDocument.importNode(dirty, true);
+            if (importedNode.nodeType === 1 && importedNode.nodeName === "BODY") {
+              body = importedNode;
+            } else if (importedNode.nodeName === "HTML") {
+              body = importedNode;
+            } else {
+              body.appendChild(importedNode);
+            }
+          } else {
+            if (!RETURN_DOM && !SAFE_FOR_TEMPLATES && !WHOLE_DOCUMENT && // eslint-disable-next-line unicorn/prefer-includes
+            dirty.indexOf("<") === -1) {
+              return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML(dirty) : dirty;
+            }
+            body = _initDocument(dirty);
+            if (!body) {
+              return RETURN_DOM ? null : RETURN_TRUSTED_TYPE ? emptyHTML : "";
+            }
+          }
+          if (body && FORCE_BODY) {
+            _forceRemove(body.firstChild);
+          }
+          const nodeIterator = _createNodeIterator(IN_PLACE ? dirty : body);
+          while (currentNode = nodeIterator.nextNode()) {
+            if (_sanitizeElements(currentNode)) {
+              continue;
+            }
+            if (currentNode.content instanceof DocumentFragment) {
+              _sanitizeShadowDOM(currentNode.content);
+            }
+            _sanitizeAttributes(currentNode);
+          }
+          if (IN_PLACE) {
+            return dirty;
+          }
+          if (RETURN_DOM) {
+            if (RETURN_DOM_FRAGMENT) {
+              returnNode = createDocumentFragment.call(body.ownerDocument);
+              while (body.firstChild) {
+                returnNode.appendChild(body.firstChild);
+              }
+            } else {
+              returnNode = body;
+            }
+            if (ALLOWED_ATTR.shadowroot || ALLOWED_ATTR.shadowrootmode) {
+              returnNode = importNode.call(originalDocument, returnNode, true);
+            }
+            return returnNode;
+          }
+          let serializedHTML = WHOLE_DOCUMENT ? body.outerHTML : body.innerHTML;
+          if (WHOLE_DOCUMENT && ALLOWED_TAGS["!doctype"] && body.ownerDocument && body.ownerDocument.doctype && body.ownerDocument.doctype.name && regExpTest(DOCTYPE_NAME, body.ownerDocument.doctype.name)) {
+            serializedHTML = "<!DOCTYPE " + body.ownerDocument.doctype.name + ">\n" + serializedHTML;
+          }
+          if (SAFE_FOR_TEMPLATES) {
+            arrayForEach([MUSTACHE_EXPR2, ERB_EXPR2, TMPLIT_EXPR2], (expr) => {
+              serializedHTML = stringReplace(serializedHTML, expr, " ");
+            });
+          }
+          return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML(serializedHTML) : serializedHTML;
+        };
+        DOMPurify.setConfig = function() {
+          let cfg = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
+          _parseConfig(cfg);
+          SET_CONFIG = true;
+        };
+        DOMPurify.clearConfig = function() {
+          CONFIG = null;
+          SET_CONFIG = false;
+        };
+        DOMPurify.isValidAttribute = function(tag, attr, value) {
+          if (!CONFIG) {
+            _parseConfig({});
+          }
+          const lcTag = transformCaseFunc(tag);
+          const lcName = transformCaseFunc(attr);
+          return _isValidAttribute(lcTag, lcName, value);
+        };
+        DOMPurify.addHook = function(entryPoint, hookFunction) {
+          if (typeof hookFunction !== "function") {
+            return;
+          }
+          hooks[entryPoint] = hooks[entryPoint] || [];
+          arrayPush(hooks[entryPoint], hookFunction);
+        };
+        DOMPurify.removeHook = function(entryPoint) {
+          if (hooks[entryPoint]) {
+            return arrayPop(hooks[entryPoint]);
+          }
+        };
+        DOMPurify.removeHooks = function(entryPoint) {
+          if (hooks[entryPoint]) {
+            hooks[entryPoint] = [];
+          }
+        };
+        DOMPurify.removeAllHooks = function() {
+          hooks = {};
+        };
+        return DOMPurify;
+      }
+      var purify = createDOMPurify();
+      return purify;
+    });
+  }
+});
+
 // node_modules/marked/lib/marked.esm.js
-function getDefaults() {
+function _getDefaults() {
   return {
     async: false,
-    baseUrl: null,
     breaks: false,
     extensions: null,
     gfm: true,
-    headerIds: true,
-    headerPrefix: "",
-    highlight: null,
-    langPrefix: "language-",
-    mangle: true,
+    hooks: null,
     pedantic: false,
     renderer: null,
-    sanitize: false,
-    sanitizer: null,
     silent: false,
-    smartypants: false,
     tokenizer: null,
-    walkTokens: null,
-    xhtml: false
+    walkTokens: null
   };
 }
-var defaults = getDefaults();
+var _defaults = _getDefaults();
 function changeDefaults(newDefaults) {
-  defaults = newDefaults;
+  _defaults = newDefaults;
 }
 var escapeTest = /[&<>"']/;
 var escapeReplace = new RegExp(escapeTest.source, "g");
@@ -50094,7 +50898,7 @@ function edit(regex, opt) {
   opt = opt || "";
   const obj = {
     replace: (name, val) => {
-      val = val.source || val;
+      val = typeof val === "object" && "source" in val ? val.source : val;
       val = val.replace(caret, "$1");
       regex = regex.replace(name, val);
       return obj;
@@ -50105,23 +50909,7 @@ function edit(regex, opt) {
   };
   return obj;
 }
-var nonWordAndColonTest = /[^\w:]/g;
-var originIndependentUrl = /^$|^[a-z][a-z0-9+.-]*:|^[?#]/i;
-function cleanUrl(sanitize2, base, href) {
-  if (sanitize2) {
-    let prot;
-    try {
-      prot = decodeURIComponent(unescape(href)).replace(nonWordAndColonTest, "").toLowerCase();
-    } catch (e) {
-      return null;
-    }
-    if (prot.indexOf("javascript:") === 0 || prot.indexOf("vbscript:") === 0 || prot.indexOf("data:") === 0) {
-      return null;
-    }
-  }
-  if (base && !originIndependentUrl.test(href)) {
-    href = resolveUrl(base, href);
-  }
+function cleanUrl(href) {
   try {
     href = encodeURI(href).replace(/%25/g, "%");
   } catch (e) {
@@ -50129,51 +50917,11 @@ function cleanUrl(sanitize2, base, href) {
   }
   return href;
 }
-var baseUrls = {};
-var justDomain = /^[^:]+:\/*[^/]*$/;
-var protocol = /^([^:]+:)[\s\S]*$/;
-var domain = /^([^:]+:\/*[^/]*)[\s\S]*$/;
-function resolveUrl(base, href) {
-  if (!baseUrls[" " + base]) {
-    if (justDomain.test(base)) {
-      baseUrls[" " + base] = base + "/";
-    } else {
-      baseUrls[" " + base] = rtrim(base, "/", true);
-    }
-  }
-  base = baseUrls[" " + base];
-  const relativeBase = base.indexOf(":") === -1;
-  if (href.substring(0, 2) === "//") {
-    if (relativeBase) {
-      return href;
-    }
-    return base.replace(protocol, "$1") + href;
-  } else if (href.charAt(0) === "/") {
-    if (relativeBase) {
-      return href;
-    }
-    return base.replace(domain, "$1") + href;
-  } else {
-    return base + href;
-  }
-}
-var noopTest = { exec: function noopTest2() {
-} };
-function merge(obj) {
-  let i = 1, target, key;
-  for (; i < arguments.length; i++) {
-    target = arguments[i];
-    for (key in target) {
-      if (Object.prototype.hasOwnProperty.call(target, key)) {
-        obj[key] = target[key];
-      }
-    }
-  }
-  return obj;
-}
+var noopTest = { exec: () => null };
 function splitCells(tableRow, count) {
   const row = tableRow.replace(/\|/g, (match, offset, str) => {
-    let escaped = false, curr = offset;
+    let escaped = false;
+    let curr = offset;
     while (--curr >= 0 && str[curr] === "\\")
       escaped = !escaped;
     if (escaped) {
@@ -50189,11 +50937,13 @@ function splitCells(tableRow, count) {
   if (cells.length > 0 && !cells[cells.length - 1].trim()) {
     cells.pop();
   }
-  if (cells.length > count) {
-    cells.splice(count);
-  } else {
-    while (cells.length < count)
-      cells.push("");
+  if (count) {
+    if (cells.length > count) {
+      cells.splice(count);
+    } else {
+      while (cells.length < count)
+        cells.push("");
+    }
   }
   for (; i < cells.length; i++) {
     cells[i] = cells[i].trim().replace(/\\\|/g, "|");
@@ -50222,9 +50972,8 @@ function findClosingBracket(str, b) {
   if (str.indexOf(b[1]) === -1) {
     return -1;
   }
-  const l = str.length;
-  let level = 0, i = 0;
-  for (; i < l; i++) {
+  let level = 0;
+  for (let i = 0; i < str.length; i++) {
     if (str[i] === "\\") {
       i++;
     } else if (str[i] === b[0]) {
@@ -50237,25 +50986,6 @@ function findClosingBracket(str, b) {
     }
   }
   return -1;
-}
-function checkSanitizeDeprecation(opt) {
-  if (opt && opt.sanitize && !opt.silent) {
-    console.warn("marked(): sanitize and sanitizer parameters are deprecated since version 0.7.0, should not be used and will be removed in the future. Read more here: https://marked.js.org/#/USING_ADVANCED.md#options");
-  }
-}
-function repeatString(pattern, count) {
-  if (count < 1) {
-    return "";
-  }
-  let result = "";
-  while (count > 1) {
-    if (count & 1) {
-      result += pattern;
-    }
-    count >>= 1;
-    pattern += pattern;
-  }
-  return result + pattern;
 }
 function outputLink(cap, link, raw, lexer2) {
   const href = link.href;
@@ -50300,9 +51030,13 @@ function indentCodeCompensation(raw, text) {
     return node;
   }).join("\n");
 }
-var Tokenizer = class {
+var _Tokenizer = class {
+  options;
+  // TODO: Fix this rules type
+  rules;
+  lexer;
   constructor(options2) {
-    this.options = options2 || defaults;
+    this.options = options2 || _defaults;
   }
   space(src) {
     const cap = this.rules.block.newline.exec(src);
@@ -50371,7 +51105,7 @@ var Tokenizer = class {
   blockquote(src) {
     const cap = this.rules.block.blockquote.exec(src);
     if (cap) {
-      const text = cap[0].replace(/^ *>[ \t]?/gm, "");
+      const text = rtrim(cap[0].replace(/^ *>[ \t]?/gm, ""), "\n");
       const top = this.lexer.state.top;
       this.lexer.state.top = true;
       const tokens = this.lexer.blockTokens(text);
@@ -50387,7 +51121,6 @@ var Tokenizer = class {
   list(src) {
     let cap = this.rules.block.list.exec(src);
     if (cap) {
-      let raw, istask, ischecked, indent, i, blankLine, endsWithBlankLine, line, nextLine, rawLine, itemContents, endEarly;
       let bull = cap[1].trim();
       const isordered = bull.length > 1;
       const list = {
@@ -50403,8 +51136,11 @@ var Tokenizer = class {
         bull = isordered ? bull : "[*+-]";
       }
       const itemRegex = new RegExp(`^( {0,3}${bull})((?:[	 ][^\\n]*)?(?:\\n|$))`);
+      let raw = "";
+      let itemContents = "";
+      let endsWithBlankLine = false;
       while (src) {
-        endEarly = false;
+        let endEarly = false;
         if (!(cap = itemRegex.exec(src))) {
           break;
         }
@@ -50413,18 +51149,19 @@ var Tokenizer = class {
         }
         raw = cap[0];
         src = src.substring(raw.length);
-        line = cap[2].split("\n", 1)[0].replace(/^\t+/, (t) => " ".repeat(3 * t.length));
-        nextLine = src.split("\n", 1)[0];
+        let line = cap[2].split("\n", 1)[0].replace(/^\t+/, (t) => " ".repeat(3 * t.length));
+        let nextLine = src.split("\n", 1)[0];
+        let indent = 0;
         if (this.options.pedantic) {
           indent = 2;
-          itemContents = line.trimLeft();
+          itemContents = line.trimStart();
         } else {
           indent = cap[2].search(/[^ ]/);
           indent = indent > 4 ? 1 : indent;
           itemContents = line.slice(indent);
           indent += cap[1].length;
         }
-        blankLine = false;
+        let blankLine = false;
         if (!line && /^ *$/.test(nextLine)) {
           raw += nextLine + "\n";
           src = src.substring(nextLine.length + 1);
@@ -50436,7 +51173,7 @@ var Tokenizer = class {
           const fencesBeginRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}(?:\`\`\`|~~~)`);
           const headingBeginRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}#`);
           while (src) {
-            rawLine = src.split("\n", 1)[0];
+            const rawLine = src.split("\n", 1)[0];
             nextLine = rawLine;
             if (this.options.pedantic) {
               nextLine = nextLine.replace(/^ {1,4}(?=( {4})*[^ ])/g, "  ");
@@ -50488,6 +51225,8 @@ var Tokenizer = class {
             endsWithBlankLine = true;
           }
         }
+        let istask = null;
+        let ischecked;
         if (this.options.gfm) {
           istask = /^\[[ xX]\] /.exec(itemContents);
           if (istask) {
@@ -50501,15 +51240,15 @@ var Tokenizer = class {
           task: !!istask,
           checked: ischecked,
           loose: false,
-          text: itemContents
+          text: itemContents,
+          tokens: []
         });
         list.raw += raw;
       }
-      list.items[list.items.length - 1].raw = raw.trimRight();
-      list.items[list.items.length - 1].text = itemContents.trimRight();
-      list.raw = list.raw.trimRight();
-      const l = list.items.length;
-      for (i = 0; i < l; i++) {
+      list.items[list.items.length - 1].raw = raw.trimEnd();
+      list.items[list.items.length - 1].text = itemContents.trimEnd();
+      list.raw = list.raw.trimEnd();
+      for (let i = 0; i < list.items.length; i++) {
         this.lexer.state.top = false;
         list.items[i].tokens = this.lexer.blockTokens(list.items[i].text, []);
         if (!list.loose) {
@@ -50519,7 +51258,7 @@ var Tokenizer = class {
         }
       }
       if (list.loose) {
-        for (i = 0; i < l; i++) {
+        for (let i = 0; i < list.items.length; i++) {
           list.items[i].loose = true;
         }
       }
@@ -50531,16 +51270,11 @@ var Tokenizer = class {
     if (cap) {
       const token = {
         type: "html",
+        block: true,
         raw: cap[0],
-        pre: !this.options.sanitizer && (cap[1] === "pre" || cap[1] === "script" || cap[1] === "style"),
+        pre: cap[1] === "pre" || cap[1] === "script" || cap[1] === "style",
         text: cap[0]
       };
-      if (this.options.sanitize) {
-        const text = this.options.sanitizer ? this.options.sanitizer(cap[0]) : escape(cap[0]);
-        token.type = "paragraph";
-        token.text = text;
-        token.tokens = this.lexer.inline(text);
-      }
       return token;
     }
   }
@@ -50562,33 +51296,39 @@ var Tokenizer = class {
   table(src) {
     const cap = this.rules.block.table.exec(src);
     if (cap) {
+      if (!/[:|]/.test(cap[2])) {
+        return;
+      }
       const item = {
         type: "table",
+        raw: cap[0],
         header: splitCells(cap[1]).map((c) => {
-          return { text: c };
+          return { text: c, tokens: [] };
         }),
-        align: cap[2].replace(/^ *|\| *$/g, "").split(/ *\| */),
+        align: cap[2].replace(/^\||\| *$/g, "").split("|"),
         rows: cap[3] && cap[3].trim() ? cap[3].replace(/\n[ \t]*$/, "").split("\n") : []
       };
       if (item.header.length === item.align.length) {
-        item.raw = cap[0];
         let l = item.align.length;
         let i, j, k, row;
         for (i = 0; i < l; i++) {
-          if (/^ *-+: *$/.test(item.align[i])) {
-            item.align[i] = "right";
-          } else if (/^ *:-+: *$/.test(item.align[i])) {
-            item.align[i] = "center";
-          } else if (/^ *:-+ *$/.test(item.align[i])) {
-            item.align[i] = "left";
-          } else {
-            item.align[i] = null;
+          const align = item.align[i];
+          if (align) {
+            if (/^ *-+: *$/.test(align)) {
+              item.align[i] = "right";
+            } else if (/^ *:-+: *$/.test(align)) {
+              item.align[i] = "center";
+            } else if (/^ *:-+ *$/.test(align)) {
+              item.align[i] = "left";
+            } else {
+              item.align[i] = null;
+            }
           }
         }
         l = item.rows.length;
         for (i = 0; i < l; i++) {
           item.rows[i] = splitCells(item.rows[i], item.header.length).map((c) => {
-            return { text: c };
+            return { text: c, tokens: [] };
           });
         }
         l = item.header.length;
@@ -50665,11 +51405,12 @@ var Tokenizer = class {
         this.lexer.state.inRawBlock = false;
       }
       return {
-        type: this.options.sanitize ? "text" : "html",
+        type: "html",
         raw: cap[0],
         inLink: this.lexer.state.inLink,
         inRawBlock: this.lexer.state.inRawBlock,
-        text: this.options.sanitize ? this.options.sanitizer ? this.options.sanitizer(cap[0]) : escape(cap[0]) : cap[0]
+        block: false,
+        text: cap[0]
       };
     }
   }
@@ -50743,8 +51484,8 @@ var Tokenizer = class {
     if (match[3] && prevChar.match(/[\p{L}\p{N}]/u))
       return;
     const nextChar = match[1] || match[2] || "";
-    if (!nextChar || nextChar && (prevChar === "" || this.rules.inline.punctuation.exec(prevChar))) {
-      const lLength = match[0].length - 1;
+    if (!nextChar || !prevChar || this.rules.inline.punctuation.exec(prevChar)) {
+      const lLength = [...match[0]].length - 1;
       let rDelim, rLength, delimTotal = lLength, midDelimTotal = 0;
       const endReg = match[0][0] === "*" ? this.rules.inline.emStrong.rDelimAst : this.rules.inline.emStrong.rDelimUnd;
       endReg.lastIndex = 0;
@@ -50753,7 +51494,7 @@ var Tokenizer = class {
         rDelim = match[1] || match[2] || match[3] || match[4] || match[5] || match[6];
         if (!rDelim)
           continue;
-        rLength = rDelim.length;
+        rLength = [...rDelim].length;
         if (match[3] || match[4]) {
           delimTotal += rLength;
           continue;
@@ -50767,7 +51508,8 @@ var Tokenizer = class {
         if (delimTotal > 0)
           continue;
         rLength = Math.min(rLength, rLength + delimTotal + midDelimTotal);
-        const raw = src.slice(0, lLength + match.index + (match[0].length - rDelim.length) + rLength);
+        const lastCharLength = [...match[0]][0].length;
+        const raw = src.slice(0, lLength + match.index + lastCharLength + rLength);
         if (Math.min(lLength, rLength) % 2) {
           const text2 = raw.slice(1, -1);
           return {
@@ -50824,12 +51566,12 @@ var Tokenizer = class {
       };
     }
   }
-  autolink(src, mangle2) {
+  autolink(src) {
     const cap = this.rules.inline.autolink.exec(src);
     if (cap) {
       let text, href;
       if (cap[2] === "@") {
-        text = escape(this.options.mangle ? mangle2(cap[1]) : cap[1]);
+        text = escape(cap[1]);
         href = "mailto:" + text;
       } else {
         text = escape(cap[1]);
@@ -50850,12 +51592,12 @@ var Tokenizer = class {
       };
     }
   }
-  url(src, mangle2) {
+  url(src) {
     let cap;
     if (cap = this.rules.inline.url.exec(src)) {
       let text, href;
       if (cap[2] === "@") {
-        text = escape(this.options.mangle ? mangle2(cap[0]) : cap[0]);
+        text = escape(cap[0]);
         href = "mailto:" + text;
       } else {
         let prevCapZero;
@@ -50885,14 +51627,14 @@ var Tokenizer = class {
       };
     }
   }
-  inlineText(src, smartypants2) {
+  inlineText(src) {
     const cap = this.rules.inline.text.exec(src);
     if (cap) {
       let text;
       if (this.lexer.state.inRawBlock) {
-        text = this.options.sanitize ? this.options.sanitizer ? this.options.sanitizer(cap[0]) : escape(cap[0]) : cap[0];
+        text = cap[0];
       } else {
-        text = escape(this.options.smartypants ? smartypants2(cap[0]) : cap[0]);
+        text = escape(cap[0]);
       }
       return {
         type: "text",
@@ -50905,7 +51647,7 @@ var Tokenizer = class {
 var block = {
   newline: /^(?: *(?:\n|$))+/,
   code: /^( {4}[^\n]+(?:\n(?: *(?:\n|$))*)?)+/,
-  fences: /^ {0,3}(`{3,}(?=[^`\n]*\n)|~{3,})([^\n]*)\n(?:|([\s\S]*?)\n)(?: {0,3}\1[~`]* *(?=\n|$)|$)/,
+  fences: /^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/,
   hr: /^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/,
   heading: /^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/,
   blockquote: /^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/,
@@ -50913,7 +51655,7 @@ var block = {
   html: "^ {0,3}(?:<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)|comment[^\\n]*(\\n+|$)|<\\?[\\s\\S]*?(?:\\?>\\n*|$)|<![A-Z][\\s\\S]*?(?:>\\n*|$)|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n *)+\\n|$)|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$))",
   def: /^ {0,3}\[(label)\]: *(?:\n *)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n *)?| *\n *)(title))? *(?:\n+|$)/,
   table: noopTest,
-  lheading: /^((?:.|\n(?!\n))+?)\n {0,3}(=+|-+) *(?:\n+|$)/,
+  lheading: /^(?!bull )((?:.|\n(?!\s*?\n|bull ))+?)\n {0,3}(=+|-+) *(?:\n+|$)/,
   // regex template, placeholders will be replaced according to different paragraph
   // interruption rules of commonmark and the original markdown spec:
   _paragraph: /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/,
@@ -50928,59 +51670,60 @@ block.list = edit(block.list).replace(/bull/g, block.bullet).replace("hr", "\\n+
 block._tag = "address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|section|source|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul";
 block._comment = /<!--(?!-?>)[\s\S]*?(?:-->|$)/;
 block.html = edit(block.html, "i").replace("comment", block._comment).replace("tag", block._tag).replace("attribute", / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex();
-block.paragraph = edit(block._paragraph).replace("hr", block.hr).replace("heading", " {0,3}#{1,6} ").replace("|lheading", "").replace("|table", "").replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", block._tag).getRegex();
+block.lheading = edit(block.lheading).replace(/bull/g, block.bullet).getRegex();
+block.paragraph = edit(block._paragraph).replace("hr", block.hr).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("|table", "").replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", block._tag).getRegex();
 block.blockquote = edit(block.blockquote).replace("paragraph", block.paragraph).getRegex();
-block.normal = merge({}, block);
-block.gfm = merge({}, block.normal, {
-  table: "^ *([^\\n ].*\\|.*)\\n {0,3}(?:\\| *)?(:?-+:? *(?:\\| *:?-+:? *)*)(?:\\| *)?(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)"
+block.normal = { ...block };
+block.gfm = {
+  ...block.normal,
+  table: "^ *([^\\n ].*)\\n {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)"
   // Cells
-});
-block.gfm.table = edit(block.gfm.table).replace("hr", block.hr).replace("heading", " {0,3}#{1,6} ").replace("blockquote", " {0,3}>").replace("code", " {4}[^\\n]").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", block._tag).getRegex();
-block.gfm.paragraph = edit(block._paragraph).replace("hr", block.hr).replace("heading", " {0,3}#{1,6} ").replace("|lheading", "").replace("table", block.gfm.table).replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", block._tag).getRegex();
-block.pedantic = merge({}, block.normal, {
-  html: edit(
-    `^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:"[^"]*"|'[^']*'|\\s[^'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))`
-  ).replace("comment", block._comment).replace(/tag/g, "(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(),
+};
+block.gfm.table = edit(block.gfm.table).replace("hr", block.hr).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("blockquote", " {0,3}>").replace("code", " {4}[^\\n]").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", block._tag).getRegex();
+block.gfm.paragraph = edit(block._paragraph).replace("hr", block.hr).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("table", block.gfm.table).replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", block._tag).getRegex();
+block.pedantic = {
+  ...block.normal,
+  html: edit(`^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:"[^"]*"|'[^']*'|\\s[^'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))`).replace("comment", block._comment).replace(/tag/g, "(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(),
   def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,
   heading: /^(#{1,6})(.*)(?:\n+|$)/,
   fences: noopTest,
-  // fences not supported
   lheading: /^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/,
   paragraph: edit(block.normal._paragraph).replace("hr", block.hr).replace("heading", " *#{1,6} *[^\n]").replace("lheading", block.lheading).replace("blockquote", " {0,3}>").replace("|fences", "").replace("|list", "").replace("|html", "").getRegex()
-});
+};
 var inline = {
   escape: /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/,
   autolink: /^<(scheme:[^\s\x00-\x1f<>]*|email)>/,
   url: noopTest,
   tag: "^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>",
-  // CDATA section
   link: /^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/,
   reflink: /^!?\[(label)\]\[(ref)\]/,
   nolink: /^!?\[(ref)\](?:\[\])?/,
   reflinkSearch: "reflink|nolink(?!\\()",
   emStrong: {
-    lDelim: /^(?:\*+(?:([punct_])|[^\s*]))|^_+(?:([punct*])|([^\s_]))/,
-    //        (1) and (2) can only be a Right Delimiter. (3) and (4) can only be Left.  (5) and (6) can be either Left or Right.
-    //          () Skip orphan inside strong                                      () Consume to delim     (1) #***                (2) a***#, a***                             (3) #***a, ***a                 (4) ***#              (5) #***#                 (6) a***a
-    rDelimAst: /^(?:[^_*\\]|\\.)*?\_\_(?:[^_*\\]|\\.)*?\*(?:[^_*\\]|\\.)*?(?=\_\_)|(?:[^*\\]|\\.)+(?=[^*])|[punct_](\*+)(?=[\s]|$)|(?:[^punct*_\s\\]|\\.)(\*+)(?=[punct_\s]|$)|[punct_\s](\*+)(?=[^punct*_\s])|[\s](\*+)(?=[punct_])|[punct_](\*+)(?=[punct_])|(?:[^punct*_\s\\]|\\.)(\*+)(?=[^punct*_\s])/,
-    rDelimUnd: /^(?:[^_*\\]|\\.)*?\*\*(?:[^_*\\]|\\.)*?\_(?:[^_*\\]|\\.)*?(?=\*\*)|(?:[^_\\]|\\.)+(?=[^_])|[punct*](\_+)(?=[\s]|$)|(?:[^punct*_\s\\]|\\.)(\_+)(?=[punct*\s]|$)|[punct*\s](\_+)(?=[^punct*_\s])|[\s](\_+)(?=[punct*])|[punct*](\_+)(?=[punct*])/
+    lDelim: /^(?:\*+(?:((?!\*)[punct])|[^\s*]))|^_+(?:((?!_)[punct])|([^\s_]))/,
+    //         (1) and (2) can only be a Right Delimiter. (3) and (4) can only be Left.  (5) and (6) can be either Left or Right.
+    //         | Skip orphan inside strong      | Consume to delim | (1) #***              | (2) a***#, a***                    | (3) #***a, ***a                  | (4) ***#                 | (5) #***#                         | (6) a***a
+    rDelimAst: /^[^_*]*?__[^_*]*?\*[^_*]*?(?=__)|[^*]+(?=[^*])|(?!\*)[punct](\*+)(?=[\s]|$)|[^punct\s](\*+)(?!\*)(?=[punct\s]|$)|(?!\*)[punct\s](\*+)(?=[^punct\s])|[\s](\*+)(?!\*)(?=[punct])|(?!\*)[punct](\*+)(?!\*)(?=[punct])|[^punct\s](\*+)(?=[^punct\s])/,
+    rDelimUnd: /^[^_*]*?\*\*[^_*]*?_[^_*]*?(?=\*\*)|[^_]+(?=[^_])|(?!_)[punct](_+)(?=[\s]|$)|[^punct\s](_+)(?!_)(?=[punct\s]|$)|(?!_)[punct\s](_+)(?=[^punct\s])|[\s](_+)(?!_)(?=[punct])|(?!_)[punct](_+)(?!_)(?=[punct])/
     // ^- Not allowed for _
   },
   code: /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/,
   br: /^( {2,}|\\)\n(?!\s*$)/,
   del: noopTest,
   text: /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/,
-  punctuation: /^([\spunctuation])/
+  punctuation: /^((?![*_])[\spunctuation])/
 };
-inline._punctuation = "!\"#$%&'()+\\-.,/:;<=>?@\\[\\]`^{|}~";
-inline.punctuation = edit(inline.punctuation).replace(/punctuation/g, inline._punctuation).getRegex();
-inline.blockSkip = /\[[^\]]*?\]\([^\)]*?\)|`[^`]*?`|<[^>]*?>/g;
-inline.escapedEmSt = /(?:^|[^\\])(?:\\\\)*\\[*_]/g;
+inline._punctuation = "\\p{P}$+<=>`^|~";
+inline.punctuation = edit(inline.punctuation, "u").replace(/punctuation/g, inline._punctuation).getRegex();
+inline.blockSkip = /\[[^[\]]*?\]\([^\(\)]*?\)|`[^`]*?`|<[^<>]*?>/g;
+inline.anyPunctuation = /\\[punct]/g;
+inline._escapes = /\\([punct])/g;
 inline._comment = edit(block._comment).replace("(?:-->|$)", "-->").getRegex();
-inline.emStrong.lDelim = edit(inline.emStrong.lDelim).replace(/punct/g, inline._punctuation).getRegex();
-inline.emStrong.rDelimAst = edit(inline.emStrong.rDelimAst, "g").replace(/punct/g, inline._punctuation).getRegex();
-inline.emStrong.rDelimUnd = edit(inline.emStrong.rDelimUnd, "g").replace(/punct/g, inline._punctuation).getRegex();
-inline._escapes = /\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/g;
+inline.emStrong.lDelim = edit(inline.emStrong.lDelim, "u").replace(/punct/g, inline._punctuation).getRegex();
+inline.emStrong.rDelimAst = edit(inline.emStrong.rDelimAst, "gu").replace(/punct/g, inline._punctuation).getRegex();
+inline.emStrong.rDelimUnd = edit(inline.emStrong.rDelimUnd, "gu").replace(/punct/g, inline._punctuation).getRegex();
+inline.anyPunctuation = edit(inline.anyPunctuation, "gu").replace(/punct/g, inline._punctuation).getRegex();
+inline._escapes = edit(inline._escapes, "gu").replace(/punct/g, inline._punctuation).getRegex();
 inline._scheme = /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/;
 inline._email = /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/;
 inline.autolink = edit(inline.autolink).replace("scheme", inline._scheme).replace("email", inline._email).getRegex();
@@ -50993,8 +51736,9 @@ inline.link = edit(inline.link).replace("label", inline._label).replace("href", 
 inline.reflink = edit(inline.reflink).replace("label", inline._label).replace("ref", block._label).getRegex();
 inline.nolink = edit(inline.nolink).replace("ref", block._label).getRegex();
 inline.reflinkSearch = edit(inline.reflinkSearch, "g").replace("reflink", inline.reflink).replace("nolink", inline.nolink).getRegex();
-inline.normal = merge({}, inline);
-inline.pedantic = merge({}, inline.normal, {
+inline.normal = { ...inline };
+inline.pedantic = {
+  ...inline.normal,
   strong: {
     start: /^__|\*\*/,
     middle: /^__(?=\S)([\s\S]*?\S)__(?!_)|^\*\*(?=\S)([\s\S]*?\S)\*\*(?!\*)/,
@@ -51009,41 +51753,33 @@ inline.pedantic = merge({}, inline.normal, {
   },
   link: edit(/^!?\[(label)\]\((.*?)\)/).replace("label", inline._label).getRegex(),
   reflink: edit(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label", inline._label).getRegex()
-});
-inline.gfm = merge({}, inline.normal, {
+};
+inline.gfm = {
+  ...inline.normal,
   escape: edit(inline.escape).replace("])", "~|])").getRegex(),
   _extended_email: /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/,
   url: /^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/,
   _backpedal: /(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/,
   del: /^(~~?)(?=[^\s~])([\s\S]*?[^\s~])\1(?=[^~]|$)/,
   text: /^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/
-});
+};
 inline.gfm.url = edit(inline.gfm.url, "i").replace("email", inline.gfm._extended_email).getRegex();
-inline.breaks = merge({}, inline.gfm, {
+inline.breaks = {
+  ...inline.gfm,
   br: edit(inline.br).replace("{2,}", "*").getRegex(),
   text: edit(inline.gfm.text).replace("\\b_", "\\b_| {2,}\\n").replace(/\{2,\}/g, "*").getRegex()
-});
-function smartypants(text) {
-  return text.replace(/---/g, "\u2014").replace(/--/g, "\u2013").replace(/(^|[-\u2014/(\[{"\s])'/g, "$1\u2018").replace(/'/g, "\u2019").replace(/(^|[-\u2014/(\[{\u2018\s])"/g, "$1\u201C").replace(/"/g, "\u201D").replace(/\.{3}/g, "\u2026");
-}
-function mangle(text) {
-  let out = "", i, ch;
-  const l = text.length;
-  for (i = 0; i < l; i++) {
-    ch = text.charCodeAt(i);
-    if (Math.random() > 0.5) {
-      ch = "x" + ch.toString(16);
-    }
-    out += "&#" + ch + ";";
-  }
-  return out;
-}
-var Lexer = class {
+};
+var _Lexer = class __Lexer {
+  tokens;
+  options;
+  state;
+  tokenizer;
+  inlineQueue;
   constructor(options2) {
     this.tokens = [];
     this.tokens.links = /* @__PURE__ */ Object.create(null);
-    this.options = options2 || defaults;
-    this.options.tokenizer = this.options.tokenizer || new Tokenizer();
+    this.options = options2 || _defaults;
+    this.options.tokenizer = this.options.tokenizer || new _Tokenizer();
     this.tokenizer = this.options.tokenizer;
     this.tokenizer.options = this.options;
     this.tokenizer.lexer = this;
@@ -51083,14 +51819,14 @@ var Lexer = class {
    * Static Lex Method
    */
   static lex(src, options2) {
-    const lexer2 = new Lexer(options2);
+    const lexer2 = new __Lexer(options2);
     return lexer2.lex(src);
   }
   /**
    * Static Lex Inline Method
    */
   static lexInline(src, options2) {
-    const lexer2 = new Lexer(options2);
+    const lexer2 = new __Lexer(options2);
     return lexer2.inlineTokens(src);
   }
   /**
@@ -51105,9 +51841,6 @@ var Lexer = class {
     }
     return this.tokens;
   }
-  /**
-   * Lexing
-   */
   blockTokens(src, tokens = []) {
     if (this.options.pedantic) {
       src = src.replace(/\t/g, "    ").replace(/^ +$/gm, "");
@@ -51116,7 +51849,10 @@ var Lexer = class {
         return leading + "    ".repeat(tabs.length);
       });
     }
-    let token, lastToken, cutSrc, lastParagraphClipped;
+    let token;
+    let lastToken;
+    let cutSrc;
+    let lastParagraphClipped;
     while (src) {
       if (this.options.extensions && this.options.extensions.block && this.options.extensions.block.some((extTokenizer) => {
         if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
@@ -51209,7 +51945,7 @@ var Lexer = class {
         let startIndex = Infinity;
         const tempSrc = src.slice(1);
         let tempStart;
-        this.options.extensions.startBlock.forEach(function(getStartIndex) {
+        this.options.extensions.startBlock.forEach((getStartIndex) => {
           tempStart = getStartIndex.call({ lexer: this }, tempSrc);
           if (typeof tempStart === "number" && tempStart >= 0) {
             startIndex = Math.min(startIndex, tempStart);
@@ -51276,17 +52012,16 @@ var Lexer = class {
       if (links.length > 0) {
         while ((match = this.tokenizer.rules.inline.reflinkSearch.exec(maskedSrc)) != null) {
           if (links.includes(match[0].slice(match[0].lastIndexOf("[") + 1, -1))) {
-            maskedSrc = maskedSrc.slice(0, match.index) + "[" + repeatString("a", match[0].length - 2) + "]" + maskedSrc.slice(this.tokenizer.rules.inline.reflinkSearch.lastIndex);
+            maskedSrc = maskedSrc.slice(0, match.index) + "[" + "a".repeat(match[0].length - 2) + "]" + maskedSrc.slice(this.tokenizer.rules.inline.reflinkSearch.lastIndex);
           }
         }
       }
     }
     while ((match = this.tokenizer.rules.inline.blockSkip.exec(maskedSrc)) != null) {
-      maskedSrc = maskedSrc.slice(0, match.index) + "[" + repeatString("a", match[0].length - 2) + "]" + maskedSrc.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);
+      maskedSrc = maskedSrc.slice(0, match.index) + "[" + "a".repeat(match[0].length - 2) + "]" + maskedSrc.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);
     }
-    while ((match = this.tokenizer.rules.inline.escapedEmSt.exec(maskedSrc)) != null) {
-      maskedSrc = maskedSrc.slice(0, match.index + match[0].length - 2) + "++" + maskedSrc.slice(this.tokenizer.rules.inline.escapedEmSt.lastIndex);
-      this.tokenizer.rules.inline.escapedEmSt.lastIndex--;
+    while ((match = this.tokenizer.rules.inline.anyPunctuation.exec(maskedSrc)) != null) {
+      maskedSrc = maskedSrc.slice(0, match.index) + "++" + maskedSrc.slice(this.tokenizer.rules.inline.anyPunctuation.lastIndex);
     }
     while (src) {
       if (!keepPrevChar) {
@@ -51355,12 +52090,12 @@ var Lexer = class {
         tokens.push(token);
         continue;
       }
-      if (token = this.tokenizer.autolink(src, mangle)) {
+      if (token = this.tokenizer.autolink(src)) {
         src = src.substring(token.raw.length);
         tokens.push(token);
         continue;
       }
-      if (!this.state.inLink && (token = this.tokenizer.url(src, mangle))) {
+      if (!this.state.inLink && (token = this.tokenizer.url(src))) {
         src = src.substring(token.raw.length);
         tokens.push(token);
         continue;
@@ -51370,7 +52105,7 @@ var Lexer = class {
         let startIndex = Infinity;
         const tempSrc = src.slice(1);
         let tempStart;
-        this.options.extensions.startInline.forEach(function(getStartIndex) {
+        this.options.extensions.startInline.forEach((getStartIndex) => {
           tempStart = getStartIndex.call({ lexer: this }, tempSrc);
           if (typeof tempStart === "number" && tempStart >= 0) {
             startIndex = Math.min(startIndex, tempStart);
@@ -51380,7 +52115,7 @@ var Lexer = class {
           cutSrc = src.substring(0, startIndex + 1);
         }
       }
-      if (token = this.tokenizer.inlineText(cutSrc, smartypants)) {
+      if (token = this.tokenizer.inlineText(cutSrc)) {
         src = src.substring(token.raw.length);
         if (token.raw.slice(-1) !== "_") {
           prevChar = token.raw.slice(-1);
@@ -51408,87 +52143,55 @@ var Lexer = class {
     return tokens;
   }
 };
-var Renderer = class {
+var _Renderer = class {
+  options;
   constructor(options2) {
-    this.options = options2 || defaults;
+    this.options = options2 || _defaults;
   }
   code(code, infostring, escaped) {
-    const lang = (infostring || "").match(/\S*/)[0];
-    if (this.options.highlight) {
-      const out = this.options.highlight(code, lang);
-      if (out != null && out !== code) {
-        escaped = true;
-        code = out;
-      }
-    }
+    const lang = (infostring || "").match(/^\S*/)?.[0];
     code = code.replace(/\n$/, "") + "\n";
     if (!lang) {
       return "<pre><code>" + (escaped ? code : escape(code, true)) + "</code></pre>\n";
     }
-    return '<pre><code class="' + this.options.langPrefix + escape(lang) + '">' + (escaped ? code : escape(code, true)) + "</code></pre>\n";
+    return '<pre><code class="language-' + escape(lang) + '">' + (escaped ? code : escape(code, true)) + "</code></pre>\n";
   }
-  /**
-   * @param {string} quote
-   */
   blockquote(quote) {
     return `<blockquote>
 ${quote}</blockquote>
 `;
   }
-  html(html) {
+  html(html, block2) {
     return html;
   }
-  /**
-   * @param {string} text
-   * @param {string} level
-   * @param {string} raw
-   * @param {any} slugger
-   */
-  heading(text, level, raw, slugger) {
-    if (this.options.headerIds) {
-      const id = this.options.headerPrefix + slugger.slug(raw);
-      return `<h${level} id="${id}">${text}</h${level}>
-`;
-    }
+  heading(text, level, raw) {
     return `<h${level}>${text}</h${level}>
 `;
   }
   hr() {
-    return this.options.xhtml ? "<hr/>\n" : "<hr>\n";
+    return "<hr>\n";
   }
   list(body, ordered, start) {
-    const type = ordered ? "ol" : "ul", startatt = ordered && start !== 1 ? ' start="' + start + '"' : "";
+    const type = ordered ? "ol" : "ul";
+    const startatt = ordered && start !== 1 ? ' start="' + start + '"' : "";
     return "<" + type + startatt + ">\n" + body + "</" + type + ">\n";
   }
-  /**
-   * @param {string} text
-   */
-  listitem(text) {
+  listitem(text, task, checked) {
     return `<li>${text}</li>
 `;
   }
   checkbox(checked) {
-    return "<input " + (checked ? 'checked="" ' : "") + 'disabled="" type="checkbox"' + (this.options.xhtml ? " /" : "") + "> ";
+    return "<input " + (checked ? 'checked="" ' : "") + 'disabled="" type="checkbox">';
   }
-  /**
-   * @param {string} text
-   */
   paragraph(text) {
     return `<p>${text}</p>
 `;
   }
-  /**
-   * @param {string} header
-   * @param {string} body
-   */
   table(header, body) {
     if (body)
       body = `<tbody>${body}</tbody>`;
     return "<table>\n<thead>\n" + header + "</thead>\n" + body + "</table>\n";
   }
-  /**
-   * @param {string} content
-   */
   tablerow(content) {
     return `<tr>
 ${content}</tr>
@@ -51502,42 +52205,28 @@ ${content}</tr>
   }
   /**
    * span level renderer
-   * @param {string} text
    */
   strong(text) {
     return `<strong>${text}</strong>`;
   }
-  /**
-   * @param {string} text
-   */
   em(text) {
     return `<em>${text}</em>`;
   }
-  /**
-   * @param {string} text
-   */
   codespan(text) {
     return `<code>${text}</code>`;
   }
   br() {
-    return this.options.xhtml ? "<br/>" : "<br>";
+    return "<br>";
   }
-  /**
-   * @param {string} text
-   */
   del(text) {
     return `<del>${text}</del>`;
   }
-  /**
-   * @param {string} href
-   * @param {string} title
-   * @param {string} text
-   */
   link(href, title, text) {
-    href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
-    if (href === null) {
+    const cleanHref = cleanUrl(href);
+    if (cleanHref === null) {
       return text;
     }
+    href = cleanHref;
     let out = '<a href="' + href + '"';
     if (title) {
       out += ' title="' + title + '"';
@@ -51545,28 +52234,24 @@ ${content}</tr>
     out += ">" + text + "</a>";
     return out;
   }
-  /**
-   * @param {string} href
-   * @param {string} title
-   * @param {string} text
-   */
   image(href, title, text) {
-    href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
-    if (href === null) {
+    const cleanHref = cleanUrl(href);
+    if (cleanHref === null) {
       return text;
     }
+    href = cleanHref;
     let out = `<img src="${href}" alt="${text}"`;
     if (title) {
       out += ` title="${title}"`;
     }
-    out += this.options.xhtml ? "/>" : ">";
+    out += ">";
     return out;
   }
   text(text) {
     return text;
   }
 };
-var TextRenderer = class {
+var _TextRenderer = class {
   // no need for block level renderers
   strong(text) {
     return text;
@@ -51596,82 +52281,42 @@ var TextRenderer = class {
     return "";
   }
 };
-var Slugger = class {
-  constructor() {
-    this.seen = {};
-  }
-  /**
-   * @param {string} value
-   */
-  serialize(value) {
-    return value.toLowerCase().trim().replace(/<[!\/a-z].*?>/ig, "").replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g, "").replace(/\s/g, "-");
-  }
-  /**
-   * Finds the next safe (unique) slug to use
-   * @param {string} originalSlug
-   * @param {boolean} isDryRun
-   */
-  getNextSafeSlug(originalSlug, isDryRun) {
-    let slug = originalSlug;
-    let occurenceAccumulator = 0;
-    if (this.seen.hasOwnProperty(slug)) {
-      occurenceAccumulator = this.seen[originalSlug];
-      do {
-        occurenceAccumulator++;
-        slug = originalSlug + "-" + occurenceAccumulator;
-      } while (this.seen.hasOwnProperty(slug));
-    }
-    if (!isDryRun) {
-      this.seen[originalSlug] = occurenceAccumulator;
-      this.seen[slug] = 0;
-    }
-    return slug;
-  }
-  /**
-   * Convert string to unique id
-   * @param {object} [options]
-   * @param {boolean} [options.dryrun] Generates the next unique slug without
-   * updating the internal accumulator.
-   */
-  slug(value, options2 = {}) {
-    const slug = this.serialize(value);
-    return this.getNextSafeSlug(slug, options2.dryrun);
-  }
-};
-var Parser = class {
+var _Parser = class __Parser {
+  options;
+  renderer;
+  textRenderer;
   constructor(options2) {
-    this.options = options2 || defaults;
-    this.options.renderer = this.options.renderer || new Renderer();
+    this.options = options2 || _defaults;
+    this.options.renderer = this.options.renderer || new _Renderer();
     this.renderer = this.options.renderer;
     this.renderer.options = this.options;
-    this.textRenderer = new TextRenderer();
-    this.slugger = new Slugger();
+    this.textRenderer = new _TextRenderer();
   }
   /**
    * Static Parse Method
    */
   static parse(tokens, options2) {
-    const parser2 = new Parser(options2);
+    const parser2 = new __Parser(options2);
     return parser2.parse(tokens);
   }
   /**
    * Static Parse Inline Method
    */
   static parseInline(tokens, options2) {
-    const parser2 = new Parser(options2);
+    const parser2 = new __Parser(options2);
     return parser2.parseInline(tokens);
   }
   /**
    * Parse Loop
    */
   parse(tokens, top = true) {
-    let out = "", i, j, k, l2, l3, row, cell, header, body, token, ordered, start, loose, itemBody, item, checked, task, checkbox, ret;
-    const l = tokens.length;
-    for (i = 0; i < l; i++) {
-      token = tokens[i];
+    let out = "";
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i];
       if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token.type]) {
-        ret = this.options.extensions.renderers[token.type].call({ parser: this }, token);
-        if (ret !== false || !["space", "hr", "heading", "code", "table", "blockquote", "list", "html", "paragraph", "text"].includes(token.type)) {
+        const genericToken = token;
+        const ret = this.options.extensions.renderers[genericToken.type].call({ parser: this }, genericToken);
+        if (ret !== false || !["space", "hr", "heading", "code", "table", "blockquote", "list", "html", "paragraph", "text"].includes(genericToken.type)) {
           out += ret || "";
           continue;
         }
@@ -51685,44 +52330,29 @@ var Parser = class {
           continue;
         }
         case "heading": {
-          out += this.renderer.heading(
-            this.parseInline(token.tokens),
-            token.depth,
-            unescape(this.parseInline(token.tokens, this.textRenderer)),
-            this.slugger
-          );
+          const headingToken = token;
+          out += this.renderer.heading(this.parseInline(headingToken.tokens), headingToken.depth, unescape(this.parseInline(headingToken.tokens, this.textRenderer)));
           continue;
         }
         case "code": {
-          out += this.renderer.code(
-            token.text,
-            token.lang,
-            token.escaped
-          );
+          const codeToken = token;
+          out += this.renderer.code(codeToken.text, codeToken.lang, !!codeToken.escaped);
           continue;
         }
         case "table": {
-          header = "";
-          cell = "";
-          l2 = token.header.length;
-          for (j = 0; j < l2; j++) {
-            cell += this.renderer.tablecell(
-              this.parseInline(token.header[j].tokens),
-              { header: true, align: token.align[j] }
-            );
+          const tableToken = token;
+          let header = "";
+          let cell = "";
+          for (let j = 0; j < tableToken.header.length; j++) {
+            cell += this.renderer.tablecell(this.parseInline(tableToken.header[j].tokens), { header: true, align: tableToken.align[j] });
           }
           header += this.renderer.tablerow(cell);
-          body = "";
-          l2 = token.rows.length;
-          for (j = 0; j < l2; j++) {
-            row = token.rows[j];
+          let body = "";
+          for (let j = 0; j < tableToken.rows.length; j++) {
+            const row = tableToken.rows[j];
             cell = "";
-            l3 = row.length;
-            for (k = 0; k < l3; k++) {
-              cell += this.renderer.tablecell(
-                this.parseInline(row[k].tokens),
-                { header: false, align: token.align[k] }
-              );
+            for (let k = 0; k < row.length; k++) {
+              cell += this.renderer.tablecell(this.parseInline(row[k].tokens), { header: false, align: tableToken.align[k] });
             }
             body += this.renderer.tablerow(cell);
           }
@@ -51730,23 +52360,24 @@ var Parser = class {
           continue;
         }
         case "blockquote": {
-          body = this.parse(token.tokens);
+          const blockquoteToken = token;
+          const body = this.parse(blockquoteToken.tokens);
           out += this.renderer.blockquote(body);
           continue;
         }
         case "list": {
-          ordered = token.ordered;
-          start = token.start;
-          loose = token.loose;
-          l2 = token.items.length;
-          body = "";
-          for (j = 0; j < l2; j++) {
-            item = token.items[j];
-            checked = item.checked;
-            task = item.task;
-            itemBody = "";
+          const listToken = token;
+          const ordered = listToken.ordered;
+          const start = listToken.start;
+          const loose = listToken.loose;
+          let body = "";
+          for (let j = 0; j < listToken.items.length; j++) {
+            const item = listToken.items[j];
+            const checked = item.checked;
+            const task = item.task;
+            let itemBody = "";
             if (item.task) {
-              checkbox = this.renderer.checkbox(checked);
+              const checkbox = this.renderer.checkbox(!!checked);
               if (loose) {
                 if (item.tokens.length > 0 && item.tokens[0].type === "paragraph") {
                   item.tokens[0].text = checkbox + " " + item.tokens[0].text;
@@ -51756,32 +52387,35 @@ var Parser = class {
                 } else {
                   item.tokens.unshift({
                     type: "text",
-                    text: checkbox
+                    text: checkbox + " "
                   });
                 }
               } else {
-                itemBody += checkbox;
+                itemBody += checkbox + " ";
               }
             }
             itemBody += this.parse(item.tokens, loose);
-            body += this.renderer.listitem(itemBody, task, checked);
+            body += this.renderer.listitem(itemBody, task, !!checked);
           }
           out += this.renderer.list(body, ordered, start);
           continue;
         }
         case "html": {
-          out += this.renderer.html(token.text);
+          const htmlToken = token;
+          out += this.renderer.html(htmlToken.text, htmlToken.block);
           continue;
         }
         case "paragraph": {
-          out += this.renderer.paragraph(this.parseInline(token.tokens));
+          const paragraphToken = token;
+          out += this.renderer.paragraph(this.parseInline(paragraphToken.tokens));
           continue;
         }
         case "text": {
-          body = token.tokens ? this.parseInline(token.tokens) : token.text;
-          while (i + 1 < l && tokens[i + 1].type === "text") {
-            token = tokens[++i];
-            body += "\n" + (token.tokens ? this.parseInline(token.tokens) : token.text);
+          let textToken = token;
+          let body = textToken.tokens ? this.parseInline(textToken.tokens) : textToken.text;
+          while (i + 1 < tokens.length && tokens[i + 1].type === "text") {
+            textToken = tokens[++i];
+            body += "\n" + (textToken.tokens ? this.parseInline(textToken.tokens) : textToken.text);
           }
           out += top ? this.renderer.paragraph(body) : body;
           continue;
@@ -51790,7 +52424,7 @@ var Parser = class {
           const errMsg = 'Token with "' + token.type + '" type was not found.';
           if (this.options.silent) {
             console.error(errMsg);
-            return;
+            return "";
           } else {
             throw new Error(errMsg);
           }
@@ -51804,12 +52438,11 @@ var Parser = class {
    */
   parseInline(tokens, renderer) {
     renderer = renderer || this.renderer;
-    let out = "", i, token, ret;
-    const l = tokens.length;
-    for (i = 0; i < l; i++) {
-      token = tokens[i];
+    let out = "";
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i];
       if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token.type]) {
-        ret = this.options.extensions.renderers[token.type].call({ parser: this }, token);
+        const ret = this.options.extensions.renderers[token.type].call({ parser: this }, token);
         if (ret !== false || !["escape", "html", "link", "image", "strong", "em", "codespan", "br", "del", "text"].includes(token.type)) {
           out += ret || "";
           continue;
@@ -51817,31 +52450,38 @@ var Parser = class {
       }
       switch (token.type) {
         case "escape": {
-          out += renderer.text(token.text);
+          const escapeToken = token;
+          out += renderer.text(escapeToken.text);
           break;
         }
         case "html": {
-          out += renderer.html(token.text);
+          const tagToken = token;
+          out += renderer.html(tagToken.text);
           break;
         }
         case "link": {
-          out += renderer.link(token.href, token.title, this.parseInline(token.tokens, renderer));
+          const linkToken = token;
+          out += renderer.link(linkToken.href, linkToken.title, this.parseInline(linkToken.tokens, renderer));
           break;
         }
         case "image": {
-          out += renderer.image(token.href, token.title, token.text);
+          const imageToken = token;
+          out += renderer.image(imageToken.href, imageToken.title, imageToken.text);
           break;
         }
         case "strong": {
-          out += renderer.strong(this.parseInline(token.tokens, renderer));
+          const strongToken = token;
+          out += renderer.strong(this.parseInline(strongToken.tokens, renderer));
           break;
         }
         case "em": {
-          out += renderer.em(this.parseInline(token.tokens, renderer));
+          const emToken = token;
+          out += renderer.em(this.parseInline(emToken.tokens, renderer));
           break;
         }
         case "codespan": {
-          out += renderer.codespan(token.text);
+          const codespanToken = token;
+          out += renderer.codespan(codespanToken.text);
           break;
         }
         case "br": {
@@ -51849,18 +52489,20 @@ var Parser = class {
           break;
         }
         case "del": {
-          out += renderer.del(this.parseInline(token.tokens, renderer));
+          const delToken = token;
+          out += renderer.del(this.parseInline(delToken.tokens, renderer));
           break;
         }
         case "text": {
-          out += renderer.text(token.text);
+          const textToken = token;
+          out += renderer.text(textToken.text);
           break;
         }
         default: {
           const errMsg = 'Token with "' + token.type + '" type was not found.';
           if (this.options.silent) {
             console.error(errMsg);
-            return;
+            return "";
           } else {
             throw new Error(errMsg);
           }
@@ -51870,280 +52512,405 @@ var Parser = class {
     return out;
   }
 };
-function marked(src, opt, callback) {
-  if (typeof src === "undefined" || src === null) {
-    throw new Error("marked(): input parameter is undefined or null");
+var _Hooks = class {
+  options;
+  constructor(options2) {
+    this.options = options2 || _defaults;
   }
-  if (typeof src !== "string") {
-    throw new Error("marked(): input parameter is of type " + Object.prototype.toString.call(src) + ", string expected");
+  static passThroughHooks = /* @__PURE__ */ new Set([
+    "preprocess",
+    "postprocess"
+  ]);
+  /**
+   * Process markdown before marked
+   */
+  preprocess(markdown) {
+    return markdown;
   }
-  if (typeof opt === "function") {
-    callback = opt;
-    opt = null;
+  /**
+   * Process HTML after marked is finished
+   */
+  postprocess(html) {
+    return html;
   }
-  opt = merge({}, marked.defaults, opt || {});
-  checkSanitizeDeprecation(opt);
-  if (callback) {
-    const highlight = opt.highlight;
-    let tokens;
-    try {
-      tokens = Lexer.lex(src, opt);
-    } catch (e) {
-      return callback(e);
-    }
-    const done = function(err) {
-      let out;
-      if (!err) {
-        try {
-          if (opt.walkTokens) {
-            marked.walkTokens(tokens, opt.walkTokens);
-          }
-          out = Parser.parse(tokens, opt);
-        } catch (e) {
-          err = e;
-        }
-      }
-      opt.highlight = highlight;
-      return err ? callback(err) : callback(null, out);
-    };
-    if (!highlight || highlight.length < 3) {
-      return done();
-    }
-    delete opt.highlight;
-    if (!tokens.length)
-      return done();
-    let pending = 0;
-    marked.walkTokens(tokens, function(token) {
-      if (token.type === "code") {
-        pending++;
-        setTimeout(() => {
-          highlight(token.text, token.lang, function(err, code) {
-            if (err) {
-              return done(err);
-            }
-            if (code != null && code !== token.text) {
-              token.text = code;
-              token.escaped = true;
-            }
-            pending--;
-            if (pending === 0) {
-              done();
-            }
-          });
-        }, 0);
-      }
-    });
-    if (pending === 0) {
-      done();
-    }
-    return;
-  }
-  function onError(e) {
-    e.message += "\nPlease report this to https://github.com/markedjs/marked.";
-    if (opt.silent) {
-      return "<p>An error occurred:</p><pre>" + escape(e.message + "", true) + "</pre>";
-    }
-    throw e;
-  }
-  try {
-    const tokens = Lexer.lex(src, opt);
-    if (opt.walkTokens) {
-      if (opt.async) {
-        return Promise.all(marked.walkTokens(tokens, opt.walkTokens)).then(() => {
-          return Parser.parse(tokens, opt);
-        }).catch(onError);
-      }
-      marked.walkTokens(tokens, opt.walkTokens);
-    }
-    return Parser.parse(tokens, opt);
-  } catch (e) {
-    onError(e);
-  }
-}
-marked.options = marked.setOptions = function(opt) {
-  merge(marked.defaults, opt);
-  changeDefaults(marked.defaults);
-  return marked;
 };
-marked.getDefaults = getDefaults;
-marked.defaults = defaults;
-marked.use = function(...args) {
-  const extensions = marked.defaults.extensions || { renderers: {}, childTokens: {} };
-  args.forEach((pack) => {
-    const opts = merge({}, pack);
-    opts.async = marked.defaults.async || opts.async;
-    if (pack.extensions) {
-      pack.extensions.forEach((ext) => {
-        if (!ext.name) {
-          throw new Error("extension name required");
+var Marked = class {
+  defaults = _getDefaults();
+  options = this.setOptions;
+  parse = this.#parseMarkdown(_Lexer.lex, _Parser.parse);
+  parseInline = this.#parseMarkdown(_Lexer.lexInline, _Parser.parseInline);
+  Parser = _Parser;
+  parser = _Parser.parse;
+  Renderer = _Renderer;
+  TextRenderer = _TextRenderer;
+  Lexer = _Lexer;
+  lexer = _Lexer.lex;
+  Tokenizer = _Tokenizer;
+  Hooks = _Hooks;
+  constructor(...args) {
+    this.use(...args);
+  }
+  /**
+   * Run callback for every token
+   */
+  walkTokens(tokens, callback) {
+    let values = [];
+    for (const token of tokens) {
+      values = values.concat(callback.call(this, token));
+      switch (token.type) {
+        case "table": {
+          const tableToken = token;
+          for (const cell of tableToken.header) {
+            values = values.concat(this.walkTokens(cell.tokens, callback));
+          }
+          for (const row of tableToken.rows) {
+            for (const cell of row) {
+              values = values.concat(this.walkTokens(cell.tokens, callback));
+            }
+          }
+          break;
         }
-        if (ext.renderer) {
-          const prevRenderer = extensions.renderers[ext.name];
-          if (prevRenderer) {
-            extensions.renderers[ext.name] = function(...args2) {
-              let ret = ext.renderer.apply(this, args2);
+        case "list": {
+          const listToken = token;
+          values = values.concat(this.walkTokens(listToken.items, callback));
+          break;
+        }
+        default: {
+          const genericToken = token;
+          if (this.defaults.extensions?.childTokens?.[genericToken.type]) {
+            this.defaults.extensions.childTokens[genericToken.type].forEach((childTokens) => {
+              values = values.concat(this.walkTokens(genericToken[childTokens], callback));
+            });
+          } else if (genericToken.tokens) {
+            values = values.concat(this.walkTokens(genericToken.tokens, callback));
+          }
+        }
+      }
+    }
+    return values;
+  }
+  use(...args) {
+    const extensions = this.defaults.extensions || { renderers: {}, childTokens: {} };
+    args.forEach((pack) => {
+      const opts = { ...pack };
+      opts.async = this.defaults.async || opts.async || false;
+      if (pack.extensions) {
+        pack.extensions.forEach((ext) => {
+          if (!ext.name) {
+            throw new Error("extension name required");
+          }
+          if ("renderer" in ext) {
+            const prevRenderer = extensions.renderers[ext.name];
+            if (prevRenderer) {
+              extensions.renderers[ext.name] = function(...args2) {
+                let ret = ext.renderer.apply(this, args2);
+                if (ret === false) {
+                  ret = prevRenderer.apply(this, args2);
+                }
+                return ret;
+              };
+            } else {
+              extensions.renderers[ext.name] = ext.renderer;
+            }
+          }
+          if ("tokenizer" in ext) {
+            if (!ext.level || ext.level !== "block" && ext.level !== "inline") {
+              throw new Error("extension level must be 'block' or 'inline'");
+            }
+            const extLevel = extensions[ext.level];
+            if (extLevel) {
+              extLevel.unshift(ext.tokenizer);
+            } else {
+              extensions[ext.level] = [ext.tokenizer];
+            }
+            if (ext.start) {
+              if (ext.level === "block") {
+                if (extensions.startBlock) {
+                  extensions.startBlock.push(ext.start);
+                } else {
+                  extensions.startBlock = [ext.start];
+                }
+              } else if (ext.level === "inline") {
+                if (extensions.startInline) {
+                  extensions.startInline.push(ext.start);
+                } else {
+                  extensions.startInline = [ext.start];
+                }
+              }
+            }
+          }
+          if ("childTokens" in ext && ext.childTokens) {
+            extensions.childTokens[ext.name] = ext.childTokens;
+          }
+        });
+        opts.extensions = extensions;
+      }
+      if (pack.renderer) {
+        const renderer = this.defaults.renderer || new _Renderer(this.defaults);
+        for (const prop in pack.renderer) {
+          const rendererFunc = pack.renderer[prop];
+          const rendererKey = prop;
+          const prevRenderer = renderer[rendererKey];
+          renderer[rendererKey] = (...args2) => {
+            let ret = rendererFunc.apply(renderer, args2);
+            if (ret === false) {
+              ret = prevRenderer.apply(renderer, args2);
+            }
+            return ret || "";
+          };
+        }
+        opts.renderer = renderer;
+      }
+      if (pack.tokenizer) {
+        const tokenizer = this.defaults.tokenizer || new _Tokenizer(this.defaults);
+        for (const prop in pack.tokenizer) {
+          const tokenizerFunc = pack.tokenizer[prop];
+          const tokenizerKey = prop;
+          const prevTokenizer = tokenizer[tokenizerKey];
+          tokenizer[tokenizerKey] = (...args2) => {
+            let ret = tokenizerFunc.apply(tokenizer, args2);
+            if (ret === false) {
+              ret = prevTokenizer.apply(tokenizer, args2);
+            }
+            return ret;
+          };
+        }
+        opts.tokenizer = tokenizer;
+      }
+      if (pack.hooks) {
+        const hooks = this.defaults.hooks || new _Hooks();
+        for (const prop in pack.hooks) {
+          const hooksFunc = pack.hooks[prop];
+          const hooksKey = prop;
+          const prevHook = hooks[hooksKey];
+          if (_Hooks.passThroughHooks.has(prop)) {
+            hooks[hooksKey] = (arg) => {
+              if (this.defaults.async) {
+                return Promise.resolve(hooksFunc.call(hooks, arg)).then((ret2) => {
+                  return prevHook.call(hooks, ret2);
+                });
+              }
+              const ret = hooksFunc.call(hooks, arg);
+              return prevHook.call(hooks, ret);
+            };
+          } else {
+            hooks[hooksKey] = (...args2) => {
+              let ret = hooksFunc.apply(hooks, args2);
               if (ret === false) {
-                ret = prevRenderer.apply(this, args2);
+                ret = prevHook.apply(hooks, args2);
               }
               return ret;
             };
-          } else {
-            extensions.renderers[ext.name] = ext.renderer;
           }
         }
-        if (ext.tokenizer) {
-          if (!ext.level || ext.level !== "block" && ext.level !== "inline") {
-            throw new Error("extension level must be 'block' or 'inline'");
+        opts.hooks = hooks;
+      }
+      if (pack.walkTokens) {
+        const walkTokens2 = this.defaults.walkTokens;
+        const packWalktokens = pack.walkTokens;
+        opts.walkTokens = function(token) {
+          let values = [];
+          values.push(packWalktokens.call(this, token));
+          if (walkTokens2) {
+            values = values.concat(walkTokens2.call(this, token));
           }
-          if (extensions[ext.level]) {
-            extensions[ext.level].unshift(ext.tokenizer);
-          } else {
-            extensions[ext.level] = [ext.tokenizer];
-          }
-          if (ext.start) {
-            if (ext.level === "block") {
-              if (extensions.startBlock) {
-                extensions.startBlock.push(ext.start);
-              } else {
-                extensions.startBlock = [ext.start];
-              }
-            } else if (ext.level === "inline") {
-              if (extensions.startInline) {
-                extensions.startInline.push(ext.start);
-              } else {
-                extensions.startInline = [ext.start];
-              }
-            }
-          }
-        }
-        if (ext.childTokens) {
-          extensions.childTokens[ext.name] = ext.childTokens;
-        }
-      });
-      opts.extensions = extensions;
-    }
-    if (pack.renderer) {
-      const renderer = marked.defaults.renderer || new Renderer();
-      for (const prop in pack.renderer) {
-        const prevRenderer = renderer[prop];
-        renderer[prop] = (...args2) => {
-          let ret = pack.renderer[prop].apply(renderer, args2);
-          if (ret === false) {
-            ret = prevRenderer.apply(renderer, args2);
-          }
-          return ret;
+          return values;
         };
       }
-      opts.renderer = renderer;
-    }
-    if (pack.tokenizer) {
-      const tokenizer = marked.defaults.tokenizer || new Tokenizer();
-      for (const prop in pack.tokenizer) {
-        const prevTokenizer = tokenizer[prop];
-        tokenizer[prop] = (...args2) => {
-          let ret = pack.tokenizer[prop].apply(tokenizer, args2);
-          if (ret === false) {
-            ret = prevTokenizer.apply(tokenizer, args2);
-          }
-          return ret;
-        };
-      }
-      opts.tokenizer = tokenizer;
-    }
-    if (pack.walkTokens) {
-      const walkTokens2 = marked.defaults.walkTokens;
-      opts.walkTokens = function(token) {
-        let values = [];
-        values.push(pack.walkTokens.call(this, token));
-        if (walkTokens2) {
-          values = values.concat(walkTokens2.call(this, token));
+      this.defaults = { ...this.defaults, ...opts };
+    });
+    return this;
+  }
+  setOptions(opt) {
+    this.defaults = { ...this.defaults, ...opt };
+    return this;
+  }
+  #parseMarkdown(lexer2, parser2) {
+    return (src, options2) => {
+      const origOpt = { ...options2 };
+      const opt = { ...this.defaults, ...origOpt };
+      if (this.defaults.async === true && origOpt.async === false) {
+        if (!opt.silent) {
+          console.warn("marked(): The async option was set to true by an extension. The async: false option sent to parse will be ignored.");
         }
-        return values;
-      };
-    }
-    marked.setOptions(opts);
-  });
+        opt.async = true;
+      }
+      const throwError = this.#onError(!!opt.silent, !!opt.async);
+      if (typeof src === "undefined" || src === null) {
+        return throwError(new Error("marked(): input parameter is undefined or null"));
+      }
+      if (typeof src !== "string") {
+        return throwError(new Error("marked(): input parameter is of type " + Object.prototype.toString.call(src) + ", string expected"));
+      }
+      if (opt.hooks) {
+        opt.hooks.options = opt;
+      }
+      if (opt.async) {
+        return Promise.resolve(opt.hooks ? opt.hooks.preprocess(src) : src).then((src2) => lexer2(src2, opt)).then((tokens) => opt.walkTokens ? Promise.all(this.walkTokens(tokens, opt.walkTokens)).then(() => tokens) : tokens).then((tokens) => parser2(tokens, opt)).then((html) => opt.hooks ? opt.hooks.postprocess(html) : html).catch(throwError);
+      }
+      try {
+        if (opt.hooks) {
+          src = opt.hooks.preprocess(src);
+        }
+        const tokens = lexer2(src, opt);
+        if (opt.walkTokens) {
+          this.walkTokens(tokens, opt.walkTokens);
+        }
+        let html = parser2(tokens, opt);
+        if (opt.hooks) {
+          html = opt.hooks.postprocess(html);
+        }
+        return html;
+      } catch (e) {
+        return throwError(e);
+      }
+    };
+  }
+  #onError(silent, async) {
+    return (e) => {
+      e.message += "\nPlease report this to https://github.com/markedjs/marked.";
+      if (silent) {
+        const msg = "<p>An error occurred:</p><pre>" + escape(e.message + "", true) + "</pre>";
+        if (async) {
+          return Promise.resolve(msg);
+        }
+        return msg;
+      }
+      if (async) {
+        return Promise.reject(e);
+      }
+      throw e;
+    };
+  }
+};
+var markedInstance = new Marked();
+function marked(src, opt) {
+  return markedInstance.parse(src, opt);
+}
+marked.options = marked.setOptions = function(options2) {
+  markedInstance.setOptions(options2);
+  marked.defaults = markedInstance.defaults;
+  changeDefaults(marked.defaults);
+  return marked;
+};
+marked.getDefaults = _getDefaults;
+marked.defaults = _defaults;
+marked.use = function(...args) {
+  markedInstance.use(...args);
+  marked.defaults = markedInstance.defaults;
+  changeDefaults(marked.defaults);
+  return marked;
 };
 marked.walkTokens = function(tokens, callback) {
-  let values = [];
-  for (const token of tokens) {
-    values = values.concat(callback.call(marked, token));
-    switch (token.type) {
-      case "table": {
-        for (const cell of token.header) {
-          values = values.concat(marked.walkTokens(cell.tokens, callback));
-        }
-        for (const row of token.rows) {
-          for (const cell of row) {
-            values = values.concat(marked.walkTokens(cell.tokens, callback));
-          }
-        }
-        break;
-      }
-      case "list": {
-        values = values.concat(marked.walkTokens(token.items, callback));
-        break;
-      }
-      default: {
-        if (marked.defaults.extensions && marked.defaults.extensions.childTokens && marked.defaults.extensions.childTokens[token.type]) {
-          marked.defaults.extensions.childTokens[token.type].forEach(function(childTokens) {
-            values = values.concat(marked.walkTokens(token[childTokens], callback));
-          });
-        } else if (token.tokens) {
-          values = values.concat(marked.walkTokens(token.tokens, callback));
-        }
-      }
-    }
-  }
-  return values;
+  return markedInstance.walkTokens(tokens, callback);
 };
-marked.parseInline = function(src, opt) {
-  if (typeof src === "undefined" || src === null) {
-    throw new Error("marked.parseInline(): input parameter is undefined or null");
-  }
-  if (typeof src !== "string") {
-    throw new Error("marked.parseInline(): input parameter is of type " + Object.prototype.toString.call(src) + ", string expected");
-  }
-  opt = merge({}, marked.defaults, opt || {});
-  checkSanitizeDeprecation(opt);
-  try {
-    const tokens = Lexer.lexInline(src, opt);
-    if (opt.walkTokens) {
-      marked.walkTokens(tokens, opt.walkTokens);
-    }
-    return Parser.parseInline(tokens, opt);
-  } catch (e) {
-    e.message += "\nPlease report this to https://github.com/markedjs/marked.";
-    if (opt.silent) {
-      return "<p>An error occurred:</p><pre>" + escape(e.message + "", true) + "</pre>";
-    }
-    throw e;
-  }
-};
-marked.Parser = Parser;
-marked.parser = Parser.parse;
-marked.Renderer = Renderer;
-marked.TextRenderer = TextRenderer;
-marked.Lexer = Lexer;
-marked.lexer = Lexer.lex;
-marked.Tokenizer = Tokenizer;
-marked.Slugger = Slugger;
+marked.parseInline = markedInstance.parseInline;
+marked.Parser = _Parser;
+marked.parser = _Parser.parse;
+marked.Renderer = _Renderer;
+marked.TextRenderer = _TextRenderer;
+marked.Lexer = _Lexer;
+marked.lexer = _Lexer.lex;
+marked.Tokenizer = _Tokenizer;
+marked.Hooks = _Hooks;
 marked.parse = marked;
 var options = marked.options;
 var setOptions = marked.setOptions;
 var use = marked.use;
 var walkTokens = marked.walkTokens;
 var parseInline = marked.parseInline;
-var parser = Parser.parse;
-var lexer = Lexer.lex;
+var parser = _Parser.parse;
+var lexer = _Lexer.lex;
 
-// lib/index.js
-var import_dompurify = __toESM(require_purify(), 1);
+// node_modules/marked-highlight/src/index.js
+function markedHighlight(options2) {
+  if (typeof options2 === "function") {
+    options2 = {
+      highlight: options2
+    };
+  }
+  if (!options2 || typeof options2.highlight !== "function") {
+    throw new Error("Must provide highlight function");
+  }
+  if (typeof options2.langPrefix !== "string") {
+    options2.langPrefix = "language-";
+  }
+  return {
+    async: !!options2.async,
+    walkTokens(token) {
+      if (token.type !== "code") {
+        return;
+      }
+      const lang = getLang(token);
+      if (options2.async) {
+        return Promise.resolve(options2.highlight(token.text, lang)).then(updateToken(token));
+      }
+      const code = options2.highlight(token.text, lang);
+      if (code instanceof Promise) {
+        throw new Error("markedHighlight is not set to async but the highlight function is async. Set the async option to true on markedHighlight to await the async highlight function.");
+      }
+      updateToken(token)(code);
+    },
+    renderer: {
+      code(code, infoString, escaped) {
+        const lang = (infoString || "").match(/\S*/)[0];
+        const classAttr = lang ? ` class="${options2.langPrefix}${escape2(lang)}"` : "";
+        code = code.replace(/\n$/, "");
+        return `<pre><code${classAttr}>${escaped ? code : escape2(code, true)}
+</code></pre>`;
+      }
+    }
+  };
+}
+function getLang(token) {
+  return (token.lang || "").match(/\S*/)[0];
+}
+function updateToken(token) {
+  return (code) => {
+    if (typeof code === "string" && code !== token.text) {
+      token.escaped = true;
+      token.text = code;
+    }
+  };
+}
+var escapeTest2 = /[&<>"']/;
+var escapeReplace2 = new RegExp(escapeTest2.source, "g");
+var escapeTestNoEncode2 = /[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/;
+var escapeReplaceNoEncode2 = new RegExp(escapeTestNoEncode2.source, "g");
+var escapeReplacements2 = {
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;",
+  "'": "&#39;"
+};
+var getEscapeReplacement2 = (ch) => escapeReplacements2[ch];
+function escape2(html, encode) {
+  if (encode) {
+    if (escapeTest2.test(html)) {
+      return html.replace(escapeReplace2, getEscapeReplacement2);
+    }
+  } else {
+    if (escapeTestNoEncode2.test(html)) {
+      return html.replace(escapeReplaceNoEncode2, getEscapeReplacement2);
+    }
+  }
+  return html;
+}
 
 // node_modules/highlight.js/es/index.js
 var import_lib = __toESM(require_lib(), 1);
 
 // lib/index.js
+var import_dompurify = __toESM(require_purify(), 1);
+var marked2 = new Marked(markedHighlight({
+  highlight: (code, lang) => {
+    return import_lib.default.highlight(code, {
+      language: lang || "plaintext",
+      ignoreIllegals: true
+    }).value;
+  }
+}));
 var Markdown = class extends HTMLElement {
   constructor() {
     super();
@@ -52160,6 +52927,15 @@ var Markdown = class extends HTMLElement {
   set integrity(value) {
     this.setAttribute("integrity", value);
   }
+  set manual(value) {
+    if (value === true)
+      this.setAttribute("manual", "");
+    else
+      this.removeAttribute("manual");
+  }
+  get manual() {
+    return this.hasAttribute("manual");
+  }
   get rendered() {
     return this.hasAttribute("rendered");
   }
@@ -52168,36 +52944,39 @@ var Markdown = class extends HTMLElement {
   }
   attributeChangedCallback(name, old, value) {
     if (name === "src" && old !== value && value) {
-      this.dispatchEvent(new CustomEvent("load"));
-      this.#render(value).then(() => {
-        this.setAttribute("rendered", "");
-        this.dispatchEvent(new CustomEvent("success"));
-      }).catch((err) => {
-        this.removeAttribute("rendered");
-        this.dispatchEvent(new CustomEvent("failure", {
-          detail: { error: err }
-        }));
-      });
+      this.dispatchEvent(new CustomEvent("change"));
+      if (this.manual === false)
+        this.#render(value);
     }
   }
   async #render(path) {
-    const res = await fetch(path, {
-      integrity: this.integrity || ""
-    });
-    if (!res.ok)
-      throw new Error("HTTP Code: " + res.status);
-    const markdown = await res.text();
-    const html = marked(markdown, {
-      gfm: true,
-      breaks: true,
-      highlight: (code, lang) => {
-        return import_lib.default.highlight(code, {
-          language: lang || "plaintext",
-          ignoreIllegals: true
-        }).value;
-      }
-    });
-    this.innerHTML = (0, import_dompurify.sanitize)(html);
+    try {
+      this.dispatchEvent(new CustomEvent("load"));
+      const res = await fetch(path, {
+        integrity: this.integrity || ""
+      });
+      if (!res.ok)
+        throw new Error("HTTP Code: " + res.status);
+      const markdown = await res.text();
+      this.dispatchEvent(new CustomEvent("render"));
+      const html = marked2.parse(markdown, {
+        gfm: true,
+        //GitHub Flavored Markdown spec
+        breaks: true
+      });
+      this.innerHTML = (0, import_dompurify.sanitize)(html);
+      this.setAttribute("rendered", "");
+      this.dispatchEvent(new CustomEvent("success"));
+    } catch (err) {
+      this.removeAttribute("rendered");
+      this.dispatchEvent(new CustomEvent("failure", {
+        detail: { error: err }
+      }));
+      throw err;
+    }
+  }
+  render() {
+    return this.#render(this.src);
   }
 };
 export {
@@ -52206,5 +52985,5 @@ export {
 /*! Bundled license information:
 
 dompurify/dist/purify.js:
-  (*! @license DOMPurify 2.4.3 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/2.4.3/LICENSE *)
+  (*! @license DOMPurify 3.0.6 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.0.6/LICENSE *)
 */
