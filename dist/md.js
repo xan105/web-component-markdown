@@ -52951,6 +52951,8 @@ var Markdown = class extends HTMLElement {
   }
   async #render(path) {
     try {
+      if (!(typeof path === "string" && path.length > 0))
+        throw new TypeError("Invalid path parameter");
       this.dispatchEvent(new CustomEvent("load"));
       const res = await fetch(path, {
         integrity: this.integrity || ""
