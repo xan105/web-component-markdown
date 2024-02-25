@@ -316,10 +316,10 @@ var require_core = __commonJS({
     var BACKREF_RE = /\[(?:[^\\\]]|\\.)*\]|\(\??|\\([1-9][0-9]*)|\\./;
     function _rewriteBackreferences(regexps, { joinWith }) {
       let numCaptures = 0;
-      return regexps.map((regex) => {
+      return regexps.map((regex2) => {
         numCaptures += 1;
         const offset = numCaptures;
-        let re = source(regex);
+        let re = source(regex2);
         let out = "";
         while (re.length > 0) {
           const match = BACKREF_RE.exec(re);
@@ -1757,7 +1757,7 @@ var require_c = __commonJS({
 var require_abnf = __commonJS({
   "node_modules/highlight.js/lib/languages/abnf.js"(exports, module) {
     function abnf(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const IDENT = /^[a-zA-Z][a-zA-Z0-9-]*/;
       const KEYWORDS = [
         "ALPHA",
@@ -1796,7 +1796,7 @@ var require_abnf = __commonJS({
       };
       const RULE_DECLARATION = {
         scope: "attribute",
-        match: regex.concat(IDENT, /(?=\s*=)/)
+        match: regex2.concat(IDENT, /(?=\s*=)/)
       };
       const ASSIGNMENT = {
         scope: "operator",
@@ -1827,7 +1827,7 @@ var require_abnf = __commonJS({
 var require_accesslog = __commonJS({
   "node_modules/highlight.js/lib/languages/accesslog.js"(exports, module) {
     function accesslog(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const HTTP_VERBS = [
         "GET",
         "POST",
@@ -1857,7 +1857,7 @@ var require_accesslog = __commonJS({
           // Requests
           {
             className: "string",
-            begin: regex.concat(/"/, regex.either(...HTTP_VERBS)),
+            begin: regex2.concat(/"/, regex2.either(...HTTP_VERBS)),
             end: /"/,
             keywords: HTTP_VERBS,
             illegal: /\n/,
@@ -1913,11 +1913,11 @@ var require_accesslog = __commonJS({
 var require_actionscript = __commonJS({
   "node_modules/highlight.js/lib/languages/actionscript.js"(exports, module) {
     function actionscript(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const IDENT_RE = /[a-zA-Z_$][a-zA-Z0-9_$]*/;
-      const PKG_NAME_RE = regex.concat(
+      const PKG_NAME_RE = regex2.concat(
         IDENT_RE,
-        regex.concat("(\\.", IDENT_RE, ")*")
+        regex2.concat("(\\.", IDENT_RE, ")*")
       );
       const IDENT_FUNC_RETURN_TYPE_RE = /([*]|[a-zA-Z_$][a-zA-Z0-9_$]*)/;
       const AS3_REST_ARG_MODE = {
@@ -2044,7 +2044,7 @@ var require_actionscript = __commonJS({
                   AS3_REST_ARG_MODE
                 ]
               },
-              { begin: regex.concat(/:\s*/, IDENT_FUNC_RETURN_TYPE_RE) }
+              { begin: regex2.concat(/:\s*/, IDENT_FUNC_RETURN_TYPE_RE) }
             ]
           },
           hljs.METHOD_GUARD
@@ -2553,7 +2553,7 @@ var require_apache = __commonJS({
 var require_applescript = __commonJS({
   "node_modules/highlight.js/lib/languages/applescript.js"(exports, module) {
     function applescript(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const STRING = hljs.inherit(
         hljs.QUOTE_STRING_MODE,
         { illegal: null }
@@ -2636,9 +2636,9 @@ var require_applescript = __commonJS({
           hljs.C_NUMBER_MODE,
           {
             className: "built_in",
-            begin: regex.concat(
+            begin: regex2.concat(
               /\b/,
-              regex.either(...BUILT_IN_PATTERNS),
+              regex2.either(...BUILT_IN_PATTERNS),
               /\b/
             )
           },
@@ -2652,9 +2652,9 @@ var require_applescript = __commonJS({
           },
           {
             className: "keyword",
-            begin: regex.concat(
+            begin: regex2.concat(
               /\b/,
-              regex.either(...KEYWORD_PATTERNS),
+              regex2.either(...KEYWORD_PATTERNS),
               /\b/
             )
           },
@@ -3038,12 +3038,12 @@ var require_arcade = __commonJS({
 var require_arduino = __commonJS({
   "node_modules/highlight.js/lib/languages/arduino.js"(exports, module) {
     function cPlusPlus(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const C_LINE_COMMENT_MODE = hljs.COMMENT("//", "$", { contains: [{ begin: /\\\n/ }] });
       const DECLTYPE_AUTO_RE = "decltype\\(auto\\)";
       const NAMESPACE_RE = "[a-zA-Z_]\\w*::";
       const TEMPLATE_ARGUMENT_RE = "<[^<>]+>";
-      const FUNCTION_TYPE_RE = "(?!struct)(" + DECLTYPE_AUTO_RE + "|" + regex.optional(NAMESPACE_RE) + "[a-zA-Z_]\\w*" + regex.optional(TEMPLATE_ARGUMENT_RE) + ")";
+      const FUNCTION_TYPE_RE = "(?!struct)(" + DECLTYPE_AUTO_RE + "|" + regex2.optional(NAMESPACE_RE) + "[a-zA-Z_]\\w*" + regex2.optional(TEMPLATE_ARGUMENT_RE) + ")";
       const CPP_PRIMITIVE_TYPES = {
         className: "type",
         begin: "\\b[a-z\\d_]*_t\\b"
@@ -3099,10 +3099,10 @@ var require_arduino = __commonJS({
       };
       const TITLE_MODE = {
         className: "title",
-        begin: regex.optional(NAMESPACE_RE) + hljs.IDENT_RE,
+        begin: regex2.optional(NAMESPACE_RE) + hljs.IDENT_RE,
         relevance: 0
       };
-      const FUNCTION_TITLE = regex.optional(NAMESPACE_RE) + hljs.IDENT_RE + "\\s*\\(";
+      const FUNCTION_TITLE = regex2.optional(NAMESPACE_RE) + hljs.IDENT_RE + "\\s*\\(";
       const RESERVED_KEYWORDS = [
         "alignas",
         "alignof",
@@ -3391,7 +3391,7 @@ var require_arduino = __commonJS({
           // Only for relevance, not highlighting.
           _hint: FUNCTION_HINTS
         },
-        begin: regex.concat(
+        begin: regex2.concat(
           /\b/,
           /(?!decltype)/,
           /(?!if)/,
@@ -3399,7 +3399,7 @@ var require_arduino = __commonJS({
           /(?!switch)/,
           /(?!while)/,
           hljs.IDENT_RE,
-          regex.lookahead(/(<[^<>]+>|)\s*\(/)
+          regex2.lookahead(/(<[^<>]+>|)\s*\(/)
         )
       };
       const EXPRESSION_CONTAINS = [
@@ -4060,8 +4060,8 @@ var require_armasm = __commonJS({
 var require_xml = __commonJS({
   "node_modules/highlight.js/lib/languages/xml.js"(exports, module) {
     function xml(hljs) {
-      const regex = hljs.regex;
-      const TAG_NAME_RE = regex.concat(/[\p{L}_]/u, regex.optional(/[\p{L}0-9_.-]*:/u), /[\p{L}0-9_.-]*/u);
+      const regex2 = hljs.regex;
+      const TAG_NAME_RE = regex2.concat(/[\p{L}_]/u, regex2.optional(/[\p{L}0-9_.-]*:/u), /[\p{L}0-9_.-]*/u);
       const XML_IDENT_RE = /[\p{L}0-9._:-]+/u;
       const XML_ENTITIES = {
         className: "symbol",
@@ -4237,14 +4237,14 @@ var require_xml = __commonJS({
           // open tag
           {
             className: "tag",
-            begin: regex.concat(
+            begin: regex2.concat(
               /</,
-              regex.lookahead(regex.concat(
+              regex2.lookahead(regex2.concat(
                 TAG_NAME_RE,
                 // <tag/>
                 // <tag>
                 // <tag ...
-                regex.either(/\/>/, />/, /\s/)
+                regex2.either(/\/>/, />/, /\s/)
               ))
             ),
             end: /\/?>/,
@@ -4260,9 +4260,9 @@ var require_xml = __commonJS({
           // close tag
           {
             className: "tag",
-            begin: regex.concat(
+            begin: regex2.concat(
               /<\//,
-              regex.lookahead(regex.concat(
+              regex2.lookahead(regex2.concat(
                 TAG_NAME_RE,
                 />/
               ))
@@ -4291,7 +4291,7 @@ var require_xml = __commonJS({
 var require_asciidoc = __commonJS({
   "node_modules/highlight.js/lib/languages/asciidoc.js"(exports, module) {
     function asciidoc(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const HORIZONTAL_RULE = {
         begin: "^'{3,}[ \\t]*$",
         relevance: 10
@@ -4318,7 +4318,7 @@ var require_asciidoc = __commonJS({
         // inline unconstrained strong (multi-line)
         {
           className: "strong",
-          begin: regex.concat(
+          begin: regex2.concat(
             /\*\*/,
             /((\*(?!\*)|\\[^\n]|[^*\n\\])+\n)+/,
             /(\*(?!\*)|\\[^\n]|[^*\n\\])*/,
@@ -4348,7 +4348,7 @@ var require_asciidoc = __commonJS({
         // inline unconstrained emphasis (multi-line)
         {
           className: "emphasis",
-          begin: regex.concat(
+          begin: regex2.concat(
             /__/,
             /((_(?!_)|\\[^\n]|[^_\n\\])+\n)+/,
             /(_(?!_)|\\[^\n]|[^_\n\\])*/,
@@ -4544,7 +4544,7 @@ var require_asciidoc = __commonJS({
 var require_aspectj = __commonJS({
   "node_modules/highlight.js/lib/languages/aspectj.js"(exports, module) {
     function aspectj(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const KEYWORDS = [
         "false",
         "synchronized",
@@ -4692,7 +4692,7 @@ var require_aspectj = __commonJS({
             illegal: /["\[\]]/,
             contains: [
               {
-                begin: regex.concat(hljs.UNDERSCORE_IDENT_RE, /\s*\(/),
+                begin: regex2.concat(hljs.UNDERSCORE_IDENT_RE, /\s*\(/),
                 returnBegin: true,
                 contains: [hljs.UNDERSCORE_TITLE_MODE]
               }
@@ -4708,7 +4708,7 @@ var require_aspectj = __commonJS({
             illegal: /["\[\]]/,
             contains: [
               {
-                begin: regex.concat(hljs.UNDERSCORE_IDENT_RE, /\s*\(/),
+                begin: regex2.concat(hljs.UNDERSCORE_IDENT_RE, /\s*\(/),
                 keywords: KEYWORDS.concat(SHORTKEYS),
                 relevance: 0
               },
@@ -4730,7 +4730,7 @@ var require_aspectj = __commonJS({
             excludeEnd: true,
             contains: [
               {
-                begin: regex.concat(hljs.UNDERSCORE_IDENT_RE, /\s*\(/),
+                begin: regex2.concat(hljs.UNDERSCORE_IDENT_RE, /\s*\(/),
                 returnBegin: true,
                 relevance: 0,
                 contains: [hljs.UNDERSCORE_TITLE_MODE]
@@ -5306,7 +5306,7 @@ var require_axapta = __commonJS({
 var require_bash = __commonJS({
   "node_modules/highlight.js/lib/languages/bash.js"(exports, module) {
     function bash(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const VAR = {};
       const BRACED_VAR = {
         begin: /\$\{/,
@@ -5323,7 +5323,7 @@ var require_bash = __commonJS({
       Object.assign(VAR, {
         className: "variable",
         variants: [
-          { begin: regex.concat(
+          { begin: regex2.concat(
             /\$[\w\d#@][\w\d_]*/,
             // negative look-ahead tries to avoid matching patterns that are not
             // Perl at all like $ident$, @ident@, etc.
@@ -6000,12 +6000,12 @@ var require_brainfuck = __commonJS({
 var require_c2 = __commonJS({
   "node_modules/highlight.js/lib/languages/c.js"(exports, module) {
     function c(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const C_LINE_COMMENT_MODE = hljs.COMMENT("//", "$", { contains: [{ begin: /\\\n/ }] });
       const DECLTYPE_AUTO_RE = "decltype\\(auto\\)";
       const NAMESPACE_RE = "[a-zA-Z_]\\w*::";
       const TEMPLATE_ARGUMENT_RE = "<[^<>]+>";
-      const FUNCTION_TYPE_RE = "(" + DECLTYPE_AUTO_RE + "|" + regex.optional(NAMESPACE_RE) + "[a-zA-Z_]\\w*" + regex.optional(TEMPLATE_ARGUMENT_RE) + ")";
+      const FUNCTION_TYPE_RE = "(" + DECLTYPE_AUTO_RE + "|" + regex2.optional(NAMESPACE_RE) + "[a-zA-Z_]\\w*" + regex2.optional(TEMPLATE_ARGUMENT_RE) + ")";
       const TYPES = {
         className: "type",
         variants: [
@@ -6064,10 +6064,10 @@ var require_c2 = __commonJS({
       };
       const TITLE_MODE = {
         className: "title",
-        begin: regex.optional(NAMESPACE_RE) + hljs.IDENT_RE,
+        begin: regex2.optional(NAMESPACE_RE) + hljs.IDENT_RE,
         relevance: 0
       };
-      const FUNCTION_TITLE = regex.optional(NAMESPACE_RE) + hljs.IDENT_RE + "\\s*\\(";
+      const FUNCTION_TITLE = regex2.optional(NAMESPACE_RE) + hljs.IDENT_RE + "\\s*\\(";
       const C_KEYWORDS = [
         "asm",
         "auto",
@@ -6284,7 +6284,7 @@ var require_c2 = __commonJS({
 var require_cal = __commonJS({
   "node_modules/highlight.js/lib/languages/cal.js"(exports, module) {
     function cal(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const KEYWORDS = [
         "div",
         "mod",
@@ -6389,7 +6389,7 @@ var require_cal = __commonJS({
         match: [
           /OBJECT/,
           /\s+/,
-          regex.either(...OBJECT_TYPES),
+          regex2.either(...OBJECT_TYPES),
           /\s+/,
           /\d+/,
           /\s+(?=[^\s])/,
@@ -7833,12 +7833,12 @@ var require_cos = __commonJS({
 var require_cpp = __commonJS({
   "node_modules/highlight.js/lib/languages/cpp.js"(exports, module) {
     function cpp(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const C_LINE_COMMENT_MODE = hljs.COMMENT("//", "$", { contains: [{ begin: /\\\n/ }] });
       const DECLTYPE_AUTO_RE = "decltype\\(auto\\)";
       const NAMESPACE_RE = "[a-zA-Z_]\\w*::";
       const TEMPLATE_ARGUMENT_RE = "<[^<>]+>";
-      const FUNCTION_TYPE_RE = "(?!struct)(" + DECLTYPE_AUTO_RE + "|" + regex.optional(NAMESPACE_RE) + "[a-zA-Z_]\\w*" + regex.optional(TEMPLATE_ARGUMENT_RE) + ")";
+      const FUNCTION_TYPE_RE = "(?!struct)(" + DECLTYPE_AUTO_RE + "|" + regex2.optional(NAMESPACE_RE) + "[a-zA-Z_]\\w*" + regex2.optional(TEMPLATE_ARGUMENT_RE) + ")";
       const CPP_PRIMITIVE_TYPES = {
         className: "type",
         begin: "\\b[a-z\\d_]*_t\\b"
@@ -7894,10 +7894,10 @@ var require_cpp = __commonJS({
       };
       const TITLE_MODE = {
         className: "title",
-        begin: regex.optional(NAMESPACE_RE) + hljs.IDENT_RE,
+        begin: regex2.optional(NAMESPACE_RE) + hljs.IDENT_RE,
         relevance: 0
       };
-      const FUNCTION_TITLE = regex.optional(NAMESPACE_RE) + hljs.IDENT_RE + "\\s*\\(";
+      const FUNCTION_TITLE = regex2.optional(NAMESPACE_RE) + hljs.IDENT_RE + "\\s*\\(";
       const RESERVED_KEYWORDS = [
         "alignas",
         "alignof",
@@ -8186,7 +8186,7 @@ var require_cpp = __commonJS({
           // Only for relevance, not highlighting.
           _hint: FUNCTION_HINTS
         },
-        begin: regex.concat(
+        begin: regex2.concat(
           /\b/,
           /(?!decltype)/,
           /(?!if)/,
@@ -8194,7 +8194,7 @@ var require_cpp = __commonJS({
           /(?!switch)/,
           /(?!while)/,
           hljs.IDENT_RE,
-          regex.lookahead(/(<[^<>]+>|)\s*\(/)
+          regex2.lookahead(/(<[^<>]+>|)\s*\(/)
         )
       };
       const EXPRESSION_CONTAINS = [
@@ -9811,7 +9811,7 @@ var require_css = __commonJS({
       // instead of getting false positives on say `font`
     ].reverse();
     function css(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const modes = MODES(hljs);
       const VENDOR_PREFIX = { begin: /-(webkit|moz|ms|o)-(?=[a-z])/ };
       const AT_MODIFIERS = "and or not only";
@@ -9901,7 +9901,7 @@ var require_css = __commonJS({
             ]
           },
           {
-            begin: regex.lookahead(/@/),
+            begin: regex2.lookahead(/@/),
             end: "[{;]",
             relevance: 0,
             illegal: /:/,
@@ -10064,7 +10064,7 @@ var require_d = __commonJS({
 var require_markdown = __commonJS({
   "node_modules/highlight.js/lib/languages/markdown.js"(exports, module) {
     function markdown(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const INLINE_HTML = {
         begin: /<\/?[A-Za-z_]/,
         end: ">",
@@ -10145,7 +10145,7 @@ var require_markdown = __commonJS({
             relevance: 2
           },
           {
-            begin: regex.concat(/\[.+?\]\(/, URL_SCHEME, /:\/\/.*?\)/),
+            begin: regex2.concat(/\[.+?\]\(/, URL_SCHEME, /:\/\/.*?\)/),
             relevance: 2
           },
           // relative urls
@@ -10778,7 +10778,7 @@ var require_delphi = __commonJS({
 var require_diff = __commonJS({
   "node_modules/highlight.js/lib/languages/diff.js"(exports, module) {
     function diff(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       return {
         name: "Diff",
         aliases: ["patch"],
@@ -10786,7 +10786,7 @@ var require_diff = __commonJS({
           {
             className: "meta",
             relevance: 10,
-            match: regex.either(
+            match: regex2.either(
               /^@@ +-\d+,\d+ +\+\d+,\d+ +@@/,
               /^\*\*\* +\d+,\d+ +\*\*\*\*$/,
               /^--- +\d+,\d+ +----$/
@@ -10796,7 +10796,7 @@ var require_diff = __commonJS({
             className: "comment",
             variants: [
               {
-                begin: regex.either(
+                begin: regex2.either(
                   /Index: /,
                   /^index/,
                   /={3,}/,
@@ -11456,7 +11456,7 @@ var require_ebnf = __commonJS({
 var require_elixir = __commonJS({
   "node_modules/highlight.js/lib/languages/elixir.js"(exports, module) {
     function elixir(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const ELIXIR_IDENT_RE = "[a-zA-Z_][a-zA-Z0-9_.]*(!|\\?)?";
       const ELIXIR_METHOD_RE = "[a-zA-Z_]\\w*[!?=]?|[-+~]@|<<|>>|=~|===?|<=>|[<>]=?|\\*\\*|[-/+%^&*~`|]|\\[\\]=?";
       const KEYWORDS = [
@@ -11557,7 +11557,7 @@ var require_elixir = __commonJS({
       const escapeSigilEnd = (end) => {
         return {
           scope: "char.escape",
-          begin: regex.concat(/\\/, end),
+          begin: regex2.concat(/\\/, end),
           relevance: 0
         };
       };
@@ -11589,7 +11589,7 @@ var require_elixir = __commonJS({
             contains: SIGIL_DELIMITER_MODES.map((x) => hljs.inherit(
               x,
               {
-                end: regex.concat(x.end, /[uismxfU]{0,7}/),
+                end: regex2.concat(x.end, /[uismxfU]{0,7}/),
                 contains: [
                   escapeSigilEnd(x.end),
                   BACKSLASH_ESCAPE,
@@ -11604,7 +11604,7 @@ var require_elixir = __commonJS({
               (x) => hljs.inherit(
                 x,
                 {
-                  end: regex.concat(x.end, /[uismxfU]{0,7}/),
+                  end: regex2.concat(x.end, /[uismxfU]{0,7}/),
                   contains: [escapeSigilEnd(x.end)]
                 }
               )
@@ -11866,14 +11866,14 @@ var require_elm = __commonJS({
 var require_ruby = __commonJS({
   "node_modules/highlight.js/lib/languages/ruby.js"(exports, module) {
     function ruby(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const RUBY_METHOD_RE = "([a-zA-Z_]\\w*[!?=]?|[-+~]@|<<|>>|=~|===?|<=>|[<>]=?|\\*\\*|[-/+%^&*~`|]|\\[\\]=?)";
-      const CLASS_NAME_RE = regex.either(
+      const CLASS_NAME_RE = regex2.either(
         /\b([A-Z]+[a-z0-9]+)+/,
         // ends in caps
         /\b([A-Z]+[a-z0-9]+)+[A-Z]+/
       );
-      const CLASS_NAME_WITH_NAMESPACE_RE = regex.concat(CLASS_NAME_RE, /(::\w+)*/);
+      const CLASS_NAME_WITH_NAMESPACE_RE = regex2.concat(CLASS_NAME_RE, /(::\w+)*/);
       const PSEUDO_KWS = [
         "include",
         "extend",
@@ -12039,9 +12039,9 @@ var require_ruby = __commonJS({
           {
             // this guard makes sure that we have an entire heredoc and not a false
             // positive (auto-detect, etc.)
-            begin: regex.concat(
+            begin: regex2.concat(
               /<<[-~]?'?/,
-              regex.lookahead(/(\w+)(?=\W)[^\n]*\n(?:[^\n]*\n)*?\s*\1\b/)
+              regex2.lookahead(/(\w+)(?=\W)[^\n]*\n(?:[^\n]*\n)*?\s*\1\b/)
             ),
             contains: [
               hljs.END_SAME_AS_BEGIN({
@@ -12307,7 +12307,7 @@ var require_erb = __commonJS({
 var require_erlang_repl = __commonJS({
   "node_modules/highlight.js/lib/languages/erlang-repl.js"(exports, module) {
     function erlangRepl(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       return {
         name: "Erlang REPL",
         keywords: {
@@ -12328,7 +12328,7 @@ var require_erlang_repl = __commonJS({
           },
           hljs.APOS_STRING_MODE,
           hljs.QUOTE_STRING_MODE,
-          { begin: regex.concat(
+          { begin: regex2.concat(
             /\?(::)?/,
             /([A-Z]\w*)/,
             // at least one identifier
@@ -13191,7 +13191,7 @@ var require_flix = __commonJS({
 var require_fortran = __commonJS({
   "node_modules/highlight.js/lib/languages/fortran.js"(exports, module) {
     function fortran(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const PARAMS = {
         className: "params",
         begin: "\\(",
@@ -13208,9 +13208,9 @@ var require_fortran = __commonJS({
       const NUMBER = {
         className: "number",
         variants: [
-          { begin: regex.concat(/\b\d+/, /\.(\d*)/, OPTIONAL_NUMBER_EXP, OPTIONAL_NUMBER_SUFFIX) },
-          { begin: regex.concat(/\b\d+/, OPTIONAL_NUMBER_EXP, OPTIONAL_NUMBER_SUFFIX) },
-          { begin: regex.concat(/\.\d+/, OPTIONAL_NUMBER_EXP, OPTIONAL_NUMBER_SUFFIX) }
+          { begin: regex2.concat(/\b\d+/, /\.(\d*)/, OPTIONAL_NUMBER_EXP, OPTIONAL_NUMBER_SUFFIX) },
+          { begin: regex2.concat(/\b\d+/, OPTIONAL_NUMBER_EXP, OPTIONAL_NUMBER_SUFFIX) },
+          { begin: regex2.concat(/\.\d+/, OPTIONAL_NUMBER_EXP, OPTIONAL_NUMBER_SUFFIX) }
         ],
         relevance: 0
       };
@@ -14328,7 +14328,7 @@ var require_fsharp = __commonJS({
 var require_gams = __commonJS({
   "node_modules/highlight.js/lib/languages/gams.js"(exports, module) {
     function gams(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const KEYWORDS = {
         keyword: "abort acronym acronyms alias all and assign binary card diag display else eq file files for free ge gt if integer le loop lt maximizing minimizing model models ne negative no not option options or ord positive prod put putpage puttl repeat sameas semicont semiint smax smin solve sos1 sos2 sum system table then until using while xor yes",
         literal: "eps inf na",
@@ -14390,10 +14390,10 @@ var require_gams = __commonJS({
           {
             className: "comment",
             // one comment word, then possibly more
-            begin: regex.concat(
+            begin: regex2.concat(
               COMMENT_WORD,
               // [ ] because \s would be too broad (matching newlines)
-              regex.anyNumberOfTimes(regex.concat(/[ ]+/, COMMENT_WORD))
+              regex2.anyNumberOfTimes(regex2.concat(/[ ]+/, COMMENT_WORD))
             ),
             relevance: 0
           }
@@ -18050,7 +18050,7 @@ var require_gradle = __commonJS({
 var require_graphql = __commonJS({
   "node_modules/highlight.js/lib/languages/graphql.js"(exports, module) {
     function graphql(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const GQL_NAME = /[_A-Za-z][_0-9A-Za-z]*/;
       return {
         name: "GraphQL",
@@ -18107,7 +18107,7 @@ var require_graphql = __commonJS({
           },
           {
             scope: "symbol",
-            begin: regex.concat(GQL_NAME, regex.lookahead(/\s*:/)),
+            begin: regex2.concat(GQL_NAME, regex2.lookahead(/\s*:/)),
             relevance: 0
           }
         ],
@@ -18129,7 +18129,7 @@ var require_groovy = __commonJS({
       return obj;
     }
     function groovy(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const IDENT_RE = "[A-Za-z0-9_$]+";
       const COMMENT = variants([
         hljs.C_LINE_COMMENT_MODE,
@@ -18293,7 +18293,7 @@ var require_groovy = __commonJS({
           {
             // highlight labeled statements
             className: "symbol",
-            begin: "^[ 	]*" + regex.lookahead(IDENT_RE + ":"),
+            begin: "^[ 	]*" + regex2.lookahead(IDENT_RE + ":"),
             excludeBegin: true,
             end: IDENT_RE + ":",
             relevance: 0
@@ -18419,7 +18419,7 @@ var require_haml = __commonJS({
 var require_handlebars = __commonJS({
   "node_modules/highlight.js/lib/languages/handlebars.js"(exports, module) {
     function handlebars(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const BUILT_INS = {
         $pattern: /[\w.\/]+/,
         built_in: [
@@ -18468,22 +18468,22 @@ var require_handlebars = __commonJS({
       const BRACKET_QUOTED_ID_REGEX = /\[\]|\[[^\]]+\]/;
       const PLAIN_ID_REGEX = /[^\s!"#%&'()*+,.\/;<=>@\[\\\]^`{|}~]+/;
       const PATH_DELIMITER_REGEX = /(\.|\/)/;
-      const ANY_ID = regex.either(
+      const ANY_ID = regex2.either(
         DOUBLE_QUOTED_ID_REGEX,
         SINGLE_QUOTED_ID_REGEX,
         BRACKET_QUOTED_ID_REGEX,
         PLAIN_ID_REGEX
       );
-      const IDENTIFIER_REGEX = regex.concat(
-        regex.optional(/\.|\.\/|\//),
+      const IDENTIFIER_REGEX = regex2.concat(
+        regex2.optional(/\.|\.\/|\//),
         // relative or absolute path
         ANY_ID,
-        regex.anyNumberOfTimes(regex.concat(
+        regex2.anyNumberOfTimes(regex2.concat(
           PATH_DELIMITER_REGEX,
           ANY_ID
         ))
       );
-      const HASH_PARAM_REGEX = regex.concat(
+      const HASH_PARAM_REGEX = regex2.concat(
         "(",
         BRACKET_QUOTED_ID_REGEX,
         "|",
@@ -19066,12 +19066,12 @@ var require_hsp = __commonJS({
 var require_http = __commonJS({
   "node_modules/highlight.js/lib/languages/http.js"(exports, module) {
     function http(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const VERSION = "HTTP/([32]|1\\.[01])";
       const HEADER_NAME = /[A-Za-z][A-Za-z0-9-]*/;
       const HEADER = {
         className: "attribute",
-        begin: regex.concat("^", HEADER_NAME, "(?=\\:\\s)"),
+        begin: regex2.concat("^", HEADER_NAME, "(?=\\:\\s)"),
         starts: { contains: [
           {
             className: "punctuation",
@@ -19324,7 +19324,7 @@ var require_inform7 = __commonJS({
 var require_ini = __commonJS({
   "node_modules/highlight.js/lib/languages/ini.js"(exports, module) {
     function ini(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const NUMBERS = {
         className: "number",
         relevance: 0,
@@ -19395,17 +19395,17 @@ var require_ini = __commonJS({
       const BARE_KEY = /[A-Za-z0-9_-]+/;
       const QUOTED_KEY_DOUBLE_QUOTE = /"(\\"|[^"])*"/;
       const QUOTED_KEY_SINGLE_QUOTE = /'[^']*'/;
-      const ANY_KEY = regex.either(
+      const ANY_KEY = regex2.either(
         BARE_KEY,
         QUOTED_KEY_DOUBLE_QUOTE,
         QUOTED_KEY_SINGLE_QUOTE
       );
-      const DOTTED_KEY = regex.concat(
+      const DOTTED_KEY = regex2.concat(
         ANY_KEY,
         "(\\s*\\.\\s*",
         ANY_KEY,
         ")*",
-        regex.lookahead(/\s*=\s*[^#\s]/)
+        regex2.lookahead(/\s*=\s*[^#\s]/)
       );
       return {
         name: "TOML, also INI",
@@ -19445,7 +19445,7 @@ var require_ini = __commonJS({
 var require_irpf90 = __commonJS({
   "node_modules/highlight.js/lib/languages/irpf90.js"(exports, module) {
     function irpf90(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const PARAMS = {
         className: "params",
         begin: "\\(",
@@ -19456,9 +19456,9 @@ var require_irpf90 = __commonJS({
       const NUMBER = {
         className: "number",
         variants: [
-          { begin: regex.concat(/\b\d+/, /\.(\d*)/, OPTIONAL_NUMBER_EXP, OPTIONAL_NUMBER_SUFFIX) },
-          { begin: regex.concat(/\b\d+/, OPTIONAL_NUMBER_EXP, OPTIONAL_NUMBER_SUFFIX) },
-          { begin: regex.concat(/\.\d+/, OPTIONAL_NUMBER_EXP, OPTIONAL_NUMBER_SUFFIX) }
+          { begin: regex2.concat(/\b\d+/, /\.(\d*)/, OPTIONAL_NUMBER_EXP, OPTIONAL_NUMBER_SUFFIX) },
+          { begin: regex2.concat(/\b\d+/, OPTIONAL_NUMBER_EXP, OPTIONAL_NUMBER_SUFFIX) },
+          { begin: regex2.concat(/\.\d+/, OPTIONAL_NUMBER_EXP, OPTIONAL_NUMBER_SUFFIX) }
         ],
         relevance: 0
       };
@@ -19799,7 +19799,7 @@ var require_java = __commonJS({
       });
     }
     function java(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const JAVA_IDENT_RE = "[\xC0-\u02B8a-zA-Z_$][\xC0-\u02B8a-zA-Z_$0-9]*";
       const GENERIC_IDENT_RE = JAVA_IDENT_RE + recurRegex("(?:<" + JAVA_IDENT_RE + "~~~(?:\\s*,\\s*" + JAVA_IDENT_RE + "~~~)*>)?", /~~~/g, 2);
       const MAIN_KEYWORDS = [
@@ -19950,7 +19950,7 @@ var require_java = __commonJS({
           },
           {
             begin: [
-              regex.concat(/(?!else)/, JAVA_IDENT_RE),
+              regex2.concat(/(?!else)/, JAVA_IDENT_RE),
               /\s+/,
               JAVA_IDENT_RE,
               /\s+/,
@@ -20175,7 +20175,7 @@ var require_javascript = __commonJS({
       ERROR_TYPES
     );
     function javascript(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const hasClosingTag = (match, { after }) => {
         const tag = "</" + match[0].slice(1);
         const pos = match.input.indexOf(tag, after);
@@ -20412,7 +20412,7 @@ var require_javascript = __commonJS({
               /\s+/,
               /extends/,
               /\s+/,
-              regex.concat(IDENT_RE$1, "(", regex.concat(/\./, IDENT_RE$1), ")*")
+              regex2.concat(IDENT_RE$1, "(", regex2.concat(/\./, IDENT_RE$1), ")*")
             ],
             scope: {
               1: "keyword",
@@ -20437,7 +20437,7 @@ var require_javascript = __commonJS({
       };
       const CLASS_REFERENCE = {
         relevance: 0,
-        match: regex.either(
+        match: regex2.either(
           // Hard coded exceptions
           /\bJSON/,
           // Float32Array, OutT
@@ -20498,10 +20498,10 @@ var require_javascript = __commonJS({
         className: "variable.constant"
       };
       function noneOf(list) {
-        return regex.concat("(?!", list.join("|"), ")");
+        return regex2.concat("(?!", list.join("|"), ")");
       }
       const FUNCTION_CALL = {
-        match: regex.concat(
+        match: regex2.concat(
           /\b/,
           noneOf([
             ...BUILT_IN_GLOBALS,
@@ -20509,14 +20509,14 @@ var require_javascript = __commonJS({
             "import"
           ]),
           IDENT_RE$1,
-          regex.lookahead(/\(/)
+          regex2.lookahead(/\(/)
         ),
         className: "title.function",
         relevance: 0
       };
       const PROPERTY_ACCESS = {
-        begin: regex.concat(/\./, regex.lookahead(
-          regex.concat(IDENT_RE$1, /(?![0-9A-Za-z$_(])/)
+        begin: regex2.concat(/\./, regex2.lookahead(
+          regex2.concat(IDENT_RE$1, /(?![0-9A-Za-z$_(])/)
         )),
         end: IDENT_RE$1,
         excludeBegin: true,
@@ -20553,7 +20553,7 @@ var require_javascript = __commonJS({
           /=\s*/,
           /(async\s*)?/,
           // async is optional
-          regex.lookahead(FUNC_LEAD_IN_RE)
+          regex2.lookahead(FUNC_LEAD_IN_RE)
         ],
         keywords: "async",
         className: {
@@ -20591,7 +20591,7 @@ var require_javascript = __commonJS({
           CLASS_REFERENCE,
           {
             className: "attr",
-            begin: IDENT_RE$1 + regex.lookahead(":"),
+            begin: IDENT_RE$1 + regex2.lookahead(":"),
             relevance: 0
           },
           FUNCTION_VARIABLE,
@@ -21643,8 +21643,8 @@ var require_lasso = __commonJS({
 var require_latex = __commonJS({
   "node_modules/highlight.js/lib/languages/latex.js"(exports, module) {
     function latex(hljs) {
-      const regex = hljs.regex;
-      const KNOWN_CONTROL_WORDS = regex.either(...[
+      const regex2 = hljs.regex;
+      const KNOWN_CONTROL_WORDS = regex2.either(...[
         "(?:NeedsTeXFormat|RequirePackage|GetIdInfo)",
         "Provides(?:Expl)?(?:Package|Class|File)",
         "(?:DeclareOption|ProcessOptions)",
@@ -23459,7 +23459,7 @@ var require_livescript = __commonJS({
 var require_llvm = __commonJS({
   "node_modules/highlight.js/lib/languages/llvm.js"(exports, module) {
     function llvm(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const IDENT_RE = /([-a-zA-Z$._][\w$.-]*)/;
       const TYPE = {
         className: "type",
@@ -23494,7 +23494,7 @@ var require_llvm = __commonJS({
       const VARIABLE = {
         className: "variable",
         variants: [
-          { begin: regex.concat(/%/, IDENT_RE) },
+          { begin: regex2.concat(/%/, IDENT_RE) },
           { begin: /%\d+/ },
           { begin: /#\d+/ }
         ]
@@ -23502,10 +23502,10 @@ var require_llvm = __commonJS({
       const FUNCTION = {
         className: "title",
         variants: [
-          { begin: regex.concat(/@/, IDENT_RE) },
+          { begin: regex2.concat(/@/, IDENT_RE) },
           { begin: /@\d+/ },
-          { begin: regex.concat(/!/, IDENT_RE) },
-          { begin: regex.concat(/!\d+/, IDENT_RE) },
+          { begin: regex2.concat(/!/, IDENT_RE) },
+          { begin: regex2.concat(/!\d+/, IDENT_RE) },
           // https://llvm.org/docs/LangRef.html#namedmetadatastructure
           // obviously a single digit can also be used in this fashion
           { begin: /!\d+/ }
@@ -30990,19 +30990,19 @@ var require_mathematica = __commonJS({
       "$WolframUUID"
     ];
     function mathematica(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const BASE_RE = /([2-9]|[1-2]\d|[3][0-5])\^\^/;
       const BASE_DIGITS_RE = /(\w*\.\w+|\w+\.\w*|\w+)/;
       const NUMBER_RE = /(\d*\.\d+|\d+\.\d*|\d+)/;
-      const BASE_NUMBER_RE = regex.either(regex.concat(BASE_RE, BASE_DIGITS_RE), NUMBER_RE);
+      const BASE_NUMBER_RE = regex2.either(regex2.concat(BASE_RE, BASE_DIGITS_RE), NUMBER_RE);
       const ACCURACY_RE = /``[+-]?(\d*\.\d+|\d+\.\d*|\d+)/;
       const PRECISION_RE = /`([+-]?(\d*\.\d+|\d+\.\d*|\d+))?/;
-      const APPROXIMATE_NUMBER_RE = regex.either(ACCURACY_RE, PRECISION_RE);
+      const APPROXIMATE_NUMBER_RE = regex2.either(ACCURACY_RE, PRECISION_RE);
       const SCIENTIFIC_NOTATION_RE = /\*\^[+-]?\d+/;
-      const MATHEMATICA_NUMBER_RE = regex.concat(
+      const MATHEMATICA_NUMBER_RE = regex2.concat(
         BASE_NUMBER_RE,
-        regex.optional(APPROXIMATE_NUMBER_RE),
-        regex.optional(SCIENTIFIC_NOTATION_RE)
+        regex2.optional(APPROXIMATE_NUMBER_RE),
+        regex2.optional(SCIENTIFIC_NOTATION_RE)
       );
       const NUMBERS = {
         className: "number",
@@ -31054,7 +31054,7 @@ var require_mathematica = __commonJS({
       const MESSAGES = {
         className: "message-name",
         relevance: 0,
-        begin: regex.concat("::", SYMBOL_RE)
+        begin: regex2.concat("::", SYMBOL_RE)
       };
       return {
         name: "Mathematica",
@@ -31442,7 +31442,7 @@ var require_mizar = __commonJS({
 var require_perl = __commonJS({
   "node_modules/highlight.js/lib/languages/perl.js"(exports, module) {
     function perl(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const KEYWORDS = [
         "abs",
         "accept",
@@ -31693,7 +31693,7 @@ var require_perl = __commonJS({
       };
       const VAR = { variants: [
         { begin: /\$\d/ },
-        { begin: regex.concat(
+        { begin: regex2.concat(
           /[$%@](\^\w\b|#\w+(::\w+)*|\{\w+\}|\w+(::\w*)*)/,
           // negative look-ahead tries to avoid matching patterns that are not
           // Perl at all like $ident$, @ident@, etc.
@@ -31721,9 +31721,9 @@ var require_perl = __commonJS({
         // valid but infrequent and weird
       ];
       const PAIRED_DOUBLE_RE = (prefix, open, close = "\\1") => {
-        const middle = close === "\\1" ? close : regex.concat(close, open);
-        return regex.concat(
-          regex.concat("(?:", prefix, ")"),
+        const middle = close === "\\1" ? close : regex2.concat(close, open);
+        return regex2.concat(
+          regex2.concat("(?:", prefix, ")"),
           open,
           /(?:\\.|[^\\\/])*?/,
           middle,
@@ -31733,8 +31733,8 @@ var require_perl = __commonJS({
         );
       };
       const PAIRED_RE = (prefix, open, close) => {
-        return regex.concat(
-          regex.concat("(?:", prefix, ")"),
+        return regex2.concat(
+          regex2.concat("(?:", prefix, ")"),
           open,
           /(?:\\.|[^\\\/])*?/,
           close,
@@ -31824,7 +31824,7 @@ var require_perl = __commonJS({
               className: "regexp",
               variants: [
                 // allow matching common delimiters
-                { begin: PAIRED_DOUBLE_RE("s|tr|y", regex.either(...REGEX_DELIMS, { capture: true })) },
+                { begin: PAIRED_DOUBLE_RE("s|tr|y", regex2.either(...REGEX_DELIMS, { capture: true })) },
                 // and then paired delmis
                 { begin: PAIRED_DOUBLE_RE("s|tr|y", "\\(", "\\)") },
                 { begin: PAIRED_DOUBLE_RE("s|tr|y", "\\[", "\\]") },
@@ -31844,7 +31844,7 @@ var require_perl = __commonJS({
                 // prefix is optional with /regex/
                 { begin: PAIRED_RE("(?:m|qr)?", /\//, /\//) },
                 // allow matching common delimiters
-                { begin: PAIRED_RE("m|qr", regex.either(...REGEX_DELIMS, { capture: true }), /\1/) },
+                { begin: PAIRED_RE("m|qr", regex2.either(...REGEX_DELIMS, { capture: true }), /\1/) },
                 // allow common paired delmins
                 { begin: PAIRED_RE("m|qr", /\(/, /\)/) },
                 { begin: PAIRED_RE("m|qr", /\[/, /\]/) },
@@ -32688,13 +32688,13 @@ var require_nestedtext = __commonJS({
 var require_nginx = __commonJS({
   "node_modules/highlight.js/lib/languages/nginx.js"(exports, module) {
     function nginx(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const VAR = {
         className: "variable",
         variants: [
           { begin: /\$\d+/ },
           { begin: /\$\{\w+\}/ },
-          { begin: regex.concat(/[$@]/, hljs.UNDERSCORE_IDENT_RE) }
+          { begin: regex2.concat(/[$@]/, hljs.UNDERSCORE_IDENT_RE) }
         ]
       };
       const LITERALS = [
@@ -32809,11 +32809,11 @@ var require_nginx = __commonJS({
           },
           {
             className: "section",
-            begin: regex.concat(hljs.UNDERSCORE_IDENT_RE + regex.lookahead(/\s+\{/)),
+            begin: regex2.concat(hljs.UNDERSCORE_IDENT_RE + regex2.lookahead(/\s+\{/)),
             relevance: 0
           },
           {
-            begin: regex.lookahead(hljs.UNDERSCORE_IDENT_RE + "\\s"),
+            begin: regex2.lookahead(hljs.UNDERSCORE_IDENT_RE + "\\s"),
             end: ";|\\{",
             contains: [
               {
@@ -33142,7 +33142,7 @@ var require_node_repl = __commonJS({
 var require_nsis = __commonJS({
   "node_modules/highlight.js/lib/languages/nsis.js"(exports, module) {
     function nsis(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const LANGUAGE_CONSTANTS = [
         "ADMINTOOLS",
         "APPDATA",
@@ -33280,7 +33280,7 @@ var require_nsis = __commonJS({
       ];
       const CONSTANTS = {
         className: "variable.constant",
-        begin: regex.concat(/\$/, regex.either(...LANGUAGE_CONSTANTS))
+        begin: regex2.concat(/\$/, regex2.either(...LANGUAGE_CONSTANTS))
       };
       const DEFINES = {
         // ${defines}
@@ -33301,14 +33301,14 @@ var require_nsis = __commonJS({
       const PARAMETERS = {
         // command parameters
         className: "params",
-        begin: regex.either(...PARAM_NAMES)
+        begin: regex2.either(...PARAM_NAMES)
       };
       const COMPILER = {
         // !compiler_flags
         className: "keyword",
-        begin: regex.concat(
+        begin: regex2.concat(
           /!/,
-          regex.either(...COMPILER_FLAGS)
+          regex2.either(...COMPILER_FLAGS)
         )
       };
       const ESCAPE_CHARS = {
@@ -33619,7 +33619,7 @@ var require_nsis = __commonJS({
         match: [
           /Function/,
           /\s+/,
-          regex.concat(/(\.)?/, hljs.IDENT_RE)
+          regex2.concat(/(\.)?/, hljs.IDENT_RE)
         ],
         scope: {
           1: "keyword",
@@ -34522,13 +34522,13 @@ var require_pgsql = __commonJS({
 var require_php = __commonJS({
   "node_modules/highlight.js/lib/languages/php.js"(exports, module) {
     function php(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const NOT_PERL_ETC = /(?![A-Za-z0-9])(?![$])/;
-      const IDENT_RE = regex.concat(
+      const IDENT_RE = regex2.concat(
         /[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/,
         NOT_PERL_ETC
       );
-      const PASCAL_CASE_CLASS_NAME_RE = regex.concat(
+      const PASCAL_CASE_CLASS_NAME_RE = regex2.concat(
         /(\\?[A-Z][a-z0-9_\x7f-\xff]+|\\?[A-Z]+(?=[A-Z][a-z0-9_\x7f-\xff])){1,}/,
         NOT_PERL_ETC
       );
@@ -34831,9 +34831,9 @@ var require_php = __commonJS({
         {
           match: [
             /new/,
-            regex.concat(WHITESPACE, "+"),
+            regex2.concat(WHITESPACE, "+"),
             // to prevent built ins from being confused as the class constructor call
-            regex.concat("(?!", normalizeKeywords(BUILT_INS).join("\\b|"), "\\b)"),
+            regex2.concat("(?!", normalizeKeywords(BUILT_INS).join("\\b|"), "\\b)"),
             PASCAL_CASE_CLASS_NAME_RE
           ],
           scope: {
@@ -34842,13 +34842,13 @@ var require_php = __commonJS({
           }
         }
       ] };
-      const CONSTANT_REFERENCE = regex.concat(IDENT_RE, "\\b(?!\\()");
+      const CONSTANT_REFERENCE = regex2.concat(IDENT_RE, "\\b(?!\\()");
       const LEFT_AND_RIGHT_SIDE_OF_DOUBLE_COLON = { variants: [
         {
           match: [
-            regex.concat(
+            regex2.concat(
               /::/,
-              regex.lookahead(/(?!class\b)/)
+              regex2.lookahead(/(?!class\b)/)
             ),
             CONSTANT_REFERENCE
           ],
@@ -34864,9 +34864,9 @@ var require_php = __commonJS({
         {
           match: [
             PASCAL_CASE_CLASS_NAME_RE,
-            regex.concat(
+            regex2.concat(
               /::/,
-              regex.lookahead(/(?!class\b)/)
+              regex2.lookahead(/(?!class\b)/)
             ),
             CONSTANT_REFERENCE
           ],
@@ -34878,9 +34878,9 @@ var require_php = __commonJS({
         {
           match: [
             PASCAL_CASE_CLASS_NAME_RE,
-            regex.concat(
+            regex2.concat(
               "::",
-              regex.lookahead(/(?!class\b)/)
+              regex2.lookahead(/(?!class\b)/)
             )
           ],
           scope: { 1: "title.class" }
@@ -34899,7 +34899,7 @@ var require_php = __commonJS({
       ] };
       const NAMED_ARGUMENT = {
         scope: "attr",
-        match: regex.concat(IDENT_RE, regex.lookahead(":"), regex.lookahead(/(?!::)/))
+        match: regex2.concat(IDENT_RE, regex2.lookahead(":"), regex2.lookahead(/(?!::)/))
       };
       const PARAMS_MODE = {
         relevance: 0,
@@ -34921,10 +34921,10 @@ var require_php = __commonJS({
         match: [
           /\b/,
           // to prevent keywords from being confused as the function title
-          regex.concat("(?!fn\\b|function\\b|", normalizeKeywords(KWS).join("\\b|"), "|", normalizeKeywords(BUILT_INS).join("\\b|"), "\\b)"),
+          regex2.concat("(?!fn\\b|function\\b|", normalizeKeywords(KWS).join("\\b|"), "|", normalizeKeywords(BUILT_INS).join("\\b|"), "\\b)"),
           IDENT_RE,
-          regex.concat(WHITESPACE, "*"),
-          regex.lookahead(/(?=\()/)
+          regex2.concat(WHITESPACE, "*"),
+          regex2.lookahead(/(?=\()/)
         ],
         scope: { 3: "title.function.invoke" },
         contains: [PARAMS_MODE]
@@ -34939,7 +34939,7 @@ var require_php = __commonJS({
         CONSTRUCTOR_CALL
       ];
       const ATTRIBUTES = {
-        begin: regex.concat(/#\[\s*/, PASCAL_CASE_CLASS_NAME_RE),
+        begin: regex2.concat(/#\[\s*/, PASCAL_CASE_CLASS_NAME_RE),
         beginScope: "meta",
         end: /]/,
         endScope: "meta",
@@ -35505,7 +35505,7 @@ var require_powershell = __commonJS({
 var require_processing = __commonJS({
   "node_modules/highlight.js/lib/languages/processing.js"(exports, module) {
     function processing(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const BUILT_INS = [
         "displayHeight",
         "displayWidth",
@@ -35772,15 +35772,15 @@ var require_processing = __commonJS({
       const IDENT = hljs.IDENT_RE;
       const FUNC_NAME = { variants: [
         {
-          match: regex.concat(regex.either(...BUILT_INS), regex.lookahead(/\s*\(/)),
+          match: regex2.concat(regex2.either(...BUILT_INS), regex2.lookahead(/\s*\(/)),
           className: "built_in"
         },
         {
           relevance: 0,
-          match: regex.concat(
+          match: regex2.concat(
             /\b(?!for|if|while)/,
             IDENT,
-            regex.lookahead(/\s*\(/)
+            regex2.lookahead(/\s*\(/)
           ),
           className: "title.function"
         }
@@ -36378,7 +36378,7 @@ var require_purebasic = __commonJS({
 var require_python = __commonJS({
   "node_modules/highlight.js/lib/languages/python.js"(exports, module) {
     function python(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const IDENT_RE = /[\p{XID_Start}_]\p{XID_Continue}*/u;
       const RESERVED_WORDS = [
         "and",
@@ -36664,7 +36664,7 @@ var require_python = __commonJS({
       };
       const COMMENT_TYPE = {
         className: "comment",
-        begin: regex.lookahead(/# type:/),
+        begin: regex2.lookahead(/# type:/),
         end: /$/,
         keywords: KEYWORDS,
         contains: [
@@ -36855,7 +36855,7 @@ var require_q = __commonJS({
 var require_qml = __commonJS({
   "node_modules/highlight.js/lib/languages/qml.js"(exports, module) {
     function qml(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const KEYWORDS = {
         keyword: "in of on if for while finally var new function do return void else break catch instanceof with throw case default try this switch continue typeof delete let yield const export super debugger as async await import",
         literal: "true false null undefined NaN Infinity",
@@ -36904,7 +36904,7 @@ var require_qml = __commonJS({
         relevance: 0
       };
       const QML_OBJECT = {
-        begin: regex.concat(QML_IDENT_RE, /\s*\{/),
+        begin: regex2.concat(QML_IDENT_RE, /\s*\{/),
         end: /\{/,
         returnBegin: true,
         relevance: 0,
@@ -37008,9 +37008,9 @@ var require_qml = __commonJS({
 var require_r = __commonJS({
   "node_modules/highlight.js/lib/languages/r.js"(exports, module) {
     function r(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const IDENT_RE = /(?:(?:[a-zA-Z]|\.[._a-zA-Z])[._a-zA-Z0-9]*)|\.(?!\d)/;
-      const NUMBER_TYPES_RE = regex.either(
+      const NUMBER_TYPES_RE = regex2.either(
         // Special case: only hexadecimal binary powers can contain fractions
         /0[xX][0-9a-fA-F]+\.[0-9a-fA-F]*[pP][+-]?\d+i?/,
         // Hexadecimal numbers without fraction and optional binary power
@@ -37019,7 +37019,7 @@ var require_r = __commonJS({
         /(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?[Li]?/
       );
       const OPERATORS_RE = /[=!<>:]=|\|\||&&|:::?|<-|<<-|->>|->|\|>|[-+*\/?!$&|:<=>@^~]|\*\*/;
-      const PUNCTUATION_RE = regex.either(
+      const PUNCTUATION_RE = regex2.either(
         /[()]/,
         /[{}]/,
         /\[\[/,
@@ -37053,7 +37053,7 @@ var require_r = __commonJS({
                 scope: "doctag",
                 match: /@examples/,
                 starts: {
-                  end: regex.lookahead(regex.either(
+                  end: regex2.lookahead(regex2.either(
                     // end if another doc comment
                     /\n^#'\s*(?=@[a-zA-Z]+)/,
                     // or a line with no comment
@@ -37788,15 +37788,15 @@ var require_ruleslanguage = __commonJS({
 var require_rust = __commonJS({
   "node_modules/highlight.js/lib/languages/rust.js"(exports, module) {
     function rust(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const FUNCTION_INVOKE = {
         className: "title.function.invoke",
         relevance: 0,
-        begin: regex.concat(
+        begin: regex2.concat(
           /\b/,
           /(?!let|for|while|if|else|match\b)/,
           hljs.IDENT_RE,
-          regex.lookahead(/\s*\(/)
+          regex2.lookahead(/\s*\(/)
         )
       };
       const NUMBER_SUFFIX = "([ui](8|16|32|64|128|size)|f(32|64))?";
@@ -38089,7 +38089,7 @@ var require_rust = __commonJS({
 var require_sas = __commonJS({
   "node_modules/highlight.js/lib/languages/sas.js"(exports, module) {
     function sas(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const SAS_KEYWORDS = [
         "do",
         "if",
@@ -38603,7 +38603,7 @@ var require_sas = __commonJS({
           {
             // Built-in macro variables
             className: "built_in",
-            begin: "%" + regex.either(...MACRO_FUNCTIONS)
+            begin: "%" + regex2.either(...MACRO_FUNCTIONS)
           },
           {
             // User-defined macro functions
@@ -38615,7 +38615,7 @@ var require_sas = __commonJS({
             // built_in may need more nuance
             // https://github.com/highlightjs/highlight.js/issues/2521
             className: "meta",
-            begin: regex.either(...FUNCTIONS) + "(?=\\()"
+            begin: regex2.either(...FUNCTIONS) + "(?=\\()"
           },
           {
             className: "string",
@@ -38637,7 +38637,7 @@ var require_sas = __commonJS({
 var require_scala = __commonJS({
   "node_modules/highlight.js/lib/languages/scala.js"(exports, module) {
     function scala(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const ANNOTATION = {
         className: "meta",
         begin: "@[A-Za-z]+"
@@ -38736,7 +38736,7 @@ var require_scala = __commonJS({
       const METHOD = {
         className: "function",
         beginKeywords: "def",
-        end: regex.lookahead(/[:={\[(\n;]/),
+        end: regex2.lookahead(/[:={\[(\n;]/),
         contains: [NAME]
       };
       const EXTENSION = {
@@ -42667,7 +42667,7 @@ var require_sqf = __commonJS({
 var require_sql = __commonJS({
   "node_modules/highlight.js/lib/languages/sql.js"(exports, module) {
     function sql(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const COMMENT_MODE = hljs.COMMENT("--", "$");
       const STRING = {
         className: "string",
@@ -43244,7 +43244,7 @@ var require_sql = __commonJS({
         relevance: 0
       };
       const FUNCTION_CALL = {
-        begin: regex.concat(/\b/, regex.either(...FUNCTIONS), /\s*\(/),
+        begin: regex2.concat(/\b/, regex2.either(...FUNCTIONS), /\s*\(/),
         relevance: 0,
         keywords: { built_in: FUNCTIONS }
       };
@@ -43278,7 +43278,7 @@ var require_sql = __commonJS({
         },
         contains: [
           {
-            begin: regex.either(...COMBOS),
+            begin: regex2.either(...COMBOS),
             relevance: 0,
             keywords: {
               $pattern: /[\w\.]+/,
@@ -43289,7 +43289,7 @@ var require_sql = __commonJS({
           },
           {
             className: "type",
-            begin: regex.either(...MULTI_WORD_TYPES)
+            begin: regex2.either(...MULTI_WORD_TYPES)
           },
           FUNCTION_CALL,
           VARIABLE,
@@ -43310,7 +43310,7 @@ var require_sql = __commonJS({
 var require_stan = __commonJS({
   "node_modules/highlight.js/lib/languages/stan.js"(exports, module) {
     function stan(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const BLOCKS = [
         "functions",
         "model",
@@ -43729,7 +43729,7 @@ var require_stan = __commonJS({
             relevance: 0
           },
           {
-            match: regex.concat(/[<,]\s*/, regex.either(...RANGE_CONSTRAINTS), /\s*=/),
+            match: regex2.concat(/[<,]\s*/, regex2.either(...RANGE_CONSTRAINTS), /\s*=/),
             keywords: RANGE_CONSTRAINTS
           },
           {
@@ -43740,7 +43740,7 @@ var require_stan = __commonJS({
             // highlights the 'T' in T[,] for only Stan language distributrions
             match: [
               /~\s*/,
-              regex.either(...DISTRIBUTIONS),
+              regex2.either(...DISTRIBUTIONS),
               /(?:\(\))/,
               /\s*T(?=\s*\[)/
             ],
@@ -43753,14 +43753,14 @@ var require_stan = __commonJS({
             // highlights distributions that end with special endings
             scope: "built_in",
             keywords: DISTRIBUTIONS,
-            begin: regex.concat(/\w*/, regex.either(...DISTRIBUTIONS), /(_lpdf|_lupdf|_lpmf|_cdf|_lcdf|_lccdf|_qf)(?=\s*[\(.*\)])/)
+            begin: regex2.concat(/\w*/, regex2.either(...DISTRIBUTIONS), /(_lpdf|_lupdf|_lpmf|_cdf|_lcdf|_lccdf|_qf)(?=\s*[\(.*\)])/)
           },
           {
             // highlights distributions after ~
             begin: [
               /~/,
               /\s*/,
-              regex.concat(regex.either(...DISTRIBUTIONS), /(?=\s*[\(.*\)])/)
+              regex2.concat(regex2.either(...DISTRIBUTIONS), /(?=\s*[\(.*\)])/)
             ],
             scope: { 3: "built_in" }
           },
@@ -43769,7 +43769,7 @@ var require_stan = __commonJS({
             begin: [
               /~/,
               /\s*\w+(?=\s*[\(.*\)])/,
-              "(?!.*/\b(" + regex.either(...DISTRIBUTIONS) + ")\b)"
+              "(?!.*/\b(" + regex2.either(...DISTRIBUTIONS) + ")\b)"
             ],
             scope: { 2: "title.function" }
           },
@@ -43780,7 +43780,7 @@ var require_stan = __commonJS({
           },
           {
             scope: "number",
-            match: regex.concat(
+            match: regex2.concat(
               // Comes from @RunDevelopment accessed 11/29/2021 at
               // https://github.com/PrismJS/prism/blob/c53ad2e65b7193ab4f03a1797506a54bbb33d5a2/components/prism-stan.js#L56
               // start of big noncapture group which
@@ -45850,7 +45850,7 @@ var require_tap = __commonJS({
 var require_tcl = __commonJS({
   "node_modules/highlight.js/lib/languages/tcl.js"(exports, module) {
     function tcl(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const TCL_IDENT = /[a-zA-Z_][a-zA-Z0-9_]*/;
       const NUMBER = {
         className: "number",
@@ -46003,9 +46003,9 @@ var require_tcl = __commonJS({
           {
             className: "variable",
             variants: [
-              { begin: regex.concat(
+              { begin: regex2.concat(
                 /\$/,
-                regex.optional(/::/),
+                regex2.optional(/::/),
                 TCL_IDENT,
                 "(::",
                 TCL_IDENT,
@@ -46279,7 +46279,7 @@ var require_tp = __commonJS({
 var require_twig = __commonJS({
   "node_modules/highlight.js/lib/languages/twig.js"(exports, module) {
     function twig(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const FUNCTION_NAMES = [
         "absolute_url",
         "asset|0",
@@ -46476,7 +46476,7 @@ var require_twig = __commonJS({
           begin: [
             /\{%/,
             /\s*/,
-            regex.either(...tagnames)
+            regex2.either(...tagnames)
           ],
           end: /%\}/,
           keywords: "in",
@@ -46674,7 +46674,7 @@ var require_typescript = __commonJS({
       ERROR_TYPES
     );
     function javascript(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const hasClosingTag = (match, { after }) => {
         const tag = "</" + match[0].slice(1);
         const pos = match.input.indexOf(tag, after);
@@ -46911,7 +46911,7 @@ var require_typescript = __commonJS({
               /\s+/,
               /extends/,
               /\s+/,
-              regex.concat(IDENT_RE$1, "(", regex.concat(/\./, IDENT_RE$1), ")*")
+              regex2.concat(IDENT_RE$1, "(", regex2.concat(/\./, IDENT_RE$1), ")*")
             ],
             scope: {
               1: "keyword",
@@ -46936,7 +46936,7 @@ var require_typescript = __commonJS({
       };
       const CLASS_REFERENCE = {
         relevance: 0,
-        match: regex.either(
+        match: regex2.either(
           // Hard coded exceptions
           /\bJSON/,
           // Float32Array, OutT
@@ -46997,10 +46997,10 @@ var require_typescript = __commonJS({
         className: "variable.constant"
       };
       function noneOf(list) {
-        return regex.concat("(?!", list.join("|"), ")");
+        return regex2.concat("(?!", list.join("|"), ")");
       }
       const FUNCTION_CALL = {
-        match: regex.concat(
+        match: regex2.concat(
           /\b/,
           noneOf([
             ...BUILT_IN_GLOBALS,
@@ -47008,14 +47008,14 @@ var require_typescript = __commonJS({
             "import"
           ]),
           IDENT_RE$1,
-          regex.lookahead(/\(/)
+          regex2.lookahead(/\(/)
         ),
         className: "title.function",
         relevance: 0
       };
       const PROPERTY_ACCESS = {
-        begin: regex.concat(/\./, regex.lookahead(
-          regex.concat(IDENT_RE$1, /(?![0-9A-Za-z$_(])/)
+        begin: regex2.concat(/\./, regex2.lookahead(
+          regex2.concat(IDENT_RE$1, /(?![0-9A-Za-z$_(])/)
         )),
         end: IDENT_RE$1,
         excludeBegin: true,
@@ -47052,7 +47052,7 @@ var require_typescript = __commonJS({
           /=\s*/,
           /(async\s*)?/,
           // async is optional
-          regex.lookahead(FUNC_LEAD_IN_RE)
+          regex2.lookahead(FUNC_LEAD_IN_RE)
         ],
         keywords: "async",
         className: {
@@ -47090,7 +47090,7 @@ var require_typescript = __commonJS({
           CLASS_REFERENCE,
           {
             className: "attr",
-            begin: IDENT_RE$1 + regex.lookahead(":"),
+            begin: IDENT_RE$1 + regex2.lookahead(":"),
             relevance: 0
           },
           FUNCTION_VARIABLE,
@@ -47361,7 +47361,7 @@ var require_vala = __commonJS({
 var require_vbnet = __commonJS({
   "node_modules/highlight.js/lib/languages/vbnet.js"(exports, module) {
     function vbnet(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const CHARACTER = {
         className: "string",
         begin: /"(""|[^/n])"C\b/
@@ -47387,23 +47387,23 @@ var require_vbnet = __commonJS({
         variants: [
           {
             // #YYYY-MM-DD# (ISO-Date) or #M/D/YYYY# (US-Date)
-            begin: regex.concat(/# */, regex.either(YYYY_MM_DD, MM_DD_YYYY), / *#/)
+            begin: regex2.concat(/# */, regex2.either(YYYY_MM_DD, MM_DD_YYYY), / *#/)
           },
           {
             // #H:mm[:ss]# (24h Time)
-            begin: regex.concat(/# */, TIME_24H, / *#/)
+            begin: regex2.concat(/# */, TIME_24H, / *#/)
           },
           {
             // #h[:mm[:ss]] A# (12h Time)
-            begin: regex.concat(/# */, TIME_12H, / *#/)
+            begin: regex2.concat(/# */, TIME_12H, / *#/)
           },
           {
             // date plus time
-            begin: regex.concat(
+            begin: regex2.concat(
               /# */,
-              regex.either(YYYY_MM_DD, MM_DD_YYYY),
+              regex2.either(YYYY_MM_DD, MM_DD_YYYY),
               / +/,
-              regex.either(TIME_12H, TIME_24H),
+              regex2.either(TIME_12H, TIME_24H),
               / *#/
             )
           }
@@ -47499,7 +47499,7 @@ var require_vbnet = __commonJS({
 var require_vbscript = __commonJS({
   "node_modules/highlight.js/lib/languages/vbscript.js"(exports, module) {
     function vbscript(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const BUILT_IN_FUNCTIONS = [
         "lcase",
         "month",
@@ -47609,7 +47609,7 @@ var require_vbscript = __commonJS({
         "scriptenginemajorversion"
       ];
       const BUILT_IN_CALL = {
-        begin: regex.concat(regex.either(...BUILT_IN_FUNCTIONS), "\\s*\\("),
+        begin: regex2.concat(regex2.either(...BUILT_IN_FUNCTIONS), "\\s*\\("),
         // relevance 0 because this is acting as a beginKeywords really
         relevance: 0,
         keywords: { built_in: BUILT_IN_FUNCTIONS }
@@ -47730,7 +47730,7 @@ var require_vbscript_html = __commonJS({
 var require_verilog = __commonJS({
   "node_modules/highlight.js/lib/languages/verilog.js"(exports, module) {
     function verilog(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const KEYWORDS = {
         $pattern: /\$?[\w]+(\$[\w]+)*/,
         keyword: [
@@ -48256,11 +48256,11 @@ var require_verilog = __commonJS({
           },
           {
             scope: "variable.constant",
-            match: regex.concat(/`/, regex.either(...BUILT_IN_CONSTANTS))
+            match: regex2.concat(/`/, regex2.either(...BUILT_IN_CONSTANTS))
           },
           {
             scope: "meta",
-            begin: regex.concat(/`/, regex.either(...DIRECTIVES)),
+            begin: regex2.concat(/`/, regex2.either(...DIRECTIVES)),
             end: /$|\/\/|\/\*/,
             returnEnd: true,
             keywords: DIRECTIVES
@@ -48684,7 +48684,7 @@ var require_wasm = __commonJS({
 var require_wren = __commonJS({
   "node_modules/highlight.js/lib/languages/wren.js"(exports, module) {
     function wren(hljs) {
-      const regex = hljs.regex;
+      const regex2 = hljs.regex;
       const IDENT_RE = /[a-zA-Z]\w*/;
       const KEYWORDS = [
         "as",
@@ -48756,14 +48756,14 @@ var require_wren = __commonJS({
       ];
       const FUNCTION = {
         relevance: 0,
-        match: regex.concat(/\b(?!(if|while|for|else|super)\b)/, IDENT_RE, /(?=\s*[({])/),
+        match: regex2.concat(/\b(?!(if|while|for|else|super)\b)/, IDENT_RE, /(?=\s*[({])/),
         className: "title.function"
       };
       const FUNCTION_DEFINITION = {
-        match: regex.concat(
-          regex.either(
-            regex.concat(/\b(?!(if|while|for|else|super)\b)/, IDENT_RE),
-            regex.either(...OPERATORS)
+        match: regex2.concat(
+          regex2.either(
+            regex2.concat(/\b(?!(if|while|for|else|super)\b)/, IDENT_RE),
+            regex2.either(...OPERATORS)
           ),
           /(?=\s*\([^)]+\)\s*\{)/
         ),
@@ -48803,7 +48803,7 @@ var require_wren = __commonJS({
       };
       const OPERATOR = {
         relevance: 0,
-        match: regex.either(...OPERATORS),
+        match: regex2.either(...OPERATORS),
         className: "operator"
       };
       const TRIPLE_STRING = {
@@ -48813,14 +48813,14 @@ var require_wren = __commonJS({
       };
       const PROPERTY = {
         className: "property",
-        begin: regex.concat(/\./, regex.lookahead(IDENT_RE)),
+        begin: regex2.concat(/\./, regex2.lookahead(IDENT_RE)),
         end: IDENT_RE,
         excludeBegin: true,
         relevance: 0
       };
       const FIELD = {
         relevance: 0,
-        match: regex.concat(/\b_/, IDENT_RE),
+        match: regex2.concat(/\b_/, IDENT_RE),
         scope: "variable"
       };
       const CLASS_REFERENCE = {
@@ -48894,7 +48894,7 @@ var require_wren = __commonJS({
       ];
       const VARIABLE = {
         relevance: 0,
-        match: regex.concat(
+        match: regex2.concat(
           "\\b(?!",
           ALL_KWS.join("|"),
           "\\b)",
@@ -50893,18 +50893,18 @@ function unescape(html) {
   });
 }
 var caret = /(^|[^\[])\^/g;
-function edit(regex, opt) {
-  regex = typeof regex === "string" ? regex : regex.source;
+function edit(regex2, opt) {
+  regex2 = typeof regex2 === "string" ? regex2 : regex2.source;
   opt = opt || "";
   const obj = {
     replace: (name, val) => {
       val = typeof val === "object" && "source" in val ? val.source : val;
       val = val.replace(caret, "$1");
-      regex = regex.replace(name, val);
+      regex2 = regex2.replace(name, val);
       return obj;
     },
     getRegex: () => {
-      return new RegExp(regex, opt);
+      return new RegExp(regex2, opt);
     }
   };
   return obj;
@@ -52898,22 +52898,122 @@ function escape2(html, encode) {
   return html;
 }
 
+// node_modules/github-slugger/regex.js
+var regex = /[\0-\x1F!-,\.\/:-@\[-\^`\{-\xA9\xAB-\xB4\xB6-\xB9\xBB-\xBF\xD7\xF7\u02C2-\u02C5\u02D2-\u02DF\u02E5-\u02EB\u02ED\u02EF-\u02FF\u0375\u0378\u0379\u037E\u0380-\u0385\u0387\u038B\u038D\u03A2\u03F6\u0482\u0530\u0557\u0558\u055A-\u055F\u0589-\u0590\u05BE\u05C0\u05C3\u05C6\u05C8-\u05CF\u05EB-\u05EE\u05F3-\u060F\u061B-\u061F\u066A-\u066D\u06D4\u06DD\u06DE\u06E9\u06FD\u06FE\u0700-\u070F\u074B\u074C\u07B2-\u07BF\u07F6-\u07F9\u07FB\u07FC\u07FE\u07FF\u082E-\u083F\u085C-\u085F\u086B-\u089F\u08B5\u08C8-\u08D2\u08E2\u0964\u0965\u0970\u0984\u098D\u098E\u0991\u0992\u09A9\u09B1\u09B3-\u09B5\u09BA\u09BB\u09C5\u09C6\u09C9\u09CA\u09CF-\u09D6\u09D8-\u09DB\u09DE\u09E4\u09E5\u09F2-\u09FB\u09FD\u09FF\u0A00\u0A04\u0A0B-\u0A0E\u0A11\u0A12\u0A29\u0A31\u0A34\u0A37\u0A3A\u0A3B\u0A3D\u0A43-\u0A46\u0A49\u0A4A\u0A4E-\u0A50\u0A52-\u0A58\u0A5D\u0A5F-\u0A65\u0A76-\u0A80\u0A84\u0A8E\u0A92\u0AA9\u0AB1\u0AB4\u0ABA\u0ABB\u0AC6\u0ACA\u0ACE\u0ACF\u0AD1-\u0ADF\u0AE4\u0AE5\u0AF0-\u0AF8\u0B00\u0B04\u0B0D\u0B0E\u0B11\u0B12\u0B29\u0B31\u0B34\u0B3A\u0B3B\u0B45\u0B46\u0B49\u0B4A\u0B4E-\u0B54\u0B58-\u0B5B\u0B5E\u0B64\u0B65\u0B70\u0B72-\u0B81\u0B84\u0B8B-\u0B8D\u0B91\u0B96-\u0B98\u0B9B\u0B9D\u0BA0-\u0BA2\u0BA5-\u0BA7\u0BAB-\u0BAD\u0BBA-\u0BBD\u0BC3-\u0BC5\u0BC9\u0BCE\u0BCF\u0BD1-\u0BD6\u0BD8-\u0BE5\u0BF0-\u0BFF\u0C0D\u0C11\u0C29\u0C3A-\u0C3C\u0C45\u0C49\u0C4E-\u0C54\u0C57\u0C5B-\u0C5F\u0C64\u0C65\u0C70-\u0C7F\u0C84\u0C8D\u0C91\u0CA9\u0CB4\u0CBA\u0CBB\u0CC5\u0CC9\u0CCE-\u0CD4\u0CD7-\u0CDD\u0CDF\u0CE4\u0CE5\u0CF0\u0CF3-\u0CFF\u0D0D\u0D11\u0D45\u0D49\u0D4F-\u0D53\u0D58-\u0D5E\u0D64\u0D65\u0D70-\u0D79\u0D80\u0D84\u0D97-\u0D99\u0DB2\u0DBC\u0DBE\u0DBF\u0DC7-\u0DC9\u0DCB-\u0DCE\u0DD5\u0DD7\u0DE0-\u0DE5\u0DF0\u0DF1\u0DF4-\u0E00\u0E3B-\u0E3F\u0E4F\u0E5A-\u0E80\u0E83\u0E85\u0E8B\u0EA4\u0EA6\u0EBE\u0EBF\u0EC5\u0EC7\u0ECE\u0ECF\u0EDA\u0EDB\u0EE0-\u0EFF\u0F01-\u0F17\u0F1A-\u0F1F\u0F2A-\u0F34\u0F36\u0F38\u0F3A-\u0F3D\u0F48\u0F6D-\u0F70\u0F85\u0F98\u0FBD-\u0FC5\u0FC7-\u0FFF\u104A-\u104F\u109E\u109F\u10C6\u10C8-\u10CC\u10CE\u10CF\u10FB\u1249\u124E\u124F\u1257\u1259\u125E\u125F\u1289\u128E\u128F\u12B1\u12B6\u12B7\u12BF\u12C1\u12C6\u12C7\u12D7\u1311\u1316\u1317\u135B\u135C\u1360-\u137F\u1390-\u139F\u13F6\u13F7\u13FE-\u1400\u166D\u166E\u1680\u169B-\u169F\u16EB-\u16ED\u16F9-\u16FF\u170D\u1715-\u171F\u1735-\u173F\u1754-\u175F\u176D\u1771\u1774-\u177F\u17D4-\u17D6\u17D8-\u17DB\u17DE\u17DF\u17EA-\u180A\u180E\u180F\u181A-\u181F\u1879-\u187F\u18AB-\u18AF\u18F6-\u18FF\u191F\u192C-\u192F\u193C-\u1945\u196E\u196F\u1975-\u197F\u19AC-\u19AF\u19CA-\u19CF\u19DA-\u19FF\u1A1C-\u1A1F\u1A5F\u1A7D\u1A7E\u1A8A-\u1A8F\u1A9A-\u1AA6\u1AA8-\u1AAF\u1AC1-\u1AFF\u1B4C-\u1B4F\u1B5A-\u1B6A\u1B74-\u1B7F\u1BF4-\u1BFF\u1C38-\u1C3F\u1C4A-\u1C4C\u1C7E\u1C7F\u1C89-\u1C8F\u1CBB\u1CBC\u1CC0-\u1CCF\u1CD3\u1CFB-\u1CFF\u1DFA\u1F16\u1F17\u1F1E\u1F1F\u1F46\u1F47\u1F4E\u1F4F\u1F58\u1F5A\u1F5C\u1F5E\u1F7E\u1F7F\u1FB5\u1FBD\u1FBF-\u1FC1\u1FC5\u1FCD-\u1FCF\u1FD4\u1FD5\u1FDC-\u1FDF\u1FED-\u1FF1\u1FF5\u1FFD-\u203E\u2041-\u2053\u2055-\u2070\u2072-\u207E\u2080-\u208F\u209D-\u20CF\u20F1-\u2101\u2103-\u2106\u2108\u2109\u2114\u2116-\u2118\u211E-\u2123\u2125\u2127\u2129\u212E\u213A\u213B\u2140-\u2144\u214A-\u214D\u214F-\u215F\u2189-\u24B5\u24EA-\u2BFF\u2C2F\u2C5F\u2CE5-\u2CEA\u2CF4-\u2CFF\u2D26\u2D28-\u2D2C\u2D2E\u2D2F\u2D68-\u2D6E\u2D70-\u2D7E\u2D97-\u2D9F\u2DA7\u2DAF\u2DB7\u2DBF\u2DC7\u2DCF\u2DD7\u2DDF\u2E00-\u2E2E\u2E30-\u3004\u3008-\u3020\u3030\u3036\u3037\u303D-\u3040\u3097\u3098\u309B\u309C\u30A0\u30FB\u3100-\u3104\u3130\u318F-\u319F\u31C0-\u31EF\u3200-\u33FF\u4DC0-\u4DFF\u9FFD-\u9FFF\uA48D-\uA4CF\uA4FE\uA4FF\uA60D-\uA60F\uA62C-\uA63F\uA673\uA67E\uA6F2-\uA716\uA720\uA721\uA789\uA78A\uA7C0\uA7C1\uA7CB-\uA7F4\uA828-\uA82B\uA82D-\uA83F\uA874-\uA87F\uA8C6-\uA8CF\uA8DA-\uA8DF\uA8F8-\uA8FA\uA8FC\uA92E\uA92F\uA954-\uA95F\uA97D-\uA97F\uA9C1-\uA9CE\uA9DA-\uA9DF\uA9FF\uAA37-\uAA3F\uAA4E\uAA4F\uAA5A-\uAA5F\uAA77-\uAA79\uAAC3-\uAADA\uAADE\uAADF\uAAF0\uAAF1\uAAF7-\uAB00\uAB07\uAB08\uAB0F\uAB10\uAB17-\uAB1F\uAB27\uAB2F\uAB5B\uAB6A-\uAB6F\uABEB\uABEE\uABEF\uABFA-\uABFF\uD7A4-\uD7AF\uD7C7-\uD7CA\uD7FC-\uD7FF\uE000-\uF8FF\uFA6E\uFA6F\uFADA-\uFAFF\uFB07-\uFB12\uFB18-\uFB1C\uFB29\uFB37\uFB3D\uFB3F\uFB42\uFB45\uFBB2-\uFBD2\uFD3E-\uFD4F\uFD90\uFD91\uFDC8-\uFDEF\uFDFC-\uFDFF\uFE10-\uFE1F\uFE30-\uFE32\uFE35-\uFE4C\uFE50-\uFE6F\uFE75\uFEFD-\uFF0F\uFF1A-\uFF20\uFF3B-\uFF3E\uFF40\uFF5B-\uFF65\uFFBF-\uFFC1\uFFC8\uFFC9\uFFD0\uFFD1\uFFD8\uFFD9\uFFDD-\uFFFF]|\uD800[\uDC0C\uDC27\uDC3B\uDC3E\uDC4E\uDC4F\uDC5E-\uDC7F\uDCFB-\uDD3F\uDD75-\uDDFC\uDDFE-\uDE7F\uDE9D-\uDE9F\uDED1-\uDEDF\uDEE1-\uDEFF\uDF20-\uDF2C\uDF4B-\uDF4F\uDF7B-\uDF7F\uDF9E\uDF9F\uDFC4-\uDFC7\uDFD0\uDFD6-\uDFFF]|\uD801[\uDC9E\uDC9F\uDCAA-\uDCAF\uDCD4-\uDCD7\uDCFC-\uDCFF\uDD28-\uDD2F\uDD64-\uDDFF\uDF37-\uDF3F\uDF56-\uDF5F\uDF68-\uDFFF]|\uD802[\uDC06\uDC07\uDC09\uDC36\uDC39-\uDC3B\uDC3D\uDC3E\uDC56-\uDC5F\uDC77-\uDC7F\uDC9F-\uDCDF\uDCF3\uDCF6-\uDCFF\uDD16-\uDD1F\uDD3A-\uDD7F\uDDB8-\uDDBD\uDDC0-\uDDFF\uDE04\uDE07-\uDE0B\uDE14\uDE18\uDE36\uDE37\uDE3B-\uDE3E\uDE40-\uDE5F\uDE7D-\uDE7F\uDE9D-\uDEBF\uDEC8\uDEE7-\uDEFF\uDF36-\uDF3F\uDF56-\uDF5F\uDF73-\uDF7F\uDF92-\uDFFF]|\uD803[\uDC49-\uDC7F\uDCB3-\uDCBF\uDCF3-\uDCFF\uDD28-\uDD2F\uDD3A-\uDE7F\uDEAA\uDEAD-\uDEAF\uDEB2-\uDEFF\uDF1D-\uDF26\uDF28-\uDF2F\uDF51-\uDFAF\uDFC5-\uDFDF\uDFF7-\uDFFF]|\uD804[\uDC47-\uDC65\uDC70-\uDC7E\uDCBB-\uDCCF\uDCE9-\uDCEF\uDCFA-\uDCFF\uDD35\uDD40-\uDD43\uDD48-\uDD4F\uDD74\uDD75\uDD77-\uDD7F\uDDC5-\uDDC8\uDDCD\uDDDB\uDDDD-\uDDFF\uDE12\uDE38-\uDE3D\uDE3F-\uDE7F\uDE87\uDE89\uDE8E\uDE9E\uDEA9-\uDEAF\uDEEB-\uDEEF\uDEFA-\uDEFF\uDF04\uDF0D\uDF0E\uDF11\uDF12\uDF29\uDF31\uDF34\uDF3A\uDF45\uDF46\uDF49\uDF4A\uDF4E\uDF4F\uDF51-\uDF56\uDF58-\uDF5C\uDF64\uDF65\uDF6D-\uDF6F\uDF75-\uDFFF]|\uD805[\uDC4B-\uDC4F\uDC5A-\uDC5D\uDC62-\uDC7F\uDCC6\uDCC8-\uDCCF\uDCDA-\uDD7F\uDDB6\uDDB7\uDDC1-\uDDD7\uDDDE-\uDDFF\uDE41-\uDE43\uDE45-\uDE4F\uDE5A-\uDE7F\uDEB9-\uDEBF\uDECA-\uDEFF\uDF1B\uDF1C\uDF2C-\uDF2F\uDF3A-\uDFFF]|\uD806[\uDC3B-\uDC9F\uDCEA-\uDCFE\uDD07\uDD08\uDD0A\uDD0B\uDD14\uDD17\uDD36\uDD39\uDD3A\uDD44-\uDD4F\uDD5A-\uDD9F\uDDA8\uDDA9\uDDD8\uDDD9\uDDE2\uDDE5-\uDDFF\uDE3F-\uDE46\uDE48-\uDE4F\uDE9A-\uDE9C\uDE9E-\uDEBF\uDEF9-\uDFFF]|\uD807[\uDC09\uDC37\uDC41-\uDC4F\uDC5A-\uDC71\uDC90\uDC91\uDCA8\uDCB7-\uDCFF\uDD07\uDD0A\uDD37-\uDD39\uDD3B\uDD3E\uDD48-\uDD4F\uDD5A-\uDD5F\uDD66\uDD69\uDD8F\uDD92\uDD99-\uDD9F\uDDAA-\uDEDF\uDEF7-\uDFAF\uDFB1-\uDFFF]|\uD808[\uDF9A-\uDFFF]|\uD809[\uDC6F-\uDC7F\uDD44-\uDFFF]|[\uD80A\uD80B\uD80E-\uD810\uD812-\uD819\uD824-\uD82B\uD82D\uD82E\uD830-\uD833\uD837\uD839\uD83D\uD83F\uD87B-\uD87D\uD87F\uD885-\uDB3F\uDB41-\uDBFF][\uDC00-\uDFFF]|\uD80D[\uDC2F-\uDFFF]|\uD811[\uDE47-\uDFFF]|\uD81A[\uDE39-\uDE3F\uDE5F\uDE6A-\uDECF\uDEEE\uDEEF\uDEF5-\uDEFF\uDF37-\uDF3F\uDF44-\uDF4F\uDF5A-\uDF62\uDF78-\uDF7C\uDF90-\uDFFF]|\uD81B[\uDC00-\uDE3F\uDE80-\uDEFF\uDF4B-\uDF4E\uDF88-\uDF8E\uDFA0-\uDFDF\uDFE2\uDFE5-\uDFEF\uDFF2-\uDFFF]|\uD821[\uDFF8-\uDFFF]|\uD823[\uDCD6-\uDCFF\uDD09-\uDFFF]|\uD82C[\uDD1F-\uDD4F\uDD53-\uDD63\uDD68-\uDD6F\uDEFC-\uDFFF]|\uD82F[\uDC6B-\uDC6F\uDC7D-\uDC7F\uDC89-\uDC8F\uDC9A-\uDC9C\uDC9F-\uDFFF]|\uD834[\uDC00-\uDD64\uDD6A-\uDD6C\uDD73-\uDD7A\uDD83\uDD84\uDD8C-\uDDA9\uDDAE-\uDE41\uDE45-\uDFFF]|\uD835[\uDC55\uDC9D\uDCA0\uDCA1\uDCA3\uDCA4\uDCA7\uDCA8\uDCAD\uDCBA\uDCBC\uDCC4\uDD06\uDD0B\uDD0C\uDD15\uDD1D\uDD3A\uDD3F\uDD45\uDD47-\uDD49\uDD51\uDEA6\uDEA7\uDEC1\uDEDB\uDEFB\uDF15\uDF35\uDF4F\uDF6F\uDF89\uDFA9\uDFC3\uDFCC\uDFCD]|\uD836[\uDC00-\uDDFF\uDE37-\uDE3A\uDE6D-\uDE74\uDE76-\uDE83\uDE85-\uDE9A\uDEA0\uDEB0-\uDFFF]|\uD838[\uDC07\uDC19\uDC1A\uDC22\uDC25\uDC2B-\uDCFF\uDD2D-\uDD2F\uDD3E\uDD3F\uDD4A-\uDD4D\uDD4F-\uDEBF\uDEFA-\uDFFF]|\uD83A[\uDCC5-\uDCCF\uDCD7-\uDCFF\uDD4C-\uDD4F\uDD5A-\uDFFF]|\uD83B[\uDC00-\uDDFF\uDE04\uDE20\uDE23\uDE25\uDE26\uDE28\uDE33\uDE38\uDE3A\uDE3C-\uDE41\uDE43-\uDE46\uDE48\uDE4A\uDE4C\uDE50\uDE53\uDE55\uDE56\uDE58\uDE5A\uDE5C\uDE5E\uDE60\uDE63\uDE65\uDE66\uDE6B\uDE73\uDE78\uDE7D\uDE7F\uDE8A\uDE9C-\uDEA0\uDEA4\uDEAA\uDEBC-\uDFFF]|\uD83C[\uDC00-\uDD2F\uDD4A-\uDD4F\uDD6A-\uDD6F\uDD8A-\uDFFF]|\uD83E[\uDC00-\uDFEF\uDFFA-\uDFFF]|\uD869[\uDEDE-\uDEFF]|\uD86D[\uDF35-\uDF3F]|\uD86E[\uDC1E\uDC1F]|\uD873[\uDEA2-\uDEAF]|\uD87A[\uDFE1-\uDFFF]|\uD87E[\uDE1E-\uDFFF]|\uD884[\uDF4B-\uDFFF]|\uDB40[\uDC00-\uDCFF\uDDF0-\uDFFF]/g;
+
+// node_modules/github-slugger/index.js
+var own = Object.hasOwnProperty;
+var BananaSlug = class {
+  /**
+   * Create a new slug class.
+   */
+  constructor() {
+    this.occurrences;
+    this.reset();
+  }
+  /**
+   * Generate a unique slug.
+  *
+  * Tracks previously generated slugs: repeated calls with the same value
+  * will result in different slugs.
+  * Use the `slug` function to get same slugs.
+   *
+   * @param  {string} value
+   *   String of text to slugify
+   * @param  {boolean} [maintainCase=false]
+   *   Keep the current case, otherwise make all lowercase
+   * @return {string}
+   *   A unique slug string
+   */
+  slug(value, maintainCase) {
+    const self2 = this;
+    let result = slug(value, maintainCase === true);
+    const originalSlug = result;
+    while (own.call(self2.occurrences, result)) {
+      self2.occurrences[originalSlug]++;
+      result = originalSlug + "-" + self2.occurrences[originalSlug];
+    }
+    self2.occurrences[result] = 0;
+    return result;
+  }
+  /**
+   * Reset - Forget all previous slugs
+   *
+   * @return void
+   */
+  reset() {
+    this.occurrences = /* @__PURE__ */ Object.create(null);
+  }
+};
+function slug(value, maintainCase) {
+  if (typeof value !== "string")
+    return "";
+  if (!maintainCase)
+    value = value.toLowerCase();
+  return value.replace(regex, "").replace(/ /g, "-");
+}
+
+// node_modules/marked-gfm-heading-id/src/index.js
+var slugger;
+var headings = [];
+function gfmHeadingId({ prefix = "" } = {}) {
+  return {
+    headerIds: false,
+    // prevent deprecation warning; remove this once headerIds option is removed
+    hooks: {
+      preprocess(src) {
+        headings = [];
+        slugger = new BananaSlug();
+        return src;
+      }
+    },
+    renderer: {
+      heading(text, level, raw) {
+        raw = raw.toLowerCase().trim().replace(/<[!\/a-z].*?>/gi, "");
+        const id = `${prefix}${slugger.slug(raw)}`;
+        const heading = { level, text, id };
+        headings.push(heading);
+        return `<h${level} id="${id}">${text}</h${level}>
+`;
+      }
+    }
+  };
+}
+
 // node_modules/highlight.js/es/index.js
 var import_lib = __toESM(require_lib(), 1);
 
 // lib/index.js
 var import_dompurify = __toESM(require_purify(), 1);
-var marked2 = new Marked(markedHighlight({
-  highlight: (code, lang) => {
-    return import_lib.default.highlight(code, {
-      language: lang || "plaintext",
-      ignoreIllegals: true
-    }).value;
-  }
-}));
 var Markdown = class extends HTMLElement {
+  #marked;
+  #observer;
   constructor() {
     super();
+    this.#marked = new Marked({
+      gfm: true,
+      //GitHub Flavored Markdown spec
+      breaks: true
+      //Requires gfm to true
+    });
+    this.#marked.use(markedHighlight({
+      highlight: (code, lang) => {
+        return import_lib.default.highlight(code, {
+          language: lang || "plaintext",
+          ignoreIllegals: true
+        }).value;
+      }
+    }));
+    this.#marked.use(gfmHeadingId({ prefix: "user-content-" }));
+    this.#observer = new IntersectionObserver((entries) => {
+      entries.map((entry) => {
+        if (entry.isIntersecting) {
+          this.dispatchEvent(new CustomEvent("intersect", {
+            detail: { id: entry.target.id }
+          }));
+        }
+      });
+    }, { threshold: 0.8, rootMargin: "0% 0% -80% 0%" });
   }
   get src() {
     return this.getAttribute("src");
@@ -52939,12 +53039,29 @@ var Markdown = class extends HTMLElement {
   get rendered() {
     return this.hasAttribute("rendered");
   }
+  get headings() {
+    const result = new List();
+    if (this.rendered) {
+      const headings2 = [...this.querySelectorAll("h1, h2, h3, h4, h5, h6")];
+      for (const heading of headings2) {
+        const item = /* @__PURE__ */ Object.create(null);
+        item.id = heading.id;
+        item.level = +heading.tagName.toLowerCase().at(1);
+        item.title = heading.textContent;
+        if (!item.id || !item.title)
+          continue;
+        result.add(item);
+      }
+    }
+    return result;
+  }
   static get observedAttributes() {
     return ["src"];
   }
   attributeChangedCallback(name, old, value) {
     if (name === "src" && old !== value && value) {
       this.dispatchEvent(new CustomEvent("change"));
+      this.#observer.disconnect();
       if (this.manual === false)
         this.#render(value);
     }
@@ -52961,13 +53078,13 @@ var Markdown = class extends HTMLElement {
         throw new Error("HTTP Code: " + res.status);
       const markdown = await res.text();
       this.dispatchEvent(new CustomEvent("render"));
-      const html = marked2.parse(markdown, {
-        gfm: true,
-        //GitHub Flavored Markdown spec
-        breaks: true
-      });
+      const html = this.#marked.parse(markdown);
       this.innerHTML = (0, import_dompurify.sanitize)(html);
       this.setAttribute("rendered", "");
+      [...this.querySelectorAll("h1, h2, h3, h4, h5, h6")].forEach((el) => {
+        if (el.id && el.textContent)
+          this.#observer.observe(el);
+      });
       this.dispatchEvent(new CustomEvent("success"));
     } catch (err) {
       this.removeAttribute("rendered");
@@ -52979,6 +53096,42 @@ var Markdown = class extends HTMLElement {
   }
   render() {
     return this.#render(this.src);
+  }
+};
+var List = class extends Set {
+  constructor() {
+    super();
+  }
+  toHTML(options2 = {}) {
+    const depth = Number.isSafeInteger(options2?.depth) && options2.depth >= 1 && options2.depth <= 6 ? options2.depth : 6;
+    const floors = [...Array(depth).keys()].map((i) => i + 1);
+    const tag = options2?.ordered === true ? "ol" : "ul";
+    const result = document.createElement(tag);
+    let root = result;
+    let previous = 1;
+    for (const { level, id, title } of this) {
+      if (!floors.includes(level))
+        continue;
+      if (level > previous) {
+        for (let i = 0; i < level - previous; ++i) {
+          const item2 = document.createElement("ul");
+          root.appendChild(item2);
+          root = item2;
+        }
+      } else if (level < previous) {
+        for (let i = 0; i < previous - level; ++i) {
+          root = root.parentNode;
+        }
+      }
+      const ref = document.createElement("a");
+      ref.setAttribute("href", "#" + id);
+      ref.textContent = title;
+      const item = document.createElement("li");
+      item.appendChild(ref);
+      root.appendChild(item);
+      previous = level;
+    }
+    return (0, import_dompurify.sanitize)(result.outerHTML);
   }
 };
 export {

@@ -1,3 +1,17 @@
+nav{
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+article {
+  width: 1000px;
+  padding: 10px 20px;
+  margin: 20px auto auto 500px;
+}
+
+/*----*/
+
 mark-down ul, ol { padding-left: 2em; }
 mark-down ul li,
 mark-down ul li { list-style: disc; }
@@ -21,9 +35,9 @@ ol[start] li {
 ol:not([start]) li { 
   counter-increment: step-counter;
   list-style-type: none;
-  padding-left: 4rem;
+  padding-left: 4em;
   position: relative;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2em;
   line-height: 1.5;
   display: list-item;
   
@@ -48,18 +62,27 @@ ol:not([start]) li::before {
   line-height: 1.1;
 }
 
-
-mark-down h1 {
-  text-decoration: underline;
-  text-underline-offset: 10px;
-  text-decoration-thickness: 2px;
+mark-down li {
+  margin-top: .25em;
 }
 
+mark-down hr {
+  height: .25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #d0d7de;
+  border: 0;
+}
+
+mark-down h1, 
 mark-down h2 {
-  text-decoration: underline;
-  text-underline-offset: 10px;
-  text-decoration-thickness: 2px;
-  text-decoration-style: dashed;
+  padding-bottom: .3em;
+  font-size: 1.5em;
+  border-bottom: 1px solid #d8dee4;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
 }
 
 mark-down p {
@@ -74,12 +97,18 @@ mark-down a:hover {
   text-decoration: none;
 }
 
+mark-down blockquote{
+  margin: 0;
+  padding: 0 1em;
+  color: #656d76;
+  border-left: .25em solid #d0d7de;
+}
+
 mark-down code {
   background: rgba(175,184,193,0.2);
   display: inline-block;
-  padding: 5px 10px;
+  padding: .2em .4em;
   border-radius: 0.3em;
-  margin: 4px 0;
 }
 
 mark-down pre { 
@@ -95,4 +124,31 @@ mark-down pre code {
   padding: 1em 1.2em;
   border-radius: 0.3em;
   font-family: "Cascadia Mono";
+  overflow-x: auto;
+}
+
+mark-down table{
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin-top: 0;
+  margin-bottom: 16px;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow: auto;
+}
+
+mark-down table tr {
+  background-color: #fff;
+  border-top: 1px solid #d8dee4;
+}
+
+mark-down table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+mark-down table th,
+mark-down table td {
+  padding: 6px 13px;
+  border: 1px solid #d0d7de;
 }

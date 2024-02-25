@@ -47,6 +47,9 @@ Optional JavaScript API:
   el.render().catch((err)=>{
     console.error(err);
   });
+  
+  //Table of contents
+  querySelect("#toc").innerHTML = el.headings.toHTML({ depth: 4 });
 ```
 
 Install
@@ -93,64 +96,111 @@ API
 
 **Options**
 
-N/A
+  N/A
 
 **Events**
 
-- `change()`
+  - `change()`
 
-  The source (src) attribute has changed.
+    The source (src) attribute has changed.
 
-- `load()`
+  - `load()`
 
-  Markdown is being loaded.
-  
-- `render()`
+    Markdown is being loaded.
+    
+  - `render()`
 
-  Markdown is being rendered.
+    Markdown is being rendered.
 
-- `success()`
+  - `success()`
 
-  Markdown was rendered without any issue.
+    Markdown was rendered without any issue.
 
-- `failure(detail)`
+  - `failure(detail)`
 
-  Something went wrong, see `detail`:
-  
-```ts
-  {
-    error: Error
-  }
-```
+    Something went wrong, see `detail`:
+    
+    ```ts
+      { error: Error }
+    ```
+    
+  - `intersect(detail)`
+
+    A heading (h1, h2, ...) is now visible and has entered the top of the viewport.
+
+    ```ts
+    { id: string }
+    ```
 
 **Attribute / Property**
 
-- `src` | string
+  - `src: string`
+    
+    Path/URL to the `.md` file to load.
+    
+  - `integrity: string`
+
+    Integrity hash passed to `fetch()`. See [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) for more details.
+
+  - `manual: boolean`
+
+    If set markdown will not be rendered automatically and you will have to call the `render()` method yourself (see below).
+    
+  - `rendered: boolean` _(Read-only)_
+
+    Whether the markdown was succesfuly rendered or not. You can use `:not([rendered])` in your CSS to style the element differently before rendering.
+    
+  - `headings: Set<object>` _(Read-only)_
   
-  Path/URL to the `.md` file to load.
-  
-- `integrity` | string
-
-  Integrity hash passed to `fetch()`. See [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) for more details.
-
-- `manual` | boolean
-
-  If set markdown will not be rendered automatically and you will have to call the `render()` method yourself (see below).
-  
-- `rendered` _(Read-only)_ | boolean
-
-  Whether the markdown was succesfuly rendered or not. You can use `:not([rendered])` in your CSS to style the element differently before rendering.
+    List of all headings (h1, h2, ...) with an id and text content represented as follows:
+    
+    ```ts
+    {
+      id: string,
+      level: number,
+      title: string
+    }
+    ```
+    
+    The returned `Set` is _extended_ with an additional `toHTML()` function:
+    
+    + `toHTML(options?: object)`
+    
+      Which returns a HTML string representing the table of contents from the headings (nested list).
+      
+      ```html
+        <ul>
+          <li><a href="#id">title</a></li>
+          <li>
+            <ul>
+              <li><a href="#id">title</a></li>
+              <li><a href="#id">title</a></li>
+            </ul>
+          </li>
+        <ul/>
+      ```
+      
+      Options:
+      
+        - `depth?: number` (6)
+        
+          How deep to list ? Headings start from 1 to 6.
+          
+        - `ordered?: boolean` (false)
+        
+          When set to false the root of the list is `ul` otherwise `ol`.
+    
 
 **Methods**
 
-- `render(): Promise<void>`
+  - `render(): Promise<void>`
 
-  Load and render markdown into sanitized HTML.
-  
-  ✔️ Resolves when markdown has been sucesfully rendered.<br />
-  ❌ Rejects on error
-  
-  💡 Invoking this method still triggers related events.
+    Load and render markdown into sanitized HTML.
+    
+    ✔️ Resolves when markdown has been sucesfully rendered.<br />
+    ❌ Rejects on error
+    
+    💡 Invoking this method still triggers related events.
   
 Related
 =======
