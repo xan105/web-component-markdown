@@ -150,6 +150,8 @@ API
 
     Whether the markdown was succesfuly rendered or not. You can use `:not([rendered])` in your CSS to style the element differently before rendering.
     
+**Property**
+    
   - `headings: Set<object>` _(Read-only)_
   
     List of all headings (h1, h2, ...) with an id and text content represented as follows:
@@ -164,9 +166,9 @@ API
     
     The returned `Set` is _extended_ with an additional `toHTML()` function:
     
-    + `toHTML(options?: object)`
+    + `toHTML(options?: object): string`
     
-      Which returns a HTML string representing the table of contents from the headings (nested list).
+      Which returns sanitized HTML string representing the table of contents from the headings (nested list).
       
       ```html
         <ul>
@@ -190,7 +192,6 @@ API
         
           When set to false the root of the list is `ul` otherwise `ol`.
     
-
 **Methods**
 
   - `render(): Promise<void>`
