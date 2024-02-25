@@ -50,6 +50,10 @@ Optional JavaScript API:
   
   //Table of contents
   querySelect("#toc").innerHTML = el.headings.toHTML({ depth: 4 });
+  
+  el.addEventListener("intersect", ({detail})=>{
+    querySelect(`#toc a[href="#${detail.id}"]`).classList.add("active");
+  });
 ```
 
 Install
