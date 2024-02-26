@@ -1,6 +1,6 @@
 {
   "name": "@xan105/markdown",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Web-component to render markdown into html with syntax highlighting",
   "type": "module",
   "exports": "./lib/index.js",
@@ -19,7 +19,7 @@
     "lint": "eslint \"./lib/**/*.js\"",
     "bundle": "npm run-script bundle:pretty && npm run-script bundle:min",
     "bundle:pretty": "esbuild \"./lib/index.js\" --bundle --platform=browser --target=esnext --format=esm --outfile=\"./dist/md.js\"",
-    "bundle:min": "esbuild \"./lib/index.js\" --bundle --minify --platform=browser --target=esnext --format=esm --outfile=\"./dist/md.min.js\"",
+    "bundle:min": "esbuild \"./lib/index.js\" --bundle --minify --legal-comments=none --platform=browser --target=esnext --format=esm --outfile=\"./dist/md.min.js\"",
     "test": "start http://localhost/test && websrv"
   },
   "keywords": [
