@@ -1,7 +1,7 @@
 About
 =====
 
-Web-component to load an external markdown (.md) file and render it into sanitized HTML.
+Web-component to load an external markdown (.md) file and render it into sanitized HTML with syntax highlighing.
 
 💡 Markdown is rendered into the light DOM without any predefined css styling.
 
@@ -49,10 +49,11 @@ Optional JavaScript API:
   });
   
   //Table of contents
-  querySelect("#toc").innerHTML = el.headings.toHTML({ depth: 4 });
+  querySelector("#toc").innerHTML = el.headings.toHTML({ depth: 4 });
   
   el.addEventListener("intersect", ({detail})=>{
-    querySelect(`#toc a[href="#${detail.id}"]`).classList.add("active");
+    //Do something when a heading (h1, h2, ...) has entered the top of the viewport
+    querySelector(`#toc a[href="#${detail.id}"]`).classList.add("active");
   });
 ```
 
@@ -67,27 +68,27 @@ npm i @xan105/markdown
 
 ### Via importmap
 
-Create an importmap and add it to your html:
+  Create an importmap and add it to your html:
 
-```html
-  <script type="importmap">
-  {
-    "imports": {
-      "@xan105/markdown": "./path/to/node_modules/@xan105/markdown/dist/md.min.js"
+  ```html
+    <script type="importmap">
+    {
+      "imports": {
+        "@xan105/markdown": "./path/to/node_modules/@xan105/markdown/dist/md.min.js"
+      }
     }
-  }
-  </script>
-  <script src="./index.js" type="module"></script>
-  </body>
-</html>
-```
+    </script>
+    <script src="./index.js" type="module"></script>
+    </body>
+  </html>
+  ```
 
-index.js:
+  index.js:
 
-```js
-import { Markdown } from "@xan105/markdown"
-customElements.define("mark-down", Markdown);
-```
+  ```js
+  import { Markdown } from "@xan105/markdown"
+  customElements.define("mark-down", Markdown);
+  ```
 
 API
 ===
@@ -97,10 +98,6 @@ API
 ## Named export
 
 ### `Markdown(): Class`
-
-**Options**
-
-  N/A
 
 **Events**
 
@@ -130,7 +127,7 @@ API
     
   - `intersect(detail)`
 
-    A heading (h1, h2, ...) is now visible and has entered the top of the viewport.
+    A heading (h1, h2, ...) has entered the top of the viewport, see `detail`:
 
     ```ts
     { id: string }
@@ -166,6 +163,13 @@ API
       level: number,
       title: string
     }
+    ```
+    
+    Example:
+    
+    ```js
+      //<h2 id="user-content-links">Links</h2>
+      { id: "user-content-links", title: "Links", level: 2 }
     ```
     
     The returned `Set` is _extended_ with an additional `toHTML()` function:
