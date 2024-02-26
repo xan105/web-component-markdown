@@ -1,7 +1,7 @@
 About
 =====
 
-Web-component to load an external markdown (.md) file and render it into sanitized HTML with syntax highlighing.
+Web-component to load an external markdown file (.md) and render it into sanitized HTML with syntax highlighting.
 
 💡 Markdown is rendered into the light DOM without any predefined css styling.
 
