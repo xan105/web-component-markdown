@@ -16498,14 +16498,14 @@ var Markdown = class extends HTMLElement {
   set integrity(value) {
     this.setAttribute("integrity", value);
   }
+  get manual() {
+    return this.hasAttribute("manual");
+  }
   set manual(value) {
     if (value === true)
       this.setAttribute("manual", "");
     else
       this.removeAttribute("manual");
-  }
-  get manual() {
-    return this.hasAttribute("manual");
   }
   get rendered() {
     return this.hasAttribute("rendered");
@@ -16553,6 +16553,10 @@ var Markdown = class extends HTMLElement {
       [...this.querySelectorAll("h1, h2, h3, h4, h5, h6")].forEach((el) => {
         if (el.id && el.textContent)
           this.#observer.observe(el);
+      });
+      [...this.querySelectorAll('a[href^="http"]')].forEach((href) => {
+        if (href.hostname !== location.hostname)
+          href.target = "_blank";
       });
       this.dispatchEvent(new CustomEvent("success"));
     } catch (err) {

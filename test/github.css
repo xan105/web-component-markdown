@@ -1,4 +1,4 @@
-mark-down pre code{
+mark-down pre code {
   --color-default: #24292e;
   --color-keyword: #d73a49;
   --color-class: #953800;
@@ -19,128 +19,131 @@ mark-down pre code{
   --bg-addition: #f0fff4; 
   --bg-deletion: #ffeef0;
 }
-:root[data-theme="dark"] mark-down pre code{
-  --bg-default: #22272e;
-  --bg-addition: #1b4721; 
-  --bg-deletion: #78191b;
-  --color-default: #adbac7;
-  --color-keyword: #f47067;
-  --color-class: #953800;
-  --color-function: #dcbdfb;
-  --color-variable: #6cb6ff;
-  --color-string: #96d0ff;
-  --color-symbol: #f69d50;
-  --color-comment: #768390;
-  --color-name: #8ddb8c;
-  --color-subst: #adbac7;
-  --color-section: #316dca;
-  --color-bullet: #eac55f;
-  --color-emphasis: #adbac7;
-  --color-strong: #adbac7;
-  --color-addition: #b4f1b4;
-  --color-deletion: #ffd8d3;
+
+@media (prefers-color-scheme: dark) {
+  mark-down pre code {
+    --bg-default: #22272e;
+    --bg-addition: #1b4721; 
+    --bg-deletion: #78191b;
+    --color-default: #adbac7;
+    --color-keyword: #f47067;
+    --color-class: #953800;
+    --color-function: #dcbdfb;
+    --color-variable: #6cb6ff;
+    --color-string: #96d0ff;
+    --color-symbol: #f69d50;
+    --color-comment: #768390;
+    --color-name: #8ddb8c;
+    --color-subst: #adbac7;
+    --color-section: #316dca;
+    --color-bullet: #eac55f;
+    --color-emphasis: #adbac7;
+    --color-strong: #adbac7;
+    --color-addition: #b4f1b4;
+    --color-deletion: #ffd8d3;
+  }
 }
 
-.hljs {
+mark-down pre code .hljs {
   color: var(--color-default);
   background: var(--bg-default);
 }
 
-.hljs-doctag,
-.hljs-keyword,
-.hljs-meta .hljs-keyword,
-.hljs-template-tag,
-.hljs-template-variable,
-.hljs-type,
-.hljs-variable.language_ {
+mark-down pre code .hljs-doctag,
+mark-down pre code .hljs-keyword,
+mark-down pre code .hljs-meta .hljs-keyword,
+mark-down pre code .hljs-template-tag,
+mark-down pre code .hljs-template-variable,
+mark-down pre code .hljs-type,
+mark-down pre code .hljs-variable.language_ {
   color: var(--color-keyword);
 }
 
-.hljs-title,
-.hljs-title.class_,
-.hljs-title.class_.inherited__ {
+mark-down pre code .hljs-title,
+mark-down pre code .hljs-title.class_,
+mark-down pre code .hljs-title.class_.inherited__ {
   color: var(--color-class);
 }
 
-.hljs-title.function_ {
+mark-down pre code .hljs-title.function_ {
   color: var(--color-function);
 }
 
-.hljs-attr,
-.hljs-attribute,
-.hljs-literal,
-.hljs-meta,
-.hljs-number,
-.hljs-operator,
-.hljs-variable,
-.hljs-selector-attr,
-.hljs-selector-class,
-.hljs-selector-id {
+mark-down pre code .hljs-attr,
+mark-down pre code .hljs-attribute,
+mark-down pre code .hljs-literal,
+mark-down pre code .hljs-meta,
+mark-down pre code .hljs-number,
+mark-down pre code .hljs-operator,
+mark-down pre code .hljs-variable,
+mark-down pre code .hljs-selector-attr,
+mark-down pre code .hljs-selector-class,
+mark-down pre code .hljs-selector-id {
   color: var(--color-variable);
 }
 
-.hljs-regexp,
-.hljs-string,
-.hljs-meta .hljs-string {
+mark-down pre code .hljs-regexp,
+mark-down pre code .hljs-string,
+mark-down pre code .hljs-meta .hljs-string {
   color: var(--color-string);
 }
 
-.hljs-built_in,
-.hljs-symbol {
+mark-down pre code .hljs-built_in,
+mark-down pre code .hljs-symbol {
   color: var(--color-symbol);
 }
 
-.hljs-comment,
-.hljs-code,
-.hljs-formula {
+mark-down pre code .hljs-comment,
+mark-down pre code .hljs-code,
+mark-down pre code .hljs-formula {
   color: var(--color-comment);
 }
 
-.hljs-name,
-.hljs-quote,
-.hljs-selector-tag,
-.hljs-selector-pseudo {
+mark-down pre code .hljs-name,
+mark-down pre code .hljs-quote,
+mark-down pre code .hljs-selector-tag,
+mark-down pre code .hljs-selector-pseudo {
   color: var(--color-name);
 }
 
-.hljs-subst {
+mark-down pre code .hljs-subst {
   color: var(--color-subst);
 }
 
-.hljs-section {
+mark-down pre code .hljs-section {
   color: var(--color-section);
   font-weight: bold;
 }
 
-.hljs-bullet {
+mark-down pre code .hljs-bullet {
   color: var(--color-bullet);
 }
 
-.hljs-emphasis {
+mark-down pre code .hljs-emphasis {
   color: var(--color-emphasis);
   font-style: italic;
 }
 
-.hljs-strong {
+mark-down pre code .hljs-strong {
   color: var(--color-strong);
   font-weight: bold;
 }
 
-.hljs-addition {
+mark-down pre code .hljs-addition {
   color: var(--color-addition);
   background-color: var(--bg-addition);
 }
 
-.hljs-deletion {
+mark-down pre code .hljs-deletion {
   color: var(--color-deletion);
   background-color: var(--bg-deletion);
 }
 
-.hljs-char.escape_,
-.hljs-link,
-.hljs-params,
-.hljs-property,
-.hljs-punctuation,
-.hljs-tag {
+mark-down pre code .hljs-char.escape_,
+mark-down pre code .hljs-link,
+mark-down pre code .hljs-params,
+mark-down pre code .hljs-property,
+mark-down pre code .hljs-punctuation,
+mark-down pre code .hljs-tag {
   /* purposely ignored */
 }

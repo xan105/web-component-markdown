@@ -107,6 +107,16 @@ var foo = function (bar) {
   return bar++;
 };
 
+function add(a, b) {
+  return a + b;
+}
+
+class SuperSet extends Set {
+  constructor(){
+    super();
+  }
+}
+
 console.log(foo(5));
 ```
 

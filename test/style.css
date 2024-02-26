@@ -1,0 +1,11 @@
+nav{
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+article {
+  width: 1000px;
+  padding: 10px 20px;
+  margin: 20px auto auto 500px;
+}

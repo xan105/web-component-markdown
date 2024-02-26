@@ -1,38 +1,24 @@
-nav{
-  position: fixed;
-  top: 0;
-  left: 0;
-}
-
-article {
-  width: 1000px;
-  padding: 10px 20px;
-  margin: 20px auto auto 500px;
-}
-
-/*----*/
-
 mark-down ul, ol { padding-left: 2em; }
 mark-down ul li,
 mark-down ul li { list-style: disc; }
 mark-down ul ul li { list-style: circle; }
 mark-down ul ul ul li { list-style: square; }
 
-ol { 
+mark-down ol { 
   margin: 0; 
   padding: 0; 
 }
 
-ol[start] {
+mark-down ol[start] {
   padding-left: 2em;
 }
 
-ol[start] li { 
+mark-down ol[start] li { 
   list-style: decimal; 
   margin: 4px 0;
 }
 
-ol:not([start]) li { 
+mark-down ol:not([start]) li { 
   counter-increment: step-counter;
   list-style-type: none;
   padding-left: 4em;
@@ -42,12 +28,12 @@ ol:not([start]) li {
   display: list-item;
   
 }
-ol:not([start]) li p{ 
+mark-down ol:not([start]) li p{ 
   margin: 0;
   line-height: unset;
 }
 
-ol:not([start]) li::before {
+mark-down ol:not([start]) li::before {
   content: counter(step-counter);
   position: absolute;
   top: .25rem;
