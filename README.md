@@ -96,7 +96,7 @@ Use regular selectors to style just like you would for the rest of the page.
 
 For syntax highlighting you can use one of the many [hljs themes](https://github.com/highlightjs/highlight.js/tree/main/src/styles) available.
 
-💡That being said, there is a minimal css style available in the `./dist` folder to get you started.
+💡That being said, there is a basic css style available in the `./dist` folder to get you started.
 
 API
 ===
