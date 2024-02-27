@@ -17,9 +17,10 @@
   },
   "scripts": {
     "lint": "eslint \"./lib/**/*.js\"",
-    "bundle": "npm run-script bundle:pretty && npm run-script bundle:min",
+    "bundle": "npm run-script bundle:pretty && npm run-script bundle:min && npm run-script bundle:style",
     "bundle:pretty": "esbuild \"./lib/index.js\" --bundle --platform=browser --target=esnext --format=esm --outfile=\"./dist/md.js\"",
     "bundle:min": "esbuild \"./lib/index.js\" --bundle --minify --legal-comments=none --platform=browser --target=esnext --format=esm --outfile=\"./dist/md.min.js\"",
+    "bundle:style": "esbuild \"./style/index.css\" --bundle --outfile=\"./dist/style.css\"",
     "test": "start http://localhost/test && websrv"
   },
   "keywords": [

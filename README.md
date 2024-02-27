@@ -3,8 +3,6 @@ About
 
 Web-component to load an external markdown file (.md) and render it into sanitized HTML with syntax highlighting.
 
-💡 Markdown is rendered into the light DOM without any predefined css styling.
-
 📦 Scoped `@xan105` packages are for my own personal use but feel free to use them.
 
 Example
@@ -90,6 +88,16 @@ npm i @xan105/markdown
   customElements.define("mark-down", Markdown);
   ```
 
+Styling
+=======
+
+⚠️ Markdown is rendered into the light DOM without any predefined css styling, this is by design.<br/>
+Use regular selectors to style just like you would for the rest of the page.
+
+For syntax highlighting you can use one of the many [hljs themes](https://github.com/highlightjs/highlight.js/tree/main/src/styles) available.
+
+💡That being said, there is a minimal css style available in the `./dist` folder to get you started.
+
 API
 ===
 
@@ -98,6 +106,13 @@ API
 ## Named export
 
 ### `Markdown(): Class`
+
+This is a Web-component as such you need to define it:
+
+```js
+import { Markdown } from "/path/to/md.js"
+customElements.define("mark-down", Markdown);
+```
 
 **Events**
 
@@ -117,7 +132,7 @@ API
 
     Markdown was rendered without any issue.
 
-  - `failure(detail)`
+  - `failure(detail: object)`
 
     Something went wrong, see `detail`:
     
@@ -125,7 +140,7 @@ API
     { error: Error }
     ```
     
-  - `intersect(detail)`
+  - `intersect(detail: object)`
 
     A heading (h1, h2, ...) has entered the top of the viewport, see `detail`:
 

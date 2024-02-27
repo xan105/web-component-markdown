@@ -14,13 +14,13 @@ el.$on("render", ()=>{ console.log("render") });
 el.$on("success", ()=>{ console.log("success") });
 el.$on("failure", ({ detail })=>{ console.error(detail) });
 el.$on("intersect", ({ detail })=>{ 
-  
-  console.log("intersect", detail.id);
-
   const toc = $select("#toc");
-  toc.$selectAll("a").forEach(el => el.$css("color", "blue"));
-  toc.$select(`a[href="#${detail.id}"]`)?.$css("color", "red");
-  
+  const active = toc.$select(`a[href="#${detail.id}"]`);
+  if(active){
+    console.log("intersect", detail.id);
+    toc.$selectAll("a").forEach(el => el.$css("color", "blue"));
+    active.$css("color", "red");
+  }
 });
 
 console.time("render");

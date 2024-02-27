@@ -1,0 +1,265 @@
+/* style/markdown.css */
+mark-down ul,
+ol {
+  padding-left: 2em;
+}
+mark-down ul li,
+mark-down ul li {
+  list-style: disc;
+}
+mark-down ul ul li {
+  list-style: circle;
+}
+mark-down ul ul ul li {
+  list-style: square;
+}
+mark-down ol {
+  margin: 0;
+  padding: 0;
+}
+mark-down ol[start] {
+  padding-left: 2em;
+}
+mark-down ol[start] li {
+  list-style: decimal;
+  margin: 4px 0;
+}
+mark-down ol:not([start]) li {
+  counter-increment: step-counter;
+  list-style-type: none;
+  padding-left: 4em;
+  position: relative;
+  margin-bottom: 1.2em;
+  line-height: 1.5;
+  display: list-item;
+}
+mark-down ol:not([start]) li p {
+  margin: 0;
+  line-height: unset;
+}
+mark-down ol:not([start]) li::before {
+  content: counter(step-counter);
+  position: absolute;
+  top: .25rem;
+  left: 0;
+  width: 2rem;
+  height: 100%;
+  opacity: .15;
+  padding-right: 1em;
+  border-right: 1px solid;
+  text-align: right;
+  font-weight: 600;
+  line-height: 1.1;
+}
+mark-down li {
+  margin-top: .25em;
+}
+mark-down hr {
+  height: .25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #d0d7de;
+  border: 0;
+}
+mark-down h1,
+mark-down h2 {
+  padding-bottom: .3em;
+  font-size: 1.5em;
+  border-bottom: 1px solid #d8dee4;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+mark-down p {
+  line-height: 1.3em;
+  margin: 10px 0;
+}
+mark-down a {
+  color: inherit;
+}
+mark-down a:hover {
+  text-decoration: none;
+}
+mark-down blockquote {
+  margin: 0;
+  padding: 0 1em;
+  color: #656d76;
+  border-left: .25em solid #d0d7de;
+}
+mark-down code {
+  background: rgba(175, 184, 193, 0.2);
+  display: inline-block;
+  padding: .2em .4em;
+  border-radius: 0.3em;
+}
+mark-down pre {
+  margin: 0;
+  white-space: pre;
+  tab-size: 2;
+}
+mark-down pre code {
+  display: block;
+  background: #f1f3f4;
+  border: 1px solid #bdbcbc;
+  padding: 1em 1.2em;
+  border-radius: 0.3em;
+  font-family: "Cascadia Mono";
+  overflow-x: auto;
+}
+mark-down table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin-top: 0;
+  margin-bottom: 16px;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow: auto;
+}
+mark-down table tr {
+  background-color: #fff;
+  border-top: 1px solid #d8dee4;
+}
+mark-down table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+mark-down table th,
+mark-down table td {
+  padding: 6px 13px;
+  border: 1px solid #d0d7de;
+}
+
+/* style/github.css */
+mark-down pre code {
+  --color-default: #24292e;
+  --color-keyword: #d73a49;
+  --color-class: #953800;
+  --color-function: #6f42c1;
+  --color-variable: #005cc5;
+  --color-string: #032f62;
+  --color-symbol: #e36209;
+  --color-comment: #6a737d;
+  --color-name: #22863a;
+  --color-subst: #24292e;
+  --color-section: #005cc5;
+  --color-bullet: #735c0f;
+  --color-emphasis: #24292e;
+  --color-strong: #24292e;
+  --color-addition: #22863a;
+  --color-deletion: #b31d28;
+  --bg-default: #ffffff;
+  --bg-addition: #f0fff4;
+  --bg-deletion: #ffeef0;
+}
+@media (prefers-color-scheme: dark) {
+  mark-down pre code {
+    --bg-default: #22272e;
+    --bg-addition: #1b4721;
+    --bg-deletion: #78191b;
+    --color-default: #adbac7;
+    --color-keyword: #f47067;
+    --color-class: #953800;
+    --color-function: #dcbdfb;
+    --color-variable: #6cb6ff;
+    --color-string: #96d0ff;
+    --color-symbol: #f69d50;
+    --color-comment: #768390;
+    --color-name: #8ddb8c;
+    --color-subst: #adbac7;
+    --color-section: #316dca;
+    --color-bullet: #eac55f;
+    --color-emphasis: #adbac7;
+    --color-strong: #adbac7;
+    --color-addition: #b4f1b4;
+    --color-deletion: #ffd8d3;
+  }
+}
+mark-down pre code .hljs {
+  color: var(--color-default);
+  background: var(--bg-default);
+}
+mark-down pre code .hljs-doctag,
+mark-down pre code .hljs-keyword,
+mark-down pre code .hljs-meta .hljs-keyword,
+mark-down pre code .hljs-template-tag,
+mark-down pre code .hljs-template-variable,
+mark-down pre code .hljs-type,
+mark-down pre code .hljs-variable.language_ {
+  color: var(--color-keyword);
+}
+mark-down pre code .hljs-title,
+mark-down pre code .hljs-title.class_,
+mark-down pre code .hljs-title.class_.inherited__ {
+  color: var(--color-class);
+}
+mark-down pre code .hljs-title.function_ {
+  color: var(--color-function);
+}
+mark-down pre code .hljs-attr,
+mark-down pre code .hljs-attribute,
+mark-down pre code .hljs-literal,
+mark-down pre code .hljs-meta,
+mark-down pre code .hljs-number,
+mark-down pre code .hljs-operator,
+mark-down pre code .hljs-variable,
+mark-down pre code .hljs-selector-attr,
+mark-down pre code .hljs-selector-class,
+mark-down pre code .hljs-selector-id {
+  color: var(--color-variable);
+}
+mark-down pre code .hljs-regexp,
+mark-down pre code .hljs-string,
+mark-down pre code .hljs-meta .hljs-string {
+  color: var(--color-string);
+}
+mark-down pre code .hljs-built_in,
+mark-down pre code .hljs-symbol {
+  color: var(--color-symbol);
+}
+mark-down pre code .hljs-comment,
+mark-down pre code .hljs-code,
+mark-down pre code .hljs-formula {
+  color: var(--color-comment);
+}
+mark-down pre code .hljs-name,
+mark-down pre code .hljs-quote,
+mark-down pre code .hljs-selector-tag,
+mark-down pre code .hljs-selector-pseudo {
+  color: var(--color-name);
+}
+mark-down pre code .hljs-subst {
+  color: var(--color-subst);
+}
+mark-down pre code .hljs-section {
+  color: var(--color-section);
+  font-weight: bold;
+}
+mark-down pre code .hljs-bullet {
+  color: var(--color-bullet);
+}
+mark-down pre code .hljs-emphasis {
+  color: var(--color-emphasis);
+  font-style: italic;
+}
+mark-down pre code .hljs-strong {
+  color: var(--color-strong);
+  font-weight: bold;
+}
+mark-down pre code .hljs-addition {
+  color: var(--color-addition);
+  background-color: var(--bg-addition);
+}
+mark-down pre code .hljs-deletion {
+  color: var(--color-deletion);
+  background-color: var(--bg-deletion);
+}
+mark-down pre code .hljs-char.escape_,
+mark-down pre code .hljs-link,
+mark-down pre code .hljs-params,
+mark-down pre code .hljs-property,
+mark-down pre code .hljs-punctuation,
+mark-down pre code .hljs-tag {
+}
+
+/* style/index.css */
