@@ -5,6 +5,8 @@ Web-component to load an external markdown file (.md) and render it into sanitiz
 
 📦 Scoped `@xan105` packages are for my own personal use but feel free to use them.
 
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg?style=flat-square)](https://www.webcomponents.org/element/@xan105/markdown)
+
 Example
 =======
 
