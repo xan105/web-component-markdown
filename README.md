@@ -1,7 +1,13 @@
 About
 =====
 
-Web-component to load an external markdown file (.md) and render it into sanitized HTML with syntax highlighting.
+Web-component to load an external markdown file (.md) and render it into sanitized HTML.
+
+Goodies:
+
+- Syntax highlighting
+- Table of contents
+- Copy code to clipboard
 
 📦 Scoped `@xan105` packages are for my own personal use but feel free to use them.
 
@@ -93,12 +99,27 @@ npm i @xan105/markdown
 Styling
 =======
 
-⚠️ Markdown is rendered into the light DOM without any predefined css styling, this is by design.<br/>
+Markdown is rendered into the light DOM without any predefined css styling, **this is by design**.<br/>
 Use regular selectors to style just like you would for the rest of the page.
 
 For syntax highlighting you can use one of the many [hljs themes](https://github.com/highlightjs/highlight.js/tree/main/src/styles) available.
 
-💡That being said, there is a basic css style available in the `./dist` folder to get you started.
+💡That being said, there is a basic css style with Github-like syntax highlighting available in the `./dist` folder to get you started.
+
+### Copy to clipboard
+
+To target the copy to clipboard unstyled button added to "code blocks" use css `::part()` selector:
+
+```
+clipboard-copy-code { display: block } //by default it is not rendered (display: none)
+clipboard-copy-code::part(button) { ... }
+clipboard-copy-code::part(button)::before { /*go nuts this also works*/ }
+```
+
+`clipboard-copy-code` will have the attribute `copied` set when the content has been copied to the clipboard;
+You can target it via css and add a `timeout` (ms) attribute/property value to `clipboard-copy-code` if you wish to do some kind of animation on copy.
+
+`clipboard-copy-code` also fires a `copied` event just in case.
 
 API
 ===
