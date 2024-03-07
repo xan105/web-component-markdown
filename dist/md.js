@@ -16474,6 +16474,52 @@ var TableOfContent = class extends Set {
   }
 };
 
+// lib/clipboard.js
+var Clipboard = class extends HTMLElement {
+  #button;
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    const button = document.createElement("button");
+    button.part = "button";
+    this.#button = this.shadowRoot.appendChild(button);
+    const sheet = new CSSStyleSheet();
+    sheet.replace(":host { display: none; } button { all: unset; }").then(() => {
+      this.shadowRoot.adoptedStyleSheets = [sheet];
+    });
+  }
+  get copied() {
+    return this.hasAttribute("copied");
+  }
+  get timeout() {
+    return +this.getAttribute("timeout");
+  }
+  set timeout(value) {
+    this.setAttribute("timeout", value.toString());
+  }
+  connectedCallback() {
+    this.#button.addEventListener("click", this.copy.bind(this));
+  }
+  disconnectedCallback() {
+    this.#button.removeEventListener("click", this.copy.bind(this));
+  }
+  async copy() {
+    this.#button.disabled = true;
+    try {
+      this.removeAttribute("copied");
+      const text = this.parentNode.querySelector("code").textContent;
+      await navigator.clipboard.writeText(text);
+      this.setAttribute("copied", "");
+      this.dispatchEvent(new CustomEvent("copied"));
+    } catch {
+    }
+    await new Promise((resolve) => setTimeout(resolve, this.timeout));
+    this.removeAttribute("copied");
+    this.#button.disabled = false;
+  }
+};
+customElements.define("clipboard-copy-code", Clipboard);
+
 // lib/index.js
 var Markdown = class extends HTMLElement {
   #parser;
@@ -16507,6 +16553,7 @@ var Markdown = class extends HTMLElement {
     else
       this.removeAttribute("manual");
   }
+  //Read only
   get rendered() {
     return this.hasAttribute("rendered");
   }
@@ -16515,6 +16562,7 @@ var Markdown = class extends HTMLElement {
     const result = new TableOfContent(headings2);
     return result;
   }
+  //Observed
   static get observedAttributes() {
     return ["src"];
   }
@@ -16533,6 +16581,16 @@ var Markdown = class extends HTMLElement {
           detail: { id: entry.target.id }
         }));
       }
+    });
+  }
+  //Rendering
+  #postProcess() {
+    [...this.querySelectorAll('a[href^="http"]')].forEach((href) => {
+      if (href.hostname !== location.hostname)
+        href.target = "_blank";
+    });
+    [...this.querySelectorAll("pre:has(code)")].forEach((codeBlock) => {
+      codeBlock.appendChild(new Clipboard());
     });
   }
   async #render(path) {
@@ -16554,10 +16612,7 @@ var Markdown = class extends HTMLElement {
         if (el.id && el.textContent)
           this.#observer.observe(el);
       });
-      [...this.querySelectorAll('a[href^="http"]')].forEach((href) => {
-        if (href.hostname !== location.hostname)
-          href.target = "_blank";
-      });
+      this.#postProcess();
       this.dispatchEvent(new CustomEvent("success"));
     } catch (err) {
       this.removeAttribute("rendered");
