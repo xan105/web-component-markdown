@@ -248,3 +248,8 @@ customElements.define("mark-down", Markdown);
     ❌ Rejects on error
     
     💡 Invoking this method still triggers related events.
+    
+  - `estimateReadingTime(speed?: number): number`
+  
+    Estimate the _"time to read"_ of the markdown's content in minutes.<br />
+    By default `speed` is `265` words per minute; the average reading speed of an adult (English).
