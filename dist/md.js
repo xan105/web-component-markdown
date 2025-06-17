@@ -24,960 +24,6 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// node_modules/dompurify/dist/purify.js
-var require_purify = __commonJS({
-  "node_modules/dompurify/dist/purify.js"(exports, module) {
-    (function(global, factory) {
-      typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define(factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, global.DOMPurify = factory());
-    })(exports, function() {
-      "use strict";
-      const {
-        entries,
-        setPrototypeOf,
-        isFrozen,
-        getPrototypeOf,
-        getOwnPropertyDescriptor
-      } = Object;
-      let {
-        freeze,
-        seal,
-        create
-      } = Object;
-      let {
-        apply,
-        construct
-      } = typeof Reflect !== "undefined" && Reflect;
-      if (!freeze) {
-        freeze = function freeze2(x) {
-          return x;
-        };
-      }
-      if (!seal) {
-        seal = function seal2(x) {
-          return x;
-        };
-      }
-      if (!apply) {
-        apply = function apply2(fun, thisValue, args) {
-          return fun.apply(thisValue, args);
-        };
-      }
-      if (!construct) {
-        construct = function construct2(Func, args) {
-          return new Func(...args);
-        };
-      }
-      const arrayForEach = unapply(Array.prototype.forEach);
-      const arrayPop = unapply(Array.prototype.pop);
-      const arrayPush = unapply(Array.prototype.push);
-      const stringToLowerCase = unapply(String.prototype.toLowerCase);
-      const stringToString = unapply(String.prototype.toString);
-      const stringMatch = unapply(String.prototype.match);
-      const stringReplace = unapply(String.prototype.replace);
-      const stringIndexOf = unapply(String.prototype.indexOf);
-      const stringTrim = unapply(String.prototype.trim);
-      const objectHasOwnProperty = unapply(Object.prototype.hasOwnProperty);
-      const regExpTest = unapply(RegExp.prototype.test);
-      const typeErrorCreate = unconstruct(TypeError);
-      function unapply(func) {
-        return function(thisArg) {
-          for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-            args[_key - 1] = arguments[_key];
-          }
-          return apply(func, thisArg, args);
-        };
-      }
-      function unconstruct(func) {
-        return function() {
-          for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-            args[_key2] = arguments[_key2];
-          }
-          return construct(func, args);
-        };
-      }
-      function addToSet(set, array) {
-        let transformCaseFunc = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : stringToLowerCase;
-        if (setPrototypeOf) {
-          setPrototypeOf(set, null);
-        }
-        let l = array.length;
-        while (l--) {
-          let element = array[l];
-          if (typeof element === "string") {
-            const lcElement = transformCaseFunc(element);
-            if (lcElement !== element) {
-              if (!isFrozen(array)) {
-                array[l] = lcElement;
-              }
-              element = lcElement;
-            }
-          }
-          set[element] = true;
-        }
-        return set;
-      }
-      function cleanArray(array) {
-        for (let index = 0; index < array.length; index++) {
-          const isPropertyExist = objectHasOwnProperty(array, index);
-          if (!isPropertyExist) {
-            array[index] = null;
-          }
-        }
-        return array;
-      }
-      function clone(object) {
-        const newObject = create(null);
-        for (const [property, value] of entries(object)) {
-          const isPropertyExist = objectHasOwnProperty(object, property);
-          if (isPropertyExist) {
-            if (Array.isArray(value)) {
-              newObject[property] = cleanArray(value);
-            } else if (value && typeof value === "object" && value.constructor === Object) {
-              newObject[property] = clone(value);
-            } else {
-              newObject[property] = value;
-            }
-          }
-        }
-        return newObject;
-      }
-      function lookupGetter(object, prop) {
-        while (object !== null) {
-          const desc = getOwnPropertyDescriptor(object, prop);
-          if (desc) {
-            if (desc.get) {
-              return unapply(desc.get);
-            }
-            if (typeof desc.value === "function") {
-              return unapply(desc.value);
-            }
-          }
-          object = getPrototypeOf(object);
-        }
-        function fallbackValue() {
-          return null;
-        }
-        return fallbackValue;
-      }
-      const html$1 = freeze(["a", "abbr", "acronym", "address", "area", "article", "aside", "audio", "b", "bdi", "bdo", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "content", "data", "datalist", "dd", "decorator", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "fieldset", "figcaption", "figure", "font", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "img", "input", "ins", "kbd", "label", "legend", "li", "main", "map", "mark", "marquee", "menu", "menuitem", "meter", "nav", "nobr", "ol", "optgroup", "option", "output", "p", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "section", "select", "shadow", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "tr", "track", "tt", "u", "ul", "var", "video", "wbr"]);
-      const svg$1 = freeze(["svg", "a", "altglyph", "altglyphdef", "altglyphitem", "animatecolor", "animatemotion", "animatetransform", "circle", "clippath", "defs", "desc", "ellipse", "filter", "font", "g", "glyph", "glyphref", "hkern", "image", "line", "lineargradient", "marker", "mask", "metadata", "mpath", "path", "pattern", "polygon", "polyline", "radialgradient", "rect", "stop", "style", "switch", "symbol", "text", "textpath", "title", "tref", "tspan", "view", "vkern"]);
-      const svgFilters = freeze(["feBlend", "feColorMatrix", "feComponentTransfer", "feComposite", "feConvolveMatrix", "feDiffuseLighting", "feDisplacementMap", "feDistantLight", "feDropShadow", "feFlood", "feFuncA", "feFuncB", "feFuncG", "feFuncR", "feGaussianBlur", "feImage", "feMerge", "feMergeNode", "feMorphology", "feOffset", "fePointLight", "feSpecularLighting", "feSpotLight", "feTile", "feTurbulence"]);
-      const svgDisallowed = freeze(["animate", "color-profile", "cursor", "discard", "font-face", "font-face-format", "font-face-name", "font-face-src", "font-face-uri", "foreignobject", "hatch", "hatchpath", "mesh", "meshgradient", "meshpatch", "meshrow", "missing-glyph", "script", "set", "solidcolor", "unknown", "use"]);
-      const mathMl$1 = freeze(["math", "menclose", "merror", "mfenced", "mfrac", "mglyph", "mi", "mlabeledtr", "mmultiscripts", "mn", "mo", "mover", "mpadded", "mphantom", "mroot", "mrow", "ms", "mspace", "msqrt", "mstyle", "msub", "msup", "msubsup", "mtable", "mtd", "mtext", "mtr", "munder", "munderover", "mprescripts"]);
-      const mathMlDisallowed = freeze(["maction", "maligngroup", "malignmark", "mlongdiv", "mscarries", "mscarry", "msgroup", "mstack", "msline", "msrow", "semantics", "annotation", "annotation-xml", "mprescripts", "none"]);
-      const text = freeze(["#text"]);
-      const html2 = freeze(["accept", "action", "align", "alt", "autocapitalize", "autocomplete", "autopictureinpicture", "autoplay", "background", "bgcolor", "border", "capture", "cellpadding", "cellspacing", "checked", "cite", "class", "clear", "color", "cols", "colspan", "controls", "controlslist", "coords", "crossorigin", "datetime", "decoding", "default", "dir", "disabled", "disablepictureinpicture", "disableremoteplayback", "download", "draggable", "enctype", "enterkeyhint", "face", "for", "headers", "height", "hidden", "high", "href", "hreflang", "id", "inputmode", "integrity", "ismap", "kind", "label", "lang", "list", "loading", "loop", "low", "max", "maxlength", "media", "method", "min", "minlength", "multiple", "muted", "name", "nonce", "noshade", "novalidate", "nowrap", "open", "optimum", "pattern", "placeholder", "playsinline", "poster", "preload", "pubdate", "radiogroup", "readonly", "rel", "required", "rev", "reversed", "role", "rows", "rowspan", "spellcheck", "scope", "selected", "shape", "size", "sizes", "span", "srclang", "start", "src", "srcset", "step", "style", "summary", "tabindex", "title", "translate", "type", "usemap", "valign", "value", "width", "xmlns", "slot"]);
-      const svg = freeze(["accent-height", "accumulate", "additive", "alignment-baseline", "ascent", "attributename", "attributetype", "azimuth", "basefrequency", "baseline-shift", "begin", "bias", "by", "class", "clip", "clippathunits", "clip-path", "clip-rule", "color", "color-interpolation", "color-interpolation-filters", "color-profile", "color-rendering", "cx", "cy", "d", "dx", "dy", "diffuseconstant", "direction", "display", "divisor", "dur", "edgemode", "elevation", "end", "fill", "fill-opacity", "fill-rule", "filter", "filterunits", "flood-color", "flood-opacity", "font-family", "font-size", "font-size-adjust", "font-stretch", "font-style", "font-variant", "font-weight", "fx", "fy", "g1", "g2", "glyph-name", "glyphref", "gradientunits", "gradienttransform", "height", "href", "id", "image-rendering", "in", "in2", "k", "k1", "k2", "k3", "k4", "kerning", "keypoints", "keysplines", "keytimes", "lang", "lengthadjust", "letter-spacing", "kernelmatrix", "kernelunitlength", "lighting-color", "local", "marker-end", "marker-mid", "marker-start", "markerheight", "markerunits", "markerwidth", "maskcontentunits", "maskunits", "max", "mask", "media", "method", "mode", "min", "name", "numoctaves", "offset", "operator", "opacity", "order", "orient", "orientation", "origin", "overflow", "paint-order", "path", "pathlength", "patterncontentunits", "patterntransform", "patternunits", "points", "preservealpha", "preserveaspectratio", "primitiveunits", "r", "rx", "ry", "radius", "refx", "refy", "repeatcount", "repeatdur", "restart", "result", "rotate", "scale", "seed", "shape-rendering", "specularconstant", "specularexponent", "spreadmethod", "startoffset", "stddeviation", "stitchtiles", "stop-color", "stop-opacity", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke", "stroke-width", "style", "surfacescale", "systemlanguage", "tabindex", "targetx", "targety", "transform", "transform-origin", "text-anchor", "text-decoration", "text-rendering", "textlength", "type", "u1", "u2", "unicode", "values", "viewbox", "visibility", "version", "vert-adv-y", "vert-origin-x", "vert-origin-y", "width", "word-spacing", "wrap", "writing-mode", "xchannelselector", "ychannelselector", "x", "x1", "x2", "xmlns", "y", "y1", "y2", "z", "zoomandpan"]);
-      const mathMl = freeze(["accent", "accentunder", "align", "bevelled", "close", "columnsalign", "columnlines", "columnspan", "denomalign", "depth", "dir", "display", "displaystyle", "encoding", "fence", "frame", "height", "href", "id", "largeop", "length", "linethickness", "lspace", "lquote", "mathbackground", "mathcolor", "mathsize", "mathvariant", "maxsize", "minsize", "movablelimits", "notation", "numalign", "open", "rowalign", "rowlines", "rowspacing", "rowspan", "rspace", "rquote", "scriptlevel", "scriptminsize", "scriptsizemultiplier", "selection", "separator", "separators", "stretchy", "subscriptshift", "supscriptshift", "symmetric", "voffset", "width", "xmlns"]);
-      const xml = freeze(["xlink:href", "xml:id", "xlink:title", "xml:space", "xmlns:xlink"]);
-      const MUSTACHE_EXPR = seal(/\{\{[\w\W]*|[\w\W]*\}\}/gm);
-      const ERB_EXPR = seal(/<%[\w\W]*|[\w\W]*%>/gm);
-      const TMPLIT_EXPR = seal(/\${[\w\W]*}/gm);
-      const DATA_ATTR = seal(/^data-[\-\w.\u00B7-\uFFFF]/);
-      const ARIA_ATTR = seal(/^aria-[\-\w]+$/);
-      const IS_ALLOWED_URI = seal(
-        /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i
-        // eslint-disable-line no-useless-escape
-      );
-      const IS_SCRIPT_OR_DATA = seal(/^(?:\w+script|data):/i);
-      const ATTR_WHITESPACE = seal(
-        /[\u0000-\u0020\u00A0\u1680\u180E\u2000-\u2029\u205F\u3000]/g
-        // eslint-disable-line no-control-regex
-      );
-      const DOCTYPE_NAME = seal(/^html$/i);
-      var EXPRESSIONS = /* @__PURE__ */ Object.freeze({
-        __proto__: null,
-        MUSTACHE_EXPR,
-        ERB_EXPR,
-        TMPLIT_EXPR,
-        DATA_ATTR,
-        ARIA_ATTR,
-        IS_ALLOWED_URI,
-        IS_SCRIPT_OR_DATA,
-        ATTR_WHITESPACE,
-        DOCTYPE_NAME
-      });
-      const getGlobal = function getGlobal2() {
-        return typeof window === "undefined" ? null : window;
-      };
-      const _createTrustedTypesPolicy = function _createTrustedTypesPolicy2(trustedTypes, purifyHostElement) {
-        if (typeof trustedTypes !== "object" || typeof trustedTypes.createPolicy !== "function") {
-          return null;
-        }
-        let suffix = null;
-        const ATTR_NAME = "data-tt-policy-suffix";
-        if (purifyHostElement && purifyHostElement.hasAttribute(ATTR_NAME)) {
-          suffix = purifyHostElement.getAttribute(ATTR_NAME);
-        }
-        const policyName = "dompurify" + (suffix ? "#" + suffix : "");
-        try {
-          return trustedTypes.createPolicy(policyName, {
-            createHTML(html3) {
-              return html3;
-            },
-            createScriptURL(scriptUrl) {
-              return scriptUrl;
-            }
-          });
-        } catch (_) {
-          console.warn("TrustedTypes policy " + policyName + " could not be created.");
-          return null;
-        }
-      };
-      function createDOMPurify() {
-        let window2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : getGlobal();
-        const DOMPurify = (root) => createDOMPurify(root);
-        DOMPurify.version = "3.0.9";
-        DOMPurify.removed = [];
-        if (!window2 || !window2.document || window2.document.nodeType !== 9) {
-          DOMPurify.isSupported = false;
-          return DOMPurify;
-        }
-        let {
-          document: document2
-        } = window2;
-        const originalDocument = document2;
-        const currentScript = originalDocument.currentScript;
-        const {
-          DocumentFragment,
-          HTMLTemplateElement,
-          Node,
-          Element,
-          NodeFilter,
-          NamedNodeMap = window2.NamedNodeMap || window2.MozNamedAttrMap,
-          HTMLFormElement,
-          DOMParser,
-          trustedTypes
-        } = window2;
-        const ElementPrototype = Element.prototype;
-        const cloneNode = lookupGetter(ElementPrototype, "cloneNode");
-        const getNextSibling = lookupGetter(ElementPrototype, "nextSibling");
-        const getChildNodes = lookupGetter(ElementPrototype, "childNodes");
-        const getParentNode = lookupGetter(ElementPrototype, "parentNode");
-        if (typeof HTMLTemplateElement === "function") {
-          const template = document2.createElement("template");
-          if (template.content && template.content.ownerDocument) {
-            document2 = template.content.ownerDocument;
-          }
-        }
-        let trustedTypesPolicy;
-        let emptyHTML = "";
-        const {
-          implementation,
-          createNodeIterator,
-          createDocumentFragment,
-          getElementsByTagName
-        } = document2;
-        const {
-          importNode
-        } = originalDocument;
-        let hooks = {};
-        DOMPurify.isSupported = typeof entries === "function" && typeof getParentNode === "function" && implementation && implementation.createHTMLDocument !== void 0;
-        const {
-          MUSTACHE_EXPR: MUSTACHE_EXPR2,
-          ERB_EXPR: ERB_EXPR2,
-          TMPLIT_EXPR: TMPLIT_EXPR2,
-          DATA_ATTR: DATA_ATTR2,
-          ARIA_ATTR: ARIA_ATTR2,
-          IS_SCRIPT_OR_DATA: IS_SCRIPT_OR_DATA2,
-          ATTR_WHITESPACE: ATTR_WHITESPACE2
-        } = EXPRESSIONS;
-        let {
-          IS_ALLOWED_URI: IS_ALLOWED_URI$1
-        } = EXPRESSIONS;
-        let ALLOWED_TAGS = null;
-        const DEFAULT_ALLOWED_TAGS = addToSet({}, [...html$1, ...svg$1, ...svgFilters, ...mathMl$1, ...text]);
-        let ALLOWED_ATTR = null;
-        const DEFAULT_ALLOWED_ATTR = addToSet({}, [...html2, ...svg, ...mathMl, ...xml]);
-        let CUSTOM_ELEMENT_HANDLING = Object.seal(create(null, {
-          tagNameCheck: {
-            writable: true,
-            configurable: false,
-            enumerable: true,
-            value: null
-          },
-          attributeNameCheck: {
-            writable: true,
-            configurable: false,
-            enumerable: true,
-            value: null
-          },
-          allowCustomizedBuiltInElements: {
-            writable: true,
-            configurable: false,
-            enumerable: true,
-            value: false
-          }
-        }));
-        let FORBID_TAGS = null;
-        let FORBID_ATTR = null;
-        let ALLOW_ARIA_ATTR = true;
-        let ALLOW_DATA_ATTR = true;
-        let ALLOW_UNKNOWN_PROTOCOLS = false;
-        let ALLOW_SELF_CLOSE_IN_ATTR = true;
-        let SAFE_FOR_TEMPLATES = false;
-        let WHOLE_DOCUMENT = false;
-        let SET_CONFIG = false;
-        let FORCE_BODY = false;
-        let RETURN_DOM = false;
-        let RETURN_DOM_FRAGMENT = false;
-        let RETURN_TRUSTED_TYPE = false;
-        let SANITIZE_DOM = true;
-        let SANITIZE_NAMED_PROPS = false;
-        const SANITIZE_NAMED_PROPS_PREFIX = "user-content-";
-        let KEEP_CONTENT = true;
-        let IN_PLACE = false;
-        let USE_PROFILES = {};
-        let FORBID_CONTENTS = null;
-        const DEFAULT_FORBID_CONTENTS = addToSet({}, ["annotation-xml", "audio", "colgroup", "desc", "foreignobject", "head", "iframe", "math", "mi", "mn", "mo", "ms", "mtext", "noembed", "noframes", "noscript", "plaintext", "script", "style", "svg", "template", "thead", "title", "video", "xmp"]);
-        let DATA_URI_TAGS = null;
-        const DEFAULT_DATA_URI_TAGS = addToSet({}, ["audio", "video", "img", "source", "image", "track"]);
-        let URI_SAFE_ATTRIBUTES = null;
-        const DEFAULT_URI_SAFE_ATTRIBUTES = addToSet({}, ["alt", "class", "for", "id", "label", "name", "pattern", "placeholder", "role", "summary", "title", "value", "style", "xmlns"]);
-        const MATHML_NAMESPACE = "http://www.w3.org/1998/Math/MathML";
-        const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
-        const HTML_NAMESPACE = "http://www.w3.org/1999/xhtml";
-        let NAMESPACE = HTML_NAMESPACE;
-        let IS_EMPTY_INPUT = false;
-        let ALLOWED_NAMESPACES = null;
-        const DEFAULT_ALLOWED_NAMESPACES = addToSet({}, [MATHML_NAMESPACE, SVG_NAMESPACE, HTML_NAMESPACE], stringToString);
-        let PARSER_MEDIA_TYPE = null;
-        const SUPPORTED_PARSER_MEDIA_TYPES = ["application/xhtml+xml", "text/html"];
-        const DEFAULT_PARSER_MEDIA_TYPE = "text/html";
-        let transformCaseFunc = null;
-        let CONFIG = null;
-        const formElement = document2.createElement("form");
-        const isRegexOrFunction = function isRegexOrFunction2(testValue) {
-          return testValue instanceof RegExp || testValue instanceof Function;
-        };
-        const _parseConfig = function _parseConfig2() {
-          let cfg = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
-          if (CONFIG && CONFIG === cfg) {
-            return;
-          }
-          if (!cfg || typeof cfg !== "object") {
-            cfg = {};
-          }
-          cfg = clone(cfg);
-          PARSER_MEDIA_TYPE = // eslint-disable-next-line unicorn/prefer-includes
-          SUPPORTED_PARSER_MEDIA_TYPES.indexOf(cfg.PARSER_MEDIA_TYPE) === -1 ? DEFAULT_PARSER_MEDIA_TYPE : cfg.PARSER_MEDIA_TYPE;
-          transformCaseFunc = PARSER_MEDIA_TYPE === "application/xhtml+xml" ? stringToString : stringToLowerCase;
-          ALLOWED_TAGS = objectHasOwnProperty(cfg, "ALLOWED_TAGS") ? addToSet({}, cfg.ALLOWED_TAGS, transformCaseFunc) : DEFAULT_ALLOWED_TAGS;
-          ALLOWED_ATTR = objectHasOwnProperty(cfg, "ALLOWED_ATTR") ? addToSet({}, cfg.ALLOWED_ATTR, transformCaseFunc) : DEFAULT_ALLOWED_ATTR;
-          ALLOWED_NAMESPACES = objectHasOwnProperty(cfg, "ALLOWED_NAMESPACES") ? addToSet({}, cfg.ALLOWED_NAMESPACES, stringToString) : DEFAULT_ALLOWED_NAMESPACES;
-          URI_SAFE_ATTRIBUTES = objectHasOwnProperty(cfg, "ADD_URI_SAFE_ATTR") ? addToSet(
-            clone(DEFAULT_URI_SAFE_ATTRIBUTES),
-            // eslint-disable-line indent
-            cfg.ADD_URI_SAFE_ATTR,
-            // eslint-disable-line indent
-            transformCaseFunc
-            // eslint-disable-line indent
-          ) : DEFAULT_URI_SAFE_ATTRIBUTES;
-          DATA_URI_TAGS = objectHasOwnProperty(cfg, "ADD_DATA_URI_TAGS") ? addToSet(
-            clone(DEFAULT_DATA_URI_TAGS),
-            // eslint-disable-line indent
-            cfg.ADD_DATA_URI_TAGS,
-            // eslint-disable-line indent
-            transformCaseFunc
-            // eslint-disable-line indent
-          ) : DEFAULT_DATA_URI_TAGS;
-          FORBID_CONTENTS = objectHasOwnProperty(cfg, "FORBID_CONTENTS") ? addToSet({}, cfg.FORBID_CONTENTS, transformCaseFunc) : DEFAULT_FORBID_CONTENTS;
-          FORBID_TAGS = objectHasOwnProperty(cfg, "FORBID_TAGS") ? addToSet({}, cfg.FORBID_TAGS, transformCaseFunc) : {};
-          FORBID_ATTR = objectHasOwnProperty(cfg, "FORBID_ATTR") ? addToSet({}, cfg.FORBID_ATTR, transformCaseFunc) : {};
-          USE_PROFILES = objectHasOwnProperty(cfg, "USE_PROFILES") ? cfg.USE_PROFILES : false;
-          ALLOW_ARIA_ATTR = cfg.ALLOW_ARIA_ATTR !== false;
-          ALLOW_DATA_ATTR = cfg.ALLOW_DATA_ATTR !== false;
-          ALLOW_UNKNOWN_PROTOCOLS = cfg.ALLOW_UNKNOWN_PROTOCOLS || false;
-          ALLOW_SELF_CLOSE_IN_ATTR = cfg.ALLOW_SELF_CLOSE_IN_ATTR !== false;
-          SAFE_FOR_TEMPLATES = cfg.SAFE_FOR_TEMPLATES || false;
-          WHOLE_DOCUMENT = cfg.WHOLE_DOCUMENT || false;
-          RETURN_DOM = cfg.RETURN_DOM || false;
-          RETURN_DOM_FRAGMENT = cfg.RETURN_DOM_FRAGMENT || false;
-          RETURN_TRUSTED_TYPE = cfg.RETURN_TRUSTED_TYPE || false;
-          FORCE_BODY = cfg.FORCE_BODY || false;
-          SANITIZE_DOM = cfg.SANITIZE_DOM !== false;
-          SANITIZE_NAMED_PROPS = cfg.SANITIZE_NAMED_PROPS || false;
-          KEEP_CONTENT = cfg.KEEP_CONTENT !== false;
-          IN_PLACE = cfg.IN_PLACE || false;
-          IS_ALLOWED_URI$1 = cfg.ALLOWED_URI_REGEXP || IS_ALLOWED_URI;
-          NAMESPACE = cfg.NAMESPACE || HTML_NAMESPACE;
-          CUSTOM_ELEMENT_HANDLING = cfg.CUSTOM_ELEMENT_HANDLING || {};
-          if (cfg.CUSTOM_ELEMENT_HANDLING && isRegexOrFunction(cfg.CUSTOM_ELEMENT_HANDLING.tagNameCheck)) {
-            CUSTOM_ELEMENT_HANDLING.tagNameCheck = cfg.CUSTOM_ELEMENT_HANDLING.tagNameCheck;
-          }
-          if (cfg.CUSTOM_ELEMENT_HANDLING && isRegexOrFunction(cfg.CUSTOM_ELEMENT_HANDLING.attributeNameCheck)) {
-            CUSTOM_ELEMENT_HANDLING.attributeNameCheck = cfg.CUSTOM_ELEMENT_HANDLING.attributeNameCheck;
-          }
-          if (cfg.CUSTOM_ELEMENT_HANDLING && typeof cfg.CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements === "boolean") {
-            CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements = cfg.CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements;
-          }
-          if (SAFE_FOR_TEMPLATES) {
-            ALLOW_DATA_ATTR = false;
-          }
-          if (RETURN_DOM_FRAGMENT) {
-            RETURN_DOM = true;
-          }
-          if (USE_PROFILES) {
-            ALLOWED_TAGS = addToSet({}, text);
-            ALLOWED_ATTR = [];
-            if (USE_PROFILES.html === true) {
-              addToSet(ALLOWED_TAGS, html$1);
-              addToSet(ALLOWED_ATTR, html2);
-            }
-            if (USE_PROFILES.svg === true) {
-              addToSet(ALLOWED_TAGS, svg$1);
-              addToSet(ALLOWED_ATTR, svg);
-              addToSet(ALLOWED_ATTR, xml);
-            }
-            if (USE_PROFILES.svgFilters === true) {
-              addToSet(ALLOWED_TAGS, svgFilters);
-              addToSet(ALLOWED_ATTR, svg);
-              addToSet(ALLOWED_ATTR, xml);
-            }
-            if (USE_PROFILES.mathMl === true) {
-              addToSet(ALLOWED_TAGS, mathMl$1);
-              addToSet(ALLOWED_ATTR, mathMl);
-              addToSet(ALLOWED_ATTR, xml);
-            }
-          }
-          if (cfg.ADD_TAGS) {
-            if (ALLOWED_TAGS === DEFAULT_ALLOWED_TAGS) {
-              ALLOWED_TAGS = clone(ALLOWED_TAGS);
-            }
-            addToSet(ALLOWED_TAGS, cfg.ADD_TAGS, transformCaseFunc);
-          }
-          if (cfg.ADD_ATTR) {
-            if (ALLOWED_ATTR === DEFAULT_ALLOWED_ATTR) {
-              ALLOWED_ATTR = clone(ALLOWED_ATTR);
-            }
-            addToSet(ALLOWED_ATTR, cfg.ADD_ATTR, transformCaseFunc);
-          }
-          if (cfg.ADD_URI_SAFE_ATTR) {
-            addToSet(URI_SAFE_ATTRIBUTES, cfg.ADD_URI_SAFE_ATTR, transformCaseFunc);
-          }
-          if (cfg.FORBID_CONTENTS) {
-            if (FORBID_CONTENTS === DEFAULT_FORBID_CONTENTS) {
-              FORBID_CONTENTS = clone(FORBID_CONTENTS);
-            }
-            addToSet(FORBID_CONTENTS, cfg.FORBID_CONTENTS, transformCaseFunc);
-          }
-          if (KEEP_CONTENT) {
-            ALLOWED_TAGS["#text"] = true;
-          }
-          if (WHOLE_DOCUMENT) {
-            addToSet(ALLOWED_TAGS, ["html", "head", "body"]);
-          }
-          if (ALLOWED_TAGS.table) {
-            addToSet(ALLOWED_TAGS, ["tbody"]);
-            delete FORBID_TAGS.tbody;
-          }
-          if (cfg.TRUSTED_TYPES_POLICY) {
-            if (typeof cfg.TRUSTED_TYPES_POLICY.createHTML !== "function") {
-              throw typeErrorCreate('TRUSTED_TYPES_POLICY configuration option must provide a "createHTML" hook.');
-            }
-            if (typeof cfg.TRUSTED_TYPES_POLICY.createScriptURL !== "function") {
-              throw typeErrorCreate('TRUSTED_TYPES_POLICY configuration option must provide a "createScriptURL" hook.');
-            }
-            trustedTypesPolicy = cfg.TRUSTED_TYPES_POLICY;
-            emptyHTML = trustedTypesPolicy.createHTML("");
-          } else {
-            if (trustedTypesPolicy === void 0) {
-              trustedTypesPolicy = _createTrustedTypesPolicy(trustedTypes, currentScript);
-            }
-            if (trustedTypesPolicy !== null && typeof emptyHTML === "string") {
-              emptyHTML = trustedTypesPolicy.createHTML("");
-            }
-          }
-          if (freeze) {
-            freeze(cfg);
-          }
-          CONFIG = cfg;
-        };
-        const MATHML_TEXT_INTEGRATION_POINTS = addToSet({}, ["mi", "mo", "mn", "ms", "mtext"]);
-        const HTML_INTEGRATION_POINTS = addToSet({}, ["foreignobject", "desc", "title", "annotation-xml"]);
-        const COMMON_SVG_AND_HTML_ELEMENTS = addToSet({}, ["title", "style", "font", "a", "script"]);
-        const ALL_SVG_TAGS = addToSet({}, [...svg$1, ...svgFilters, ...svgDisallowed]);
-        const ALL_MATHML_TAGS = addToSet({}, [...mathMl$1, ...mathMlDisallowed]);
-        const _checkValidNamespace = function _checkValidNamespace2(element) {
-          let parent = getParentNode(element);
-          if (!parent || !parent.tagName) {
-            parent = {
-              namespaceURI: NAMESPACE,
-              tagName: "template"
-            };
-          }
-          const tagName = stringToLowerCase(element.tagName);
-          const parentTagName = stringToLowerCase(parent.tagName);
-          if (!ALLOWED_NAMESPACES[element.namespaceURI]) {
-            return false;
-          }
-          if (element.namespaceURI === SVG_NAMESPACE) {
-            if (parent.namespaceURI === HTML_NAMESPACE) {
-              return tagName === "svg";
-            }
-            if (parent.namespaceURI === MATHML_NAMESPACE) {
-              return tagName === "svg" && (parentTagName === "annotation-xml" || MATHML_TEXT_INTEGRATION_POINTS[parentTagName]);
-            }
-            return Boolean(ALL_SVG_TAGS[tagName]);
-          }
-          if (element.namespaceURI === MATHML_NAMESPACE) {
-            if (parent.namespaceURI === HTML_NAMESPACE) {
-              return tagName === "math";
-            }
-            if (parent.namespaceURI === SVG_NAMESPACE) {
-              return tagName === "math" && HTML_INTEGRATION_POINTS[parentTagName];
-            }
-            return Boolean(ALL_MATHML_TAGS[tagName]);
-          }
-          if (element.namespaceURI === HTML_NAMESPACE) {
-            if (parent.namespaceURI === SVG_NAMESPACE && !HTML_INTEGRATION_POINTS[parentTagName]) {
-              return false;
-            }
-            if (parent.namespaceURI === MATHML_NAMESPACE && !MATHML_TEXT_INTEGRATION_POINTS[parentTagName]) {
-              return false;
-            }
-            return !ALL_MATHML_TAGS[tagName] && (COMMON_SVG_AND_HTML_ELEMENTS[tagName] || !ALL_SVG_TAGS[tagName]);
-          }
-          if (PARSER_MEDIA_TYPE === "application/xhtml+xml" && ALLOWED_NAMESPACES[element.namespaceURI]) {
-            return true;
-          }
-          return false;
-        };
-        const _forceRemove = function _forceRemove2(node) {
-          arrayPush(DOMPurify.removed, {
-            element: node
-          });
-          try {
-            node.parentNode.removeChild(node);
-          } catch (_) {
-            node.remove();
-          }
-        };
-        const _removeAttribute = function _removeAttribute2(name, node) {
-          try {
-            arrayPush(DOMPurify.removed, {
-              attribute: node.getAttributeNode(name),
-              from: node
-            });
-          } catch (_) {
-            arrayPush(DOMPurify.removed, {
-              attribute: null,
-              from: node
-            });
-          }
-          node.removeAttribute(name);
-          if (name === "is" && !ALLOWED_ATTR[name]) {
-            if (RETURN_DOM || RETURN_DOM_FRAGMENT) {
-              try {
-                _forceRemove(node);
-              } catch (_) {
-              }
-            } else {
-              try {
-                node.setAttribute(name, "");
-              } catch (_) {
-              }
-            }
-          }
-        };
-        const _initDocument = function _initDocument2(dirty) {
-          let doc = null;
-          let leadingWhitespace = null;
-          if (FORCE_BODY) {
-            dirty = "<remove></remove>" + dirty;
-          } else {
-            const matches = stringMatch(dirty, /^[\r\n\t ]+/);
-            leadingWhitespace = matches && matches[0];
-          }
-          if (PARSER_MEDIA_TYPE === "application/xhtml+xml" && NAMESPACE === HTML_NAMESPACE) {
-            dirty = '<html xmlns="http://www.w3.org/1999/xhtml"><head></head><body>' + dirty + "</body></html>";
-          }
-          const dirtyPayload = trustedTypesPolicy ? trustedTypesPolicy.createHTML(dirty) : dirty;
-          if (NAMESPACE === HTML_NAMESPACE) {
-            try {
-              doc = new DOMParser().parseFromString(dirtyPayload, PARSER_MEDIA_TYPE);
-            } catch (_) {
-            }
-          }
-          if (!doc || !doc.documentElement) {
-            doc = implementation.createDocument(NAMESPACE, "template", null);
-            try {
-              doc.documentElement.innerHTML = IS_EMPTY_INPUT ? emptyHTML : dirtyPayload;
-            } catch (_) {
-            }
-          }
-          const body = doc.body || doc.documentElement;
-          if (dirty && leadingWhitespace) {
-            body.insertBefore(document2.createTextNode(leadingWhitespace), body.childNodes[0] || null);
-          }
-          if (NAMESPACE === HTML_NAMESPACE) {
-            return getElementsByTagName.call(doc, WHOLE_DOCUMENT ? "html" : "body")[0];
-          }
-          return WHOLE_DOCUMENT ? doc.documentElement : body;
-        };
-        const _createNodeIterator = function _createNodeIterator2(root) {
-          return createNodeIterator.call(
-            root.ownerDocument || root,
-            root,
-            // eslint-disable-next-line no-bitwise
-            NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_TEXT,
-            null
-          );
-        };
-        const _isClobbered = function _isClobbered2(elm) {
-          return elm instanceof HTMLFormElement && (typeof elm.nodeName !== "string" || typeof elm.textContent !== "string" || typeof elm.removeChild !== "function" || !(elm.attributes instanceof NamedNodeMap) || typeof elm.removeAttribute !== "function" || typeof elm.setAttribute !== "function" || typeof elm.namespaceURI !== "string" || typeof elm.insertBefore !== "function" || typeof elm.hasChildNodes !== "function");
-        };
-        const _isNode = function _isNode2(object) {
-          return typeof Node === "function" && object instanceof Node;
-        };
-        const _executeHook = function _executeHook2(entryPoint, currentNode, data) {
-          if (!hooks[entryPoint]) {
-            return;
-          }
-          arrayForEach(hooks[entryPoint], (hook) => {
-            hook.call(DOMPurify, currentNode, data, CONFIG);
-          });
-        };
-        const _sanitizeElements = function _sanitizeElements2(currentNode) {
-          let content = null;
-          _executeHook("beforeSanitizeElements", currentNode, null);
-          if (_isClobbered(currentNode)) {
-            _forceRemove(currentNode);
-            return true;
-          }
-          const tagName = transformCaseFunc(currentNode.nodeName);
-          _executeHook("uponSanitizeElement", currentNode, {
-            tagName,
-            allowedTags: ALLOWED_TAGS
-          });
-          if (currentNode.hasChildNodes() && !_isNode(currentNode.firstElementChild) && regExpTest(/<[/\w]/g, currentNode.innerHTML) && regExpTest(/<[/\w]/g, currentNode.textContent)) {
-            _forceRemove(currentNode);
-            return true;
-          }
-          if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
-            if (!FORBID_TAGS[tagName] && _isBasicCustomElement(tagName)) {
-              if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, tagName)) {
-                return false;
-              }
-              if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(tagName)) {
-                return false;
-              }
-            }
-            if (KEEP_CONTENT && !FORBID_CONTENTS[tagName]) {
-              const parentNode = getParentNode(currentNode) || currentNode.parentNode;
-              const childNodes = getChildNodes(currentNode) || currentNode.childNodes;
-              if (childNodes && parentNode) {
-                const childCount = childNodes.length;
-                for (let i = childCount - 1; i >= 0; --i) {
-                  parentNode.insertBefore(cloneNode(childNodes[i], true), getNextSibling(currentNode));
-                }
-              }
-            }
-            _forceRemove(currentNode);
-            return true;
-          }
-          if (currentNode instanceof Element && !_checkValidNamespace(currentNode)) {
-            _forceRemove(currentNode);
-            return true;
-          }
-          if ((tagName === "noscript" || tagName === "noembed" || tagName === "noframes") && regExpTest(/<\/no(script|embed|frames)/i, currentNode.innerHTML)) {
-            _forceRemove(currentNode);
-            return true;
-          }
-          if (SAFE_FOR_TEMPLATES && currentNode.nodeType === 3) {
-            content = currentNode.textContent;
-            arrayForEach([MUSTACHE_EXPR2, ERB_EXPR2, TMPLIT_EXPR2], (expr) => {
-              content = stringReplace(content, expr, " ");
-            });
-            if (currentNode.textContent !== content) {
-              arrayPush(DOMPurify.removed, {
-                element: currentNode.cloneNode()
-              });
-              currentNode.textContent = content;
-            }
-          }
-          _executeHook("afterSanitizeElements", currentNode, null);
-          return false;
-        };
-        const _isValidAttribute = function _isValidAttribute2(lcTag, lcName, value) {
-          if (SANITIZE_DOM && (lcName === "id" || lcName === "name") && (value in document2 || value in formElement)) {
-            return false;
-          }
-          if (ALLOW_DATA_ATTR && !FORBID_ATTR[lcName] && regExpTest(DATA_ATTR2, lcName))
-            ;
-          else if (ALLOW_ARIA_ATTR && regExpTest(ARIA_ATTR2, lcName))
-            ;
-          else if (!ALLOWED_ATTR[lcName] || FORBID_ATTR[lcName]) {
-            if (
-              // First condition does a very basic check if a) it's basically a valid custom element tagname AND
-              // b) if the tagName passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
-              // and c) if the attribute name passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.attributeNameCheck
-              _isBasicCustomElement(lcTag) && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, lcTag) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(lcTag)) && (CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.attributeNameCheck, lcName) || CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.attributeNameCheck(lcName)) || // Alternative, second condition checks if it's an `is`-attribute, AND
-              // the value passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
-              lcName === "is" && CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, value) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(value))
-            )
-              ;
-            else {
-              return false;
-            }
-          } else if (URI_SAFE_ATTRIBUTES[lcName])
-            ;
-          else if (regExpTest(IS_ALLOWED_URI$1, stringReplace(value, ATTR_WHITESPACE2, "")))
-            ;
-          else if ((lcName === "src" || lcName === "xlink:href" || lcName === "href") && lcTag !== "script" && stringIndexOf(value, "data:") === 0 && DATA_URI_TAGS[lcTag])
-            ;
-          else if (ALLOW_UNKNOWN_PROTOCOLS && !regExpTest(IS_SCRIPT_OR_DATA2, stringReplace(value, ATTR_WHITESPACE2, "")))
-            ;
-          else if (value) {
-            return false;
-          } else
-            ;
-          return true;
-        };
-        const _isBasicCustomElement = function _isBasicCustomElement2(tagName) {
-          return tagName !== "annotation-xml" && tagName.indexOf("-") > 0;
-        };
-        const _sanitizeAttributes = function _sanitizeAttributes2(currentNode) {
-          _executeHook("beforeSanitizeAttributes", currentNode, null);
-          const {
-            attributes
-          } = currentNode;
-          if (!attributes) {
-            return;
-          }
-          const hookEvent = {
-            attrName: "",
-            attrValue: "",
-            keepAttr: true,
-            allowedAttributes: ALLOWED_ATTR
-          };
-          let l = attributes.length;
-          while (l--) {
-            const attr = attributes[l];
-            const {
-              name,
-              namespaceURI,
-              value: attrValue
-            } = attr;
-            const lcName = transformCaseFunc(name);
-            let value = name === "value" ? attrValue : stringTrim(attrValue);
-            hookEvent.attrName = lcName;
-            hookEvent.attrValue = value;
-            hookEvent.keepAttr = true;
-            hookEvent.forceKeepAttr = void 0;
-            _executeHook("uponSanitizeAttribute", currentNode, hookEvent);
-            value = hookEvent.attrValue;
-            if (hookEvent.forceKeepAttr) {
-              continue;
-            }
-            _removeAttribute(name, currentNode);
-            if (!hookEvent.keepAttr) {
-              continue;
-            }
-            if (!ALLOW_SELF_CLOSE_IN_ATTR && regExpTest(/\/>/i, value)) {
-              _removeAttribute(name, currentNode);
-              continue;
-            }
-            if (SAFE_FOR_TEMPLATES) {
-              arrayForEach([MUSTACHE_EXPR2, ERB_EXPR2, TMPLIT_EXPR2], (expr) => {
-                value = stringReplace(value, expr, " ");
-              });
-            }
-            const lcTag = transformCaseFunc(currentNode.nodeName);
-            if (!_isValidAttribute(lcTag, lcName, value)) {
-              continue;
-            }
-            if (SANITIZE_NAMED_PROPS && (lcName === "id" || lcName === "name")) {
-              _removeAttribute(name, currentNode);
-              value = SANITIZE_NAMED_PROPS_PREFIX + value;
-            }
-            if (trustedTypesPolicy && typeof trustedTypes === "object" && typeof trustedTypes.getAttributeType === "function") {
-              if (namespaceURI)
-                ;
-              else {
-                switch (trustedTypes.getAttributeType(lcTag, lcName)) {
-                  case "TrustedHTML": {
-                    value = trustedTypesPolicy.createHTML(value);
-                    break;
-                  }
-                  case "TrustedScriptURL": {
-                    value = trustedTypesPolicy.createScriptURL(value);
-                    break;
-                  }
-                }
-              }
-            }
-            try {
-              if (namespaceURI) {
-                currentNode.setAttributeNS(namespaceURI, name, value);
-              } else {
-                currentNode.setAttribute(name, value);
-              }
-              arrayPop(DOMPurify.removed);
-            } catch (_) {
-            }
-          }
-          _executeHook("afterSanitizeAttributes", currentNode, null);
-        };
-        const _sanitizeShadowDOM = function _sanitizeShadowDOM2(fragment) {
-          let shadowNode = null;
-          const shadowIterator = _createNodeIterator(fragment);
-          _executeHook("beforeSanitizeShadowDOM", fragment, null);
-          while (shadowNode = shadowIterator.nextNode()) {
-            _executeHook("uponSanitizeShadowNode", shadowNode, null);
-            if (_sanitizeElements(shadowNode)) {
-              continue;
-            }
-            if (shadowNode.content instanceof DocumentFragment) {
-              _sanitizeShadowDOM2(shadowNode.content);
-            }
-            _sanitizeAttributes(shadowNode);
-          }
-          _executeHook("afterSanitizeShadowDOM", fragment, null);
-        };
-        DOMPurify.sanitize = function(dirty) {
-          let cfg = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-          let body = null;
-          let importedNode = null;
-          let currentNode = null;
-          let returnNode = null;
-          IS_EMPTY_INPUT = !dirty;
-          if (IS_EMPTY_INPUT) {
-            dirty = "<!-->";
-          }
-          if (typeof dirty !== "string" && !_isNode(dirty)) {
-            if (typeof dirty.toString === "function") {
-              dirty = dirty.toString();
-              if (typeof dirty !== "string") {
-                throw typeErrorCreate("dirty is not a string, aborting");
-              }
-            } else {
-              throw typeErrorCreate("toString is not a function");
-            }
-          }
-          if (!DOMPurify.isSupported) {
-            return dirty;
-          }
-          if (!SET_CONFIG) {
-            _parseConfig(cfg);
-          }
-          DOMPurify.removed = [];
-          if (typeof dirty === "string") {
-            IN_PLACE = false;
-          }
-          if (IN_PLACE) {
-            if (dirty.nodeName) {
-              const tagName = transformCaseFunc(dirty.nodeName);
-              if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
-                throw typeErrorCreate("root node is forbidden and cannot be sanitized in-place");
-              }
-            }
-          } else if (dirty instanceof Node) {
-            body = _initDocument("<!---->");
-            importedNode = body.ownerDocument.importNode(dirty, true);
-            if (importedNode.nodeType === 1 && importedNode.nodeName === "BODY") {
-              body = importedNode;
-            } else if (importedNode.nodeName === "HTML") {
-              body = importedNode;
-            } else {
-              body.appendChild(importedNode);
-            }
-          } else {
-            if (!RETURN_DOM && !SAFE_FOR_TEMPLATES && !WHOLE_DOCUMENT && // eslint-disable-next-line unicorn/prefer-includes
-            dirty.indexOf("<") === -1) {
-              return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML(dirty) : dirty;
-            }
-            body = _initDocument(dirty);
-            if (!body) {
-              return RETURN_DOM ? null : RETURN_TRUSTED_TYPE ? emptyHTML : "";
-            }
-          }
-          if (body && FORCE_BODY) {
-            _forceRemove(body.firstChild);
-          }
-          const nodeIterator = _createNodeIterator(IN_PLACE ? dirty : body);
-          while (currentNode = nodeIterator.nextNode()) {
-            if (_sanitizeElements(currentNode)) {
-              continue;
-            }
-            if (currentNode.content instanceof DocumentFragment) {
-              _sanitizeShadowDOM(currentNode.content);
-            }
-            _sanitizeAttributes(currentNode);
-          }
-          if (IN_PLACE) {
-            return dirty;
-          }
-          if (RETURN_DOM) {
-            if (RETURN_DOM_FRAGMENT) {
-              returnNode = createDocumentFragment.call(body.ownerDocument);
-              while (body.firstChild) {
-                returnNode.appendChild(body.firstChild);
-              }
-            } else {
-              returnNode = body;
-            }
-            if (ALLOWED_ATTR.shadowroot || ALLOWED_ATTR.shadowrootmode) {
-              returnNode = importNode.call(originalDocument, returnNode, true);
-            }
-            return returnNode;
-          }
-          let serializedHTML = WHOLE_DOCUMENT ? body.outerHTML : body.innerHTML;
-          if (WHOLE_DOCUMENT && ALLOWED_TAGS["!doctype"] && body.ownerDocument && body.ownerDocument.doctype && body.ownerDocument.doctype.name && regExpTest(DOCTYPE_NAME, body.ownerDocument.doctype.name)) {
-            serializedHTML = "<!DOCTYPE " + body.ownerDocument.doctype.name + ">\n" + serializedHTML;
-          }
-          if (SAFE_FOR_TEMPLATES) {
-            arrayForEach([MUSTACHE_EXPR2, ERB_EXPR2, TMPLIT_EXPR2], (expr) => {
-              serializedHTML = stringReplace(serializedHTML, expr, " ");
-            });
-          }
-          return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML(serializedHTML) : serializedHTML;
-        };
-        DOMPurify.setConfig = function() {
-          let cfg = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
-          _parseConfig(cfg);
-          SET_CONFIG = true;
-        };
-        DOMPurify.clearConfig = function() {
-          CONFIG = null;
-          SET_CONFIG = false;
-        };
-        DOMPurify.isValidAttribute = function(tag2, attr, value) {
-          if (!CONFIG) {
-            _parseConfig({});
-          }
-          const lcTag = transformCaseFunc(tag2);
-          const lcName = transformCaseFunc(attr);
-          return _isValidAttribute(lcTag, lcName, value);
-        };
-        DOMPurify.addHook = function(entryPoint, hookFunction) {
-          if (typeof hookFunction !== "function") {
-            return;
-          }
-          hooks[entryPoint] = hooks[entryPoint] || [];
-          arrayPush(hooks[entryPoint], hookFunction);
-        };
-        DOMPurify.removeHook = function(entryPoint) {
-          if (hooks[entryPoint]) {
-            return arrayPop(hooks[entryPoint]);
-          }
-        };
-        DOMPurify.removeHooks = function(entryPoint) {
-          if (hooks[entryPoint]) {
-            hooks[entryPoint] = [];
-          }
-        };
-        DOMPurify.removeAllHooks = function() {
-          hooks = {};
-        };
-        return DOMPurify;
-      }
-      var purify = createDOMPurify();
-      return purify;
-    });
-  }
-});
-
 // node_modules/highlight.js/lib/core.js
 var require_core = __commonJS({
   "node_modules/highlight.js/lib/core.js"(exports, module) {
@@ -1006,8 +52,7 @@ var require_core = __commonJS({
        * @param {CompiledMode} mode
        */
       constructor(mode) {
-        if (mode.data === void 0)
-          mode.data = {};
+        if (mode.data === void 0) mode.data = {};
         this.data = mode.data;
         this.isMatchIgnored = false;
       }
@@ -1045,7 +90,7 @@ var require_core = __commonJS({
         const pieces = name.split(".");
         return [
           `${prefix}${pieces.shift()}`,
-          ...pieces.map((x, i) => `${x}${"_".repeat(i + 1)}`)
+          ...pieces.map((x2, i) => `${x2}${"_".repeat(i + 1)}`)
         ].join(" ");
       }
       return `${prefix}${name}`;
@@ -1066,16 +111,15 @@ var require_core = __commonJS({
        * Adds texts to the output stream
        *
        * @param {string} text */
-      addText(text) {
-        this.buffer += escapeHTML(text);
+      addText(text2) {
+        this.buffer += escapeHTML(text2);
       }
       /**
        * Adds a node open to the output stream (if needed)
        *
        * @param {Node} node */
       openNode(node) {
-        if (!emitsWrappingTags(node))
-          return;
+        if (!emitsWrappingTags(node)) return;
         const className = scopeToCSSClass(
           node.scope,
           { prefix: this.classPrefix }
@@ -1087,8 +131,7 @@ var require_core = __commonJS({
        *
        * @param {Node} node */
       closeNode(node) {
-        if (!emitsWrappingTags(node))
-          return;
+        if (!emitsWrappingTags(node)) return;
         this.buffer += SPAN_CLOSE;
       }
       /**
@@ -1139,8 +182,7 @@ var require_core = __commonJS({
         return void 0;
       }
       closeAllNodes() {
-        while (this.closeNode())
-          ;
+        while (this.closeNode()) ;
       }
       toJSON() {
         return JSON.stringify(this.rootNode, null, 4);
@@ -1170,10 +212,8 @@ var require_core = __commonJS({
        * @param {Node} node
        */
       static _collapse(node) {
-        if (typeof node === "string")
-          return;
-        if (!node.children)
-          return;
+        if (typeof node === "string") return;
+        if (!node.children) return;
         if (node.children.every((el) => typeof el === "string")) {
           node.children = [node.children.join("")];
         } else {
@@ -1194,11 +234,11 @@ var require_core = __commonJS({
       /**
        * @param {string} text
        */
-      addText(text) {
-        if (text === "") {
+      addText(text2) {
+        if (text2 === "") {
           return;
         }
-        this.add(text);
+        this.add(text2);
       }
       /** @param {string} scope */
       startScope(scope) {
@@ -1213,8 +253,7 @@ var require_core = __commonJS({
        */
       __addSublanguage(emitter, name) {
         const node = emitter.root;
-        if (name)
-          node.scope = `language:${name}`;
+        if (name) node.scope = `language:${name}`;
         this.add(node);
       }
       toHTML() {
@@ -1227,10 +266,8 @@ var require_core = __commonJS({
       }
     };
     function source(re) {
-      if (!re)
-        return null;
-      if (typeof re === "string")
-        return re;
+      if (!re) return null;
+      if (typeof re === "string") return re;
       return re.source;
     }
     function lookahead(re) {
@@ -1243,7 +280,7 @@ var require_core = __commonJS({
       return concat("(?:", re, ")?");
     }
     function concat(...args) {
-      const joined = args.map((x) => source(x)).join("");
+      const joined = args.map((x2) => source(x2)).join("");
       return joined;
     }
     function stripOptionsFromArgs(args) {
@@ -1257,7 +294,7 @@ var require_core = __commonJS({
     }
     function either(...args) {
       const opts = stripOptionsFromArgs(args);
-      const joined = "(" + (opts.capture ? "" : "?:") + args.map((x) => source(x)).join("|") + ")";
+      const joined = "(" + (opts.capture ? "" : "?:") + args.map((x2) => source(x2)).join("|") + ")";
       return joined;
     }
     function countMatchGroups(re) {
@@ -1318,9 +355,8 @@ var require_core = __commonJS({
         end: /$/,
         relevance: 0,
         /** @type {ModeCallback} */
-        "on:begin": (m, resp) => {
-          if (m.index !== 0)
-            resp.ignoreMatch();
+        "on:begin": (m2, resp) => {
+          if (m2.index !== 0) resp.ignoreMatch();
         }
       }, opts);
     };
@@ -1465,13 +501,12 @@ var require_core = __commonJS({
         mode,
         {
           /** @type {ModeCallback} */
-          "on:begin": (m, resp) => {
-            resp.data._beginMatch = m[1];
+          "on:begin": (m2, resp) => {
+            resp.data._beginMatch = m2[1];
           },
           /** @type {ModeCallback} */
-          "on:end": (m, resp) => {
-            if (resp.data._beginMatch !== m[1])
-              resp.ignoreMatch();
+          "on:end": (m2, resp) => {
+            if (resp.data._beginMatch !== m2[1]) resp.ignoreMatch();
           }
         }
       );
@@ -1516,39 +551,30 @@ var require_core = __commonJS({
       }
     }
     function beginKeywords(mode, parent) {
-      if (!parent)
-        return;
-      if (!mode.beginKeywords)
-        return;
+      if (!parent) return;
+      if (!mode.beginKeywords) return;
       mode.begin = "\\b(" + mode.beginKeywords.split(" ").join("|") + ")(?!\\.)(?=\\b|\\s)";
       mode.__beforeBegin = skipIfHasPrecedingDot;
       mode.keywords = mode.keywords || mode.beginKeywords;
       delete mode.beginKeywords;
-      if (mode.relevance === void 0)
-        mode.relevance = 0;
+      if (mode.relevance === void 0) mode.relevance = 0;
     }
     function compileIllegal(mode, _parent) {
-      if (!Array.isArray(mode.illegal))
-        return;
+      if (!Array.isArray(mode.illegal)) return;
       mode.illegal = either(...mode.illegal);
     }
     function compileMatch(mode, _parent) {
-      if (!mode.match)
-        return;
-      if (mode.begin || mode.end)
-        throw new Error("begin & end are not supported with match");
+      if (!mode.match) return;
+      if (mode.begin || mode.end) throw new Error("begin & end are not supported with match");
       mode.begin = mode.match;
       delete mode.match;
     }
     function compileRelevance(mode, _parent) {
-      if (mode.relevance === void 0)
-        mode.relevance = 1;
+      if (mode.relevance === void 0) mode.relevance = 1;
     }
     var beforeMatchExt = (mode, parent) => {
-      if (!mode.beforeMatch)
-        return;
-      if (mode.starts)
-        throw new Error("beforeMatch cannot be used with starts");
+      if (!mode.beforeMatch) return;
+      if (mode.starts) throw new Error("beforeMatch cannot be used with starts");
       const originalMode = Object.assign({}, mode);
       Object.keys(mode).forEach((key) => {
         delete mode[key];
@@ -1598,7 +624,7 @@ var require_core = __commonJS({
       return compiledKeywords;
       function compileList(scopeName2, keywordList) {
         if (caseInsensitive) {
-          keywordList = keywordList.map((x) => x.toLowerCase());
+          keywordList = keywordList.map((x2) => x2.toLowerCase());
         }
         keywordList.forEach(function(keyword) {
           const pair = keyword.split("|");
@@ -1623,8 +649,7 @@ var require_core = __commonJS({
       console.log(`WARN: ${message}`, ...args);
     };
     var deprecated = (version2, message) => {
-      if (seenDeprecations[`${version2}/${message}`])
-        return;
+      if (seenDeprecations[`${version2}/${message}`]) return;
       console.log(`Deprecated as of ${version2}. ${message}`);
       seenDeprecations[`${version2}/${message}`] = true;
     };
@@ -1644,8 +669,7 @@ var require_core = __commonJS({
       mode[key]._multi = true;
     }
     function beginMultiClass(mode) {
-      if (!Array.isArray(mode.begin))
-        return;
+      if (!Array.isArray(mode.begin)) return;
       if (mode.skip || mode.excludeBegin || mode.returnBegin) {
         error("skip, excludeBegin, returnBegin not compatible with beginScope: {}");
         throw MultiClassError;
@@ -1658,8 +682,7 @@ var require_core = __commonJS({
       mode.begin = _rewriteBackreferences(mode.begin, { joinWith: "" });
     }
     function endMultiClass(mode) {
-      if (!Array.isArray(mode.end))
-        return;
+      if (!Array.isArray(mode.end)) return;
       if (mode.skip || mode.excludeEnd || mode.returnEnd) {
         error("skip, excludeEnd, returnEnd not compatible with endScope: {}");
         throw MultiClassError;
@@ -1740,8 +763,7 @@ var require_core = __commonJS({
         }
         // @ts-ignore
         getMatcher(index) {
-          if (this.multiRegexes[index])
-            return this.multiRegexes[index];
+          if (this.multiRegexes[index]) return this.multiRegexes[index];
           const matcher = new MultiRegex();
           this.rules.slice(index).forEach(([re, opts]) => matcher.addRule(re, opts));
           matcher.compile();
@@ -1757,21 +779,19 @@ var require_core = __commonJS({
         // @ts-ignore
         addRule(re, opts) {
           this.rules.push([re, opts]);
-          if (opts.type === "begin")
-            this.count++;
+          if (opts.type === "begin") this.count++;
         }
         /** @param {string} s */
         exec(s) {
-          const m = this.getMatcher(this.regexIndex);
-          m.lastIndex = this.lastIndex;
-          let result = m.exec(s);
+          const m2 = this.getMatcher(this.regexIndex);
+          m2.lastIndex = this.lastIndex;
+          let result = m2.exec(s);
           if (this.resumingScanAtSamePosition()) {
-            if (result && result.index === this.lastIndex)
-              ;
+            if (result && result.index === this.lastIndex) ;
             else {
-              const m2 = this.getMatcher(0);
-              m2.lastIndex = this.lastIndex + 1;
-              result = m2.exec(s);
+              const m22 = this.getMatcher(0);
+              m22.lastIndex = this.lastIndex + 1;
+              result = m22.exec(s);
             }
           }
           if (result) {
@@ -1799,8 +819,7 @@ var require_core = __commonJS({
           /** @type CompiledMode */
           mode
         );
-        if (mode.isCompiled)
-          return cmode;
+        if (mode.isCompiled) return cmode;
         [
           scopeClassName,
           // do this early so compiler extensions generally don't have to worry about
@@ -1832,25 +851,20 @@ var require_core = __commonJS({
         }
         cmode.keywordPatternRe = langRe(keywordPattern, true);
         if (parent) {
-          if (!mode.begin)
-            mode.begin = /\B|\b/;
+          if (!mode.begin) mode.begin = /\B|\b/;
           cmode.beginRe = langRe(cmode.begin);
-          if (!mode.end && !mode.endsWithParent)
-            mode.end = /\B|\b/;
-          if (mode.end)
-            cmode.endRe = langRe(cmode.end);
+          if (!mode.end && !mode.endsWithParent) mode.end = /\B|\b/;
+          if (mode.end) cmode.endRe = langRe(cmode.end);
           cmode.terminatorEnd = source(cmode.end) || "";
           if (mode.endsWithParent && parent.terminatorEnd) {
             cmode.terminatorEnd += (mode.end ? "|" : "") + parent.terminatorEnd;
           }
         }
-        if (mode.illegal)
-          cmode.illegalRe = langRe(
-            /** @type {RegExp | string} */
-            mode.illegal
-          );
-        if (!mode.contains)
-          mode.contains = [];
+        if (mode.illegal) cmode.illegalRe = langRe(
+          /** @type {RegExp | string} */
+          mode.illegal
+        );
+        if (!mode.contains) mode.contains = [];
         mode.contains = [].concat(...mode.contains.map(function(c) {
           return expandOrCloneMode(c === "self" ? mode : c);
         }));
@@ -1867,8 +881,7 @@ var require_core = __commonJS({
         cmode.matcher = buildModeRegex(cmode);
         return cmode;
       }
-      if (!language.compilerExtensions)
-        language.compilerExtensions = [];
+      if (!language.compilerExtensions) language.compilerExtensions = [];
       if (language.contains && language.contains.includes("self")) {
         throw new Error("ERR: contains `self` is not supported at the top-level of a language.  See documentation.");
       }
@@ -1879,8 +892,7 @@ var require_core = __commonJS({
       );
     }
     function dependencyOnParent(mode) {
-      if (!mode)
-        return false;
+      if (!mode) return false;
       return mode.endsWithParent || dependencyOnParent(mode.starts);
     }
     function expandOrCloneMode(mode) {
@@ -1900,15 +912,15 @@ var require_core = __commonJS({
       }
       return mode;
     }
-    var version = "11.9.0";
+    var version = "11.11.1";
     var HTMLInjectionError = class extends Error {
-      constructor(reason, html2) {
+      constructor(reason, html3) {
         super(reason);
         this.name = "HTMLInjectionError";
-        this.html = html2;
+        this.html = html3;
       }
     };
-    var escape3 = escapeHTML;
+    var escape4 = escapeHTML;
     var inherit = inherit$1;
     var NO_MATCH = Symbol("nomatch");
     var MAX_KEYWORD_HITS = 7;
@@ -1997,8 +1009,7 @@ var require_core = __commonJS({
               emitter.addText(buf);
               buf = "";
               keywordHits[word] = (keywordHits[word] || 0) + 1;
-              if (keywordHits[word] <= MAX_KEYWORD_HITS)
-                relevance += keywordRelevance;
+              if (keywordHits[word] <= MAX_KEYWORD_HITS) relevance += keywordRelevance;
               if (kind.startsWith("_")) {
                 buf += match[0];
               } else {
@@ -2015,8 +1026,7 @@ var require_core = __commonJS({
           emitter.addText(buf);
         }
         function processSubLanguage() {
-          if (modeBuffer === "")
-            return;
+          if (modeBuffer === "") return;
           let result2 = null;
           if (typeof top.subLanguage === "string") {
             if (!languages[top.subLanguage]) {
@@ -2043,8 +1053,7 @@ var require_core = __commonJS({
           modeBuffer = "";
         }
         function emitKeyword(keyword, scope) {
-          if (keyword === "")
-            return;
+          if (keyword === "") return;
           emitter.startScope(scope);
           emitter.addText(keyword);
           emitter.endScope();
@@ -2058,11 +1067,11 @@ var require_core = __commonJS({
               continue;
             }
             const klass = language.classNameAliases[scope[i]] || scope[i];
-            const text = match[i];
+            const text2 = match[i];
             if (klass) {
-              emitKeyword(text, klass);
+              emitKeyword(text2, klass);
             } else {
-              modeBuffer = text;
+              modeBuffer = text2;
               processKeywords();
               modeBuffer = "";
             }
@@ -2091,8 +1100,7 @@ var require_core = __commonJS({
             if (mode["on:end"]) {
               const resp = new Response(mode);
               mode["on:end"](match, resp);
-              if (resp.isMatchIgnored)
-                matched = false;
+              if (resp.isMatchIgnored) matched = false;
             }
             if (matched) {
               while (mode.endsParent && mode.parent) {
@@ -2120,11 +1128,9 @@ var require_core = __commonJS({
           const resp = new Response(newMode);
           const beforeCallbacks = [newMode.__beforeBegin, newMode["on:begin"]];
           for (const cb of beforeCallbacks) {
-            if (!cb)
-              continue;
+            if (!cb) continue;
             cb(match, resp);
-            if (resp.isMatchIgnored)
-              return doIgnore(lexeme);
+            if (resp.isMatchIgnored) return doIgnore(lexeme);
           }
           if (newMode.skip) {
             modeBuffer += lexeme;
@@ -2220,6 +1226,7 @@ var require_core = __commonJS({
             }
           }
           if (match.type === "illegal" && lexeme === "") {
+            modeBuffer += "\n";
             return 1;
           }
           if (iterations > 1e5 && iterations > match.index * 3) {
@@ -2257,8 +1264,7 @@ var require_core = __commonJS({
               }
               top.matcher.lastIndex = index;
               const match = top.matcher.exec(codeToHighlight);
-              if (!match)
-                break;
+              if (!match) break;
               const beforeMatch = codeToHighlight.substring(index, match.index);
               const processedCount = processLexeme(beforeMatch, match);
               index = match.index + processedCount;
@@ -2281,7 +1287,7 @@ var require_core = __commonJS({
           if (err.message && err.message.includes("Illegal")) {
             return {
               language: languageName,
-              value: escape3(codeToHighlight),
+              value: escape4(codeToHighlight),
               illegal: true,
               relevance: 0,
               _illegalBy: {
@@ -2296,7 +1302,7 @@ var require_core = __commonJS({
           } else if (SAFE_MODE) {
             return {
               language: languageName,
-              value: escape3(codeToHighlight),
+              value: escape4(codeToHighlight),
               illegal: false,
               relevance: 0,
               errorRaised: err,
@@ -2310,7 +1316,7 @@ var require_core = __commonJS({
       }
       function justTextHighlightResult(code) {
         const result = {
-          value: escape3(code),
+          value: escape4(code),
           illegal: false,
           relevance: 0,
           _top: PLAINTEXT_LANGUAGE,
@@ -2327,8 +1333,7 @@ var require_core = __commonJS({
         );
         results.unshift(plaintext);
         const sorted = results.sort((a, b) => {
-          if (a.relevance !== b.relevance)
-            return b.relevance - a.relevance;
+          if (a.relevance !== b.relevance) return b.relevance - a.relevance;
           if (a.language && b.language) {
             if (getLanguage(a.language).supersetOf === b.language) {
               return 1;
@@ -2351,8 +1356,7 @@ var require_core = __commonJS({
       function highlightElement(element) {
         let node = null;
         const language = blockLanguage(element);
-        if (shouldNotHighlight(language))
-          return;
+        if (shouldNotHighlight(language)) return;
         fire(
           "before:highlightElement",
           { el: element, language }
@@ -2377,8 +1381,8 @@ var require_core = __commonJS({
           }
         }
         node = element;
-        const text = node.textContent;
-        const result = language ? highlight2(text, { language, ignoreIllegals: true }) : highlightAuto(text);
+        const text2 = node.textContent;
+        const result = language ? highlight2(text2, { language, ignoreIllegals: true }) : highlightAuto(text2);
         element.innerHTML = result.value;
         element.dataset.highlighted = "yes";
         updateClassName(element, language, result.language);
@@ -2394,7 +1398,7 @@ var require_core = __commonJS({
             relevance: result.secondBest.relevance
           };
         }
-        fire("after:highlightElement", { el: element, result, text });
+        fire("after:highlightElement", { el: element, result, text: text2 });
       }
       function configure(userOptions) {
         options2 = inherit(options2, userOptions);
@@ -2409,19 +1413,18 @@ var require_core = __commonJS({
       }
       let wantsHighlight = false;
       function highlightAll() {
+        function boot() {
+          highlightAll();
+        }
         if (document.readyState === "loading") {
+          if (!wantsHighlight) {
+            window.addEventListener("DOMContentLoaded", boot, false);
+          }
           wantsHighlight = true;
           return;
         }
         const blocks = document.querySelectorAll(options2.cssSelector);
         blocks.forEach(highlightElement);
-      }
-      function boot() {
-        if (wantsHighlight)
-          highlightAll();
-      }
-      if (typeof window !== "undefined" && window.addEventListener) {
-        window.addEventListener("DOMContentLoaded", boot, false);
       }
       function registerLanguage(languageName, languageDefinition) {
         let lang = null;
@@ -2436,8 +1439,7 @@ var require_core = __commonJS({
           }
           lang = PLAINTEXT_LANGUAGE;
         }
-        if (!lang.name)
-          lang.name = languageName;
+        if (!lang.name) lang.name = languageName;
         languages[languageName] = lang;
         lang.rawDefinition = languageDefinition.bind(null, hljs);
         if (lang.aliases) {
@@ -2563,7 +1565,7 @@ var require_core = __commonJS({
 // node_modules/highlight.js/lib/languages/xml.js
 var require_xml = __commonJS({
   "node_modules/highlight.js/lib/languages/xml.js"(exports, module) {
-    function xml(hljs) {
+    function xml2(hljs) {
       const regex2 = hljs.regex;
       const TAG_NAME_RE = regex2.concat(/[\p{L}_]/u, regex2.optional(/[\p{L}0-9_.-]*:/u), /[\p{L}0-9_.-]*/u);
       const XML_IDENT_RE = /[\p{L}0-9._:-]+/u;
@@ -2787,7 +1789,7 @@ var require_xml = __commonJS({
         ]
       };
     }
-    module.exports = xml;
+    module.exports = xml2;
   }
 });
 
@@ -2827,6 +1829,18 @@ var require_bash = __commonJS({
         end: /\)/,
         contains: [hljs.BACKSLASH_ESCAPE]
       };
+      const COMMENT = hljs.inherit(
+        hljs.COMMENT(),
+        {
+          match: [
+            /(^|\s)/,
+            /#.*$/
+          ],
+          scope: {
+            2: "comment"
+          }
+        }
+      );
       const HERE_DOC = {
         begin: /<<-?\s*(?=\w+)/,
         starts: { contains: [
@@ -2899,6 +1913,7 @@ var require_bash = __commonJS({
         "else",
         "elif",
         "fi",
+        "time",
         "for",
         "while",
         "until",
@@ -2907,6 +1922,7 @@ var require_bash = __commonJS({
         "done",
         "case",
         "esac",
+        "coproc",
         "function",
         "select"
       ];
@@ -2953,6 +1969,7 @@ var require_bash = __commonJS({
         "read",
         "readarray",
         "source",
+        "sudo",
         "type",
         "typeset",
         "ulimit",
@@ -3135,7 +2152,10 @@ var require_bash = __commonJS({
       ];
       return {
         name: "Bash",
-        aliases: ["sh"],
+        aliases: [
+          "sh",
+          "zsh"
+        ],
         keywords: {
           $pattern: /\b[a-z][a-z0-9._-]+\b/,
           keyword: KEYWORDS,
@@ -3157,7 +2177,7 @@ var require_bash = __commonJS({
           // to catch unknown shells but still highlight the shebang
           FUNCTION,
           ARITHMETIC,
-          hljs.HASH_COMMENT_MODE,
+          COMMENT,
           HERE_DOC,
           PATH_MODE,
           QUOTE_STRING,
@@ -3213,9 +2233,10 @@ var require_c = __commonJS({
       const NUMBERS = {
         className: "number",
         variants: [
-          { begin: "\\b(0b[01']+)" },
-          { begin: "(-?)\\b([\\d']+(\\.[\\d']*)?|\\.[\\d']+)((ll|LL|l|L)(u|U)?|(u|U)(ll|LL|l|L)?|f|F|b|B)" },
-          { begin: "(-?)(\\b0[xX][a-fA-F0-9']+|(\\b[\\d']+(\\.[\\d']*)?|\\.[\\d']+)([eE][-+]?[\\d']+)?)" }
+          { match: /\b(0b[01']+)/ },
+          { match: /(-?)\b([\d']+(\.[\d']*)?|\.[\d']+)((ll|LL|l|L)(u|U)?|(u|U)(ll|LL|l|L)?|f|F|b|B)/ },
+          { match: /(-?)\b(0[xX][a-fA-F0-9]+(?:'[a-fA-F0-9]+)*(?:\.[a-fA-F0-9]*(?:'[a-fA-F0-9]*)*)?(?:[pP][-+]?[0-9]+)?(l|L)?(u|U)?)/ },
+          { match: /(-?)\b\d+(?:'\d+)*(?:\.\d*(?:'\d*)*)?(?:[eE][-+]?\d+)?/ }
         ],
         relevance: 0
       };
@@ -3223,7 +2244,7 @@ var require_c = __commonJS({
         className: "meta",
         begin: /#\s*[a-z]+\b/,
         end: /$/,
-        keywords: { keyword: "if else elif endif define undef warning error line pragma _Pragma ifdef ifndef include" },
+        keywords: { keyword: "if else elif endif define undef warning error line pragma _Pragma ifdef ifndef elifdef elifndef include" },
         contains: [
           {
             begin: /\\\n/,
@@ -3264,6 +2285,8 @@ var require_c = __commonJS({
         "restrict",
         "return",
         "sizeof",
+        "typeof",
+        "typeof_unqual",
         "struct",
         "switch",
         "typedef",
@@ -3297,14 +2320,26 @@ var require_c = __commonJS({
         "char",
         "void",
         "_Bool",
+        "_BitInt",
         "_Complex",
         "_Imaginary",
         "_Decimal32",
         "_Decimal64",
+        "_Decimal96",
         "_Decimal128",
+        "_Decimal64x",
+        "_Decimal128x",
+        "_Float16",
+        "_Float32",
+        "_Float64",
+        "_Float128",
+        "_Float32x",
+        "_Float64x",
+        "_Float128x",
         // modifiers
         "const",
         "static",
+        "constexpr",
         // aliases
         "complex",
         "bool",
@@ -3494,9 +2529,16 @@ var require_cpp = __commonJS({
       const NUMBERS = {
         className: "number",
         variants: [
-          { begin: "\\b(0b[01']+)" },
-          { begin: "(-?)\\b([\\d']+(\\.[\\d']*)?|\\.[\\d']+)((ll|LL|l|L)(u|U)?|(u|U)(ll|LL|l|L)?|f|F|b|B)" },
-          { begin: "(-?)(\\b0[xX][a-fA-F0-9']+|(\\b[\\d']+(\\.[\\d']*)?|\\.[\\d']+)([eE][-+]?[\\d']+)?)" }
+          // Floating-point literal.
+          {
+            begin: "[+-]?(?:(?:[0-9](?:'?[0-9])*\\.(?:[0-9](?:'?[0-9])*)?|\\.[0-9](?:'?[0-9])*)(?:[Ee][+-]?[0-9](?:'?[0-9])*)?|[0-9](?:'?[0-9])*[Ee][+-]?[0-9](?:'?[0-9])*|0[Xx](?:[0-9A-Fa-f](?:'?[0-9A-Fa-f])*(?:\\.(?:[0-9A-Fa-f](?:'?[0-9A-Fa-f])*)?)?|\\.[0-9A-Fa-f](?:'?[0-9A-Fa-f])*)[Pp][+-]?[0-9](?:'?[0-9])*)(?:[Ff](?:16|32|64|128)?|(BF|bf)16|[Ll]|)"
+          },
+          // Integer literal.
+          {
+            begin: "[+-]?\\b(?:0[Bb][01](?:'?[01])*|0[Xx][0-9A-Fa-f](?:'?[0-9A-Fa-f])*|0(?:'?[0-7])*|[1-9](?:'?[0-9])*)(?:[Uu](?:LL?|ll?)|[Uu][Zz]?|(?:LL?|ll?)[Uu]?|[Zz][Uu]|)"
+            // Note: there are user-defined literal suffixes too, but perhaps having the custom suffix not part of the
+            // literal highlight actually makes it stand out more.
+          }
         ],
         relevance: 0
       };
@@ -3644,6 +2686,8 @@ var require_cpp = __commonJS({
         "counting_semaphore",
         "deque",
         "false_type",
+        "flat_map",
+        "flat_set",
         "future",
         "imaginary",
         "initializer_list",
@@ -3963,7 +3007,7 @@ var require_cpp = __commonJS({
             PREPROCESSOR,
             {
               // containers: ie, `vector <int> rooms (9);`
-              begin: "\\b(deque|list|queue|priority_queue|pair|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array|tuple|optional|variant|function)\\s*<(?!<)",
+              begin: "\\b(deque|list|queue|priority_queue|pair|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array|tuple|optional|variant|function|flat_map|flat_set)\\s*<(?!<)",
               end: ">",
               keywords: CPP_KEYWORDS,
               contains: [
@@ -4108,11 +3152,14 @@ var require_csharp = __commonJS({
         "alias",
         "and",
         "ascending",
+        "args",
         "async",
         "await",
         "by",
         "descending",
+        "dynamic",
         "equals",
+        "file",
         "from",
         "get",
         "global",
@@ -4128,7 +3175,10 @@ var require_csharp = __commonJS({
         "or",
         "orderby",
         "partial",
+        "record",
         "remove",
+        "required",
+        "scoped",
         "select",
         "set",
         "unmanaged",
@@ -4153,6 +3203,11 @@ var require_csharp = __commonJS({
           { begin: "(-?)(\\b0[xX][a-fA-F0-9']+|(\\b[\\d']+(\\.[\\d']*)?|\\.[\\d']+)([eE][-+]?[\\d']+)?)" }
         ],
         relevance: 0
+      };
+      const RAW_STRING = {
+        className: "string",
+        begin: /"""("*)(?!")(.|\n)*?"""\1/,
+        relevance: 1
       };
       const VERBATIM_STRING = {
         className: "string",
@@ -4219,6 +3274,7 @@ var require_csharp = __commonJS({
         hljs.inherit(hljs.C_BLOCK_COMMENT_MODE, { illegal: /\n/ })
       ];
       const STRING = { variants: [
+        RAW_STRING,
         INTERPOLATED_VERBATIM_STRING,
         INTERPOLATED_STRING,
         VERBATIM_STRING,
@@ -4427,7 +3483,7 @@ var require_css = __commonJS({
         }
       };
     };
-    var TAGS = [
+    var HTML_TAGS = [
       "a",
       "abbr",
       "address",
@@ -4479,11 +3535,16 @@ var require_css = __commonJS({
       "nav",
       "object",
       "ol",
+      "optgroup",
+      "option",
       "p",
+      "picture",
       "q",
       "quote",
       "samp",
       "section",
+      "select",
+      "source",
       "span",
       "strong",
       "summary",
@@ -4500,6 +3561,53 @@ var require_css = __commonJS({
       "ul",
       "var",
       "video"
+    ];
+    var SVG_TAGS = [
+      "defs",
+      "g",
+      "marker",
+      "mask",
+      "pattern",
+      "svg",
+      "switch",
+      "symbol",
+      "feBlend",
+      "feColorMatrix",
+      "feComponentTransfer",
+      "feComposite",
+      "feConvolveMatrix",
+      "feDiffuseLighting",
+      "feDisplacementMap",
+      "feFlood",
+      "feGaussianBlur",
+      "feImage",
+      "feMerge",
+      "feMorphology",
+      "feOffset",
+      "feSpecularLighting",
+      "feTile",
+      "feTurbulence",
+      "linearGradient",
+      "radialGradient",
+      "stop",
+      "circle",
+      "ellipse",
+      "image",
+      "line",
+      "path",
+      "polygon",
+      "polyline",
+      "rect",
+      "text",
+      "use",
+      "textPath",
+      "tspan",
+      "foreignObject",
+      "clipPath"
+    ];
+    var TAGS = [
+      ...HTML_TAGS,
+      ...SVG_TAGS
     ];
     var MEDIA_FEATURES = [
       "any-hover",
@@ -4536,7 +3644,7 @@ var require_css = __commonJS({
       "max-width",
       "min-height",
       "max-height"
-    ];
+    ].sort().reverse();
     var PSEUDO_CLASSES = [
       "active",
       "any-link",
@@ -4611,7 +3719,7 @@ var require_css = __commonJS({
       "visited",
       "where"
       // where()
-    ];
+    ].sort().reverse();
     var PSEUDO_ELEMENTS = [
       "after",
       "backdrop",
@@ -4627,13 +3735,17 @@ var require_css = __commonJS({
       "selection",
       "slotted",
       "spelling-error"
-    ];
+    ].sort().reverse();
     var ATTRIBUTES = [
+      "accent-color",
       "align-content",
       "align-items",
       "align-self",
+      "alignment-baseline",
       "all",
+      "anchor-name",
       "animation",
+      "animation-composition",
       "animation-delay",
       "animation-direction",
       "animation-duration",
@@ -4641,7 +3753,14 @@ var require_css = __commonJS({
       "animation-iteration-count",
       "animation-name",
       "animation-play-state",
+      "animation-range",
+      "animation-range-end",
+      "animation-range-start",
+      "animation-timeline",
       "animation-timing-function",
+      "appearance",
+      "aspect-ratio",
+      "backdrop-filter",
       "backface-visibility",
       "background",
       "background-attachment",
@@ -4651,8 +3770,11 @@ var require_css = __commonJS({
       "background-image",
       "background-origin",
       "background-position",
+      "background-position-x",
+      "background-position-y",
       "background-repeat",
       "background-size",
+      "baseline-shift",
       "block-size",
       "border",
       "border-block",
@@ -4675,6 +3797,8 @@ var require_css = __commonJS({
       "border-bottom-width",
       "border-collapse",
       "border-color",
+      "border-end-end-radius",
+      "border-end-start-radius",
       "border-image",
       "border-image-outset",
       "border-image-repeat",
@@ -4703,6 +3827,8 @@ var require_css = __commonJS({
       "border-right-style",
       "border-right-width",
       "border-spacing",
+      "border-start-end-radius",
+      "border-start-start-radius",
       "border-style",
       "border-top",
       "border-top-color",
@@ -4712,7 +3838,15 @@ var require_css = __commonJS({
       "border-top-width",
       "border-width",
       "bottom",
+      "box-align",
       "box-decoration-break",
+      "box-direction",
+      "box-flex",
+      "box-flex-group",
+      "box-lines",
+      "box-ordinal-group",
+      "box-orient",
+      "box-pack",
       "box-shadow",
       "box-sizing",
       "break-after",
@@ -4725,6 +3859,11 @@ var require_css = __commonJS({
       "clip-path",
       "clip-rule",
       "color",
+      "color-interpolation",
+      "color-interpolation-filters",
+      "color-profile",
+      "color-rendering",
+      "color-scheme",
       "column-count",
       "column-fill",
       "column-gap",
@@ -4736,17 +3875,34 @@ var require_css = __commonJS({
       "column-width",
       "columns",
       "contain",
+      "contain-intrinsic-block-size",
+      "contain-intrinsic-height",
+      "contain-intrinsic-inline-size",
+      "contain-intrinsic-size",
+      "contain-intrinsic-width",
+      "container",
+      "container-name",
+      "container-type",
       "content",
       "content-visibility",
       "counter-increment",
       "counter-reset",
+      "counter-set",
       "cue",
       "cue-after",
       "cue-before",
       "cursor",
+      "cx",
+      "cy",
       "direction",
       "display",
+      "dominant-baseline",
       "empty-cells",
+      "enable-background",
+      "field-sizing",
+      "fill",
+      "fill-opacity",
+      "fill-rule",
       "filter",
       "flex",
       "flex-basis",
@@ -4756,6 +3912,8 @@ var require_css = __commonJS({
       "flex-shrink",
       "flex-wrap",
       "float",
+      "flood-color",
+      "flood-opacity",
       "flow",
       "font",
       "font-display",
@@ -4763,21 +3921,32 @@ var require_css = __commonJS({
       "font-feature-settings",
       "font-kerning",
       "font-language-override",
+      "font-optical-sizing",
+      "font-palette",
       "font-size",
       "font-size-adjust",
+      "font-smooth",
       "font-smoothing",
       "font-stretch",
       "font-style",
       "font-synthesis",
+      "font-synthesis-position",
+      "font-synthesis-small-caps",
+      "font-synthesis-style",
+      "font-synthesis-weight",
       "font-variant",
+      "font-variant-alternates",
       "font-variant-caps",
       "font-variant-east-asian",
+      "font-variant-emoji",
       "font-variant-ligatures",
       "font-variant-numeric",
       "font-variant-position",
       "font-variation-settings",
       "font-weight",
+      "forced-color-adjust",
       "gap",
+      "glyph-orientation-horizontal",
       "glyph-orientation-vertical",
       "grid",
       "grid-area",
@@ -4797,19 +3966,36 @@ var require_css = __commonJS({
       "grid-template-rows",
       "hanging-punctuation",
       "height",
+      "hyphenate-character",
+      "hyphenate-limit-chars",
       "hyphens",
       "icon",
       "image-orientation",
       "image-rendering",
       "image-resolution",
       "ime-mode",
+      "initial-letter",
+      "initial-letter-align",
       "inline-size",
+      "inset",
+      "inset-area",
+      "inset-block",
+      "inset-block-end",
+      "inset-block-start",
+      "inset-inline",
+      "inset-inline-end",
+      "inset-inline-start",
       "isolation",
       "justify-content",
+      "justify-items",
+      "justify-self",
+      "kerning",
       "left",
       "letter-spacing",
+      "lighting-color",
       "line-break",
       "line-height",
+      "line-height-step",
       "list-style",
       "list-style-image",
       "list-style-position",
@@ -4825,6 +4011,11 @@ var require_css = __commonJS({
       "margin-left",
       "margin-right",
       "margin-top",
+      "margin-trim",
+      "marker",
+      "marker-end",
+      "marker-mid",
+      "marker-start",
       "marks",
       "mask",
       "mask-border",
@@ -4843,6 +4034,10 @@ var require_css = __commonJS({
       "mask-repeat",
       "mask-size",
       "mask-type",
+      "masonry-auto-flow",
+      "math-depth",
+      "math-shift",
+      "math-style",
       "max-block-size",
       "max-height",
       "max-inline-size",
@@ -4861,6 +4056,12 @@ var require_css = __commonJS({
       "normal",
       "object-fit",
       "object-position",
+      "offset",
+      "offset-anchor",
+      "offset-distance",
+      "offset-path",
+      "offset-position",
+      "offset-rotate",
       "opacity",
       "order",
       "orphans",
@@ -4870,9 +4071,19 @@ var require_css = __commonJS({
       "outline-style",
       "outline-width",
       "overflow",
+      "overflow-anchor",
+      "overflow-block",
+      "overflow-clip-margin",
+      "overflow-inline",
       "overflow-wrap",
       "overflow-x",
       "overflow-y",
+      "overlay",
+      "overscroll-behavior",
+      "overscroll-behavior-block",
+      "overscroll-behavior-inline",
+      "overscroll-behavior-x",
+      "overscroll-behavior-y",
       "padding",
       "padding-block",
       "padding-block-end",
@@ -4884,23 +4095,37 @@ var require_css = __commonJS({
       "padding-left",
       "padding-right",
       "padding-top",
+      "page",
       "page-break-after",
       "page-break-before",
       "page-break-inside",
+      "paint-order",
       "pause",
       "pause-after",
       "pause-before",
       "perspective",
       "perspective-origin",
+      "place-content",
+      "place-items",
+      "place-self",
       "pointer-events",
       "position",
+      "position-anchor",
+      "position-visibility",
+      "print-color-adjust",
       "quotes",
+      "r",
       "resize",
       "rest",
       "rest-after",
       "rest-before",
       "right",
+      "rotate",
       "row-gap",
+      "ruby-align",
+      "ruby-position",
+      "scale",
+      "scroll-behavior",
       "scroll-margin",
       "scroll-margin-block",
       "scroll-margin-block-end",
@@ -4926,26 +4151,44 @@ var require_css = __commonJS({
       "scroll-snap-align",
       "scroll-snap-stop",
       "scroll-snap-type",
+      "scroll-timeline",
+      "scroll-timeline-axis",
+      "scroll-timeline-name",
       "scrollbar-color",
       "scrollbar-gutter",
       "scrollbar-width",
       "shape-image-threshold",
       "shape-margin",
       "shape-outside",
+      "shape-rendering",
       "speak",
       "speak-as",
       "src",
       // @font-face
+      "stop-color",
+      "stop-opacity",
+      "stroke",
+      "stroke-dasharray",
+      "stroke-dashoffset",
+      "stroke-linecap",
+      "stroke-linejoin",
+      "stroke-miterlimit",
+      "stroke-opacity",
+      "stroke-width",
       "tab-size",
       "table-layout",
       "text-align",
       "text-align-all",
       "text-align-last",
+      "text-anchor",
       "text-combine-upright",
       "text-decoration",
       "text-decoration-color",
       "text-decoration-line",
+      "text-decoration-skip",
+      "text-decoration-skip-ink",
       "text-decoration-style",
+      "text-decoration-thickness",
       "text-emphasis",
       "text-emphasis-color",
       "text-emphasis-position",
@@ -4956,20 +4199,37 @@ var require_css = __commonJS({
       "text-overflow",
       "text-rendering",
       "text-shadow",
+      "text-size-adjust",
       "text-transform",
+      "text-underline-offset",
       "text-underline-position",
+      "text-wrap",
+      "text-wrap-mode",
+      "text-wrap-style",
+      "timeline-scope",
       "top",
+      "touch-action",
       "transform",
       "transform-box",
       "transform-origin",
       "transform-style",
       "transition",
+      "transition-behavior",
       "transition-delay",
       "transition-duration",
       "transition-property",
       "transition-timing-function",
+      "translate",
       "unicode-bidi",
+      "user-modify",
+      "user-select",
+      "vector-effect",
       "vertical-align",
+      "view-timeline",
+      "view-timeline-axis",
+      "view-timeline-inset",
+      "view-timeline-name",
+      "view-transition-name",
       "visibility",
       "voice-balance",
       "voice-duration",
@@ -4980,6 +4240,7 @@ var require_css = __commonJS({
       "voice-stress",
       "voice-volume",
       "white-space",
+      "white-space-collapse",
       "widows",
       "width",
       "will-change",
@@ -4987,10 +4248,11 @@ var require_css = __commonJS({
       "word-spacing",
       "word-wrap",
       "writing-mode",
-      "z-index"
-      // reverse makes sure longer attributes `font-weight` are matched fully
-      // instead of getting false positives on say `font`
-    ].reverse();
+      "x",
+      "y",
+      "z-index",
+      "zoom"
+    ].sort().reverse();
     function css(hljs) {
       const regex2 = hljs.regex;
       const modes = MODES(hljs);
@@ -5299,8 +4561,8 @@ var require_markdown = __commonJS({
         ITALIC,
         BOLD_WITHOUT_ITALIC,
         ITALIC_WITHOUT_BOLD
-      ].forEach((m) => {
-        m.contains = m.contains.concat(CONTAINABLE);
+      ].forEach((m2) => {
+        m2.contains = m2.contains.concat(CONTAINABLE);
       });
       CONTAINABLE = CONTAINABLE.concat(BOLD, ITALIC);
       const HEADER = {
@@ -5330,6 +4592,11 @@ var require_markdown = __commonJS({
         contains: CONTAINABLE,
         end: "$"
       };
+      const ENTITY = {
+        //https://spec.commonmark.org/0.31.2/#entity-references
+        scope: "literal",
+        match: /&([a-zA-Z0-9]+|#[0-9]{1,7}|#[Xx][0-9a-fA-F]{1,6});/
+      };
       return {
         name: "Markdown",
         aliases: [
@@ -5347,7 +4614,8 @@ var require_markdown = __commonJS({
           CODE,
           HORIZONTAL_RULE,
           LINK,
-          LINK_REFERENCE
+          LINK_REFERENCE,
+          ENTITY
         ]
       };
     }
@@ -5742,7 +5010,7 @@ var require_ruby = __commonJS({
         },
         {
           className: "params",
-          begin: /\|/,
+          begin: /\|(?!=)/,
           end: /\|/,
           excludeBegin: true,
           excludeEnd: true,
@@ -5936,10 +5204,30 @@ var require_go = __commonJS({
             className: "number",
             variants: [
               {
-                begin: hljs.C_NUMBER_RE + "[i]",
-                relevance: 1
+                match: /-?\b0[xX]\.[a-fA-F0-9](_?[a-fA-F0-9])*[pP][+-]?\d(_?\d)*i?/,
+                // hex without a present digit before . (making a digit afterwards required)
+                relevance: 0
               },
-              hljs.C_NUMBER_MODE
+              {
+                match: /-?\b0[xX](_?[a-fA-F0-9])+((\.([a-fA-F0-9](_?[a-fA-F0-9])*)?)?[pP][+-]?\d(_?\d)*)?i?/,
+                // hex with a present digit before . (making a digit afterwards optional)
+                relevance: 0
+              },
+              {
+                match: /-?\b0[oO](_?[0-7])*i?/,
+                // leading 0o octal
+                relevance: 0
+              },
+              {
+                match: /-?\.\d(_?\d)*([eE][+-]?\d(_?\d)*)?i?/,
+                // decimal without a present digit before . (making a digit afterwards required)
+                relevance: 0
+              },
+              {
+                match: /-?\b\d(_?\d)*(\.(\d(_?\d)*)?)?([eE][+-]?\d(_?\d)*)?i?/,
+                // decimal with a present digit before . (making a digit afterwards optional)
+                relevance: 0
+              }
             ]
           },
           {
@@ -6196,8 +5484,7 @@ var require_java = __commonJS({
       relevance: 0
     };
     function recurRegex(re, substitution, depth) {
-      if (depth === -1)
-        return "";
+      if (depth === -1) return "";
       return re.replace(substitution, (_) => {
         return recurRegex(re, substitution, depth - 1);
       });
@@ -6248,7 +5535,9 @@ var require_java = __commonJS({
         "do",
         "sealed",
         "yield",
-        "permits"
+        "permits",
+        "goto",
+        "when"
       ];
       const BUILT_INS = [
         "super",
@@ -6470,7 +5759,9 @@ var require_javascript = __commonJS({
       "import",
       "from",
       "export",
-      "extends"
+      "extends",
+      // It's reached stage 3, which is "recommended for implementation":
+      "using"
     ];
     var LITERALS = [
       "true",
@@ -6617,14 +5908,14 @@ var require_javascript = __commonJS({
               response.ignoreMatch();
             }
           }
-          let m;
+          let m2;
           const afterMatch = match.input.substring(afterMatchIndex);
-          if (m = afterMatch.match(/^\s*=/)) {
+          if (m2 = afterMatch.match(/^\s*=/)) {
             response.ignoreMatch();
             return;
           }
-          if (m = afterMatch.match(/^\s+extends\s+/)) {
-            if (m.index === 0) {
+          if (m2 = afterMatch.match(/^\s+extends\s+/)) {
+            if (m2.index === 0) {
               response.ignoreMatch();
               return;
             }
@@ -6668,7 +5959,7 @@ var require_javascript = __commonJS({
         // defined later
       };
       const HTML_TEMPLATE = {
-        begin: "html`",
+        begin: ".?html`",
         end: "",
         starts: {
           end: "`",
@@ -6681,7 +5972,7 @@ var require_javascript = __commonJS({
         }
       };
       const CSS_TEMPLATE = {
-        begin: "css`",
+        begin: ".?css`",
         end: "",
         starts: {
           end: "`",
@@ -6694,7 +5985,7 @@ var require_javascript = __commonJS({
         }
       };
       const GRAPHQL_TEMPLATE = {
-        begin: "gql`",
+        begin: ".?gql`",
         end: "",
         starts: {
           end: "`",
@@ -6790,7 +6081,7 @@ var require_javascript = __commonJS({
       const PARAMS_CONTAINS = SUBST_AND_COMMENTS.concat([
         // eat recursive parens in sub expressions
         {
-          begin: /\(/,
+          begin: /(\s*)\(/,
           end: /\)/,
           keywords: KEYWORDS$1,
           contains: ["self"].concat(SUBST_AND_COMMENTS)
@@ -6798,7 +6089,9 @@ var require_javascript = __commonJS({
       ]);
       const PARAMS = {
         className: "params",
-        begin: /\(/,
+        // convert this to negative lookbehind in v12
+        begin: /(\s*)\(/,
+        // to match the parms with
         end: /\)/,
         excludeBegin: true,
         excludeEnd: true,
@@ -6911,9 +6204,9 @@ var require_javascript = __commonJS({
             ...BUILT_IN_GLOBALS,
             "super",
             "import"
-          ]),
+          ].map((x2) => `${x2}\\s*\\(`)),
           IDENT_RE$1,
-          regex2.lookahead(/\(/)
+          regex2.lookahead(/\s*\(/)
         ),
         className: "title.function",
         relevance: 0
@@ -6994,8 +6287,8 @@ var require_javascript = __commonJS({
           NUMBER,
           CLASS_REFERENCE,
           {
-            className: "attr",
-            begin: IDENT_RE$1 + regex2.lookahead(":"),
+            scope: "attr",
+            match: IDENT_RE$1 + regex2.lookahead(":"),
             relevance: 0
           },
           FUNCTION_VARIABLE,
@@ -7029,7 +6322,7 @@ var require_javascript = __commonJS({
                         skip: true
                       },
                       {
-                        begin: /\(/,
+                        begin: /(\s*)\(/,
                         end: /\)/,
                         excludeBegin: true,
                         excludeEnd: true,
@@ -7151,6 +6444,7 @@ var require_json = __commonJS({
       };
       return {
         name: "JSON",
+        aliases: ["jsonc"],
         keywords: {
           literal: LITERALS
         },
@@ -7469,7 +6763,7 @@ var require_less = __commonJS({
         }
       };
     };
-    var TAGS = [
+    var HTML_TAGS = [
       "a",
       "abbr",
       "address",
@@ -7521,11 +6815,16 @@ var require_less = __commonJS({
       "nav",
       "object",
       "ol",
+      "optgroup",
+      "option",
       "p",
+      "picture",
       "q",
       "quote",
       "samp",
       "section",
+      "select",
+      "source",
       "span",
       "strong",
       "summary",
@@ -7542,6 +6841,53 @@ var require_less = __commonJS({
       "ul",
       "var",
       "video"
+    ];
+    var SVG_TAGS = [
+      "defs",
+      "g",
+      "marker",
+      "mask",
+      "pattern",
+      "svg",
+      "switch",
+      "symbol",
+      "feBlend",
+      "feColorMatrix",
+      "feComponentTransfer",
+      "feComposite",
+      "feConvolveMatrix",
+      "feDiffuseLighting",
+      "feDisplacementMap",
+      "feFlood",
+      "feGaussianBlur",
+      "feImage",
+      "feMerge",
+      "feMorphology",
+      "feOffset",
+      "feSpecularLighting",
+      "feTile",
+      "feTurbulence",
+      "linearGradient",
+      "radialGradient",
+      "stop",
+      "circle",
+      "ellipse",
+      "image",
+      "line",
+      "path",
+      "polygon",
+      "polyline",
+      "rect",
+      "text",
+      "use",
+      "textPath",
+      "tspan",
+      "foreignObject",
+      "clipPath"
+    ];
+    var TAGS = [
+      ...HTML_TAGS,
+      ...SVG_TAGS
     ];
     var MEDIA_FEATURES = [
       "any-hover",
@@ -7578,7 +6924,7 @@ var require_less = __commonJS({
       "max-width",
       "min-height",
       "max-height"
-    ];
+    ].sort().reverse();
     var PSEUDO_CLASSES = [
       "active",
       "any-link",
@@ -7653,7 +6999,7 @@ var require_less = __commonJS({
       "visited",
       "where"
       // where()
-    ];
+    ].sort().reverse();
     var PSEUDO_ELEMENTS = [
       "after",
       "backdrop",
@@ -7669,13 +7015,17 @@ var require_less = __commonJS({
       "selection",
       "slotted",
       "spelling-error"
-    ];
+    ].sort().reverse();
     var ATTRIBUTES = [
+      "accent-color",
       "align-content",
       "align-items",
       "align-self",
+      "alignment-baseline",
       "all",
+      "anchor-name",
       "animation",
+      "animation-composition",
       "animation-delay",
       "animation-direction",
       "animation-duration",
@@ -7683,7 +7033,14 @@ var require_less = __commonJS({
       "animation-iteration-count",
       "animation-name",
       "animation-play-state",
+      "animation-range",
+      "animation-range-end",
+      "animation-range-start",
+      "animation-timeline",
       "animation-timing-function",
+      "appearance",
+      "aspect-ratio",
+      "backdrop-filter",
       "backface-visibility",
       "background",
       "background-attachment",
@@ -7693,8 +7050,11 @@ var require_less = __commonJS({
       "background-image",
       "background-origin",
       "background-position",
+      "background-position-x",
+      "background-position-y",
       "background-repeat",
       "background-size",
+      "baseline-shift",
       "block-size",
       "border",
       "border-block",
@@ -7717,6 +7077,8 @@ var require_less = __commonJS({
       "border-bottom-width",
       "border-collapse",
       "border-color",
+      "border-end-end-radius",
+      "border-end-start-radius",
       "border-image",
       "border-image-outset",
       "border-image-repeat",
@@ -7745,6 +7107,8 @@ var require_less = __commonJS({
       "border-right-style",
       "border-right-width",
       "border-spacing",
+      "border-start-end-radius",
+      "border-start-start-radius",
       "border-style",
       "border-top",
       "border-top-color",
@@ -7754,7 +7118,15 @@ var require_less = __commonJS({
       "border-top-width",
       "border-width",
       "bottom",
+      "box-align",
       "box-decoration-break",
+      "box-direction",
+      "box-flex",
+      "box-flex-group",
+      "box-lines",
+      "box-ordinal-group",
+      "box-orient",
+      "box-pack",
       "box-shadow",
       "box-sizing",
       "break-after",
@@ -7767,6 +7139,11 @@ var require_less = __commonJS({
       "clip-path",
       "clip-rule",
       "color",
+      "color-interpolation",
+      "color-interpolation-filters",
+      "color-profile",
+      "color-rendering",
+      "color-scheme",
       "column-count",
       "column-fill",
       "column-gap",
@@ -7778,17 +7155,34 @@ var require_less = __commonJS({
       "column-width",
       "columns",
       "contain",
+      "contain-intrinsic-block-size",
+      "contain-intrinsic-height",
+      "contain-intrinsic-inline-size",
+      "contain-intrinsic-size",
+      "contain-intrinsic-width",
+      "container",
+      "container-name",
+      "container-type",
       "content",
       "content-visibility",
       "counter-increment",
       "counter-reset",
+      "counter-set",
       "cue",
       "cue-after",
       "cue-before",
       "cursor",
+      "cx",
+      "cy",
       "direction",
       "display",
+      "dominant-baseline",
       "empty-cells",
+      "enable-background",
+      "field-sizing",
+      "fill",
+      "fill-opacity",
+      "fill-rule",
       "filter",
       "flex",
       "flex-basis",
@@ -7798,6 +7192,8 @@ var require_less = __commonJS({
       "flex-shrink",
       "flex-wrap",
       "float",
+      "flood-color",
+      "flood-opacity",
       "flow",
       "font",
       "font-display",
@@ -7805,21 +7201,32 @@ var require_less = __commonJS({
       "font-feature-settings",
       "font-kerning",
       "font-language-override",
+      "font-optical-sizing",
+      "font-palette",
       "font-size",
       "font-size-adjust",
+      "font-smooth",
       "font-smoothing",
       "font-stretch",
       "font-style",
       "font-synthesis",
+      "font-synthesis-position",
+      "font-synthesis-small-caps",
+      "font-synthesis-style",
+      "font-synthesis-weight",
       "font-variant",
+      "font-variant-alternates",
       "font-variant-caps",
       "font-variant-east-asian",
+      "font-variant-emoji",
       "font-variant-ligatures",
       "font-variant-numeric",
       "font-variant-position",
       "font-variation-settings",
       "font-weight",
+      "forced-color-adjust",
       "gap",
+      "glyph-orientation-horizontal",
       "glyph-orientation-vertical",
       "grid",
       "grid-area",
@@ -7839,19 +7246,36 @@ var require_less = __commonJS({
       "grid-template-rows",
       "hanging-punctuation",
       "height",
+      "hyphenate-character",
+      "hyphenate-limit-chars",
       "hyphens",
       "icon",
       "image-orientation",
       "image-rendering",
       "image-resolution",
       "ime-mode",
+      "initial-letter",
+      "initial-letter-align",
       "inline-size",
+      "inset",
+      "inset-area",
+      "inset-block",
+      "inset-block-end",
+      "inset-block-start",
+      "inset-inline",
+      "inset-inline-end",
+      "inset-inline-start",
       "isolation",
       "justify-content",
+      "justify-items",
+      "justify-self",
+      "kerning",
       "left",
       "letter-spacing",
+      "lighting-color",
       "line-break",
       "line-height",
+      "line-height-step",
       "list-style",
       "list-style-image",
       "list-style-position",
@@ -7867,6 +7291,11 @@ var require_less = __commonJS({
       "margin-left",
       "margin-right",
       "margin-top",
+      "margin-trim",
+      "marker",
+      "marker-end",
+      "marker-mid",
+      "marker-start",
       "marks",
       "mask",
       "mask-border",
@@ -7885,6 +7314,10 @@ var require_less = __commonJS({
       "mask-repeat",
       "mask-size",
       "mask-type",
+      "masonry-auto-flow",
+      "math-depth",
+      "math-shift",
+      "math-style",
       "max-block-size",
       "max-height",
       "max-inline-size",
@@ -7903,6 +7336,12 @@ var require_less = __commonJS({
       "normal",
       "object-fit",
       "object-position",
+      "offset",
+      "offset-anchor",
+      "offset-distance",
+      "offset-path",
+      "offset-position",
+      "offset-rotate",
       "opacity",
       "order",
       "orphans",
@@ -7912,9 +7351,19 @@ var require_less = __commonJS({
       "outline-style",
       "outline-width",
       "overflow",
+      "overflow-anchor",
+      "overflow-block",
+      "overflow-clip-margin",
+      "overflow-inline",
       "overflow-wrap",
       "overflow-x",
       "overflow-y",
+      "overlay",
+      "overscroll-behavior",
+      "overscroll-behavior-block",
+      "overscroll-behavior-inline",
+      "overscroll-behavior-x",
+      "overscroll-behavior-y",
       "padding",
       "padding-block",
       "padding-block-end",
@@ -7926,23 +7375,37 @@ var require_less = __commonJS({
       "padding-left",
       "padding-right",
       "padding-top",
+      "page",
       "page-break-after",
       "page-break-before",
       "page-break-inside",
+      "paint-order",
       "pause",
       "pause-after",
       "pause-before",
       "perspective",
       "perspective-origin",
+      "place-content",
+      "place-items",
+      "place-self",
       "pointer-events",
       "position",
+      "position-anchor",
+      "position-visibility",
+      "print-color-adjust",
       "quotes",
+      "r",
       "resize",
       "rest",
       "rest-after",
       "rest-before",
       "right",
+      "rotate",
       "row-gap",
+      "ruby-align",
+      "ruby-position",
+      "scale",
+      "scroll-behavior",
       "scroll-margin",
       "scroll-margin-block",
       "scroll-margin-block-end",
@@ -7968,26 +7431,44 @@ var require_less = __commonJS({
       "scroll-snap-align",
       "scroll-snap-stop",
       "scroll-snap-type",
+      "scroll-timeline",
+      "scroll-timeline-axis",
+      "scroll-timeline-name",
       "scrollbar-color",
       "scrollbar-gutter",
       "scrollbar-width",
       "shape-image-threshold",
       "shape-margin",
       "shape-outside",
+      "shape-rendering",
       "speak",
       "speak-as",
       "src",
       // @font-face
+      "stop-color",
+      "stop-opacity",
+      "stroke",
+      "stroke-dasharray",
+      "stroke-dashoffset",
+      "stroke-linecap",
+      "stroke-linejoin",
+      "stroke-miterlimit",
+      "stroke-opacity",
+      "stroke-width",
       "tab-size",
       "table-layout",
       "text-align",
       "text-align-all",
       "text-align-last",
+      "text-anchor",
       "text-combine-upright",
       "text-decoration",
       "text-decoration-color",
       "text-decoration-line",
+      "text-decoration-skip",
+      "text-decoration-skip-ink",
       "text-decoration-style",
+      "text-decoration-thickness",
       "text-emphasis",
       "text-emphasis-color",
       "text-emphasis-position",
@@ -7998,20 +7479,37 @@ var require_less = __commonJS({
       "text-overflow",
       "text-rendering",
       "text-shadow",
+      "text-size-adjust",
       "text-transform",
+      "text-underline-offset",
       "text-underline-position",
+      "text-wrap",
+      "text-wrap-mode",
+      "text-wrap-style",
+      "timeline-scope",
       "top",
+      "touch-action",
       "transform",
       "transform-box",
       "transform-origin",
       "transform-style",
       "transition",
+      "transition-behavior",
       "transition-delay",
       "transition-duration",
       "transition-property",
       "transition-timing-function",
+      "translate",
       "unicode-bidi",
+      "user-modify",
+      "user-select",
+      "vector-effect",
       "vertical-align",
+      "view-timeline",
+      "view-timeline-axis",
+      "view-timeline-inset",
+      "view-timeline-name",
+      "view-transition-name",
       "visibility",
       "voice-balance",
       "voice-duration",
@@ -8022,6 +7520,7 @@ var require_less = __commonJS({
       "voice-stress",
       "voice-volume",
       "white-space",
+      "white-space-collapse",
       "widows",
       "width",
       "will-change",
@@ -8029,11 +7528,12 @@ var require_less = __commonJS({
       "word-spacing",
       "word-wrap",
       "writing-mode",
-      "z-index"
-      // reverse makes sure longer attributes `font-weight` are matched fully
-      // instead of getting false positives on say `font`
-    ].reverse();
-    var PSEUDO_SELECTORS = PSEUDO_CLASSES.concat(PSEUDO_ELEMENTS);
+      "x",
+      "y",
+      "z-index",
+      "zoom"
+    ].sort().reverse();
+    var PSEUDO_SELECTORS = PSEUDO_CLASSES.concat(PSEUDO_ELEMENTS).sort().reverse();
     function less(hljs) {
       const modes = MODES(hljs);
       const PSEUDO_SELECTORS$1 = PSEUDO_SELECTORS;
@@ -8271,6 +7771,7 @@ var require_lua = __commonJS({
       ];
       return {
         name: "Lua",
+        aliases: ["pluto"],
         keywords: {
           $pattern: hljs.UNDERSCORE_IDENT_RE,
           literal: "true false nil",
@@ -8340,7 +7841,11 @@ var require_makefile = __commonJS({
         begin: /\$\([\w-]+\s/,
         end: /\)/,
         keywords: { built_in: "subst patsubst strip findstring filter filter-out sort word wordlist firstword lastword dir notdir suffix basename addsuffix addprefix join wildcard realpath abspath error warning shell origin flavor foreach if or and call eval file value" },
-        contains: [VARIABLE]
+        contains: [
+          VARIABLE,
+          QUOTE_STRING
+          // Added QUOTE_STRING as they can be a part of functions
+        ]
       };
       const ASSIGNMENT = { begin: "^" + hljs.UNDERSCORE_IDENT_RE + "\\s*(?=[:+?]?=)" };
       const META = {
@@ -8407,6 +7912,7 @@ var require_perl = __commonJS({
         "chown",
         "chr",
         "chroot",
+        "class",
         "close",
         "closedir",
         "connect",
@@ -8436,6 +7942,7 @@ var require_perl = __commonJS({
         "exit",
         "exp",
         "fcntl",
+        "field",
         "fileno",
         "flock",
         "for",
@@ -8495,6 +8002,7 @@ var require_perl = __commonJS({
         "lt",
         "ma",
         "map",
+        "method",
         "mkdir",
         "msgctl",
         "msgget",
@@ -8637,19 +8145,46 @@ var require_perl = __commonJS({
         end: /\}/
         // contains defined later
       };
-      const VAR = { variants: [
-        { begin: /\$\d/ },
-        { begin: regex2.concat(
-          /[$%@](\^\w\b|#\w+(::\w+)*|\{\w+\}|\w+(::\w*)*)/,
-          // negative look-ahead tries to avoid matching patterns that are not
-          // Perl at all like $ident$, @ident@, etc.
-          `(?![A-Za-z])(?![@$%])`
-        ) },
-        {
-          begin: /[$%@][^\s\w{]/,
-          relevance: 0
-        }
-      ] };
+      const ATTR = {
+        scope: "attr",
+        match: /\s+:\s*\w+(\s*\(.*?\))?/
+      };
+      const VAR = {
+        scope: "variable",
+        variants: [
+          { begin: /\$\d/ },
+          {
+            begin: regex2.concat(
+              /[$%@](?!")(\^\w\b|#\w+(::\w+)*|\{\w+\}|\w+(::\w*)*)/,
+              // negative look-ahead tries to avoid matching patterns that are not
+              // Perl at all like $ident$, @ident@, etc.
+              `(?![A-Za-z])(?![@$%])`
+            )
+          },
+          {
+            // Only $= is a special Perl variable and one can't declare @= or %=.
+            begin: /[$%@](?!")[^\s\w{=]|\$=/,
+            relevance: 0
+          }
+        ],
+        contains: [ATTR]
+      };
+      const NUMBER = {
+        className: "number",
+        variants: [
+          // decimal numbers:
+          // include the case where a number starts with a dot (eg. .9), and
+          // the leading 0? avoids mixing the first and second match on 0.x cases
+          { match: /0?\.[0-9][0-9_]+\b/ },
+          // include the special versioned number (eg. v5.38)
+          { match: /\bv?(0|[1-9][0-9_]*(\.[0-9_]+)?|[1-9][0-9_]*)\b/ },
+          // non-decimal numbers:
+          { match: /\b0[0-7][0-7_]*\b/ },
+          { match: /\b0x[0-9a-fA-F][0-9a-fA-F_]*\b/ },
+          { match: /\b0b[0-1][0-1_]*\b/ }
+        ],
+        relevance: 0
+      };
       const STRING_CONTAINS = [
         hljs.BACKSLASH_ESCAPE,
         SUBST,
@@ -8754,11 +8289,7 @@ var require_perl = __commonJS({
             }
           ]
         },
-        {
-          className: "number",
-          begin: "(\\b0[0-7_]+)|(\\b0x[0-9a-fA-F_]+)|(\\b[1-9][0-9_]*(\\.[0-9_]+)?)|[0_]\\b",
-          relevance: 0
-        },
+        NUMBER,
         {
           // regexp container
           begin: "(\\/\\/|" + hljs.RE_STARTERS_RE + "|\\b(split|return|print|reverse|grep)\\b)\\s*",
@@ -8801,11 +8332,19 @@ var require_perl = __commonJS({
         },
         {
           className: "function",
-          beginKeywords: "sub",
+          beginKeywords: "sub method",
           end: "(\\s*\\(.*?\\))?[;{]",
           excludeEnd: true,
           relevance: 5,
-          contains: [hljs.TITLE_MODE]
+          contains: [hljs.TITLE_MODE, ATTR]
+        },
+        {
+          className: "class",
+          beginKeywords: "class",
+          end: "[;{]",
+          excludeEnd: true,
+          relevance: 5,
+          contains: [hljs.TITLE_MODE, ATTR, NUMBER]
         },
         {
           begin: "-\\w\\b",
@@ -9102,6 +8641,10 @@ var require_php = __commonJS({
         /(\\?[A-Z][a-z0-9_\x7f-\xff]+|\\?[A-Z]+(?=[A-Z][a-z0-9_\x7f-\xff])){1,}/,
         NOT_PERL_ETC
       );
+      const UPCASE_NAME_RE = regex2.concat(
+        /[A-Z]+/,
+        NOT_PERL_ETC
+      );
       const VARIABLE = {
         scope: "variable",
         match: "\\$+" + IDENT_RE
@@ -9137,12 +8680,11 @@ var require_php = __commonJS({
         begin: /<<<[ \t]*(?:(\w+)|"(\w+)")\n/,
         end: /[ \t]*(\w+)\b/,
         contains: hljs.QUOTE_STRING_MODE.contains.concat(SUBST),
-        "on:begin": (m, resp) => {
-          resp.data._beginMatch = m[1] || m[2];
+        "on:begin": (m2, resp) => {
+          resp.data._beginMatch = m2[1] || m2[2];
         },
-        "on:end": (m, resp) => {
-          if (resp.data._beginMatch !== m[1])
-            resp.ignoreMatch();
+        "on:end": (m2, resp) => {
+          if (resp.data._beginMatch !== m2[1]) resp.ignoreMatch();
         }
       };
       const NOWDOC = hljs.END_SAME_AS_BEGIN({
@@ -9509,7 +9051,13 @@ var require_php = __commonJS({
         CONSTRUCTOR_CALL
       ];
       const ATTRIBUTES = {
-        begin: regex2.concat(/#\[\s*/, PASCAL_CASE_CLASS_NAME_RE),
+        begin: regex2.concat(
+          /#\[\s*\\?/,
+          regex2.either(
+            PASCAL_CASE_CLASS_NAME_RE,
+            UPCASE_NAME_RE
+          )
+        ),
         beginScope: "meta",
         end: /]/,
         endScope: "meta",
@@ -9539,7 +9087,10 @@ var require_php = __commonJS({
           ...ATTRIBUTE_CONTAINS,
           {
             scope: "meta",
-            match: PASCAL_CASE_CLASS_NAME_RE
+            variants: [
+              { match: PASCAL_CASE_CLASS_NAME_RE },
+              { match: UPCASE_NAME_RE }
+            ]
           }
         ]
       };
@@ -9619,6 +9170,7 @@ var require_php = __commonJS({
                 keywords: KEYWORDS,
                 contains: [
                   "self",
+                  ATTRIBUTES,
                   VARIABLE,
                   LEFT_AND_RIGHT_SIDE_OF_DOUBLE_COLON,
                   hljs.C_BLOCK_COMMENT_MODE,
@@ -10100,7 +9652,8 @@ var require_python = __commonJS({
           NUMBER,
           {
             // very common convention
-            begin: /\bself\b/
+            scope: "variable.language",
+            match: /\bself\b/
           },
           {
             // eat "if" prior to string so that it won't accidentally be
@@ -10108,6 +9661,7 @@ var require_python = __commonJS({
             beginKeywords: "if",
             relevance: 0
           },
+          { match: /\bor\b/, scope: "keyword" },
           STRING,
           COMMENT_TYPE,
           hljs.HASH_COMMENT_MODE,
@@ -10417,13 +9971,16 @@ var require_rust = __commonJS({
   "node_modules/highlight.js/lib/languages/rust.js"(exports, module) {
     function rust(hljs) {
       const regex2 = hljs.regex;
+      const RAW_IDENTIFIER = /(r#)?/;
+      const UNDERSCORE_IDENT_RE = regex2.concat(RAW_IDENTIFIER, hljs.UNDERSCORE_IDENT_RE);
+      const IDENT_RE = regex2.concat(RAW_IDENTIFIER, hljs.IDENT_RE);
       const FUNCTION_INVOKE = {
         className: "title.function.invoke",
         relevance: 0,
         begin: regex2.concat(
           /\b/,
           /(?!let|for|while|if|else|match\b)/,
-          hljs.IDENT_RE,
+          IDENT_RE,
           regex2.lookahead(/\s*\(/)
         )
       };
@@ -10473,6 +10030,7 @@ var require_rust = __commonJS({
         "try",
         "type",
         "typeof",
+        "union",
         "unsafe",
         "unsized",
         "use",
@@ -10600,15 +10158,25 @@ var require_rust = __commonJS({
             illegal: null
           }),
           {
-            className: "string",
-            variants: [
-              { begin: /b?r(#*)"(.|\n)*?"\1(?!#)/ },
-              { begin: /b?'\\?(x\w{2}|u\w{4}|U\w{8}|.)'/ }
-            ]
+            className: "symbol",
+            // negative lookahead to avoid matching `'`
+            begin: /'[a-zA-Z_][a-zA-Z0-9_]*(?!')/
           },
           {
-            className: "symbol",
-            begin: /'[a-zA-Z_][a-zA-Z0-9_]*/
+            scope: "string",
+            variants: [
+              { begin: /b?r(#*)"(.|\n)*?"\1(?!#)/ },
+              {
+                begin: /b?'/,
+                end: /'/,
+                contains: [
+                  {
+                    scope: "char.escape",
+                    match: /\\('|\w|x\w{2}|u\w{4}|U\w{8})/
+                  }
+                ]
+              }
+            ]
           },
           {
             className: "number",
@@ -10624,7 +10192,7 @@ var require_rust = __commonJS({
             begin: [
               /fn/,
               /\s+/,
-              hljs.UNDERSCORE_IDENT_RE
+              UNDERSCORE_IDENT_RE
             ],
             className: {
               1: "keyword",
@@ -10639,7 +10207,10 @@ var require_rust = __commonJS({
               {
                 className: "string",
                 begin: /"/,
-                end: /"/
+                end: /"/,
+                contains: [
+                  hljs.BACKSLASH_ESCAPE
+                ]
               }
             ]
           },
@@ -10648,7 +10219,7 @@ var require_rust = __commonJS({
               /let/,
               /\s+/,
               /(?:mut\s+)?/,
-              hljs.UNDERSCORE_IDENT_RE
+              UNDERSCORE_IDENT_RE
             ],
             className: {
               1: "keyword",
@@ -10661,7 +10232,7 @@ var require_rust = __commonJS({
             begin: [
               /for/,
               /\s+/,
-              hljs.UNDERSCORE_IDENT_RE,
+              UNDERSCORE_IDENT_RE,
               /\s+/,
               /in/
             ],
@@ -10675,7 +10246,7 @@ var require_rust = __commonJS({
             begin: [
               /type/,
               /\s+/,
-              hljs.UNDERSCORE_IDENT_RE
+              UNDERSCORE_IDENT_RE
             ],
             className: {
               1: "keyword",
@@ -10686,7 +10257,7 @@ var require_rust = __commonJS({
             begin: [
               /(?:trait|enum|struct|union|impl|for)/,
               /\s+/,
-              hljs.UNDERSCORE_IDENT_RE
+              UNDERSCORE_IDENT_RE
             ],
             className: {
               1: "keyword",
@@ -10752,7 +10323,7 @@ var require_scss = __commonJS({
         }
       };
     };
-    var TAGS = [
+    var HTML_TAGS = [
       "a",
       "abbr",
       "address",
@@ -10804,11 +10375,16 @@ var require_scss = __commonJS({
       "nav",
       "object",
       "ol",
+      "optgroup",
+      "option",
       "p",
+      "picture",
       "q",
       "quote",
       "samp",
       "section",
+      "select",
+      "source",
       "span",
       "strong",
       "summary",
@@ -10825,6 +10401,53 @@ var require_scss = __commonJS({
       "ul",
       "var",
       "video"
+    ];
+    var SVG_TAGS = [
+      "defs",
+      "g",
+      "marker",
+      "mask",
+      "pattern",
+      "svg",
+      "switch",
+      "symbol",
+      "feBlend",
+      "feColorMatrix",
+      "feComponentTransfer",
+      "feComposite",
+      "feConvolveMatrix",
+      "feDiffuseLighting",
+      "feDisplacementMap",
+      "feFlood",
+      "feGaussianBlur",
+      "feImage",
+      "feMerge",
+      "feMorphology",
+      "feOffset",
+      "feSpecularLighting",
+      "feTile",
+      "feTurbulence",
+      "linearGradient",
+      "radialGradient",
+      "stop",
+      "circle",
+      "ellipse",
+      "image",
+      "line",
+      "path",
+      "polygon",
+      "polyline",
+      "rect",
+      "text",
+      "use",
+      "textPath",
+      "tspan",
+      "foreignObject",
+      "clipPath"
+    ];
+    var TAGS = [
+      ...HTML_TAGS,
+      ...SVG_TAGS
     ];
     var MEDIA_FEATURES = [
       "any-hover",
@@ -10861,7 +10484,7 @@ var require_scss = __commonJS({
       "max-width",
       "min-height",
       "max-height"
-    ];
+    ].sort().reverse();
     var PSEUDO_CLASSES = [
       "active",
       "any-link",
@@ -10936,7 +10559,7 @@ var require_scss = __commonJS({
       "visited",
       "where"
       // where()
-    ];
+    ].sort().reverse();
     var PSEUDO_ELEMENTS = [
       "after",
       "backdrop",
@@ -10952,13 +10575,17 @@ var require_scss = __commonJS({
       "selection",
       "slotted",
       "spelling-error"
-    ];
+    ].sort().reverse();
     var ATTRIBUTES = [
+      "accent-color",
       "align-content",
       "align-items",
       "align-self",
+      "alignment-baseline",
       "all",
+      "anchor-name",
       "animation",
+      "animation-composition",
       "animation-delay",
       "animation-direction",
       "animation-duration",
@@ -10966,7 +10593,14 @@ var require_scss = __commonJS({
       "animation-iteration-count",
       "animation-name",
       "animation-play-state",
+      "animation-range",
+      "animation-range-end",
+      "animation-range-start",
+      "animation-timeline",
       "animation-timing-function",
+      "appearance",
+      "aspect-ratio",
+      "backdrop-filter",
       "backface-visibility",
       "background",
       "background-attachment",
@@ -10976,8 +10610,11 @@ var require_scss = __commonJS({
       "background-image",
       "background-origin",
       "background-position",
+      "background-position-x",
+      "background-position-y",
       "background-repeat",
       "background-size",
+      "baseline-shift",
       "block-size",
       "border",
       "border-block",
@@ -11000,6 +10637,8 @@ var require_scss = __commonJS({
       "border-bottom-width",
       "border-collapse",
       "border-color",
+      "border-end-end-radius",
+      "border-end-start-radius",
       "border-image",
       "border-image-outset",
       "border-image-repeat",
@@ -11028,6 +10667,8 @@ var require_scss = __commonJS({
       "border-right-style",
       "border-right-width",
       "border-spacing",
+      "border-start-end-radius",
+      "border-start-start-radius",
       "border-style",
       "border-top",
       "border-top-color",
@@ -11037,7 +10678,15 @@ var require_scss = __commonJS({
       "border-top-width",
       "border-width",
       "bottom",
+      "box-align",
       "box-decoration-break",
+      "box-direction",
+      "box-flex",
+      "box-flex-group",
+      "box-lines",
+      "box-ordinal-group",
+      "box-orient",
+      "box-pack",
       "box-shadow",
       "box-sizing",
       "break-after",
@@ -11050,6 +10699,11 @@ var require_scss = __commonJS({
       "clip-path",
       "clip-rule",
       "color",
+      "color-interpolation",
+      "color-interpolation-filters",
+      "color-profile",
+      "color-rendering",
+      "color-scheme",
       "column-count",
       "column-fill",
       "column-gap",
@@ -11061,17 +10715,34 @@ var require_scss = __commonJS({
       "column-width",
       "columns",
       "contain",
+      "contain-intrinsic-block-size",
+      "contain-intrinsic-height",
+      "contain-intrinsic-inline-size",
+      "contain-intrinsic-size",
+      "contain-intrinsic-width",
+      "container",
+      "container-name",
+      "container-type",
       "content",
       "content-visibility",
       "counter-increment",
       "counter-reset",
+      "counter-set",
       "cue",
       "cue-after",
       "cue-before",
       "cursor",
+      "cx",
+      "cy",
       "direction",
       "display",
+      "dominant-baseline",
       "empty-cells",
+      "enable-background",
+      "field-sizing",
+      "fill",
+      "fill-opacity",
+      "fill-rule",
       "filter",
       "flex",
       "flex-basis",
@@ -11081,6 +10752,8 @@ var require_scss = __commonJS({
       "flex-shrink",
       "flex-wrap",
       "float",
+      "flood-color",
+      "flood-opacity",
       "flow",
       "font",
       "font-display",
@@ -11088,21 +10761,32 @@ var require_scss = __commonJS({
       "font-feature-settings",
       "font-kerning",
       "font-language-override",
+      "font-optical-sizing",
+      "font-palette",
       "font-size",
       "font-size-adjust",
+      "font-smooth",
       "font-smoothing",
       "font-stretch",
       "font-style",
       "font-synthesis",
+      "font-synthesis-position",
+      "font-synthesis-small-caps",
+      "font-synthesis-style",
+      "font-synthesis-weight",
       "font-variant",
+      "font-variant-alternates",
       "font-variant-caps",
       "font-variant-east-asian",
+      "font-variant-emoji",
       "font-variant-ligatures",
       "font-variant-numeric",
       "font-variant-position",
       "font-variation-settings",
       "font-weight",
+      "forced-color-adjust",
       "gap",
+      "glyph-orientation-horizontal",
       "glyph-orientation-vertical",
       "grid",
       "grid-area",
@@ -11122,19 +10806,36 @@ var require_scss = __commonJS({
       "grid-template-rows",
       "hanging-punctuation",
       "height",
+      "hyphenate-character",
+      "hyphenate-limit-chars",
       "hyphens",
       "icon",
       "image-orientation",
       "image-rendering",
       "image-resolution",
       "ime-mode",
+      "initial-letter",
+      "initial-letter-align",
       "inline-size",
+      "inset",
+      "inset-area",
+      "inset-block",
+      "inset-block-end",
+      "inset-block-start",
+      "inset-inline",
+      "inset-inline-end",
+      "inset-inline-start",
       "isolation",
       "justify-content",
+      "justify-items",
+      "justify-self",
+      "kerning",
       "left",
       "letter-spacing",
+      "lighting-color",
       "line-break",
       "line-height",
+      "line-height-step",
       "list-style",
       "list-style-image",
       "list-style-position",
@@ -11150,6 +10851,11 @@ var require_scss = __commonJS({
       "margin-left",
       "margin-right",
       "margin-top",
+      "margin-trim",
+      "marker",
+      "marker-end",
+      "marker-mid",
+      "marker-start",
       "marks",
       "mask",
       "mask-border",
@@ -11168,6 +10874,10 @@ var require_scss = __commonJS({
       "mask-repeat",
       "mask-size",
       "mask-type",
+      "masonry-auto-flow",
+      "math-depth",
+      "math-shift",
+      "math-style",
       "max-block-size",
       "max-height",
       "max-inline-size",
@@ -11186,6 +10896,12 @@ var require_scss = __commonJS({
       "normal",
       "object-fit",
       "object-position",
+      "offset",
+      "offset-anchor",
+      "offset-distance",
+      "offset-path",
+      "offset-position",
+      "offset-rotate",
       "opacity",
       "order",
       "orphans",
@@ -11195,9 +10911,19 @@ var require_scss = __commonJS({
       "outline-style",
       "outline-width",
       "overflow",
+      "overflow-anchor",
+      "overflow-block",
+      "overflow-clip-margin",
+      "overflow-inline",
       "overflow-wrap",
       "overflow-x",
       "overflow-y",
+      "overlay",
+      "overscroll-behavior",
+      "overscroll-behavior-block",
+      "overscroll-behavior-inline",
+      "overscroll-behavior-x",
+      "overscroll-behavior-y",
       "padding",
       "padding-block",
       "padding-block-end",
@@ -11209,23 +10935,37 @@ var require_scss = __commonJS({
       "padding-left",
       "padding-right",
       "padding-top",
+      "page",
       "page-break-after",
       "page-break-before",
       "page-break-inside",
+      "paint-order",
       "pause",
       "pause-after",
       "pause-before",
       "perspective",
       "perspective-origin",
+      "place-content",
+      "place-items",
+      "place-self",
       "pointer-events",
       "position",
+      "position-anchor",
+      "position-visibility",
+      "print-color-adjust",
       "quotes",
+      "r",
       "resize",
       "rest",
       "rest-after",
       "rest-before",
       "right",
+      "rotate",
       "row-gap",
+      "ruby-align",
+      "ruby-position",
+      "scale",
+      "scroll-behavior",
       "scroll-margin",
       "scroll-margin-block",
       "scroll-margin-block-end",
@@ -11251,26 +10991,44 @@ var require_scss = __commonJS({
       "scroll-snap-align",
       "scroll-snap-stop",
       "scroll-snap-type",
+      "scroll-timeline",
+      "scroll-timeline-axis",
+      "scroll-timeline-name",
       "scrollbar-color",
       "scrollbar-gutter",
       "scrollbar-width",
       "shape-image-threshold",
       "shape-margin",
       "shape-outside",
+      "shape-rendering",
       "speak",
       "speak-as",
       "src",
       // @font-face
+      "stop-color",
+      "stop-opacity",
+      "stroke",
+      "stroke-dasharray",
+      "stroke-dashoffset",
+      "stroke-linecap",
+      "stroke-linejoin",
+      "stroke-miterlimit",
+      "stroke-opacity",
+      "stroke-width",
       "tab-size",
       "table-layout",
       "text-align",
       "text-align-all",
       "text-align-last",
+      "text-anchor",
       "text-combine-upright",
       "text-decoration",
       "text-decoration-color",
       "text-decoration-line",
+      "text-decoration-skip",
+      "text-decoration-skip-ink",
       "text-decoration-style",
+      "text-decoration-thickness",
       "text-emphasis",
       "text-emphasis-color",
       "text-emphasis-position",
@@ -11281,20 +11039,37 @@ var require_scss = __commonJS({
       "text-overflow",
       "text-rendering",
       "text-shadow",
+      "text-size-adjust",
       "text-transform",
+      "text-underline-offset",
       "text-underline-position",
+      "text-wrap",
+      "text-wrap-mode",
+      "text-wrap-style",
+      "timeline-scope",
       "top",
+      "touch-action",
       "transform",
       "transform-box",
       "transform-origin",
       "transform-style",
       "transition",
+      "transition-behavior",
       "transition-delay",
       "transition-duration",
       "transition-property",
       "transition-timing-function",
+      "translate",
       "unicode-bidi",
+      "user-modify",
+      "user-select",
+      "vector-effect",
       "vertical-align",
+      "view-timeline",
+      "view-timeline-axis",
+      "view-timeline-inset",
+      "view-timeline-name",
+      "view-transition-name",
       "visibility",
       "voice-balance",
       "voice-duration",
@@ -11305,6 +11080,7 @@ var require_scss = __commonJS({
       "voice-stress",
       "voice-volume",
       "white-space",
+      "white-space-collapse",
       "widows",
       "width",
       "will-change",
@@ -11312,10 +11088,11 @@ var require_scss = __commonJS({
       "word-spacing",
       "word-wrap",
       "writing-mode",
-      "z-index"
-      // reverse makes sure longer attributes `font-weight` are matched fully
-      // instead of getting false positives on say `font`
-    ].reverse();
+      "x",
+      "y",
+      "z-index",
+      "zoom"
+    ].sort().reverse();
     function scss(hljs) {
       const modes = MODES(hljs);
       const PSEUDO_ELEMENTS$1 = PSEUDO_ELEMENTS;
@@ -11470,19 +11247,19 @@ var require_sql = __commonJS({
       const regex2 = hljs.regex;
       const COMMENT_MODE = hljs.COMMENT("--", "$");
       const STRING = {
-        className: "string",
+        scope: "string",
         variants: [
           {
             begin: /'/,
             end: /'/,
-            contains: [{ begin: /''/ }]
+            contains: [{ match: /''/ }]
           }
         ]
       };
       const QUOTED_IDENTIFIER = {
         begin: /"/,
         end: /"/,
-        contains: [{ begin: /""/ }]
+        contains: [{ match: /""/ }]
       };
       const LITERALS = [
         "true",
@@ -12035,18 +11812,32 @@ var require_sql = __commonJS({
         return !RESERVED_FUNCTIONS.includes(keyword);
       });
       const VARIABLE = {
-        className: "variable",
-        begin: /@[a-z0-9][a-z0-9_]*/
+        scope: "variable",
+        match: /@[a-z0-9][a-z0-9_]*/
       };
       const OPERATOR = {
-        className: "operator",
-        begin: /[-+*/=%^~]|&&?|\|\|?|!=?|<(?:=>?|<|>)?|>[>=]?/,
+        scope: "operator",
+        match: /[-+*/=%^~]|&&?|\|\|?|!=?|<(?:=>?|<|>)?|>[>=]?/,
         relevance: 0
       };
       const FUNCTION_CALL = {
-        begin: regex2.concat(/\b/, regex2.either(...FUNCTIONS), /\s*\(/),
+        match: regex2.concat(/\b/, regex2.either(...FUNCTIONS), /\s*\(/),
         relevance: 0,
         keywords: { built_in: FUNCTIONS }
+      };
+      function kws_to_regex(list2) {
+        return regex2.concat(
+          /\b/,
+          regex2.either(...list2.map((kw) => {
+            return kw.replace(/\s+/, "\\s+");
+          })),
+          /\b/
+        );
+      }
+      const MULTI_WORD_KEYWORDS = {
+        scope: "keyword",
+        match: kws_to_regex(COMBOS),
+        relevance: 0
       };
       function reduceRelevancy(list2, {
         exceptions,
@@ -12071,26 +11862,17 @@ var require_sql = __commonJS({
         illegal: /[{}]|<\//,
         keywords: {
           $pattern: /\b[\w\.]+/,
-          keyword: reduceRelevancy(KEYWORDS, { when: (x) => x.length < 3 }),
+          keyword: reduceRelevancy(KEYWORDS, { when: (x2) => x2.length < 3 }),
           literal: LITERALS,
           type: TYPES,
           built_in: POSSIBLE_WITHOUT_PARENS
         },
         contains: [
           {
-            begin: regex2.either(...COMBOS),
-            relevance: 0,
-            keywords: {
-              $pattern: /[\w\.]+/,
-              keyword: KEYWORDS.concat(COMBOS),
-              literal: LITERALS,
-              type: TYPES
-            }
+            scope: "type",
+            match: kws_to_regex(MULTI_WORD_TYPES)
           },
-          {
-            className: "type",
-            begin: regex2.either(...MULTI_WORD_TYPES)
-          },
+          MULTI_WORD_KEYWORDS,
           FUNCTION_CALL,
           VARIABLE,
           STRING,
@@ -12110,17 +11892,15 @@ var require_sql = __commonJS({
 var require_swift = __commonJS({
   "node_modules/highlight.js/lib/languages/swift.js"(exports, module) {
     function source(re) {
-      if (!re)
-        return null;
-      if (typeof re === "string")
-        return re;
+      if (!re) return null;
+      if (typeof re === "string") return re;
       return re.source;
     }
     function lookahead(re) {
       return concat("(?=", re, ")");
     }
     function concat(...args) {
-      const joined = args.map((x) => source(x)).join("");
+      const joined = args.map((x2) => source(x2)).join("");
       return joined;
     }
     function stripOptionsFromArgs(args) {
@@ -12134,7 +11914,7 @@ var require_swift = __commonJS({
     }
     function either(...args) {
       const opts = stripOptionsFromArgs(args);
-      const joined = "(" + (opts.capture ? "" : "?:") + args.map((x) => source(x)).join("|") + ")";
+      const joined = "(" + (opts.capture ? "" : "?:") + args.map((x2) => source(x2)).join("|") + ")";
       return joined;
     }
     var keywordWrapper = (keyword) => concat(
@@ -12245,6 +12025,7 @@ var require_swift = __commonJS({
       // contextual
       "override",
       // contextual
+      "package",
       "postfix",
       // contextual
       "precedencegroup",
@@ -12687,7 +12468,7 @@ var require_swift = __commonJS({
       };
       const KEYWORD_ATTRIBUTE = {
         scope: "keyword",
-        match: concat(/@/, either(...keywordAttributes))
+        match: concat(/@/, either(...keywordAttributes), lookahead(either(/\(/, /\s+/)))
       };
       const USER_DEFINED_ATTRIBUTE = {
         scope: "meta",
@@ -12874,6 +12655,61 @@ var require_swift = __commonJS({
         ],
         end: /}/
       };
+      const CLASS_FUNC_DECLARATION = {
+        match: [
+          /class\b/,
+          /\s+/,
+          /func\b/,
+          /\s+/,
+          /\b[A-Za-z_][A-Za-z0-9_]*\b/
+        ],
+        scope: {
+          1: "keyword",
+          3: "keyword",
+          5: "title.function"
+        }
+      };
+      const CLASS_VAR_DECLARATION = {
+        match: [
+          /class\b/,
+          /\s+/,
+          /var\b/
+        ],
+        scope: {
+          1: "keyword",
+          3: "keyword"
+        }
+      };
+      const TYPE_DECLARATION = {
+        begin: [
+          /(struct|protocol|class|extension|enum|actor)/,
+          /\s+/,
+          identifier,
+          /\s*/
+        ],
+        beginScope: {
+          1: "keyword",
+          3: "title.class"
+        },
+        keywords: KEYWORDS,
+        contains: [
+          GENERIC_PARAMETERS,
+          ...KEYWORD_MODES,
+          {
+            begin: /:/,
+            end: /\{/,
+            keywords: KEYWORDS,
+            contains: [
+              {
+                scope: "title.class.inherited",
+                match: typeIdentifier
+              },
+              ...KEYWORD_MODES
+            ],
+            relevance: 0
+          }
+        ]
+      };
       for (const variant of STRING.variants) {
         const interpolation = variant.contains.find((mode) => mode.label === "interpol");
         interpolation.keywords = KEYWORDS;
@@ -12904,19 +12740,9 @@ var require_swift = __commonJS({
           ...COMMENTS,
           FUNCTION_OR_MACRO,
           INIT_SUBSCRIPT,
-          {
-            beginKeywords: "struct protocol class extension enum actor",
-            end: "\\{",
-            excludeEnd: true,
-            keywords: KEYWORDS,
-            contains: [
-              hljs.inherit(hljs.TITLE_MODE, {
-                className: "title.class",
-                begin: /[A-Za-z$_][\u00C0-\u02B80-9A-Za-z$_]*/
-              }),
-              ...KEYWORD_MODES
-            ]
-          },
+          CLASS_FUNC_DECLARATION,
+          CLASS_VAR_DECLARATION,
+          TYPE_DECLARATION,
           OPERATOR_DECLARATION,
           PRECEDENCEGROUP,
           {
@@ -12951,14 +12777,15 @@ var require_yaml = __commonJS({
       const KEY = {
         className: "attr",
         variants: [
-          { begin: "\\w[\\w :\\/.-]*:(?=[ 	]|$)" },
+          // added brackets support and special char support
+          { begin: /[\w*@][\w*@ :()\./-]*:(?=[ \t]|$)/ },
           {
-            // double quoted keys
-            begin: '"\\w[\\w :\\/.-]*":(?=[ 	]|$)'
+            // double quoted keys - with brackets and special char support
+            begin: /"[\w*@][\w*@ :()\./-]*":(?=[ \t]|$)/
           },
           {
-            // single quoted keys
-            begin: "'\\w[\\w :\\/.-]*':(?=[ 	]|$)"
+            // single quoted keys - with brackets and special char support
+            begin: /'[\w*@][\w*@ :()\./-]*':(?=[ \t]|$)/
           }
         ]
       };
@@ -12977,14 +12804,23 @@ var require_yaml = __commonJS({
           }
         ]
       };
+      const SINGLE_QUOTE_STRING = {
+        className: "string",
+        relevance: 0,
+        begin: /'/,
+        end: /'/,
+        contains: [
+          {
+            match: /''/,
+            scope: "char.escape",
+            relevance: 0
+          }
+        ]
+      };
       const STRING = {
         className: "string",
         relevance: 0,
         variants: [
-          {
-            begin: /'/,
-            end: /'/
-          },
           {
             begin: /"/,
             end: /"/
@@ -12999,7 +12835,13 @@ var require_yaml = __commonJS({
       const CONTAINER_STRING = hljs.inherit(STRING, { variants: [
         {
           begin: /'/,
-          end: /'/
+          end: /'/,
+          contains: [
+            {
+              begin: /''/,
+              relevance: 0
+            }
+          ]
         },
         {
           begin: /"/,
@@ -13114,6 +12956,7 @@ var require_yaml = __commonJS({
         },
         OBJECT,
         ARRAY,
+        SINGLE_QUOTE_STRING,
         STRING
       ];
       const VALUE_MODES = [...MODES];
@@ -13177,7 +13020,9 @@ var require_typescript = __commonJS({
       "import",
       "from",
       "export",
-      "extends"
+      "extends",
+      // It's reached stage 3, which is "recommended for implementation":
+      "using"
     ];
     var LITERALS = [
       "true",
@@ -13324,14 +13169,14 @@ var require_typescript = __commonJS({
               response.ignoreMatch();
             }
           }
-          let m;
+          let m2;
           const afterMatch = match.input.substring(afterMatchIndex);
-          if (m = afterMatch.match(/^\s*=/)) {
+          if (m2 = afterMatch.match(/^\s*=/)) {
             response.ignoreMatch();
             return;
           }
-          if (m = afterMatch.match(/^\s+extends\s+/)) {
-            if (m.index === 0) {
+          if (m2 = afterMatch.match(/^\s+extends\s+/)) {
+            if (m2.index === 0) {
               response.ignoreMatch();
               return;
             }
@@ -13375,7 +13220,7 @@ var require_typescript = __commonJS({
         // defined later
       };
       const HTML_TEMPLATE = {
-        begin: "html`",
+        begin: ".?html`",
         end: "",
         starts: {
           end: "`",
@@ -13388,7 +13233,7 @@ var require_typescript = __commonJS({
         }
       };
       const CSS_TEMPLATE = {
-        begin: "css`",
+        begin: ".?css`",
         end: "",
         starts: {
           end: "`",
@@ -13401,7 +13246,7 @@ var require_typescript = __commonJS({
         }
       };
       const GRAPHQL_TEMPLATE = {
-        begin: "gql`",
+        begin: ".?gql`",
         end: "",
         starts: {
           end: "`",
@@ -13497,7 +13342,7 @@ var require_typescript = __commonJS({
       const PARAMS_CONTAINS = SUBST_AND_COMMENTS.concat([
         // eat recursive parens in sub expressions
         {
-          begin: /\(/,
+          begin: /(\s*)\(/,
           end: /\)/,
           keywords: KEYWORDS$1,
           contains: ["self"].concat(SUBST_AND_COMMENTS)
@@ -13505,7 +13350,9 @@ var require_typescript = __commonJS({
       ]);
       const PARAMS = {
         className: "params",
-        begin: /\(/,
+        // convert this to negative lookbehind in v12
+        begin: /(\s*)\(/,
+        // to match the parms with
         end: /\)/,
         excludeBegin: true,
         excludeEnd: true,
@@ -13618,9 +13465,9 @@ var require_typescript = __commonJS({
             ...BUILT_IN_GLOBALS,
             "super",
             "import"
-          ]),
+          ].map((x2) => `${x2}\\s*\\(`)),
           IDENT_RE$1,
-          regex2.lookahead(/\(/)
+          regex2.lookahead(/\s*\(/)
         ),
         className: "title.function",
         relevance: 0
@@ -13701,8 +13548,8 @@ var require_typescript = __commonJS({
           NUMBER,
           CLASS_REFERENCE,
           {
-            className: "attr",
-            begin: IDENT_RE$1 + regex2.lookahead(":"),
+            scope: "attr",
+            match: IDENT_RE$1 + regex2.lookahead(":"),
             relevance: 0
           },
           FUNCTION_VARIABLE,
@@ -13736,7 +13583,7 @@ var require_typescript = __commonJS({
                         skip: true
                       },
                       {
-                        begin: /\(/,
+                        begin: /(\s*)\(/,
                         end: /\)/,
                         excludeBegin: true,
                         excludeEnd: true,
@@ -13830,6 +13677,7 @@ var require_typescript = __commonJS({
       };
     }
     function typescript(hljs) {
+      const regex2 = hljs.regex;
       const tsLanguage = javascript(hljs);
       const IDENT_RE$1 = IDENT_RE;
       const TYPES2 = [
@@ -13845,10 +13693,15 @@ var require_typescript = __commonJS({
         "unknown"
       ];
       const NAMESPACE = {
-        beginKeywords: "namespace",
-        end: /\{/,
-        excludeEnd: true,
-        contains: [tsLanguage.exports.CLASS_REFERENCE]
+        begin: [
+          /namespace/,
+          /\s+/,
+          hljs.IDENT_RE
+        ],
+        beginScope: {
+          1: "keyword",
+          3: "title.class"
+        }
       };
       const INTERFACE = {
         beginKeywords: "interface",
@@ -13867,7 +13720,7 @@ var require_typescript = __commonJS({
       };
       const TS_SPECIFIC_KEYWORDS = [
         "type",
-        "namespace",
+        // "namespace",
         "interface",
         "public",
         "private",
@@ -13877,7 +13730,8 @@ var require_typescript = __commonJS({
         "abstract",
         "readonly",
         "enum",
-        "override"
+        "override",
+        "satisfies"
       ];
       const KEYWORDS$1 = {
         $pattern: IDENT_RE,
@@ -13891,7 +13745,7 @@ var require_typescript = __commonJS({
         begin: "@" + IDENT_RE$1
       };
       const swapMode = (mode, label, replacement) => {
-        const indx = mode.contains.findIndex((m) => m.label === label);
+        const indx = mode.contains.findIndex((m2) => m2.label === label);
         if (indx === -1) {
           throw new Error("can not find mode to replace");
         }
@@ -13899,14 +13753,30 @@ var require_typescript = __commonJS({
       };
       Object.assign(tsLanguage.keywords, KEYWORDS$1);
       tsLanguage.exports.PARAMS_CONTAINS.push(DECORATOR);
+      const ATTRIBUTE_HIGHLIGHT = tsLanguage.contains.find((c) => c.scope === "attr");
+      const OPTIONAL_KEY_OR_ARGUMENT = Object.assign(
+        {},
+        ATTRIBUTE_HIGHLIGHT,
+        { match: regex2.concat(IDENT_RE$1, regex2.lookahead(/\s*\?:/)) }
+      );
+      tsLanguage.exports.PARAMS_CONTAINS.push([
+        tsLanguage.exports.CLASS_REFERENCE,
+        // class reference for highlighting the params types
+        ATTRIBUTE_HIGHLIGHT,
+        // highlight the params key
+        OPTIONAL_KEY_OR_ARGUMENT
+        // Added for optional property assignment highlighting
+      ]);
       tsLanguage.contains = tsLanguage.contains.concat([
         DECORATOR,
         NAMESPACE,
-        INTERFACE
+        INTERFACE,
+        OPTIONAL_KEY_OR_ARGUMENT
+        // Added for optional property assignment highlighting
       ]);
       swapMode(tsLanguage, "shebang", hljs.SHEBANG());
       swapMode(tsLanguage, "use_strict", USE_STRICT);
-      const functionDeclaration = tsLanguage.contains.find((m) => m.label === "func.def");
+      const functionDeclaration = tsLanguage.contains.find((m2) => m2.label === "func.def");
       functionDeclaration.relevance = 0;
       Object.assign(tsLanguage, {
         name: "TypeScript",
@@ -14233,8 +14103,985 @@ var require_common = __commonJS({
   }
 });
 
-// lib/index.js
-var import_dompurify2 = __toESM(require_purify(), 1);
+// node_modules/dompurify/dist/purify.es.mjs
+var {
+  entries,
+  setPrototypeOf,
+  isFrozen,
+  getPrototypeOf,
+  getOwnPropertyDescriptor
+} = Object;
+var {
+  freeze,
+  seal,
+  create
+} = Object;
+var {
+  apply,
+  construct
+} = typeof Reflect !== "undefined" && Reflect;
+if (!freeze) {
+  freeze = function freeze2(x2) {
+    return x2;
+  };
+}
+if (!seal) {
+  seal = function seal2(x2) {
+    return x2;
+  };
+}
+if (!apply) {
+  apply = function apply2(fun, thisValue, args) {
+    return fun.apply(thisValue, args);
+  };
+}
+if (!construct) {
+  construct = function construct2(Func, args) {
+    return new Func(...args);
+  };
+}
+var arrayForEach = unapply(Array.prototype.forEach);
+var arrayLastIndexOf = unapply(Array.prototype.lastIndexOf);
+var arrayPop = unapply(Array.prototype.pop);
+var arrayPush = unapply(Array.prototype.push);
+var arraySplice = unapply(Array.prototype.splice);
+var stringToLowerCase = unapply(String.prototype.toLowerCase);
+var stringToString = unapply(String.prototype.toString);
+var stringMatch = unapply(String.prototype.match);
+var stringReplace = unapply(String.prototype.replace);
+var stringIndexOf = unapply(String.prototype.indexOf);
+var stringTrim = unapply(String.prototype.trim);
+var objectHasOwnProperty = unapply(Object.prototype.hasOwnProperty);
+var regExpTest = unapply(RegExp.prototype.test);
+var typeErrorCreate = unconstruct(TypeError);
+function unapply(func) {
+  return function(thisArg) {
+    if (thisArg instanceof RegExp) {
+      thisArg.lastIndex = 0;
+    }
+    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+    return apply(func, thisArg, args);
+  };
+}
+function unconstruct(func) {
+  return function() {
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+    return construct(func, args);
+  };
+}
+function addToSet(set, array) {
+  let transformCaseFunc = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : stringToLowerCase;
+  if (setPrototypeOf) {
+    setPrototypeOf(set, null);
+  }
+  let l = array.length;
+  while (l--) {
+    let element = array[l];
+    if (typeof element === "string") {
+      const lcElement = transformCaseFunc(element);
+      if (lcElement !== element) {
+        if (!isFrozen(array)) {
+          array[l] = lcElement;
+        }
+        element = lcElement;
+      }
+    }
+    set[element] = true;
+  }
+  return set;
+}
+function cleanArray(array) {
+  for (let index = 0; index < array.length; index++) {
+    const isPropertyExist = objectHasOwnProperty(array, index);
+    if (!isPropertyExist) {
+      array[index] = null;
+    }
+  }
+  return array;
+}
+function clone(object) {
+  const newObject = create(null);
+  for (const [property, value] of entries(object)) {
+    const isPropertyExist = objectHasOwnProperty(object, property);
+    if (isPropertyExist) {
+      if (Array.isArray(value)) {
+        newObject[property] = cleanArray(value);
+      } else if (value && typeof value === "object" && value.constructor === Object) {
+        newObject[property] = clone(value);
+      } else {
+        newObject[property] = value;
+      }
+    }
+  }
+  return newObject;
+}
+function lookupGetter(object, prop) {
+  while (object !== null) {
+    const desc = getOwnPropertyDescriptor(object, prop);
+    if (desc) {
+      if (desc.get) {
+        return unapply(desc.get);
+      }
+      if (typeof desc.value === "function") {
+        return unapply(desc.value);
+      }
+    }
+    object = getPrototypeOf(object);
+  }
+  function fallbackValue() {
+    return null;
+  }
+  return fallbackValue;
+}
+var html$1 = freeze(["a", "abbr", "acronym", "address", "area", "article", "aside", "audio", "b", "bdi", "bdo", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "content", "data", "datalist", "dd", "decorator", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "fieldset", "figcaption", "figure", "font", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "img", "input", "ins", "kbd", "label", "legend", "li", "main", "map", "mark", "marquee", "menu", "menuitem", "meter", "nav", "nobr", "ol", "optgroup", "option", "output", "p", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "section", "select", "shadow", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "tr", "track", "tt", "u", "ul", "var", "video", "wbr"]);
+var svg$1 = freeze(["svg", "a", "altglyph", "altglyphdef", "altglyphitem", "animatecolor", "animatemotion", "animatetransform", "circle", "clippath", "defs", "desc", "ellipse", "filter", "font", "g", "glyph", "glyphref", "hkern", "image", "line", "lineargradient", "marker", "mask", "metadata", "mpath", "path", "pattern", "polygon", "polyline", "radialgradient", "rect", "stop", "style", "switch", "symbol", "text", "textpath", "title", "tref", "tspan", "view", "vkern"]);
+var svgFilters = freeze(["feBlend", "feColorMatrix", "feComponentTransfer", "feComposite", "feConvolveMatrix", "feDiffuseLighting", "feDisplacementMap", "feDistantLight", "feDropShadow", "feFlood", "feFuncA", "feFuncB", "feFuncG", "feFuncR", "feGaussianBlur", "feImage", "feMerge", "feMergeNode", "feMorphology", "feOffset", "fePointLight", "feSpecularLighting", "feSpotLight", "feTile", "feTurbulence"]);
+var svgDisallowed = freeze(["animate", "color-profile", "cursor", "discard", "font-face", "font-face-format", "font-face-name", "font-face-src", "font-face-uri", "foreignobject", "hatch", "hatchpath", "mesh", "meshgradient", "meshpatch", "meshrow", "missing-glyph", "script", "set", "solidcolor", "unknown", "use"]);
+var mathMl$1 = freeze(["math", "menclose", "merror", "mfenced", "mfrac", "mglyph", "mi", "mlabeledtr", "mmultiscripts", "mn", "mo", "mover", "mpadded", "mphantom", "mroot", "mrow", "ms", "mspace", "msqrt", "mstyle", "msub", "msup", "msubsup", "mtable", "mtd", "mtext", "mtr", "munder", "munderover", "mprescripts"]);
+var mathMlDisallowed = freeze(["maction", "maligngroup", "malignmark", "mlongdiv", "mscarries", "mscarry", "msgroup", "mstack", "msline", "msrow", "semantics", "annotation", "annotation-xml", "mprescripts", "none"]);
+var text = freeze(["#text"]);
+var html = freeze(["accept", "action", "align", "alt", "autocapitalize", "autocomplete", "autopictureinpicture", "autoplay", "background", "bgcolor", "border", "capture", "cellpadding", "cellspacing", "checked", "cite", "class", "clear", "color", "cols", "colspan", "controls", "controlslist", "coords", "crossorigin", "datetime", "decoding", "default", "dir", "disabled", "disablepictureinpicture", "disableremoteplayback", "download", "draggable", "enctype", "enterkeyhint", "face", "for", "headers", "height", "hidden", "high", "href", "hreflang", "id", "inputmode", "integrity", "ismap", "kind", "label", "lang", "list", "loading", "loop", "low", "max", "maxlength", "media", "method", "min", "minlength", "multiple", "muted", "name", "nonce", "noshade", "novalidate", "nowrap", "open", "optimum", "pattern", "placeholder", "playsinline", "popover", "popovertarget", "popovertargetaction", "poster", "preload", "pubdate", "radiogroup", "readonly", "rel", "required", "rev", "reversed", "role", "rows", "rowspan", "spellcheck", "scope", "selected", "shape", "size", "sizes", "span", "srclang", "start", "src", "srcset", "step", "style", "summary", "tabindex", "title", "translate", "type", "usemap", "valign", "value", "width", "wrap", "xmlns", "slot"]);
+var svg = freeze(["accent-height", "accumulate", "additive", "alignment-baseline", "amplitude", "ascent", "attributename", "attributetype", "azimuth", "basefrequency", "baseline-shift", "begin", "bias", "by", "class", "clip", "clippathunits", "clip-path", "clip-rule", "color", "color-interpolation", "color-interpolation-filters", "color-profile", "color-rendering", "cx", "cy", "d", "dx", "dy", "diffuseconstant", "direction", "display", "divisor", "dur", "edgemode", "elevation", "end", "exponent", "fill", "fill-opacity", "fill-rule", "filter", "filterunits", "flood-color", "flood-opacity", "font-family", "font-size", "font-size-adjust", "font-stretch", "font-style", "font-variant", "font-weight", "fx", "fy", "g1", "g2", "glyph-name", "glyphref", "gradientunits", "gradienttransform", "height", "href", "id", "image-rendering", "in", "in2", "intercept", "k", "k1", "k2", "k3", "k4", "kerning", "keypoints", "keysplines", "keytimes", "lang", "lengthadjust", "letter-spacing", "kernelmatrix", "kernelunitlength", "lighting-color", "local", "marker-end", "marker-mid", "marker-start", "markerheight", "markerunits", "markerwidth", "maskcontentunits", "maskunits", "max", "mask", "media", "method", "mode", "min", "name", "numoctaves", "offset", "operator", "opacity", "order", "orient", "orientation", "origin", "overflow", "paint-order", "path", "pathlength", "patterncontentunits", "patterntransform", "patternunits", "points", "preservealpha", "preserveaspectratio", "primitiveunits", "r", "rx", "ry", "radius", "refx", "refy", "repeatcount", "repeatdur", "restart", "result", "rotate", "scale", "seed", "shape-rendering", "slope", "specularconstant", "specularexponent", "spreadmethod", "startoffset", "stddeviation", "stitchtiles", "stop-color", "stop-opacity", "stroke-dasharray", "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke", "stroke-width", "style", "surfacescale", "systemlanguage", "tabindex", "tablevalues", "targetx", "targety", "transform", "transform-origin", "text-anchor", "text-decoration", "text-rendering", "textlength", "type", "u1", "u2", "unicode", "values", "viewbox", "visibility", "version", "vert-adv-y", "vert-origin-x", "vert-origin-y", "width", "word-spacing", "wrap", "writing-mode", "xchannelselector", "ychannelselector", "x", "x1", "x2", "xmlns", "y", "y1", "y2", "z", "zoomandpan"]);
+var mathMl = freeze(["accent", "accentunder", "align", "bevelled", "close", "columnsalign", "columnlines", "columnspan", "denomalign", "depth", "dir", "display", "displaystyle", "encoding", "fence", "frame", "height", "href", "id", "largeop", "length", "linethickness", "lspace", "lquote", "mathbackground", "mathcolor", "mathsize", "mathvariant", "maxsize", "minsize", "movablelimits", "notation", "numalign", "open", "rowalign", "rowlines", "rowspacing", "rowspan", "rspace", "rquote", "scriptlevel", "scriptminsize", "scriptsizemultiplier", "selection", "separator", "separators", "stretchy", "subscriptshift", "supscriptshift", "symmetric", "voffset", "width", "xmlns"]);
+var xml = freeze(["xlink:href", "xml:id", "xlink:title", "xml:space", "xmlns:xlink"]);
+var MUSTACHE_EXPR = seal(/\{\{[\w\W]*|[\w\W]*\}\}/gm);
+var ERB_EXPR = seal(/<%[\w\W]*|[\w\W]*%>/gm);
+var TMPLIT_EXPR = seal(/\$\{[\w\W]*/gm);
+var DATA_ATTR = seal(/^data-[\-\w.\u00B7-\uFFFF]+$/);
+var ARIA_ATTR = seal(/^aria-[\-\w]+$/);
+var IS_ALLOWED_URI = seal(
+  /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp|matrix):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i
+  // eslint-disable-line no-useless-escape
+);
+var IS_SCRIPT_OR_DATA = seal(/^(?:\w+script|data):/i);
+var ATTR_WHITESPACE = seal(
+  /[\u0000-\u0020\u00A0\u1680\u180E\u2000-\u2029\u205F\u3000]/g
+  // eslint-disable-line no-control-regex
+);
+var DOCTYPE_NAME = seal(/^html$/i);
+var CUSTOM_ELEMENT = seal(/^[a-z][.\w]*(-[.\w]+)+$/i);
+var EXPRESSIONS = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  ARIA_ATTR,
+  ATTR_WHITESPACE,
+  CUSTOM_ELEMENT,
+  DATA_ATTR,
+  DOCTYPE_NAME,
+  ERB_EXPR,
+  IS_ALLOWED_URI,
+  IS_SCRIPT_OR_DATA,
+  MUSTACHE_EXPR,
+  TMPLIT_EXPR
+});
+var NODE_TYPE = {
+  element: 1,
+  attribute: 2,
+  text: 3,
+  cdataSection: 4,
+  entityReference: 5,
+  // Deprecated
+  entityNode: 6,
+  // Deprecated
+  progressingInstruction: 7,
+  comment: 8,
+  document: 9,
+  documentType: 10,
+  documentFragment: 11,
+  notation: 12
+  // Deprecated
+};
+var getGlobal = function getGlobal2() {
+  return typeof window === "undefined" ? null : window;
+};
+var _createTrustedTypesPolicy = function _createTrustedTypesPolicy2(trustedTypes, purifyHostElement) {
+  if (typeof trustedTypes !== "object" || typeof trustedTypes.createPolicy !== "function") {
+    return null;
+  }
+  let suffix = null;
+  const ATTR_NAME = "data-tt-policy-suffix";
+  if (purifyHostElement && purifyHostElement.hasAttribute(ATTR_NAME)) {
+    suffix = purifyHostElement.getAttribute(ATTR_NAME);
+  }
+  const policyName = "dompurify" + (suffix ? "#" + suffix : "");
+  try {
+    return trustedTypes.createPolicy(policyName, {
+      createHTML(html3) {
+        return html3;
+      },
+      createScriptURL(scriptUrl) {
+        return scriptUrl;
+      }
+    });
+  } catch (_) {
+    console.warn("TrustedTypes policy " + policyName + " could not be created.");
+    return null;
+  }
+};
+var _createHooksMap = function _createHooksMap2() {
+  return {
+    afterSanitizeAttributes: [],
+    afterSanitizeElements: [],
+    afterSanitizeShadowDOM: [],
+    beforeSanitizeAttributes: [],
+    beforeSanitizeElements: [],
+    beforeSanitizeShadowDOM: [],
+    uponSanitizeAttribute: [],
+    uponSanitizeElement: [],
+    uponSanitizeShadowNode: []
+  };
+};
+function createDOMPurify() {
+  let window2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : getGlobal();
+  const DOMPurify = (root) => createDOMPurify(root);
+  DOMPurify.version = "3.2.6";
+  DOMPurify.removed = [];
+  if (!window2 || !window2.document || window2.document.nodeType !== NODE_TYPE.document || !window2.Element) {
+    DOMPurify.isSupported = false;
+    return DOMPurify;
+  }
+  let {
+    document: document2
+  } = window2;
+  const originalDocument = document2;
+  const currentScript = originalDocument.currentScript;
+  const {
+    DocumentFragment,
+    HTMLTemplateElement,
+    Node,
+    Element,
+    NodeFilter,
+    NamedNodeMap = window2.NamedNodeMap || window2.MozNamedAttrMap,
+    HTMLFormElement,
+    DOMParser,
+    trustedTypes
+  } = window2;
+  const ElementPrototype = Element.prototype;
+  const cloneNode = lookupGetter(ElementPrototype, "cloneNode");
+  const remove = lookupGetter(ElementPrototype, "remove");
+  const getNextSibling = lookupGetter(ElementPrototype, "nextSibling");
+  const getChildNodes = lookupGetter(ElementPrototype, "childNodes");
+  const getParentNode = lookupGetter(ElementPrototype, "parentNode");
+  if (typeof HTMLTemplateElement === "function") {
+    const template = document2.createElement("template");
+    if (template.content && template.content.ownerDocument) {
+      document2 = template.content.ownerDocument;
+    }
+  }
+  let trustedTypesPolicy;
+  let emptyHTML = "";
+  const {
+    implementation,
+    createNodeIterator,
+    createDocumentFragment,
+    getElementsByTagName
+  } = document2;
+  const {
+    importNode
+  } = originalDocument;
+  let hooks = _createHooksMap();
+  DOMPurify.isSupported = typeof entries === "function" && typeof getParentNode === "function" && implementation && implementation.createHTMLDocument !== void 0;
+  const {
+    MUSTACHE_EXPR: MUSTACHE_EXPR2,
+    ERB_EXPR: ERB_EXPR2,
+    TMPLIT_EXPR: TMPLIT_EXPR2,
+    DATA_ATTR: DATA_ATTR2,
+    ARIA_ATTR: ARIA_ATTR2,
+    IS_SCRIPT_OR_DATA: IS_SCRIPT_OR_DATA2,
+    ATTR_WHITESPACE: ATTR_WHITESPACE2,
+    CUSTOM_ELEMENT: CUSTOM_ELEMENT2
+  } = EXPRESSIONS;
+  let {
+    IS_ALLOWED_URI: IS_ALLOWED_URI$1
+  } = EXPRESSIONS;
+  let ALLOWED_TAGS = null;
+  const DEFAULT_ALLOWED_TAGS = addToSet({}, [...html$1, ...svg$1, ...svgFilters, ...mathMl$1, ...text]);
+  let ALLOWED_ATTR = null;
+  const DEFAULT_ALLOWED_ATTR = addToSet({}, [...html, ...svg, ...mathMl, ...xml]);
+  let CUSTOM_ELEMENT_HANDLING = Object.seal(create(null, {
+    tagNameCheck: {
+      writable: true,
+      configurable: false,
+      enumerable: true,
+      value: null
+    },
+    attributeNameCheck: {
+      writable: true,
+      configurable: false,
+      enumerable: true,
+      value: null
+    },
+    allowCustomizedBuiltInElements: {
+      writable: true,
+      configurable: false,
+      enumerable: true,
+      value: false
+    }
+  }));
+  let FORBID_TAGS = null;
+  let FORBID_ATTR = null;
+  let ALLOW_ARIA_ATTR = true;
+  let ALLOW_DATA_ATTR = true;
+  let ALLOW_UNKNOWN_PROTOCOLS = false;
+  let ALLOW_SELF_CLOSE_IN_ATTR = true;
+  let SAFE_FOR_TEMPLATES = false;
+  let SAFE_FOR_XML = true;
+  let WHOLE_DOCUMENT = false;
+  let SET_CONFIG = false;
+  let FORCE_BODY = false;
+  let RETURN_DOM = false;
+  let RETURN_DOM_FRAGMENT = false;
+  let RETURN_TRUSTED_TYPE = false;
+  let SANITIZE_DOM = true;
+  let SANITIZE_NAMED_PROPS = false;
+  const SANITIZE_NAMED_PROPS_PREFIX = "user-content-";
+  let KEEP_CONTENT = true;
+  let IN_PLACE = false;
+  let USE_PROFILES = {};
+  let FORBID_CONTENTS = null;
+  const DEFAULT_FORBID_CONTENTS = addToSet({}, ["annotation-xml", "audio", "colgroup", "desc", "foreignobject", "head", "iframe", "math", "mi", "mn", "mo", "ms", "mtext", "noembed", "noframes", "noscript", "plaintext", "script", "style", "svg", "template", "thead", "title", "video", "xmp"]);
+  let DATA_URI_TAGS = null;
+  const DEFAULT_DATA_URI_TAGS = addToSet({}, ["audio", "video", "img", "source", "image", "track"]);
+  let URI_SAFE_ATTRIBUTES = null;
+  const DEFAULT_URI_SAFE_ATTRIBUTES = addToSet({}, ["alt", "class", "for", "id", "label", "name", "pattern", "placeholder", "role", "summary", "title", "value", "style", "xmlns"]);
+  const MATHML_NAMESPACE = "http://www.w3.org/1998/Math/MathML";
+  const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
+  const HTML_NAMESPACE = "http://www.w3.org/1999/xhtml";
+  let NAMESPACE = HTML_NAMESPACE;
+  let IS_EMPTY_INPUT = false;
+  let ALLOWED_NAMESPACES = null;
+  const DEFAULT_ALLOWED_NAMESPACES = addToSet({}, [MATHML_NAMESPACE, SVG_NAMESPACE, HTML_NAMESPACE], stringToString);
+  let MATHML_TEXT_INTEGRATION_POINTS = addToSet({}, ["mi", "mo", "mn", "ms", "mtext"]);
+  let HTML_INTEGRATION_POINTS = addToSet({}, ["annotation-xml"]);
+  const COMMON_SVG_AND_HTML_ELEMENTS = addToSet({}, ["title", "style", "font", "a", "script"]);
+  let PARSER_MEDIA_TYPE = null;
+  const SUPPORTED_PARSER_MEDIA_TYPES = ["application/xhtml+xml", "text/html"];
+  const DEFAULT_PARSER_MEDIA_TYPE = "text/html";
+  let transformCaseFunc = null;
+  let CONFIG = null;
+  const formElement = document2.createElement("form");
+  const isRegexOrFunction = function isRegexOrFunction2(testValue) {
+    return testValue instanceof RegExp || testValue instanceof Function;
+  };
+  const _parseConfig = function _parseConfig2() {
+    let cfg = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
+    if (CONFIG && CONFIG === cfg) {
+      return;
+    }
+    if (!cfg || typeof cfg !== "object") {
+      cfg = {};
+    }
+    cfg = clone(cfg);
+    PARSER_MEDIA_TYPE = // eslint-disable-next-line unicorn/prefer-includes
+    SUPPORTED_PARSER_MEDIA_TYPES.indexOf(cfg.PARSER_MEDIA_TYPE) === -1 ? DEFAULT_PARSER_MEDIA_TYPE : cfg.PARSER_MEDIA_TYPE;
+    transformCaseFunc = PARSER_MEDIA_TYPE === "application/xhtml+xml" ? stringToString : stringToLowerCase;
+    ALLOWED_TAGS = objectHasOwnProperty(cfg, "ALLOWED_TAGS") ? addToSet({}, cfg.ALLOWED_TAGS, transformCaseFunc) : DEFAULT_ALLOWED_TAGS;
+    ALLOWED_ATTR = objectHasOwnProperty(cfg, "ALLOWED_ATTR") ? addToSet({}, cfg.ALLOWED_ATTR, transformCaseFunc) : DEFAULT_ALLOWED_ATTR;
+    ALLOWED_NAMESPACES = objectHasOwnProperty(cfg, "ALLOWED_NAMESPACES") ? addToSet({}, cfg.ALLOWED_NAMESPACES, stringToString) : DEFAULT_ALLOWED_NAMESPACES;
+    URI_SAFE_ATTRIBUTES = objectHasOwnProperty(cfg, "ADD_URI_SAFE_ATTR") ? addToSet(clone(DEFAULT_URI_SAFE_ATTRIBUTES), cfg.ADD_URI_SAFE_ATTR, transformCaseFunc) : DEFAULT_URI_SAFE_ATTRIBUTES;
+    DATA_URI_TAGS = objectHasOwnProperty(cfg, "ADD_DATA_URI_TAGS") ? addToSet(clone(DEFAULT_DATA_URI_TAGS), cfg.ADD_DATA_URI_TAGS, transformCaseFunc) : DEFAULT_DATA_URI_TAGS;
+    FORBID_CONTENTS = objectHasOwnProperty(cfg, "FORBID_CONTENTS") ? addToSet({}, cfg.FORBID_CONTENTS, transformCaseFunc) : DEFAULT_FORBID_CONTENTS;
+    FORBID_TAGS = objectHasOwnProperty(cfg, "FORBID_TAGS") ? addToSet({}, cfg.FORBID_TAGS, transformCaseFunc) : clone({});
+    FORBID_ATTR = objectHasOwnProperty(cfg, "FORBID_ATTR") ? addToSet({}, cfg.FORBID_ATTR, transformCaseFunc) : clone({});
+    USE_PROFILES = objectHasOwnProperty(cfg, "USE_PROFILES") ? cfg.USE_PROFILES : false;
+    ALLOW_ARIA_ATTR = cfg.ALLOW_ARIA_ATTR !== false;
+    ALLOW_DATA_ATTR = cfg.ALLOW_DATA_ATTR !== false;
+    ALLOW_UNKNOWN_PROTOCOLS = cfg.ALLOW_UNKNOWN_PROTOCOLS || false;
+    ALLOW_SELF_CLOSE_IN_ATTR = cfg.ALLOW_SELF_CLOSE_IN_ATTR !== false;
+    SAFE_FOR_TEMPLATES = cfg.SAFE_FOR_TEMPLATES || false;
+    SAFE_FOR_XML = cfg.SAFE_FOR_XML !== false;
+    WHOLE_DOCUMENT = cfg.WHOLE_DOCUMENT || false;
+    RETURN_DOM = cfg.RETURN_DOM || false;
+    RETURN_DOM_FRAGMENT = cfg.RETURN_DOM_FRAGMENT || false;
+    RETURN_TRUSTED_TYPE = cfg.RETURN_TRUSTED_TYPE || false;
+    FORCE_BODY = cfg.FORCE_BODY || false;
+    SANITIZE_DOM = cfg.SANITIZE_DOM !== false;
+    SANITIZE_NAMED_PROPS = cfg.SANITIZE_NAMED_PROPS || false;
+    KEEP_CONTENT = cfg.KEEP_CONTENT !== false;
+    IN_PLACE = cfg.IN_PLACE || false;
+    IS_ALLOWED_URI$1 = cfg.ALLOWED_URI_REGEXP || IS_ALLOWED_URI;
+    NAMESPACE = cfg.NAMESPACE || HTML_NAMESPACE;
+    MATHML_TEXT_INTEGRATION_POINTS = cfg.MATHML_TEXT_INTEGRATION_POINTS || MATHML_TEXT_INTEGRATION_POINTS;
+    HTML_INTEGRATION_POINTS = cfg.HTML_INTEGRATION_POINTS || HTML_INTEGRATION_POINTS;
+    CUSTOM_ELEMENT_HANDLING = cfg.CUSTOM_ELEMENT_HANDLING || {};
+    if (cfg.CUSTOM_ELEMENT_HANDLING && isRegexOrFunction(cfg.CUSTOM_ELEMENT_HANDLING.tagNameCheck)) {
+      CUSTOM_ELEMENT_HANDLING.tagNameCheck = cfg.CUSTOM_ELEMENT_HANDLING.tagNameCheck;
+    }
+    if (cfg.CUSTOM_ELEMENT_HANDLING && isRegexOrFunction(cfg.CUSTOM_ELEMENT_HANDLING.attributeNameCheck)) {
+      CUSTOM_ELEMENT_HANDLING.attributeNameCheck = cfg.CUSTOM_ELEMENT_HANDLING.attributeNameCheck;
+    }
+    if (cfg.CUSTOM_ELEMENT_HANDLING && typeof cfg.CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements === "boolean") {
+      CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements = cfg.CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements;
+    }
+    if (SAFE_FOR_TEMPLATES) {
+      ALLOW_DATA_ATTR = false;
+    }
+    if (RETURN_DOM_FRAGMENT) {
+      RETURN_DOM = true;
+    }
+    if (USE_PROFILES) {
+      ALLOWED_TAGS = addToSet({}, text);
+      ALLOWED_ATTR = [];
+      if (USE_PROFILES.html === true) {
+        addToSet(ALLOWED_TAGS, html$1);
+        addToSet(ALLOWED_ATTR, html);
+      }
+      if (USE_PROFILES.svg === true) {
+        addToSet(ALLOWED_TAGS, svg$1);
+        addToSet(ALLOWED_ATTR, svg);
+        addToSet(ALLOWED_ATTR, xml);
+      }
+      if (USE_PROFILES.svgFilters === true) {
+        addToSet(ALLOWED_TAGS, svgFilters);
+        addToSet(ALLOWED_ATTR, svg);
+        addToSet(ALLOWED_ATTR, xml);
+      }
+      if (USE_PROFILES.mathMl === true) {
+        addToSet(ALLOWED_TAGS, mathMl$1);
+        addToSet(ALLOWED_ATTR, mathMl);
+        addToSet(ALLOWED_ATTR, xml);
+      }
+    }
+    if (cfg.ADD_TAGS) {
+      if (ALLOWED_TAGS === DEFAULT_ALLOWED_TAGS) {
+        ALLOWED_TAGS = clone(ALLOWED_TAGS);
+      }
+      addToSet(ALLOWED_TAGS, cfg.ADD_TAGS, transformCaseFunc);
+    }
+    if (cfg.ADD_ATTR) {
+      if (ALLOWED_ATTR === DEFAULT_ALLOWED_ATTR) {
+        ALLOWED_ATTR = clone(ALLOWED_ATTR);
+      }
+      addToSet(ALLOWED_ATTR, cfg.ADD_ATTR, transformCaseFunc);
+    }
+    if (cfg.ADD_URI_SAFE_ATTR) {
+      addToSet(URI_SAFE_ATTRIBUTES, cfg.ADD_URI_SAFE_ATTR, transformCaseFunc);
+    }
+    if (cfg.FORBID_CONTENTS) {
+      if (FORBID_CONTENTS === DEFAULT_FORBID_CONTENTS) {
+        FORBID_CONTENTS = clone(FORBID_CONTENTS);
+      }
+      addToSet(FORBID_CONTENTS, cfg.FORBID_CONTENTS, transformCaseFunc);
+    }
+    if (KEEP_CONTENT) {
+      ALLOWED_TAGS["#text"] = true;
+    }
+    if (WHOLE_DOCUMENT) {
+      addToSet(ALLOWED_TAGS, ["html", "head", "body"]);
+    }
+    if (ALLOWED_TAGS.table) {
+      addToSet(ALLOWED_TAGS, ["tbody"]);
+      delete FORBID_TAGS.tbody;
+    }
+    if (cfg.TRUSTED_TYPES_POLICY) {
+      if (typeof cfg.TRUSTED_TYPES_POLICY.createHTML !== "function") {
+        throw typeErrorCreate('TRUSTED_TYPES_POLICY configuration option must provide a "createHTML" hook.');
+      }
+      if (typeof cfg.TRUSTED_TYPES_POLICY.createScriptURL !== "function") {
+        throw typeErrorCreate('TRUSTED_TYPES_POLICY configuration option must provide a "createScriptURL" hook.');
+      }
+      trustedTypesPolicy = cfg.TRUSTED_TYPES_POLICY;
+      emptyHTML = trustedTypesPolicy.createHTML("");
+    } else {
+      if (trustedTypesPolicy === void 0) {
+        trustedTypesPolicy = _createTrustedTypesPolicy(trustedTypes, currentScript);
+      }
+      if (trustedTypesPolicy !== null && typeof emptyHTML === "string") {
+        emptyHTML = trustedTypesPolicy.createHTML("");
+      }
+    }
+    if (freeze) {
+      freeze(cfg);
+    }
+    CONFIG = cfg;
+  };
+  const ALL_SVG_TAGS = addToSet({}, [...svg$1, ...svgFilters, ...svgDisallowed]);
+  const ALL_MATHML_TAGS = addToSet({}, [...mathMl$1, ...mathMlDisallowed]);
+  const _checkValidNamespace = function _checkValidNamespace2(element) {
+    let parent = getParentNode(element);
+    if (!parent || !parent.tagName) {
+      parent = {
+        namespaceURI: NAMESPACE,
+        tagName: "template"
+      };
+    }
+    const tagName = stringToLowerCase(element.tagName);
+    const parentTagName = stringToLowerCase(parent.tagName);
+    if (!ALLOWED_NAMESPACES[element.namespaceURI]) {
+      return false;
+    }
+    if (element.namespaceURI === SVG_NAMESPACE) {
+      if (parent.namespaceURI === HTML_NAMESPACE) {
+        return tagName === "svg";
+      }
+      if (parent.namespaceURI === MATHML_NAMESPACE) {
+        return tagName === "svg" && (parentTagName === "annotation-xml" || MATHML_TEXT_INTEGRATION_POINTS[parentTagName]);
+      }
+      return Boolean(ALL_SVG_TAGS[tagName]);
+    }
+    if (element.namespaceURI === MATHML_NAMESPACE) {
+      if (parent.namespaceURI === HTML_NAMESPACE) {
+        return tagName === "math";
+      }
+      if (parent.namespaceURI === SVG_NAMESPACE) {
+        return tagName === "math" && HTML_INTEGRATION_POINTS[parentTagName];
+      }
+      return Boolean(ALL_MATHML_TAGS[tagName]);
+    }
+    if (element.namespaceURI === HTML_NAMESPACE) {
+      if (parent.namespaceURI === SVG_NAMESPACE && !HTML_INTEGRATION_POINTS[parentTagName]) {
+        return false;
+      }
+      if (parent.namespaceURI === MATHML_NAMESPACE && !MATHML_TEXT_INTEGRATION_POINTS[parentTagName]) {
+        return false;
+      }
+      return !ALL_MATHML_TAGS[tagName] && (COMMON_SVG_AND_HTML_ELEMENTS[tagName] || !ALL_SVG_TAGS[tagName]);
+    }
+    if (PARSER_MEDIA_TYPE === "application/xhtml+xml" && ALLOWED_NAMESPACES[element.namespaceURI]) {
+      return true;
+    }
+    return false;
+  };
+  const _forceRemove = function _forceRemove2(node) {
+    arrayPush(DOMPurify.removed, {
+      element: node
+    });
+    try {
+      getParentNode(node).removeChild(node);
+    } catch (_) {
+      remove(node);
+    }
+  };
+  const _removeAttribute = function _removeAttribute2(name, element) {
+    try {
+      arrayPush(DOMPurify.removed, {
+        attribute: element.getAttributeNode(name),
+        from: element
+      });
+    } catch (_) {
+      arrayPush(DOMPurify.removed, {
+        attribute: null,
+        from: element
+      });
+    }
+    element.removeAttribute(name);
+    if (name === "is") {
+      if (RETURN_DOM || RETURN_DOM_FRAGMENT) {
+        try {
+          _forceRemove(element);
+        } catch (_) {
+        }
+      } else {
+        try {
+          element.setAttribute(name, "");
+        } catch (_) {
+        }
+      }
+    }
+  };
+  const _initDocument = function _initDocument2(dirty) {
+    let doc = null;
+    let leadingWhitespace = null;
+    if (FORCE_BODY) {
+      dirty = "<remove></remove>" + dirty;
+    } else {
+      const matches = stringMatch(dirty, /^[\r\n\t ]+/);
+      leadingWhitespace = matches && matches[0];
+    }
+    if (PARSER_MEDIA_TYPE === "application/xhtml+xml" && NAMESPACE === HTML_NAMESPACE) {
+      dirty = '<html xmlns="http://www.w3.org/1999/xhtml"><head></head><body>' + dirty + "</body></html>";
+    }
+    const dirtyPayload = trustedTypesPolicy ? trustedTypesPolicy.createHTML(dirty) : dirty;
+    if (NAMESPACE === HTML_NAMESPACE) {
+      try {
+        doc = new DOMParser().parseFromString(dirtyPayload, PARSER_MEDIA_TYPE);
+      } catch (_) {
+      }
+    }
+    if (!doc || !doc.documentElement) {
+      doc = implementation.createDocument(NAMESPACE, "template", null);
+      try {
+        doc.documentElement.innerHTML = IS_EMPTY_INPUT ? emptyHTML : dirtyPayload;
+      } catch (_) {
+      }
+    }
+    const body = doc.body || doc.documentElement;
+    if (dirty && leadingWhitespace) {
+      body.insertBefore(document2.createTextNode(leadingWhitespace), body.childNodes[0] || null);
+    }
+    if (NAMESPACE === HTML_NAMESPACE) {
+      return getElementsByTagName.call(doc, WHOLE_DOCUMENT ? "html" : "body")[0];
+    }
+    return WHOLE_DOCUMENT ? doc.documentElement : body;
+  };
+  const _createNodeIterator = function _createNodeIterator2(root) {
+    return createNodeIterator.call(
+      root.ownerDocument || root,
+      root,
+      // eslint-disable-next-line no-bitwise
+      NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_TEXT | NodeFilter.SHOW_PROCESSING_INSTRUCTION | NodeFilter.SHOW_CDATA_SECTION,
+      null
+    );
+  };
+  const _isClobbered = function _isClobbered2(element) {
+    return element instanceof HTMLFormElement && (typeof element.nodeName !== "string" || typeof element.textContent !== "string" || typeof element.removeChild !== "function" || !(element.attributes instanceof NamedNodeMap) || typeof element.removeAttribute !== "function" || typeof element.setAttribute !== "function" || typeof element.namespaceURI !== "string" || typeof element.insertBefore !== "function" || typeof element.hasChildNodes !== "function");
+  };
+  const _isNode = function _isNode2(value) {
+    return typeof Node === "function" && value instanceof Node;
+  };
+  function _executeHooks(hooks2, currentNode, data) {
+    arrayForEach(hooks2, (hook) => {
+      hook.call(DOMPurify, currentNode, data, CONFIG);
+    });
+  }
+  const _sanitizeElements = function _sanitizeElements2(currentNode) {
+    let content = null;
+    _executeHooks(hooks.beforeSanitizeElements, currentNode, null);
+    if (_isClobbered(currentNode)) {
+      _forceRemove(currentNode);
+      return true;
+    }
+    const tagName = transformCaseFunc(currentNode.nodeName);
+    _executeHooks(hooks.uponSanitizeElement, currentNode, {
+      tagName,
+      allowedTags: ALLOWED_TAGS
+    });
+    if (SAFE_FOR_XML && currentNode.hasChildNodes() && !_isNode(currentNode.firstElementChild) && regExpTest(/<[/\w!]/g, currentNode.innerHTML) && regExpTest(/<[/\w!]/g, currentNode.textContent)) {
+      _forceRemove(currentNode);
+      return true;
+    }
+    if (currentNode.nodeType === NODE_TYPE.progressingInstruction) {
+      _forceRemove(currentNode);
+      return true;
+    }
+    if (SAFE_FOR_XML && currentNode.nodeType === NODE_TYPE.comment && regExpTest(/<[/\w]/g, currentNode.data)) {
+      _forceRemove(currentNode);
+      return true;
+    }
+    if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
+      if (!FORBID_TAGS[tagName] && _isBasicCustomElement(tagName)) {
+        if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, tagName)) {
+          return false;
+        }
+        if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(tagName)) {
+          return false;
+        }
+      }
+      if (KEEP_CONTENT && !FORBID_CONTENTS[tagName]) {
+        const parentNode = getParentNode(currentNode) || currentNode.parentNode;
+        const childNodes = getChildNodes(currentNode) || currentNode.childNodes;
+        if (childNodes && parentNode) {
+          const childCount = childNodes.length;
+          for (let i = childCount - 1; i >= 0; --i) {
+            const childClone = cloneNode(childNodes[i], true);
+            childClone.__removalCount = (currentNode.__removalCount || 0) + 1;
+            parentNode.insertBefore(childClone, getNextSibling(currentNode));
+          }
+        }
+      }
+      _forceRemove(currentNode);
+      return true;
+    }
+    if (currentNode instanceof Element && !_checkValidNamespace(currentNode)) {
+      _forceRemove(currentNode);
+      return true;
+    }
+    if ((tagName === "noscript" || tagName === "noembed" || tagName === "noframes") && regExpTest(/<\/no(script|embed|frames)/i, currentNode.innerHTML)) {
+      _forceRemove(currentNode);
+      return true;
+    }
+    if (SAFE_FOR_TEMPLATES && currentNode.nodeType === NODE_TYPE.text) {
+      content = currentNode.textContent;
+      arrayForEach([MUSTACHE_EXPR2, ERB_EXPR2, TMPLIT_EXPR2], (expr) => {
+        content = stringReplace(content, expr, " ");
+      });
+      if (currentNode.textContent !== content) {
+        arrayPush(DOMPurify.removed, {
+          element: currentNode.cloneNode()
+        });
+        currentNode.textContent = content;
+      }
+    }
+    _executeHooks(hooks.afterSanitizeElements, currentNode, null);
+    return false;
+  };
+  const _isValidAttribute = function _isValidAttribute2(lcTag, lcName, value) {
+    if (SANITIZE_DOM && (lcName === "id" || lcName === "name") && (value in document2 || value in formElement)) {
+      return false;
+    }
+    if (ALLOW_DATA_ATTR && !FORBID_ATTR[lcName] && regExpTest(DATA_ATTR2, lcName)) ;
+    else if (ALLOW_ARIA_ATTR && regExpTest(ARIA_ATTR2, lcName)) ;
+    else if (!ALLOWED_ATTR[lcName] || FORBID_ATTR[lcName]) {
+      if (
+        // First condition does a very basic check if a) it's basically a valid custom element tagname AND
+        // b) if the tagName passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
+        // and c) if the attribute name passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.attributeNameCheck
+        _isBasicCustomElement(lcTag) && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, lcTag) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(lcTag)) && (CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.attributeNameCheck, lcName) || CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.attributeNameCheck(lcName)) || // Alternative, second condition checks if it's an `is`-attribute, AND
+        // the value passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
+        lcName === "is" && CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, value) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(value))
+      ) ;
+      else {
+        return false;
+      }
+    } else if (URI_SAFE_ATTRIBUTES[lcName]) ;
+    else if (regExpTest(IS_ALLOWED_URI$1, stringReplace(value, ATTR_WHITESPACE2, ""))) ;
+    else if ((lcName === "src" || lcName === "xlink:href" || lcName === "href") && lcTag !== "script" && stringIndexOf(value, "data:") === 0 && DATA_URI_TAGS[lcTag]) ;
+    else if (ALLOW_UNKNOWN_PROTOCOLS && !regExpTest(IS_SCRIPT_OR_DATA2, stringReplace(value, ATTR_WHITESPACE2, ""))) ;
+    else if (value) {
+      return false;
+    } else ;
+    return true;
+  };
+  const _isBasicCustomElement = function _isBasicCustomElement2(tagName) {
+    return tagName !== "annotation-xml" && stringMatch(tagName, CUSTOM_ELEMENT2);
+  };
+  const _sanitizeAttributes = function _sanitizeAttributes2(currentNode) {
+    _executeHooks(hooks.beforeSanitizeAttributes, currentNode, null);
+    const {
+      attributes
+    } = currentNode;
+    if (!attributes || _isClobbered(currentNode)) {
+      return;
+    }
+    const hookEvent = {
+      attrName: "",
+      attrValue: "",
+      keepAttr: true,
+      allowedAttributes: ALLOWED_ATTR,
+      forceKeepAttr: void 0
+    };
+    let l = attributes.length;
+    while (l--) {
+      const attr = attributes[l];
+      const {
+        name,
+        namespaceURI,
+        value: attrValue
+      } = attr;
+      const lcName = transformCaseFunc(name);
+      const initValue = attrValue;
+      let value = name === "value" ? initValue : stringTrim(initValue);
+      hookEvent.attrName = lcName;
+      hookEvent.attrValue = value;
+      hookEvent.keepAttr = true;
+      hookEvent.forceKeepAttr = void 0;
+      _executeHooks(hooks.uponSanitizeAttribute, currentNode, hookEvent);
+      value = hookEvent.attrValue;
+      if (SANITIZE_NAMED_PROPS && (lcName === "id" || lcName === "name")) {
+        _removeAttribute(name, currentNode);
+        value = SANITIZE_NAMED_PROPS_PREFIX + value;
+      }
+      if (SAFE_FOR_XML && regExpTest(/((--!?|])>)|<\/(style|title)/i, value)) {
+        _removeAttribute(name, currentNode);
+        continue;
+      }
+      if (hookEvent.forceKeepAttr) {
+        continue;
+      }
+      if (!hookEvent.keepAttr) {
+        _removeAttribute(name, currentNode);
+        continue;
+      }
+      if (!ALLOW_SELF_CLOSE_IN_ATTR && regExpTest(/\/>/i, value)) {
+        _removeAttribute(name, currentNode);
+        continue;
+      }
+      if (SAFE_FOR_TEMPLATES) {
+        arrayForEach([MUSTACHE_EXPR2, ERB_EXPR2, TMPLIT_EXPR2], (expr) => {
+          value = stringReplace(value, expr, " ");
+        });
+      }
+      const lcTag = transformCaseFunc(currentNode.nodeName);
+      if (!_isValidAttribute(lcTag, lcName, value)) {
+        _removeAttribute(name, currentNode);
+        continue;
+      }
+      if (trustedTypesPolicy && typeof trustedTypes === "object" && typeof trustedTypes.getAttributeType === "function") {
+        if (namespaceURI) ;
+        else {
+          switch (trustedTypes.getAttributeType(lcTag, lcName)) {
+            case "TrustedHTML": {
+              value = trustedTypesPolicy.createHTML(value);
+              break;
+            }
+            case "TrustedScriptURL": {
+              value = trustedTypesPolicy.createScriptURL(value);
+              break;
+            }
+          }
+        }
+      }
+      if (value !== initValue) {
+        try {
+          if (namespaceURI) {
+            currentNode.setAttributeNS(namespaceURI, name, value);
+          } else {
+            currentNode.setAttribute(name, value);
+          }
+          if (_isClobbered(currentNode)) {
+            _forceRemove(currentNode);
+          } else {
+            arrayPop(DOMPurify.removed);
+          }
+        } catch (_) {
+          _removeAttribute(name, currentNode);
+        }
+      }
+    }
+    _executeHooks(hooks.afterSanitizeAttributes, currentNode, null);
+  };
+  const _sanitizeShadowDOM = function _sanitizeShadowDOM2(fragment) {
+    let shadowNode = null;
+    const shadowIterator = _createNodeIterator(fragment);
+    _executeHooks(hooks.beforeSanitizeShadowDOM, fragment, null);
+    while (shadowNode = shadowIterator.nextNode()) {
+      _executeHooks(hooks.uponSanitizeShadowNode, shadowNode, null);
+      _sanitizeElements(shadowNode);
+      _sanitizeAttributes(shadowNode);
+      if (shadowNode.content instanceof DocumentFragment) {
+        _sanitizeShadowDOM2(shadowNode.content);
+      }
+    }
+    _executeHooks(hooks.afterSanitizeShadowDOM, fragment, null);
+  };
+  DOMPurify.sanitize = function(dirty) {
+    let cfg = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+    let body = null;
+    let importedNode = null;
+    let currentNode = null;
+    let returnNode = null;
+    IS_EMPTY_INPUT = !dirty;
+    if (IS_EMPTY_INPUT) {
+      dirty = "<!-->";
+    }
+    if (typeof dirty !== "string" && !_isNode(dirty)) {
+      if (typeof dirty.toString === "function") {
+        dirty = dirty.toString();
+        if (typeof dirty !== "string") {
+          throw typeErrorCreate("dirty is not a string, aborting");
+        }
+      } else {
+        throw typeErrorCreate("toString is not a function");
+      }
+    }
+    if (!DOMPurify.isSupported) {
+      return dirty;
+    }
+    if (!SET_CONFIG) {
+      _parseConfig(cfg);
+    }
+    DOMPurify.removed = [];
+    if (typeof dirty === "string") {
+      IN_PLACE = false;
+    }
+    if (IN_PLACE) {
+      if (dirty.nodeName) {
+        const tagName = transformCaseFunc(dirty.nodeName);
+        if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
+          throw typeErrorCreate("root node is forbidden and cannot be sanitized in-place");
+        }
+      }
+    } else if (dirty instanceof Node) {
+      body = _initDocument("<!---->");
+      importedNode = body.ownerDocument.importNode(dirty, true);
+      if (importedNode.nodeType === NODE_TYPE.element && importedNode.nodeName === "BODY") {
+        body = importedNode;
+      } else if (importedNode.nodeName === "HTML") {
+        body = importedNode;
+      } else {
+        body.appendChild(importedNode);
+      }
+    } else {
+      if (!RETURN_DOM && !SAFE_FOR_TEMPLATES && !WHOLE_DOCUMENT && // eslint-disable-next-line unicorn/prefer-includes
+      dirty.indexOf("<") === -1) {
+        return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML(dirty) : dirty;
+      }
+      body = _initDocument(dirty);
+      if (!body) {
+        return RETURN_DOM ? null : RETURN_TRUSTED_TYPE ? emptyHTML : "";
+      }
+    }
+    if (body && FORCE_BODY) {
+      _forceRemove(body.firstChild);
+    }
+    const nodeIterator = _createNodeIterator(IN_PLACE ? dirty : body);
+    while (currentNode = nodeIterator.nextNode()) {
+      _sanitizeElements(currentNode);
+      _sanitizeAttributes(currentNode);
+      if (currentNode.content instanceof DocumentFragment) {
+        _sanitizeShadowDOM(currentNode.content);
+      }
+    }
+    if (IN_PLACE) {
+      return dirty;
+    }
+    if (RETURN_DOM) {
+      if (RETURN_DOM_FRAGMENT) {
+        returnNode = createDocumentFragment.call(body.ownerDocument);
+        while (body.firstChild) {
+          returnNode.appendChild(body.firstChild);
+        }
+      } else {
+        returnNode = body;
+      }
+      if (ALLOWED_ATTR.shadowroot || ALLOWED_ATTR.shadowrootmode) {
+        returnNode = importNode.call(originalDocument, returnNode, true);
+      }
+      return returnNode;
+    }
+    let serializedHTML = WHOLE_DOCUMENT ? body.outerHTML : body.innerHTML;
+    if (WHOLE_DOCUMENT && ALLOWED_TAGS["!doctype"] && body.ownerDocument && body.ownerDocument.doctype && body.ownerDocument.doctype.name && regExpTest(DOCTYPE_NAME, body.ownerDocument.doctype.name)) {
+      serializedHTML = "<!DOCTYPE " + body.ownerDocument.doctype.name + ">\n" + serializedHTML;
+    }
+    if (SAFE_FOR_TEMPLATES) {
+      arrayForEach([MUSTACHE_EXPR2, ERB_EXPR2, TMPLIT_EXPR2], (expr) => {
+        serializedHTML = stringReplace(serializedHTML, expr, " ");
+      });
+    }
+    return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML(serializedHTML) : serializedHTML;
+  };
+  DOMPurify.setConfig = function() {
+    let cfg = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
+    _parseConfig(cfg);
+    SET_CONFIG = true;
+  };
+  DOMPurify.clearConfig = function() {
+    CONFIG = null;
+    SET_CONFIG = false;
+  };
+  DOMPurify.isValidAttribute = function(tag2, attr, value) {
+    if (!CONFIG) {
+      _parseConfig({});
+    }
+    const lcTag = transformCaseFunc(tag2);
+    const lcName = transformCaseFunc(attr);
+    return _isValidAttribute(lcTag, lcName, value);
+  };
+  DOMPurify.addHook = function(entryPoint, hookFunction) {
+    if (typeof hookFunction !== "function") {
+      return;
+    }
+    arrayPush(hooks[entryPoint], hookFunction);
+  };
+  DOMPurify.removeHook = function(entryPoint, hookFunction) {
+    if (hookFunction !== void 0) {
+      const index = arrayLastIndexOf(hooks[entryPoint], hookFunction);
+      return index === -1 ? void 0 : arraySplice(hooks[entryPoint], index, 1)[0];
+    }
+    return arrayPop(hooks[entryPoint]);
+  };
+  DOMPurify.removeHooks = function(entryPoint) {
+    hooks[entryPoint] = [];
+  };
+  DOMPurify.removeAllHooks = function() {
+    hooks = _createHooksMap();
+  };
+  return DOMPurify;
+}
+var purify = createDOMPurify();
 
 // node_modules/marked/lib/marked.esm.js
 function _getDefaults() {
@@ -14255,50 +15102,13 @@ var _defaults = _getDefaults();
 function changeDefaults(newDefaults) {
   _defaults = newDefaults;
 }
-var escapeTest = /[&<>"']/;
-var escapeReplace = new RegExp(escapeTest.source, "g");
-var escapeTestNoEncode = /[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/;
-var escapeReplaceNoEncode = new RegExp(escapeTestNoEncode.source, "g");
-var escapeReplacements = {
-  "&": "&amp;",
-  "<": "&lt;",
-  ">": "&gt;",
-  '"': "&quot;",
-  "'": "&#39;"
-};
-var getEscapeReplacement = (ch) => escapeReplacements[ch];
-function escape$1(html2, encode) {
-  if (encode) {
-    if (escapeTest.test(html2)) {
-      return html2.replace(escapeReplace, getEscapeReplacement);
-    }
-  } else {
-    if (escapeTestNoEncode.test(html2)) {
-      return html2.replace(escapeReplaceNoEncode, getEscapeReplacement);
-    }
-  }
-  return html2;
-}
-var unescapeTest = /&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/ig;
-function unescape(html2) {
-  return html2.replace(unescapeTest, (_, n) => {
-    n = n.toLowerCase();
-    if (n === "colon")
-      return ":";
-    if (n.charAt(0) === "#") {
-      return n.charAt(1) === "x" ? String.fromCharCode(parseInt(n.substring(2), 16)) : String.fromCharCode(+n.substring(1));
-    }
-    return "";
-  });
-}
-var caret = /(^|[^\[])\^/g;
-function edit(regex2, opt) {
+var noopTest = { exec: () => null };
+function edit(regex2, opt = "") {
   let source = typeof regex2 === "string" ? regex2 : regex2.source;
-  opt = opt || "";
   const obj = {
     replace: (name, val) => {
       let valSource = typeof val === "string" ? val : val.source;
-      valSource = valSource.replace(caret, "$1");
+      valSource = valSource.replace(other.caret, "$1");
       source = source.replace(name, valSource);
       return obj;
     },
@@ -14308,44 +15118,262 @@ function edit(regex2, opt) {
   };
   return obj;
 }
+var other = {
+  codeRemoveIndent: /^(?: {1,4}| {0,3}\t)/gm,
+  outputLinkReplace: /\\([\[\]])/g,
+  indentCodeCompensation: /^(\s+)(?:```)/,
+  beginningSpace: /^\s+/,
+  endingHash: /#$/,
+  startingSpaceChar: /^ /,
+  endingSpaceChar: / $/,
+  nonSpaceChar: /[^ ]/,
+  newLineCharGlobal: /\n/g,
+  tabCharGlobal: /\t/g,
+  multipleSpaceGlobal: /\s+/g,
+  blankLine: /^[ \t]*$/,
+  doubleBlankLine: /\n[ \t]*\n[ \t]*$/,
+  blockquoteStart: /^ {0,3}>/,
+  blockquoteSetextReplace: /\n {0,3}((?:=+|-+) *)(?=\n|$)/g,
+  blockquoteSetextReplace2: /^ {0,3}>[ \t]?/gm,
+  listReplaceTabs: /^\t+/,
+  listReplaceNesting: /^ {1,4}(?=( {4})*[^ ])/g,
+  listIsTask: /^\[[ xX]\] /,
+  listReplaceTask: /^\[[ xX]\] +/,
+  anyLine: /\n.*\n/,
+  hrefBrackets: /^<(.*)>$/,
+  tableDelimiter: /[:|]/,
+  tableAlignChars: /^\||\| *$/g,
+  tableRowBlankLine: /\n[ \t]*$/,
+  tableAlignRight: /^ *-+: *$/,
+  tableAlignCenter: /^ *:-+: *$/,
+  tableAlignLeft: /^ *:-+ *$/,
+  startATag: /^<a /i,
+  endATag: /^<\/a>/i,
+  startPreScriptTag: /^<(pre|code|kbd|script)(\s|>)/i,
+  endPreScriptTag: /^<\/(pre|code|kbd|script)(\s|>)/i,
+  startAngleBracket: /^</,
+  endAngleBracket: />$/,
+  pedanticHrefTitle: /^([^'"]*[^\s])\s+(['"])(.*)\2/,
+  unicodeAlphaNumeric: /[\p{L}\p{N}]/u,
+  escapeTest: /[&<>"']/,
+  escapeReplace: /[&<>"']/g,
+  escapeTestNoEncode: /[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/,
+  escapeReplaceNoEncode: /[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/g,
+  unescapeTest: /&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/ig,
+  caret: /(^|[^\[])\^/g,
+  percentDecode: /%25/g,
+  findPipe: /\|/g,
+  splitPipe: / \|/,
+  slashPipe: /\\\|/g,
+  carriageReturn: /\r\n|\r/g,
+  spaceLine: /^ +$/gm,
+  notSpaceStart: /^\S*/,
+  endingNewline: /\n$/,
+  listItemRegex: (bull) => new RegExp(`^( {0,3}${bull})((?:[	 ][^\\n]*)?(?:\\n|$))`),
+  nextBulletRegex: (indent) => new RegExp(`^ {0,${Math.min(3, indent - 1)}}(?:[*+-]|\\d{1,9}[.)])((?:[ 	][^\\n]*)?(?:\\n|$))`),
+  hrRegex: (indent) => new RegExp(`^ {0,${Math.min(3, indent - 1)}}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$)`),
+  fencesBeginRegex: (indent) => new RegExp(`^ {0,${Math.min(3, indent - 1)}}(?:\`\`\`|~~~)`),
+  headingBeginRegex: (indent) => new RegExp(`^ {0,${Math.min(3, indent - 1)}}#`),
+  htmlBeginRegex: (indent) => new RegExp(`^ {0,${Math.min(3, indent - 1)}}<(?:[a-z].*>|!--)`, "i")
+};
+var newline = /^(?:[ \t]*(?:\n|$))+/;
+var blockCode = /^((?: {4}| {0,3}\t)[^\n]+(?:\n(?:[ \t]*(?:\n|$))*)?)+/;
+var fences = /^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/;
+var hr = /^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/;
+var heading = /^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/;
+var bullet = /(?:[*+-]|\d{1,9}[.)])/;
+var lheadingCore = /^(?!bull |blockCode|fences|blockquote|heading|html|table)((?:.|\n(?!\s*?\n|bull |blockCode|fences|blockquote|heading|html|table))+?)\n {0,3}(=+|-+) *(?:\n+|$)/;
+var lheading = edit(lheadingCore).replace(/bull/g, bullet).replace(/blockCode/g, /(?: {4}| {0,3}\t)/).replace(/fences/g, / {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g, / {0,3}>/).replace(/heading/g, / {0,3}#{1,6}/).replace(/html/g, / {0,3}<[^\n>]+>\n/).replace(/\|table/g, "").getRegex();
+var lheadingGfm = edit(lheadingCore).replace(/bull/g, bullet).replace(/blockCode/g, /(?: {4}| {0,3}\t)/).replace(/fences/g, / {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g, / {0,3}>/).replace(/heading/g, / {0,3}#{1,6}/).replace(/html/g, / {0,3}<[^\n>]+>\n/).replace(/table/g, / {0,3}\|?(?:[:\- ]*\|)+[\:\- ]*\n/).getRegex();
+var _paragraph = /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/;
+var blockText = /^[^\n]+/;
+var _blockLabel = /(?!\s*\])(?:\\.|[^\[\]\\])+/;
+var def = edit(/^ {0,3}\[(label)\]: *(?:\n[ \t]*)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n[ \t]*)?| *\n[ \t]*)(title))? *(?:\n+|$)/).replace("label", _blockLabel).replace("title", /(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/).getRegex();
+var list = edit(/^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/).replace(/bull/g, bullet).getRegex();
+var _tag = "address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul";
+var _comment = /<!--(?:-?>|[\s\S]*?(?:-->|$))/;
+var html2 = edit(
+  "^ {0,3}(?:<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)|comment[^\\n]*(\\n+|$)|<\\?[\\s\\S]*?(?:\\?>\\n*|$)|<![A-Z][\\s\\S]*?(?:>\\n*|$)|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n[ 	]*)+\\n|$)|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n[ 	]*)+\\n|$)|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n[ 	]*)+\\n|$))",
+  "i"
+).replace("comment", _comment).replace("tag", _tag).replace("attribute", / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex();
+var paragraph = edit(_paragraph).replace("hr", hr).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("|table", "").replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", _tag).getRegex();
+var blockquote = edit(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/).replace("paragraph", paragraph).getRegex();
+var blockNormal = {
+  blockquote,
+  code: blockCode,
+  def,
+  fences,
+  heading,
+  hr,
+  html: html2,
+  lheading,
+  list,
+  newline,
+  paragraph,
+  table: noopTest,
+  text: blockText
+};
+var gfmTable = edit(
+  "^ *([^\\n ].*)\\n {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)"
+).replace("hr", hr).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("blockquote", " {0,3}>").replace("code", "(?: {4}| {0,3}	)[^\\n]").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", _tag).getRegex();
+var blockGfm = {
+  ...blockNormal,
+  lheading: lheadingGfm,
+  table: gfmTable,
+  paragraph: edit(_paragraph).replace("hr", hr).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("table", gfmTable).replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", _tag).getRegex()
+};
+var blockPedantic = {
+  ...blockNormal,
+  html: edit(
+    `^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:"[^"]*"|'[^']*'|\\s[^'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))`
+  ).replace("comment", _comment).replace(/tag/g, "(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(),
+  def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,
+  heading: /^(#{1,6})(.*)(?:\n+|$)/,
+  fences: noopTest,
+  // fences not supported
+  lheading: /^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/,
+  paragraph: edit(_paragraph).replace("hr", hr).replace("heading", " *#{1,6} *[^\n]").replace("lheading", lheading).replace("|table", "").replace("blockquote", " {0,3}>").replace("|fences", "").replace("|list", "").replace("|html", "").replace("|tag", "").getRegex()
+};
+var escape = /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/;
+var inlineCode = /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/;
+var br = /^( {2,}|\\)\n(?!\s*$)/;
+var inlineText = /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/;
+var _punctuation = /[\p{P}\p{S}]/u;
+var _punctuationOrSpace = /[\s\p{P}\p{S}]/u;
+var _notPunctuationOrSpace = /[^\s\p{P}\p{S}]/u;
+var punctuation = edit(/^((?![*_])punctSpace)/, "u").replace(/punctSpace/g, _punctuationOrSpace).getRegex();
+var _punctuationGfmStrongEm = /(?!~)[\p{P}\p{S}]/u;
+var _punctuationOrSpaceGfmStrongEm = /(?!~)[\s\p{P}\p{S}]/u;
+var _notPunctuationOrSpaceGfmStrongEm = /(?:[^\s\p{P}\p{S}]|~)/u;
+var blockSkip = /\[[^[\]]*?\]\((?:\\.|[^\\\(\)]|\((?:\\.|[^\\\(\)])*\))*\)|`[^`]*?`|<[^<>]*?>/g;
+var emStrongLDelimCore = /^(?:\*+(?:((?!\*)punct)|[^\s*]))|^_+(?:((?!_)punct)|([^\s_]))/;
+var emStrongLDelim = edit(emStrongLDelimCore, "u").replace(/punct/g, _punctuation).getRegex();
+var emStrongLDelimGfm = edit(emStrongLDelimCore, "u").replace(/punct/g, _punctuationGfmStrongEm).getRegex();
+var emStrongRDelimAstCore = "^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)|[^*]+(?=[^*])|(?!\\*)punct(\\*+)(?=[\\s]|$)|notPunctSpace(\\*+)(?!\\*)(?=punctSpace|$)|(?!\\*)punctSpace(\\*+)(?=notPunctSpace)|[\\s](\\*+)(?!\\*)(?=punct)|(?!\\*)punct(\\*+)(?!\\*)(?=punct)|notPunctSpace(\\*+)(?=notPunctSpace)";
+var emStrongRDelimAst = edit(emStrongRDelimAstCore, "gu").replace(/notPunctSpace/g, _notPunctuationOrSpace).replace(/punctSpace/g, _punctuationOrSpace).replace(/punct/g, _punctuation).getRegex();
+var emStrongRDelimAstGfm = edit(emStrongRDelimAstCore, "gu").replace(/notPunctSpace/g, _notPunctuationOrSpaceGfmStrongEm).replace(/punctSpace/g, _punctuationOrSpaceGfmStrongEm).replace(/punct/g, _punctuationGfmStrongEm).getRegex();
+var emStrongRDelimUnd = edit(
+  "^[^_*]*?\\*\\*[^_*]*?_[^_*]*?(?=\\*\\*)|[^_]+(?=[^_])|(?!_)punct(_+)(?=[\\s]|$)|notPunctSpace(_+)(?!_)(?=punctSpace|$)|(?!_)punctSpace(_+)(?=notPunctSpace)|[\\s](_+)(?!_)(?=punct)|(?!_)punct(_+)(?!_)(?=punct)",
+  "gu"
+).replace(/notPunctSpace/g, _notPunctuationOrSpace).replace(/punctSpace/g, _punctuationOrSpace).replace(/punct/g, _punctuation).getRegex();
+var anyPunctuation = edit(/\\(punct)/, "gu").replace(/punct/g, _punctuation).getRegex();
+var autolink = edit(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/).replace("scheme", /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/).replace("email", /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/).getRegex();
+var _inlineComment = edit(_comment).replace("(?:-->|$)", "-->").getRegex();
+var tag = edit(
+  "^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>"
+).replace("comment", _inlineComment).replace("attribute", /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/).getRegex();
+var _inlineLabel = /(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/;
+var link = edit(/^!?\[(label)\]\(\s*(href)(?:(?:[ \t]*(?:\n[ \t]*)?)(title))?\s*\)/).replace("label", _inlineLabel).replace("href", /<(?:\\.|[^\n<>\\])+>|[^ \t\n\x00-\x1f]*/).replace("title", /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/).getRegex();
+var reflink = edit(/^!?\[(label)\]\[(ref)\]/).replace("label", _inlineLabel).replace("ref", _blockLabel).getRegex();
+var nolink = edit(/^!?\[(ref)\](?:\[\])?/).replace("ref", _blockLabel).getRegex();
+var reflinkSearch = edit("reflink|nolink(?!\\()", "g").replace("reflink", reflink).replace("nolink", nolink).getRegex();
+var inlineNormal = {
+  _backpedal: noopTest,
+  // only used for GFM url
+  anyPunctuation,
+  autolink,
+  blockSkip,
+  br,
+  code: inlineCode,
+  del: noopTest,
+  emStrongLDelim,
+  emStrongRDelimAst,
+  emStrongRDelimUnd,
+  escape,
+  link,
+  nolink,
+  punctuation,
+  reflink,
+  reflinkSearch,
+  tag,
+  text: inlineText,
+  url: noopTest
+};
+var inlinePedantic = {
+  ...inlineNormal,
+  link: edit(/^!?\[(label)\]\((.*?)\)/).replace("label", _inlineLabel).getRegex(),
+  reflink: edit(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label", _inlineLabel).getRegex()
+};
+var inlineGfm = {
+  ...inlineNormal,
+  emStrongRDelimAst: emStrongRDelimAstGfm,
+  emStrongLDelim: emStrongLDelimGfm,
+  url: edit(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/, "i").replace("email", /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/).getRegex(),
+  _backpedal: /(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/,
+  del: /^(~~?)(?=[^\s~])((?:\\.|[^\\])*?(?:\\.|[^\s~\\]))\1(?=[^~]|$)/,
+  text: /^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/
+};
+var inlineBreaks = {
+  ...inlineGfm,
+  br: edit(br).replace("{2,}", "*").getRegex(),
+  text: edit(inlineGfm.text).replace("\\b_", "\\b_| {2,}\\n").replace(/\{2,\}/g, "*").getRegex()
+};
+var block = {
+  normal: blockNormal,
+  gfm: blockGfm,
+  pedantic: blockPedantic
+};
+var inline = {
+  normal: inlineNormal,
+  gfm: inlineGfm,
+  breaks: inlineBreaks,
+  pedantic: inlinePedantic
+};
+var escapeReplacements = {
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;",
+  "'": "&#39;"
+};
+var getEscapeReplacement = (ch) => escapeReplacements[ch];
+function escape2(html22, encode) {
+  if (encode) {
+    if (other.escapeTest.test(html22)) {
+      return html22.replace(other.escapeReplace, getEscapeReplacement);
+    }
+  } else {
+    if (other.escapeTestNoEncode.test(html22)) {
+      return html22.replace(other.escapeReplaceNoEncode, getEscapeReplacement);
+    }
+  }
+  return html22;
+}
 function cleanUrl(href) {
   try {
-    href = encodeURI(href).replace(/%25/g, "%");
-  } catch (e) {
+    href = encodeURI(href).replace(other.percentDecode, "%");
+  } catch {
     return null;
   }
   return href;
 }
-var noopTest = { exec: () => null };
 function splitCells(tableRow, count) {
-  const row = tableRow.replace(/\|/g, (match, offset, str) => {
+  const row = tableRow.replace(other.findPipe, (match, offset, str) => {
     let escaped = false;
     let curr = offset;
-    while (--curr >= 0 && str[curr] === "\\")
-      escaped = !escaped;
+    while (--curr >= 0 && str[curr] === "\\") escaped = !escaped;
     if (escaped) {
       return "|";
     } else {
       return " |";
     }
-  }), cells = row.split(/ \|/);
+  }), cells = row.split(other.splitPipe);
   let i = 0;
   if (!cells[0].trim()) {
     cells.shift();
   }
-  if (cells.length > 0 && !cells[cells.length - 1].trim()) {
+  if (cells.length > 0 && !cells.at(-1)?.trim()) {
     cells.pop();
   }
   if (count) {
     if (cells.length > count) {
       cells.splice(count);
     } else {
-      while (cells.length < count)
-        cells.push("");
+      while (cells.length < count) cells.push("");
     }
   }
   for (; i < cells.length; i++) {
-    cells[i] = cells[i].trim().replace(/\\\|/g, "|");
+    cells[i] = cells[i].trim().replace(other.slashPipe, "|");
   }
   return cells;
 }
@@ -14384,41 +15412,35 @@ function findClosingBracket(str, b) {
       }
     }
   }
+  if (level > 0) {
+    return -2;
+  }
   return -1;
 }
-function outputLink(cap, link2, raw, lexer2) {
+function outputLink(cap, link2, raw, lexer2, rules) {
   const href = link2.href;
-  const title = link2.title ? escape$1(link2.title) : null;
-  const text = cap[1].replace(/\\([\[\]])/g, "$1");
-  if (cap[0].charAt(0) !== "!") {
-    lexer2.state.inLink = true;
-    const token = {
-      type: "link",
-      raw,
-      href,
-      title,
-      text,
-      tokens: lexer2.inlineTokens(text)
-    };
-    lexer2.state.inLink = false;
-    return token;
-  }
-  return {
-    type: "image",
+  const title = link2.title || null;
+  const text2 = cap[1].replace(rules.other.outputLinkReplace, "$1");
+  lexer2.state.inLink = true;
+  const token = {
+    type: cap[0].charAt(0) === "!" ? "image" : "link",
     raw,
     href,
     title,
-    text: escape$1(text)
+    text: text2,
+    tokens: lexer2.inlineTokens(text2)
   };
+  lexer2.state.inLink = false;
+  return token;
 }
-function indentCodeCompensation(raw, text) {
-  const matchIndentToCode = raw.match(/^(\s+)(?:```)/);
+function indentCodeCompensation(raw, text2, rules) {
+  const matchIndentToCode = raw.match(rules.other.indentCodeCompensation);
   if (matchIndentToCode === null) {
-    return text;
+    return text2;
   }
   const indentToCode = matchIndentToCode[1];
-  return text.split("\n").map((node) => {
-    const matchIndentInNode = node.match(/^\s+/);
+  return text2.split("\n").map((node) => {
+    const matchIndentInNode = node.match(rules.other.beginningSpace);
     if (matchIndentInNode === null) {
       return node;
     }
@@ -14450,12 +15472,12 @@ var _Tokenizer = class {
   code(src) {
     const cap = this.rules.block.code.exec(src);
     if (cap) {
-      const text = cap[0].replace(/^ {1,4}/gm, "");
+      const text2 = cap[0].replace(this.rules.other.codeRemoveIndent, "");
       return {
         type: "code",
         raw: cap[0],
         codeBlockStyle: "indented",
-        text: !this.options.pedantic ? rtrim(text, "\n") : text
+        text: !this.options.pedantic ? rtrim(text2, "\n") : text2
       };
     }
   }
@@ -14463,33 +15485,33 @@ var _Tokenizer = class {
     const cap = this.rules.block.fences.exec(src);
     if (cap) {
       const raw = cap[0];
-      const text = indentCodeCompensation(raw, cap[3] || "");
+      const text2 = indentCodeCompensation(raw, cap[3] || "", this.rules);
       return {
         type: "code",
         raw,
         lang: cap[2] ? cap[2].trim().replace(this.rules.inline.anyPunctuation, "$1") : cap[2],
-        text
+        text: text2
       };
     }
   }
   heading(src) {
     const cap = this.rules.block.heading.exec(src);
     if (cap) {
-      let text = cap[2].trim();
-      if (/#$/.test(text)) {
-        const trimmed = rtrim(text, "#");
+      let text2 = cap[2].trim();
+      if (this.rules.other.endingHash.test(text2)) {
+        const trimmed = rtrim(text2, "#");
         if (this.options.pedantic) {
-          text = trimmed.trim();
-        } else if (!trimmed || / $/.test(trimmed)) {
-          text = trimmed.trim();
+          text2 = trimmed.trim();
+        } else if (!trimmed || this.rules.other.endingSpaceChar.test(trimmed)) {
+          text2 = trimmed.trim();
         }
       }
       return {
         type: "heading",
         raw: cap[0],
         depth: cap[1].length,
-        text,
-        tokens: this.lexer.inline(text)
+        text: text2,
+        tokens: this.lexer.inline(text2)
       };
     }
   }
@@ -14498,23 +15520,72 @@ var _Tokenizer = class {
     if (cap) {
       return {
         type: "hr",
-        raw: cap[0]
+        raw: rtrim(cap[0], "\n")
       };
     }
   }
   blockquote(src) {
     const cap = this.rules.block.blockquote.exec(src);
     if (cap) {
-      const text = rtrim(cap[0].replace(/^ *>[ \t]?/gm, ""), "\n");
-      const top = this.lexer.state.top;
-      this.lexer.state.top = true;
-      const tokens = this.lexer.blockTokens(text);
-      this.lexer.state.top = top;
+      let lines = rtrim(cap[0], "\n").split("\n");
+      let raw = "";
+      let text2 = "";
+      const tokens = [];
+      while (lines.length > 0) {
+        let inBlockquote = false;
+        const currentLines = [];
+        let i;
+        for (i = 0; i < lines.length; i++) {
+          if (this.rules.other.blockquoteStart.test(lines[i])) {
+            currentLines.push(lines[i]);
+            inBlockquote = true;
+          } else if (!inBlockquote) {
+            currentLines.push(lines[i]);
+          } else {
+            break;
+          }
+        }
+        lines = lines.slice(i);
+        const currentRaw = currentLines.join("\n");
+        const currentText = currentRaw.replace(this.rules.other.blockquoteSetextReplace, "\n    $1").replace(this.rules.other.blockquoteSetextReplace2, "");
+        raw = raw ? `${raw}
+${currentRaw}` : currentRaw;
+        text2 = text2 ? `${text2}
+${currentText}` : currentText;
+        const top = this.lexer.state.top;
+        this.lexer.state.top = true;
+        this.lexer.blockTokens(currentText, tokens, true);
+        this.lexer.state.top = top;
+        if (lines.length === 0) {
+          break;
+        }
+        const lastToken = tokens.at(-1);
+        if (lastToken?.type === "code") {
+          break;
+        } else if (lastToken?.type === "blockquote") {
+          const oldToken = lastToken;
+          const newText = oldToken.raw + "\n" + lines.join("\n");
+          const newToken = this.blockquote(newText);
+          tokens[tokens.length - 1] = newToken;
+          raw = raw.substring(0, raw.length - oldToken.raw.length) + newToken.raw;
+          text2 = text2.substring(0, text2.length - oldToken.text.length) + newToken.text;
+          break;
+        } else if (lastToken?.type === "list") {
+          const oldToken = lastToken;
+          const newText = oldToken.raw + "\n" + lines.join("\n");
+          const newToken = this.list(newText);
+          tokens[tokens.length - 1] = newToken;
+          raw = raw.substring(0, raw.length - lastToken.raw.length) + newToken.raw;
+          text2 = text2.substring(0, text2.length - oldToken.raw.length) + newToken.raw;
+          lines = newText.substring(tokens.at(-1).raw.length).split("\n");
+          continue;
+        }
+      }
       return {
         type: "blockquote",
-        raw: cap[0],
+        raw,
         tokens,
-        text
+        text: text2
       };
     }
   }
@@ -14535,12 +15606,12 @@ var _Tokenizer = class {
       if (this.options.pedantic) {
         bull = isordered ? bull : "[*+-]";
       }
-      const itemRegex = new RegExp(`^( {0,3}${bull})((?:[	 ][^\\n]*)?(?:\\n|$))`);
-      let raw = "";
-      let itemContents = "";
+      const itemRegex = this.rules.other.listItemRegex(bull);
       let endsWithBlankLine = false;
       while (src) {
         let endEarly = false;
+        let raw = "";
+        let itemContents = "";
         if (!(cap = itemRegex.exec(src))) {
           break;
         }
@@ -14549,34 +15620,41 @@ var _Tokenizer = class {
         }
         raw = cap[0];
         src = src.substring(raw.length);
-        let line = cap[2].split("\n", 1)[0].replace(/^\t+/, (t) => " ".repeat(3 * t.length));
+        let line = cap[2].split("\n", 1)[0].replace(this.rules.other.listReplaceTabs, (t) => " ".repeat(3 * t.length));
         let nextLine = src.split("\n", 1)[0];
+        let blankLine = !line.trim();
         let indent = 0;
         if (this.options.pedantic) {
           indent = 2;
           itemContents = line.trimStart();
+        } else if (blankLine) {
+          indent = cap[1].length + 1;
         } else {
-          indent = cap[2].search(/[^ ]/);
+          indent = cap[2].search(this.rules.other.nonSpaceChar);
           indent = indent > 4 ? 1 : indent;
           itemContents = line.slice(indent);
           indent += cap[1].length;
         }
-        let blankLine = false;
-        if (!line && /^ *$/.test(nextLine)) {
+        if (blankLine && this.rules.other.blankLine.test(nextLine)) {
           raw += nextLine + "\n";
           src = src.substring(nextLine.length + 1);
           endEarly = true;
         }
         if (!endEarly) {
-          const nextBulletRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}(?:[*+-]|\\d{1,9}[.)])((?:[ 	][^\\n]*)?(?:\\n|$))`);
-          const hrRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$)`);
-          const fencesBeginRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}(?:\`\`\`|~~~)`);
-          const headingBeginRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}#`);
+          const nextBulletRegex = this.rules.other.nextBulletRegex(indent);
+          const hrRegex = this.rules.other.hrRegex(indent);
+          const fencesBeginRegex = this.rules.other.fencesBeginRegex(indent);
+          const headingBeginRegex = this.rules.other.headingBeginRegex(indent);
+          const htmlBeginRegex = this.rules.other.htmlBeginRegex(indent);
           while (src) {
             const rawLine = src.split("\n", 1)[0];
+            let nextLineWithoutTabs;
             nextLine = rawLine;
             if (this.options.pedantic) {
-              nextLine = nextLine.replace(/^ {1,4}(?=( {4})*[^ ])/g, "  ");
+              nextLine = nextLine.replace(this.rules.other.listReplaceNesting, "  ");
+              nextLineWithoutTabs = nextLine;
+            } else {
+              nextLineWithoutTabs = nextLine.replace(this.rules.other.tabCharGlobal, "    ");
             }
             if (fencesBeginRegex.test(nextLine)) {
               break;
@@ -14584,19 +15662,22 @@ var _Tokenizer = class {
             if (headingBeginRegex.test(nextLine)) {
               break;
             }
+            if (htmlBeginRegex.test(nextLine)) {
+              break;
+            }
             if (nextBulletRegex.test(nextLine)) {
               break;
             }
-            if (hrRegex.test(src)) {
+            if (hrRegex.test(nextLine)) {
               break;
             }
-            if (nextLine.search(/[^ ]/) >= indent || !nextLine.trim()) {
-              itemContents += "\n" + nextLine.slice(indent);
+            if (nextLineWithoutTabs.search(this.rules.other.nonSpaceChar) >= indent || !nextLine.trim()) {
+              itemContents += "\n" + nextLineWithoutTabs.slice(indent);
             } else {
               if (blankLine) {
                 break;
               }
-              if (line.search(/[^ ]/) >= 4) {
+              if (line.replace(this.rules.other.tabCharGlobal, "    ").search(this.rules.other.nonSpaceChar) >= 4) {
                 break;
               }
               if (fencesBeginRegex.test(line)) {
@@ -14615,23 +15696,23 @@ var _Tokenizer = class {
             }
             raw += rawLine + "\n";
             src = src.substring(rawLine.length + 1);
-            line = nextLine.slice(indent);
+            line = nextLineWithoutTabs.slice(indent);
           }
         }
         if (!list2.loose) {
           if (endsWithBlankLine) {
             list2.loose = true;
-          } else if (/\n *\n *$/.test(raw)) {
+          } else if (this.rules.other.doubleBlankLine.test(raw)) {
             endsWithBlankLine = true;
           }
         }
         let istask = null;
         let ischecked;
         if (this.options.gfm) {
-          istask = /^\[[ xX]\] /.exec(itemContents);
+          istask = this.rules.other.listIsTask.exec(itemContents);
           if (istask) {
             ischecked = istask[0] !== "[ ] ";
-            itemContents = itemContents.replace(/^\[[ xX]\] +/, "");
+            itemContents = itemContents.replace(this.rules.other.listReplaceTask, "");
           }
         }
         list2.items.push({
@@ -14645,15 +15726,20 @@ var _Tokenizer = class {
         });
         list2.raw += raw;
       }
-      list2.items[list2.items.length - 1].raw = raw.trimEnd();
-      list2.items[list2.items.length - 1].text = itemContents.trimEnd();
+      const lastItem = list2.items.at(-1);
+      if (lastItem) {
+        lastItem.raw = lastItem.raw.trimEnd();
+        lastItem.text = lastItem.text.trimEnd();
+      } else {
+        return;
+      }
       list2.raw = list2.raw.trimEnd();
       for (let i = 0; i < list2.items.length; i++) {
         this.lexer.state.top = false;
         list2.items[i].tokens = this.lexer.blockTokens(list2.items[i].text, []);
         if (!list2.loose) {
           const spacers = list2.items[i].tokens.filter((t) => t.type === "space");
-          const hasMultipleLineBreaks = spacers.length > 0 && spacers.some((t) => /\n.*\n/.test(t.raw));
+          const hasMultipleLineBreaks = spacers.length > 0 && spacers.some((t) => this.rules.other.anyLine.test(t.raw));
           list2.loose = hasMultipleLineBreaks;
         }
       }
@@ -14681,8 +15767,8 @@ var _Tokenizer = class {
   def(src) {
     const cap = this.rules.block.def.exec(src);
     if (cap) {
-      const tag2 = cap[1].toLowerCase().replace(/\s+/g, " ");
-      const href = cap[2] ? cap[2].replace(/^<(.*)>$/, "$1").replace(this.rules.inline.anyPunctuation, "$1") : "";
+      const tag2 = cap[1].toLowerCase().replace(this.rules.other.multipleSpaceGlobal, " ");
+      const href = cap[2] ? cap[2].replace(this.rules.other.hrefBrackets, "$1").replace(this.rules.inline.anyPunctuation, "$1") : "";
       const title = cap[3] ? cap[3].substring(1, cap[3].length - 1).replace(this.rules.inline.anyPunctuation, "$1") : cap[3];
       return {
         type: "def",
@@ -14698,12 +15784,12 @@ var _Tokenizer = class {
     if (!cap) {
       return;
     }
-    if (!/[:|]/.test(cap[2])) {
+    if (!this.rules.other.tableDelimiter.test(cap[2])) {
       return;
     }
     const headers = splitCells(cap[1]);
-    const aligns = cap[2].replace(/^\||\| *$/g, "").split("|");
-    const rows = cap[3] && cap[3].trim() ? cap[3].replace(/\n[ \t]*$/, "").split("\n") : [];
+    const aligns = cap[2].replace(this.rules.other.tableAlignChars, "").split("|");
+    const rows = cap[3]?.trim() ? cap[3].replace(this.rules.other.tableRowBlankLine, "").split("\n") : [];
     const item = {
       type: "table",
       raw: cap[0],
@@ -14715,27 +15801,31 @@ var _Tokenizer = class {
       return;
     }
     for (const align of aligns) {
-      if (/^ *-+: *$/.test(align)) {
+      if (this.rules.other.tableAlignRight.test(align)) {
         item.align.push("right");
-      } else if (/^ *:-+: *$/.test(align)) {
+      } else if (this.rules.other.tableAlignCenter.test(align)) {
         item.align.push("center");
-      } else if (/^ *:-+ *$/.test(align)) {
+      } else if (this.rules.other.tableAlignLeft.test(align)) {
         item.align.push("left");
       } else {
         item.align.push(null);
       }
     }
-    for (const header of headers) {
+    for (let i = 0; i < headers.length; i++) {
       item.header.push({
-        text: header,
-        tokens: this.lexer.inline(header)
+        text: headers[i],
+        tokens: this.lexer.inline(headers[i]),
+        header: true,
+        align: item.align[i]
       });
     }
     for (const row of rows) {
-      item.rows.push(splitCells(row, item.header.length).map((cell) => {
+      item.rows.push(splitCells(row, item.header.length).map((cell, i) => {
         return {
           text: cell,
-          tokens: this.lexer.inline(cell)
+          tokens: this.lexer.inline(cell),
+          header: false,
+          align: item.align[i]
         };
       }));
     }
@@ -14756,12 +15846,12 @@ var _Tokenizer = class {
   paragraph(src) {
     const cap = this.rules.block.paragraph.exec(src);
     if (cap) {
-      const text = cap[1].charAt(cap[1].length - 1) === "\n" ? cap[1].slice(0, -1) : cap[1];
+      const text2 = cap[1].charAt(cap[1].length - 1) === "\n" ? cap[1].slice(0, -1) : cap[1];
       return {
         type: "paragraph",
         raw: cap[0],
-        text,
-        tokens: this.lexer.inline(text)
+        text: text2,
+        tokens: this.lexer.inline(text2)
       };
     }
   }
@@ -14782,21 +15872,21 @@ var _Tokenizer = class {
       return {
         type: "escape",
         raw: cap[0],
-        text: escape$1(cap[1])
+        text: cap[1]
       };
     }
   }
   tag(src) {
     const cap = this.rules.inline.tag.exec(src);
     if (cap) {
-      if (!this.lexer.state.inLink && /^<a /i.test(cap[0])) {
+      if (!this.lexer.state.inLink && this.rules.other.startATag.test(cap[0])) {
         this.lexer.state.inLink = true;
-      } else if (this.lexer.state.inLink && /^<\/a>/i.test(cap[0])) {
+      } else if (this.lexer.state.inLink && this.rules.other.endATag.test(cap[0])) {
         this.lexer.state.inLink = false;
       }
-      if (!this.lexer.state.inRawBlock && /^<(pre|code|kbd|script)(\s|>)/i.test(cap[0])) {
+      if (!this.lexer.state.inRawBlock && this.rules.other.startPreScriptTag.test(cap[0])) {
         this.lexer.state.inRawBlock = true;
-      } else if (this.lexer.state.inRawBlock && /^<\/(pre|code|kbd|script)(\s|>)/i.test(cap[0])) {
+      } else if (this.lexer.state.inRawBlock && this.rules.other.endPreScriptTag.test(cap[0])) {
         this.lexer.state.inRawBlock = false;
       }
       return {
@@ -14813,8 +15903,8 @@ var _Tokenizer = class {
     const cap = this.rules.inline.link.exec(src);
     if (cap) {
       const trimmedUrl = cap[2].trim();
-      if (!this.options.pedantic && /^</.test(trimmedUrl)) {
-        if (!/>$/.test(trimmedUrl)) {
+      if (!this.options.pedantic && this.rules.other.startAngleBracket.test(trimmedUrl)) {
+        if (!this.rules.other.endAngleBracket.test(trimmedUrl)) {
           return;
         }
         const rtrimSlash = rtrim(trimmedUrl.slice(0, -1), "\\");
@@ -14823,6 +15913,9 @@ var _Tokenizer = class {
         }
       } else {
         const lastParenIndex = findClosingBracket(cap[2], "()");
+        if (lastParenIndex === -2) {
+          return;
+        }
         if (lastParenIndex > -1) {
           const start = cap[0].indexOf("!") === 0 ? 5 : 4;
           const linkLen = start + cap[1].length + lastParenIndex;
@@ -14834,7 +15927,7 @@ var _Tokenizer = class {
       let href = cap[2];
       let title = "";
       if (this.options.pedantic) {
-        const link2 = /^([^'"]*[^\s])\s+(['"])(.*)\2/.exec(href);
+        const link2 = this.rules.other.pedanticHrefTitle.exec(href);
         if (link2) {
           href = link2[1];
           title = link2[3];
@@ -14843,8 +15936,8 @@ var _Tokenizer = class {
         title = cap[3] ? cap[3].slice(1, -1) : "";
       }
       href = href.trim();
-      if (/^</.test(href)) {
-        if (this.options.pedantic && !/>$/.test(trimmedUrl)) {
+      if (this.rules.other.startAngleBracket.test(href)) {
+        if (this.options.pedantic && !this.rules.other.endAngleBracket.test(trimmedUrl)) {
           href = href.slice(1);
         } else {
           href = href.slice(1, -1);
@@ -14853,31 +15946,29 @@ var _Tokenizer = class {
       return outputLink(cap, {
         href: href ? href.replace(this.rules.inline.anyPunctuation, "$1") : href,
         title: title ? title.replace(this.rules.inline.anyPunctuation, "$1") : title
-      }, cap[0], this.lexer);
+      }, cap[0], this.lexer, this.rules);
     }
   }
   reflink(src, links) {
     let cap;
     if ((cap = this.rules.inline.reflink.exec(src)) || (cap = this.rules.inline.nolink.exec(src))) {
-      const linkString = (cap[2] || cap[1]).replace(/\s+/g, " ");
+      const linkString = (cap[2] || cap[1]).replace(this.rules.other.multipleSpaceGlobal, " ");
       const link2 = links[linkString.toLowerCase()];
       if (!link2) {
-        const text = cap[0].charAt(0);
+        const text2 = cap[0].charAt(0);
         return {
           type: "text",
-          raw: text,
-          text
+          raw: text2,
+          text: text2
         };
       }
-      return outputLink(cap, link2, cap[0], this.lexer);
+      return outputLink(cap, link2, cap[0], this.lexer, this.rules);
     }
   }
   emStrong(src, maskedSrc, prevChar = "") {
     let match = this.rules.inline.emStrongLDelim.exec(src);
-    if (!match)
-      return;
-    if (match[3] && prevChar.match(/[\p{L}\p{N}]/u))
-      return;
+    if (!match) return;
+    if (match[3] && prevChar.match(this.rules.other.unicodeAlphaNumeric)) return;
     const nextChar = match[1] || match[2] || "";
     if (!nextChar || !prevChar || this.rules.inline.punctuation.exec(prevChar)) {
       const lLength = [...match[0]].length - 1;
@@ -14887,8 +15978,7 @@ var _Tokenizer = class {
       maskedSrc = maskedSrc.slice(-1 * src.length + lLength);
       while ((match = endReg.exec(maskedSrc)) != null) {
         rDelim = match[1] || match[2] || match[3] || match[4] || match[5] || match[6];
-        if (!rDelim)
-          continue;
+        if (!rDelim) continue;
         rLength = [...rDelim].length;
         if (match[3] || match[4]) {
           delimTotal += rLength;
@@ -14900,26 +15990,25 @@ var _Tokenizer = class {
           }
         }
         delimTotal -= rLength;
-        if (delimTotal > 0)
-          continue;
+        if (delimTotal > 0) continue;
         rLength = Math.min(rLength, rLength + delimTotal + midDelimTotal);
         const lastCharLength = [...match[0]][0].length;
         const raw = src.slice(0, lLength + match.index + lastCharLength + rLength);
         if (Math.min(lLength, rLength) % 2) {
-          const text2 = raw.slice(1, -1);
+          const text22 = raw.slice(1, -1);
           return {
             type: "em",
             raw,
-            text: text2,
-            tokens: this.lexer.inlineTokens(text2)
+            text: text22,
+            tokens: this.lexer.inlineTokens(text22)
           };
         }
-        const text = raw.slice(2, -2);
+        const text2 = raw.slice(2, -2);
         return {
           type: "strong",
           raw,
-          text,
-          tokens: this.lexer.inlineTokens(text)
+          text: text2,
+          tokens: this.lexer.inlineTokens(text2)
         };
       }
     }
@@ -14927,17 +16016,16 @@ var _Tokenizer = class {
   codespan(src) {
     const cap = this.rules.inline.code.exec(src);
     if (cap) {
-      let text = cap[2].replace(/\n/g, " ");
-      const hasNonSpaceChars = /[^ ]/.test(text);
-      const hasSpaceCharsOnBothEnds = /^ /.test(text) && / $/.test(text);
+      let text2 = cap[2].replace(this.rules.other.newLineCharGlobal, " ");
+      const hasNonSpaceChars = this.rules.other.nonSpaceChar.test(text2);
+      const hasSpaceCharsOnBothEnds = this.rules.other.startingSpaceChar.test(text2) && this.rules.other.endingSpaceChar.test(text2);
       if (hasNonSpaceChars && hasSpaceCharsOnBothEnds) {
-        text = text.substring(1, text.length - 1);
+        text2 = text2.substring(1, text2.length - 1);
       }
-      text = escape$1(text, true);
       return {
         type: "codespan",
         raw: cap[0],
-        text
+        text: text2
       };
     }
   }
@@ -14964,24 +16052,24 @@ var _Tokenizer = class {
   autolink(src) {
     const cap = this.rules.inline.autolink.exec(src);
     if (cap) {
-      let text, href;
+      let text2, href;
       if (cap[2] === "@") {
-        text = escape$1(cap[1]);
-        href = "mailto:" + text;
+        text2 = cap[1];
+        href = "mailto:" + text2;
       } else {
-        text = escape$1(cap[1]);
-        href = text;
+        text2 = cap[1];
+        href = text2;
       }
       return {
         type: "link",
         raw: cap[0],
-        text,
+        text: text2,
         href,
         tokens: [
           {
             type: "text",
-            raw: text,
-            text
+            raw: text2,
+            text: text2
           }
         ]
       };
@@ -14990,17 +16078,17 @@ var _Tokenizer = class {
   url(src) {
     let cap;
     if (cap = this.rules.inline.url.exec(src)) {
-      let text, href;
+      let text2, href;
       if (cap[2] === "@") {
-        text = escape$1(cap[0]);
-        href = "mailto:" + text;
+        text2 = cap[0];
+        href = "mailto:" + text2;
       } else {
         let prevCapZero;
         do {
           prevCapZero = cap[0];
           cap[0] = this.rules.inline._backpedal.exec(cap[0])?.[0] ?? "";
         } while (prevCapZero !== cap[0]);
-        text = escape$1(cap[0]);
+        text2 = cap[0];
         if (cap[1] === "www.") {
           href = "http://" + cap[0];
         } else {
@@ -15010,13 +16098,13 @@ var _Tokenizer = class {
       return {
         type: "link",
         raw: cap[0],
-        text,
+        text: text2,
         href,
         tokens: [
           {
             type: "text",
-            raw: text,
-            text
+            raw: text2,
+            text: text2
           }
         ]
       };
@@ -15025,137 +16113,15 @@ var _Tokenizer = class {
   inlineText(src) {
     const cap = this.rules.inline.text.exec(src);
     if (cap) {
-      let text;
-      if (this.lexer.state.inRawBlock) {
-        text = cap[0];
-      } else {
-        text = escape$1(cap[0]);
-      }
+      const escaped = this.lexer.state.inRawBlock;
       return {
         type: "text",
         raw: cap[0],
-        text
+        text: cap[0],
+        escaped
       };
     }
   }
-};
-var newline = /^(?: *(?:\n|$))+/;
-var blockCode = /^( {4}[^\n]+(?:\n(?: *(?:\n|$))*)?)+/;
-var fences = /^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/;
-var hr = /^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/;
-var heading = /^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/;
-var bullet = /(?:[*+-]|\d{1,9}[.)])/;
-var lheading = edit(/^(?!bull )((?:.|\n(?!\s*?\n|bull ))+?)\n {0,3}(=+|-+) *(?:\n+|$)/).replace(/bull/g, bullet).getRegex();
-var _paragraph = /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/;
-var blockText = /^[^\n]+/;
-var _blockLabel = /(?!\s*\])(?:\\.|[^\[\]\\])+/;
-var def = edit(/^ {0,3}\[(label)\]: *(?:\n *)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n *)?| *\n *)(title))? *(?:\n+|$)/).replace("label", _blockLabel).replace("title", /(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/).getRegex();
-var list = edit(/^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/).replace(/bull/g, bullet).getRegex();
-var _tag = "address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul";
-var _comment = /<!--(?:-?>|[\s\S]*?(?:-->|$))/;
-var html = edit("^ {0,3}(?:<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)|comment[^\\n]*(\\n+|$)|<\\?[\\s\\S]*?(?:\\?>\\n*|$)|<![A-Z][\\s\\S]*?(?:>\\n*|$)|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n *)+\\n|$)|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$))", "i").replace("comment", _comment).replace("tag", _tag).replace("attribute", / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex();
-var paragraph = edit(_paragraph).replace("hr", hr).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("|table", "").replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", _tag).getRegex();
-var blockquote = edit(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/).replace("paragraph", paragraph).getRegex();
-var blockNormal = {
-  blockquote,
-  code: blockCode,
-  def,
-  fences,
-  heading,
-  hr,
-  html,
-  lheading,
-  list,
-  newline,
-  paragraph,
-  table: noopTest,
-  text: blockText
-};
-var gfmTable = edit("^ *([^\\n ].*)\\n {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)").replace("hr", hr).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("blockquote", " {0,3}>").replace("code", " {4}[^\\n]").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", _tag).getRegex();
-var blockGfm = {
-  ...blockNormal,
-  table: gfmTable,
-  paragraph: edit(_paragraph).replace("hr", hr).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("table", gfmTable).replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", _tag).getRegex()
-};
-var blockPedantic = {
-  ...blockNormal,
-  html: edit(`^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:"[^"]*"|'[^']*'|\\s[^'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))`).replace("comment", _comment).replace(/tag/g, "(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(),
-  def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,
-  heading: /^(#{1,6})(.*)(?:\n+|$)/,
-  fences: noopTest,
-  // fences not supported
-  lheading: /^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/,
-  paragraph: edit(_paragraph).replace("hr", hr).replace("heading", " *#{1,6} *[^\n]").replace("lheading", lheading).replace("|table", "").replace("blockquote", " {0,3}>").replace("|fences", "").replace("|list", "").replace("|html", "").replace("|tag", "").getRegex()
-};
-var escape = /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/;
-var inlineCode = /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/;
-var br = /^( {2,}|\\)\n(?!\s*$)/;
-var inlineText = /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/;
-var _punctuation = "\\p{P}\\p{S}";
-var punctuation = edit(/^((?![*_])[\spunctuation])/, "u").replace(/punctuation/g, _punctuation).getRegex();
-var blockSkip = /\[[^[\]]*?\]\([^\(\)]*?\)|`[^`]*?`|<[^<>]*?>/g;
-var emStrongLDelim = edit(/^(?:\*+(?:((?!\*)[punct])|[^\s*]))|^_+(?:((?!_)[punct])|([^\s_]))/, "u").replace(/punct/g, _punctuation).getRegex();
-var emStrongRDelimAst = edit("^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)|[^*]+(?=[^*])|(?!\\*)[punct](\\*+)(?=[\\s]|$)|[^punct\\s](\\*+)(?!\\*)(?=[punct\\s]|$)|(?!\\*)[punct\\s](\\*+)(?=[^punct\\s])|[\\s](\\*+)(?!\\*)(?=[punct])|(?!\\*)[punct](\\*+)(?!\\*)(?=[punct])|[^punct\\s](\\*+)(?=[^punct\\s])", "gu").replace(/punct/g, _punctuation).getRegex();
-var emStrongRDelimUnd = edit("^[^_*]*?\\*\\*[^_*]*?_[^_*]*?(?=\\*\\*)|[^_]+(?=[^_])|(?!_)[punct](_+)(?=[\\s]|$)|[^punct\\s](_+)(?!_)(?=[punct\\s]|$)|(?!_)[punct\\s](_+)(?=[^punct\\s])|[\\s](_+)(?!_)(?=[punct])|(?!_)[punct](_+)(?!_)(?=[punct])", "gu").replace(/punct/g, _punctuation).getRegex();
-var anyPunctuation = edit(/\\([punct])/, "gu").replace(/punct/g, _punctuation).getRegex();
-var autolink = edit(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/).replace("scheme", /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/).replace("email", /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/).getRegex();
-var _inlineComment = edit(_comment).replace("(?:-->|$)", "-->").getRegex();
-var tag = edit("^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>").replace("comment", _inlineComment).replace("attribute", /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/).getRegex();
-var _inlineLabel = /(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/;
-var link = edit(/^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/).replace("label", _inlineLabel).replace("href", /<(?:\\.|[^\n<>\\])+>|[^\s\x00-\x1f]*/).replace("title", /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/).getRegex();
-var reflink = edit(/^!?\[(label)\]\[(ref)\]/).replace("label", _inlineLabel).replace("ref", _blockLabel).getRegex();
-var nolink = edit(/^!?\[(ref)\](?:\[\])?/).replace("ref", _blockLabel).getRegex();
-var reflinkSearch = edit("reflink|nolink(?!\\()", "g").replace("reflink", reflink).replace("nolink", nolink).getRegex();
-var inlineNormal = {
-  _backpedal: noopTest,
-  // only used for GFM url
-  anyPunctuation,
-  autolink,
-  blockSkip,
-  br,
-  code: inlineCode,
-  del: noopTest,
-  emStrongLDelim,
-  emStrongRDelimAst,
-  emStrongRDelimUnd,
-  escape,
-  link,
-  nolink,
-  punctuation,
-  reflink,
-  reflinkSearch,
-  tag,
-  text: inlineText,
-  url: noopTest
-};
-var inlinePedantic = {
-  ...inlineNormal,
-  link: edit(/^!?\[(label)\]\((.*?)\)/).replace("label", _inlineLabel).getRegex(),
-  reflink: edit(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label", _inlineLabel).getRegex()
-};
-var inlineGfm = {
-  ...inlineNormal,
-  escape: edit(escape).replace("])", "~|])").getRegex(),
-  url: edit(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/, "i").replace("email", /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/).getRegex(),
-  _backpedal: /(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/,
-  del: /^(~~?)(?=[^\s~])([\s\S]*?[^\s~])\1(?=[^~]|$)/,
-  text: /^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/
-};
-var inlineBreaks = {
-  ...inlineGfm,
-  br: edit(br).replace("{2,}", "*").getRegex(),
-  text: edit(inlineGfm.text).replace("\\b_", "\\b_| {2,}\\n").replace(/\{2,\}/g, "*").getRegex()
-};
-var block = {
-  normal: blockNormal,
-  gfm: blockGfm,
-  pedantic: blockPedantic
-};
-var inline = {
-  normal: inlineNormal,
-  gfm: inlineGfm,
-  breaks: inlineBreaks,
-  pedantic: inlinePedantic
 };
 var _Lexer = class __Lexer {
   tokens;
@@ -15178,6 +16144,7 @@ var _Lexer = class __Lexer {
       top: true
     };
     const rules = {
+      other,
       block: block.normal,
       inline: inline.normal
     };
@@ -15221,7 +16188,7 @@ var _Lexer = class __Lexer {
    * Preprocessing
    */
   lex(src) {
-    src = src.replace(/\r\n|\r/g, "\n");
+    src = src.replace(other.carriageReturn, "\n");
     this.blockTokens(src, this.tokens);
     for (let i = 0; i < this.inlineQueue.length; i++) {
       const next = this.inlineQueue[i];
@@ -15230,20 +16197,13 @@ var _Lexer = class __Lexer {
     this.inlineQueue = [];
     return this.tokens;
   }
-  blockTokens(src, tokens = []) {
+  blockTokens(src, tokens = [], lastParagraphClipped = false) {
     if (this.options.pedantic) {
-      src = src.replace(/\t/g, "    ").replace(/^ +$/gm, "");
-    } else {
-      src = src.replace(/^( *)(\t+)/gm, (_, leading, tabs) => {
-        return leading + "    ".repeat(tabs.length);
-      });
+      src = src.replace(other.tabCharGlobal, "    ").replace(other.spaceLine, "");
     }
-    let token;
-    let lastToken;
-    let cutSrc;
-    let lastParagraphClipped;
     while (src) {
-      if (this.options.extensions && this.options.extensions.block && this.options.extensions.block.some((extTokenizer) => {
+      let token;
+      if (this.options.extensions?.block?.some((extTokenizer) => {
         if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
           src = src.substring(token.raw.length);
           tokens.push(token);
@@ -15255,8 +16215,9 @@ var _Lexer = class __Lexer {
       }
       if (token = this.tokenizer.space(src)) {
         src = src.substring(token.raw.length);
-        if (token.raw.length === 1 && tokens.length > 0) {
-          tokens[tokens.length - 1].raw += "\n";
+        const lastToken = tokens.at(-1);
+        if (token.raw.length === 1 && lastToken !== void 0) {
+          lastToken.raw += "\n";
         } else {
           tokens.push(token);
         }
@@ -15264,11 +16225,11 @@ var _Lexer = class __Lexer {
       }
       if (token = this.tokenizer.code(src)) {
         src = src.substring(token.raw.length);
-        lastToken = tokens[tokens.length - 1];
-        if (lastToken && (lastToken.type === "paragraph" || lastToken.type === "text")) {
+        const lastToken = tokens.at(-1);
+        if (lastToken?.type === "paragraph" || lastToken?.type === "text") {
           lastToken.raw += "\n" + token.raw;
           lastToken.text += "\n" + token.text;
-          this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
+          this.inlineQueue.at(-1).src = lastToken.text;
         } else {
           tokens.push(token);
         }
@@ -15306,11 +16267,11 @@ var _Lexer = class __Lexer {
       }
       if (token = this.tokenizer.def(src)) {
         src = src.substring(token.raw.length);
-        lastToken = tokens[tokens.length - 1];
-        if (lastToken && (lastToken.type === "paragraph" || lastToken.type === "text")) {
+        const lastToken = tokens.at(-1);
+        if (lastToken?.type === "paragraph" || lastToken?.type === "text") {
           lastToken.raw += "\n" + token.raw;
           lastToken.text += "\n" + token.raw;
-          this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
+          this.inlineQueue.at(-1).src = lastToken.text;
         } else if (!this.tokens.links[token.tag]) {
           this.tokens.links[token.tag] = {
             href: token.href,
@@ -15329,8 +16290,8 @@ var _Lexer = class __Lexer {
         tokens.push(token);
         continue;
       }
-      cutSrc = src;
-      if (this.options.extensions && this.options.extensions.startBlock) {
+      let cutSrc = src;
+      if (this.options.extensions?.startBlock) {
         let startIndex = Infinity;
         const tempSrc = src.slice(1);
         let tempStart;
@@ -15345,12 +16306,12 @@ var _Lexer = class __Lexer {
         }
       }
       if (this.state.top && (token = this.tokenizer.paragraph(cutSrc))) {
-        lastToken = tokens[tokens.length - 1];
-        if (lastParagraphClipped && lastToken.type === "paragraph") {
+        const lastToken = tokens.at(-1);
+        if (lastParagraphClipped && lastToken?.type === "paragraph") {
           lastToken.raw += "\n" + token.raw;
           lastToken.text += "\n" + token.text;
           this.inlineQueue.pop();
-          this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
+          this.inlineQueue.at(-1).src = lastToken.text;
         } else {
           tokens.push(token);
         }
@@ -15360,12 +16321,12 @@ var _Lexer = class __Lexer {
       }
       if (token = this.tokenizer.text(src)) {
         src = src.substring(token.raw.length);
-        lastToken = tokens[tokens.length - 1];
-        if (lastToken && lastToken.type === "text") {
+        const lastToken = tokens.at(-1);
+        if (lastToken?.type === "text") {
           lastToken.raw += "\n" + token.raw;
           lastToken.text += "\n" + token.text;
           this.inlineQueue.pop();
-          this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
+          this.inlineQueue.at(-1).src = lastToken.text;
         } else {
           tokens.push(token);
         }
@@ -15392,10 +16353,8 @@ var _Lexer = class __Lexer {
    * Lexing/Compiling
    */
   inlineTokens(src, tokens = []) {
-    let token, lastToken, cutSrc;
     let maskedSrc = src;
-    let match;
-    let keepPrevChar, prevChar;
+    let match = null;
     if (this.tokens.links) {
       const links = Object.keys(this.tokens.links);
       if (links.length > 0) {
@@ -15406,18 +16365,21 @@ var _Lexer = class __Lexer {
         }
       }
     }
-    while ((match = this.tokenizer.rules.inline.blockSkip.exec(maskedSrc)) != null) {
-      maskedSrc = maskedSrc.slice(0, match.index) + "[" + "a".repeat(match[0].length - 2) + "]" + maskedSrc.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);
-    }
     while ((match = this.tokenizer.rules.inline.anyPunctuation.exec(maskedSrc)) != null) {
       maskedSrc = maskedSrc.slice(0, match.index) + "++" + maskedSrc.slice(this.tokenizer.rules.inline.anyPunctuation.lastIndex);
     }
+    while ((match = this.tokenizer.rules.inline.blockSkip.exec(maskedSrc)) != null) {
+      maskedSrc = maskedSrc.slice(0, match.index) + "[" + "a".repeat(match[0].length - 2) + "]" + maskedSrc.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);
+    }
+    let keepPrevChar = false;
+    let prevChar = "";
     while (src) {
       if (!keepPrevChar) {
         prevChar = "";
       }
       keepPrevChar = false;
-      if (this.options.extensions && this.options.extensions.inline && this.options.extensions.inline.some((extTokenizer) => {
+      let token;
+      if (this.options.extensions?.inline?.some((extTokenizer) => {
         if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
           src = src.substring(token.raw.length);
           tokens.push(token);
@@ -15434,13 +16396,7 @@ var _Lexer = class __Lexer {
       }
       if (token = this.tokenizer.tag(src)) {
         src = src.substring(token.raw.length);
-        lastToken = tokens[tokens.length - 1];
-        if (lastToken && token.type === "text" && lastToken.type === "text") {
-          lastToken.raw += token.raw;
-          lastToken.text += token.text;
-        } else {
-          tokens.push(token);
-        }
+        tokens.push(token);
         continue;
       }
       if (token = this.tokenizer.link(src)) {
@@ -15450,8 +16406,8 @@ var _Lexer = class __Lexer {
       }
       if (token = this.tokenizer.reflink(src, this.tokens.links)) {
         src = src.substring(token.raw.length);
-        lastToken = tokens[tokens.length - 1];
-        if (lastToken && token.type === "text" && lastToken.type === "text") {
+        const lastToken = tokens.at(-1);
+        if (token.type === "text" && lastToken?.type === "text") {
           lastToken.raw += token.raw;
           lastToken.text += token.text;
         } else {
@@ -15489,8 +16445,8 @@ var _Lexer = class __Lexer {
         tokens.push(token);
         continue;
       }
-      cutSrc = src;
-      if (this.options.extensions && this.options.extensions.startInline) {
+      let cutSrc = src;
+      if (this.options.extensions?.startInline) {
         let startIndex = Infinity;
         const tempSrc = src.slice(1);
         let tempStart;
@@ -15510,8 +16466,8 @@ var _Lexer = class __Lexer {
           prevChar = token.raw.slice(-1);
         }
         keepPrevChar = true;
-        lastToken = tokens[tokens.length - 1];
-        if (lastToken && lastToken.type === "text") {
+        const lastToken = tokens.at(-1);
+        if (lastToken?.type === "text") {
           lastToken.raw += token.raw;
           lastToken.text += token.text;
         } else {
@@ -15534,137 +16490,192 @@ var _Lexer = class __Lexer {
 };
 var _Renderer = class {
   options;
+  parser;
+  // set by the parser
   constructor(options2) {
     this.options = options2 || _defaults;
   }
-  code(code, infostring, escaped) {
-    const lang = (infostring || "").match(/^\S*/)?.[0];
-    code = code.replace(/\n$/, "") + "\n";
-    if (!lang) {
-      return "<pre><code>" + (escaped ? code : escape$1(code, true)) + "</code></pre>\n";
+  space(token) {
+    return "";
+  }
+  code({ text: text2, lang, escaped }) {
+    const langString = (lang || "").match(other.notSpaceStart)?.[0];
+    const code = text2.replace(other.endingNewline, "") + "\n";
+    if (!langString) {
+      return "<pre><code>" + (escaped ? code : escape2(code, true)) + "</code></pre>\n";
     }
-    return '<pre><code class="language-' + escape$1(lang) + '">' + (escaped ? code : escape$1(code, true)) + "</code></pre>\n";
+    return '<pre><code class="language-' + escape2(langString) + '">' + (escaped ? code : escape2(code, true)) + "</code></pre>\n";
   }
-  blockquote(quote) {
+  blockquote({ tokens }) {
+    const body = this.parser.parse(tokens);
     return `<blockquote>
-${quote}</blockquote>
+${body}</blockquote>
 `;
   }
-  html(html2, block2) {
-    return html2;
+  html({ text: text2 }) {
+    return text2;
   }
-  heading(text, level, raw) {
-    return `<h${level}>${text}</h${level}>
+  heading({ tokens, depth }) {
+    return `<h${depth}>${this.parser.parseInline(tokens)}</h${depth}>
 `;
   }
-  hr() {
+  hr(token) {
     return "<hr>\n";
   }
-  list(body, ordered, start) {
+  list(token) {
+    const ordered = token.ordered;
+    const start = token.start;
+    let body = "";
+    for (let j = 0; j < token.items.length; j++) {
+      const item = token.items[j];
+      body += this.listitem(item);
+    }
     const type = ordered ? "ol" : "ul";
-    const startatt = ordered && start !== 1 ? ' start="' + start + '"' : "";
-    return "<" + type + startatt + ">\n" + body + "</" + type + ">\n";
+    const startAttr = ordered && start !== 1 ? ' start="' + start + '"' : "";
+    return "<" + type + startAttr + ">\n" + body + "</" + type + ">\n";
   }
-  listitem(text, task, checked) {
-    return `<li>${text}</li>
+  listitem(item) {
+    let itemBody = "";
+    if (item.task) {
+      const checkbox = this.checkbox({ checked: !!item.checked });
+      if (item.loose) {
+        if (item.tokens[0]?.type === "paragraph") {
+          item.tokens[0].text = checkbox + " " + item.tokens[0].text;
+          if (item.tokens[0].tokens && item.tokens[0].tokens.length > 0 && item.tokens[0].tokens[0].type === "text") {
+            item.tokens[0].tokens[0].text = checkbox + " " + escape2(item.tokens[0].tokens[0].text);
+            item.tokens[0].tokens[0].escaped = true;
+          }
+        } else {
+          item.tokens.unshift({
+            type: "text",
+            raw: checkbox + " ",
+            text: checkbox + " ",
+            escaped: true
+          });
+        }
+      } else {
+        itemBody += checkbox + " ";
+      }
+    }
+    itemBody += this.parser.parse(item.tokens, !!item.loose);
+    return `<li>${itemBody}</li>
 `;
   }
-  checkbox(checked) {
+  checkbox({ checked }) {
     return "<input " + (checked ? 'checked="" ' : "") + 'disabled="" type="checkbox">';
   }
-  paragraph(text) {
-    return `<p>${text}</p>
+  paragraph({ tokens }) {
+    return `<p>${this.parser.parseInline(tokens)}</p>
 `;
   }
-  table(header, body) {
-    if (body)
-      body = `<tbody>${body}</tbody>`;
+  table(token) {
+    let header = "";
+    let cell = "";
+    for (let j = 0; j < token.header.length; j++) {
+      cell += this.tablecell(token.header[j]);
+    }
+    header += this.tablerow({ text: cell });
+    let body = "";
+    for (let j = 0; j < token.rows.length; j++) {
+      const row = token.rows[j];
+      cell = "";
+      for (let k = 0; k < row.length; k++) {
+        cell += this.tablecell(row[k]);
+      }
+      body += this.tablerow({ text: cell });
+    }
+    if (body) body = `<tbody>${body}</tbody>`;
     return "<table>\n<thead>\n" + header + "</thead>\n" + body + "</table>\n";
   }
-  tablerow(content) {
+  tablerow({ text: text2 }) {
     return `<tr>
-${content}</tr>
+${text2}</tr>
 `;
   }
-  tablecell(content, flags) {
-    const type = flags.header ? "th" : "td";
-    const tag2 = flags.align ? `<${type} align="${flags.align}">` : `<${type}>`;
+  tablecell(token) {
+    const content = this.parser.parseInline(token.tokens);
+    const type = token.header ? "th" : "td";
+    const tag2 = token.align ? `<${type} align="${token.align}">` : `<${type}>`;
     return tag2 + content + `</${type}>
 `;
   }
   /**
    * span level renderer
    */
-  strong(text) {
-    return `<strong>${text}</strong>`;
+  strong({ tokens }) {
+    return `<strong>${this.parser.parseInline(tokens)}</strong>`;
   }
-  em(text) {
-    return `<em>${text}</em>`;
+  em({ tokens }) {
+    return `<em>${this.parser.parseInline(tokens)}</em>`;
   }
-  codespan(text) {
-    return `<code>${text}</code>`;
+  codespan({ text: text2 }) {
+    return `<code>${escape2(text2, true)}</code>`;
   }
-  br() {
+  br(token) {
     return "<br>";
   }
-  del(text) {
-    return `<del>${text}</del>`;
+  del({ tokens }) {
+    return `<del>${this.parser.parseInline(tokens)}</del>`;
   }
-  link(href, title, text) {
+  link({ href, title, tokens }) {
+    const text2 = this.parser.parseInline(tokens);
     const cleanHref = cleanUrl(href);
     if (cleanHref === null) {
-      return text;
+      return text2;
     }
     href = cleanHref;
     let out = '<a href="' + href + '"';
     if (title) {
-      out += ' title="' + title + '"';
+      out += ' title="' + escape2(title) + '"';
     }
-    out += ">" + text + "</a>";
+    out += ">" + text2 + "</a>";
     return out;
   }
-  image(href, title, text) {
+  image({ href, title, text: text2, tokens }) {
+    if (tokens) {
+      text2 = this.parser.parseInline(tokens, this.parser.textRenderer);
+    }
     const cleanHref = cleanUrl(href);
     if (cleanHref === null) {
-      return text;
+      return escape2(text2);
     }
     href = cleanHref;
-    let out = `<img src="${href}" alt="${text}"`;
+    let out = `<img src="${href}" alt="${text2}"`;
     if (title) {
-      out += ` title="${title}"`;
+      out += ` title="${escape2(title)}"`;
     }
     out += ">";
     return out;
   }
-  text(text) {
-    return text;
+  text(token) {
+    return "tokens" in token && token.tokens ? this.parser.parseInline(token.tokens) : "escaped" in token && token.escaped ? token.text : escape2(token.text);
   }
 };
 var _TextRenderer = class {
   // no need for block level renderers
-  strong(text) {
-    return text;
+  strong({ text: text2 }) {
+    return text2;
   }
-  em(text) {
-    return text;
+  em({ text: text2 }) {
+    return text2;
   }
-  codespan(text) {
-    return text;
+  codespan({ text: text2 }) {
+    return text2;
   }
-  del(text) {
-    return text;
+  del({ text: text2 }) {
+    return text2;
   }
-  html(text) {
-    return text;
+  html({ text: text2 }) {
+    return text2;
   }
-  text(text) {
-    return text;
+  text({ text: text2 }) {
+    return text2;
   }
-  link(href, title, text) {
-    return "" + text;
+  link({ text: text2 }) {
+    return "" + text2;
   }
-  image(href, title, text) {
-    return "" + text;
+  image({ text: text2 }) {
+    return "" + text2;
   }
   br() {
     return "";
@@ -15679,6 +16690,7 @@ var _Parser = class __Parser {
     this.options.renderer = this.options.renderer || new _Renderer();
     this.renderer = this.options.renderer;
     this.renderer.options = this.options;
+    this.renderer.parser = this;
     this.textRenderer = new _TextRenderer();
   }
   /**
@@ -15701,112 +16713,70 @@ var _Parser = class __Parser {
   parse(tokens, top = true) {
     let out = "";
     for (let i = 0; i < tokens.length; i++) {
-      const token = tokens[i];
-      if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token.type]) {
-        const genericToken = token;
+      const anyToken = tokens[i];
+      if (this.options.extensions?.renderers?.[anyToken.type]) {
+        const genericToken = anyToken;
         const ret = this.options.extensions.renderers[genericToken.type].call({ parser: this }, genericToken);
         if (ret !== false || !["space", "hr", "heading", "code", "table", "blockquote", "list", "html", "paragraph", "text"].includes(genericToken.type)) {
           out += ret || "";
           continue;
         }
       }
+      const token = anyToken;
       switch (token.type) {
         case "space": {
+          out += this.renderer.space(token);
           continue;
         }
         case "hr": {
-          out += this.renderer.hr();
+          out += this.renderer.hr(token);
           continue;
         }
         case "heading": {
-          const headingToken = token;
-          out += this.renderer.heading(this.parseInline(headingToken.tokens), headingToken.depth, unescape(this.parseInline(headingToken.tokens, this.textRenderer)));
+          out += this.renderer.heading(token);
           continue;
         }
         case "code": {
-          const codeToken = token;
-          out += this.renderer.code(codeToken.text, codeToken.lang, !!codeToken.escaped);
+          out += this.renderer.code(token);
           continue;
         }
         case "table": {
-          const tableToken = token;
-          let header = "";
-          let cell = "";
-          for (let j = 0; j < tableToken.header.length; j++) {
-            cell += this.renderer.tablecell(this.parseInline(tableToken.header[j].tokens), { header: true, align: tableToken.align[j] });
-          }
-          header += this.renderer.tablerow(cell);
-          let body = "";
-          for (let j = 0; j < tableToken.rows.length; j++) {
-            const row = tableToken.rows[j];
-            cell = "";
-            for (let k = 0; k < row.length; k++) {
-              cell += this.renderer.tablecell(this.parseInline(row[k].tokens), { header: false, align: tableToken.align[k] });
-            }
-            body += this.renderer.tablerow(cell);
-          }
-          out += this.renderer.table(header, body);
+          out += this.renderer.table(token);
           continue;
         }
         case "blockquote": {
-          const blockquoteToken = token;
-          const body = this.parse(blockquoteToken.tokens);
-          out += this.renderer.blockquote(body);
+          out += this.renderer.blockquote(token);
           continue;
         }
         case "list": {
-          const listToken = token;
-          const ordered = listToken.ordered;
-          const start = listToken.start;
-          const loose = listToken.loose;
-          let body = "";
-          for (let j = 0; j < listToken.items.length; j++) {
-            const item = listToken.items[j];
-            const checked = item.checked;
-            const task = item.task;
-            let itemBody = "";
-            if (item.task) {
-              const checkbox = this.renderer.checkbox(!!checked);
-              if (loose) {
-                if (item.tokens.length > 0 && item.tokens[0].type === "paragraph") {
-                  item.tokens[0].text = checkbox + " " + item.tokens[0].text;
-                  if (item.tokens[0].tokens && item.tokens[0].tokens.length > 0 && item.tokens[0].tokens[0].type === "text") {
-                    item.tokens[0].tokens[0].text = checkbox + " " + item.tokens[0].tokens[0].text;
-                  }
-                } else {
-                  item.tokens.unshift({
-                    type: "text",
-                    text: checkbox + " "
-                  });
-                }
-              } else {
-                itemBody += checkbox + " ";
-              }
-            }
-            itemBody += this.parse(item.tokens, loose);
-            body += this.renderer.listitem(itemBody, task, !!checked);
-          }
-          out += this.renderer.list(body, ordered, start);
+          out += this.renderer.list(token);
           continue;
         }
         case "html": {
-          const htmlToken = token;
-          out += this.renderer.html(htmlToken.text, htmlToken.block);
+          out += this.renderer.html(token);
           continue;
         }
         case "paragraph": {
-          const paragraphToken = token;
-          out += this.renderer.paragraph(this.parseInline(paragraphToken.tokens));
+          out += this.renderer.paragraph(token);
           continue;
         }
         case "text": {
           let textToken = token;
-          let body = textToken.tokens ? this.parseInline(textToken.tokens) : textToken.text;
+          let body = this.renderer.text(textToken);
           while (i + 1 < tokens.length && tokens[i + 1].type === "text") {
             textToken = tokens[++i];
-            body += "\n" + (textToken.tokens ? this.parseInline(textToken.tokens) : textToken.text);
+            body += "\n" + this.renderer.text(textToken);
           }
-          out += top ? this.renderer.paragraph(body) : body;
+          if (top) {
+            out += this.renderer.paragraph({
+              type: "paragraph",
+              raw: body,
+              text: body,
+              tokens: [{ type: "text", raw: body, text: body, escaped: true }]
+            });
+          } else {
+            out += body;
+          }
           continue;
         }
         default: {
@@ -15825,66 +16795,57 @@ var _Parser = class __Parser {
   /**
    * Parse Inline Tokens
    */
-  parseInline(tokens, renderer) {
-    renderer = renderer || this.renderer;
+  parseInline(tokens, renderer = this.renderer) {
     let out = "";
     for (let i = 0; i < tokens.length; i++) {
-      const token = tokens[i];
-      if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token.type]) {
-        const ret = this.options.extensions.renderers[token.type].call({ parser: this }, token);
-        if (ret !== false || !["escape", "html", "link", "image", "strong", "em", "codespan", "br", "del", "text"].includes(token.type)) {
+      const anyToken = tokens[i];
+      if (this.options.extensions?.renderers?.[anyToken.type]) {
+        const ret = this.options.extensions.renderers[anyToken.type].call({ parser: this }, anyToken);
+        if (ret !== false || !["escape", "html", "link", "image", "strong", "em", "codespan", "br", "del", "text"].includes(anyToken.type)) {
           out += ret || "";
           continue;
         }
       }
+      const token = anyToken;
       switch (token.type) {
         case "escape": {
-          const escapeToken = token;
-          out += renderer.text(escapeToken.text);
+          out += renderer.text(token);
           break;
         }
         case "html": {
-          const tagToken = token;
-          out += renderer.html(tagToken.text);
+          out += renderer.html(token);
           break;
         }
         case "link": {
-          const linkToken = token;
-          out += renderer.link(linkToken.href, linkToken.title, this.parseInline(linkToken.tokens, renderer));
+          out += renderer.link(token);
           break;
         }
         case "image": {
-          const imageToken = token;
-          out += renderer.image(imageToken.href, imageToken.title, imageToken.text);
+          out += renderer.image(token);
           break;
         }
         case "strong": {
-          const strongToken = token;
-          out += renderer.strong(this.parseInline(strongToken.tokens, renderer));
+          out += renderer.strong(token);
           break;
         }
         case "em": {
-          const emToken = token;
-          out += renderer.em(this.parseInline(emToken.tokens, renderer));
+          out += renderer.em(token);
           break;
         }
         case "codespan": {
-          const codespanToken = token;
-          out += renderer.codespan(codespanToken.text);
+          out += renderer.codespan(token);
           break;
         }
         case "br": {
-          out += renderer.br();
+          out += renderer.br(token);
           break;
         }
         case "del": {
-          const delToken = token;
-          out += renderer.del(this.parseInline(delToken.tokens, renderer));
+          out += renderer.del(token);
           break;
         }
         case "text": {
-          const textToken = token;
-          out += renderer.text(textToken.text);
+          out += renderer.text(token);
           break;
         }
         default: {
@@ -15903,6 +16864,7 @@ var _Parser = class __Parser {
 };
 var _Hooks = class {
   options;
+  block;
   constructor(options2) {
     this.options = options2 || _defaults;
   }
@@ -15920,8 +16882,8 @@ var _Hooks = class {
   /**
    * Process HTML after marked is finished
    */
-  postprocess(html2) {
-    return html2;
+  postprocess(html22) {
+    return html22;
   }
   /**
    * Process all tokens before walk tokens
@@ -15929,12 +16891,24 @@ var _Hooks = class {
   processAllTokens(tokens) {
     return tokens;
   }
+  /**
+   * Provide function to tokenize markdown
+   */
+  provideLexer() {
+    return this.block ? _Lexer.lex : _Lexer.lexInline;
+  }
+  /**
+   * Provide function to parse tokens
+   */
+  provideParser() {
+    return this.block ? _Parser.parse : _Parser.parseInline;
+  }
 };
 var Marked = class {
   defaults = _getDefaults();
   options = this.setOptions;
-  parse = this.#parseMarkdown(_Lexer.lex, _Parser.parse);
-  parseInline = this.#parseMarkdown(_Lexer.lexInline, _Parser.parseInline);
+  parse = this.parseMarkdown(true);
+  parseInline = this.parseMarkdown(false);
   Parser = _Parser;
   Renderer = _Renderer;
   TextRenderer = _TextRenderer;
@@ -16046,7 +17020,7 @@ var Marked = class {
           if (!(prop in renderer)) {
             throw new Error(`renderer '${prop}' does not exist`);
           }
-          if (prop === "options") {
+          if (["options", "parser"].includes(prop)) {
             continue;
           }
           const rendererProp = prop;
@@ -16090,7 +17064,7 @@ var Marked = class {
           if (!(prop in hooks)) {
             throw new Error(`hook '${prop}' does not exist`);
           }
-          if (prop === "options") {
+          if (["options", "block"].includes(prop)) {
             continue;
           }
           const hooksProp = prop;
@@ -16144,17 +17118,14 @@ var Marked = class {
   parser(tokens, options2) {
     return _Parser.parse(tokens, options2 ?? this.defaults);
   }
-  #parseMarkdown(lexer2, parser2) {
-    return (src, options2) => {
+  parseMarkdown(blockType) {
+    const parse2 = (src, options2) => {
       const origOpt = { ...options2 };
       const opt = { ...this.defaults, ...origOpt };
+      const throwError = this.onError(!!opt.silent, !!opt.async);
       if (this.defaults.async === true && origOpt.async === false) {
-        if (!opt.silent) {
-          console.warn("marked(): The async option was set to true by an extension. The async: false option sent to parse will be ignored.");
-        }
-        opt.async = true;
+        return throwError(new Error("marked(): The async option was set to true by an extension. Remove async: false from the parse options object to return a Promise."));
       }
-      const throwError = this.#onError(!!opt.silent, !!opt.async);
       if (typeof src === "undefined" || src === null) {
         return throwError(new Error("marked(): input parameter is undefined or null"));
       }
@@ -16163,9 +17134,12 @@ var Marked = class {
       }
       if (opt.hooks) {
         opt.hooks.options = opt;
+        opt.hooks.block = blockType;
       }
+      const lexer2 = opt.hooks ? opt.hooks.provideLexer() : blockType ? _Lexer.lex : _Lexer.lexInline;
+      const parser2 = opt.hooks ? opt.hooks.provideParser() : blockType ? _Parser.parse : _Parser.parseInline;
       if (opt.async) {
-        return Promise.resolve(opt.hooks ? opt.hooks.preprocess(src) : src).then((src2) => lexer2(src2, opt)).then((tokens) => opt.hooks ? opt.hooks.processAllTokens(tokens) : tokens).then((tokens) => opt.walkTokens ? Promise.all(this.walkTokens(tokens, opt.walkTokens)).then(() => tokens) : tokens).then((tokens) => parser2(tokens, opt)).then((html2) => opt.hooks ? opt.hooks.postprocess(html2) : html2).catch(throwError);
+        return Promise.resolve(opt.hooks ? opt.hooks.preprocess(src) : src).then((src2) => lexer2(src2, opt)).then((tokens) => opt.hooks ? opt.hooks.processAllTokens(tokens) : tokens).then((tokens) => opt.walkTokens ? Promise.all(this.walkTokens(tokens, opt.walkTokens)).then(() => tokens) : tokens).then((tokens) => parser2(tokens, opt)).then((html22) => opt.hooks ? opt.hooks.postprocess(html22) : html22).catch(throwError);
       }
       try {
         if (opt.hooks) {
@@ -16178,21 +17152,22 @@ var Marked = class {
         if (opt.walkTokens) {
           this.walkTokens(tokens, opt.walkTokens);
         }
-        let html2 = parser2(tokens, opt);
+        let html22 = parser2(tokens, opt);
         if (opt.hooks) {
-          html2 = opt.hooks.postprocess(html2);
+          html22 = opt.hooks.postprocess(html22);
         }
-        return html2;
+        return html22;
       } catch (e) {
         return throwError(e);
       }
     };
+    return parse2;
   }
-  #onError(silent, async) {
+  onError(silent, async) {
     return (e) => {
       e.message += "\nPlease report this to https://github.com/markedjs/marked.";
       if (silent) {
-        const msg = "<p>An error occurred:</p><pre>" + escape$1(e.message + "", true) + "</pre>";
+        const msg = "<p>An error occurred:</p><pre>" + escape2(e.message + "", true) + "</pre>";
         if (async) {
           return Promise.resolve(msg);
         }
@@ -16257,6 +17232,9 @@ function markedHighlight(options2) {
   if (typeof options2.langPrefix !== "string") {
     options2.langPrefix = "language-";
   }
+  if (typeof options2.emptyLangClass !== "string") {
+    options2.emptyLangClass = "";
+  }
   return {
     async: !!options2.async,
     walkTokens(token) {
@@ -16273,12 +17251,19 @@ function markedHighlight(options2) {
       }
       updateToken(token)(code);
     },
+    useNewRenderer: true,
     renderer: {
       code(code, infoString, escaped) {
+        if (typeof code === "object") {
+          escaped = code.escaped;
+          infoString = code.lang;
+          code = code.text;
+        }
         const lang = getLang(infoString);
-        const classAttr = lang ? ` class="${options2.langPrefix}${escape2(lang)}"` : "";
+        const classValue = lang ? options2.langPrefix + escape3(lang) : options2.emptyLangClass;
+        const classAttr = classValue ? ` class="${classValue}"` : "";
         code = code.replace(/\n$/, "");
-        return `<pre><code${classAttr}>${escaped ? code : escape2(code, true)}
+        return `<pre><code${classAttr}>${escaped ? code : escape3(code, true)}
 </code></pre>`;
       }
     }
@@ -16295,10 +17280,10 @@ function updateToken(token) {
     }
   };
 }
-var escapeTest2 = /[&<>"']/;
-var escapeReplace2 = new RegExp(escapeTest2.source, "g");
-var escapeTestNoEncode2 = /[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/;
-var escapeReplaceNoEncode2 = new RegExp(escapeTestNoEncode2.source, "g");
+var escapeTest = /[&<>"']/;
+var escapeReplace = new RegExp(escapeTest.source, "g");
+var escapeTestNoEncode = /[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/;
+var escapeReplaceNoEncode = new RegExp(escapeTestNoEncode.source, "g");
 var escapeReplacements2 = {
   "&": "&amp;",
   "<": "&lt;",
@@ -16307,17 +17292,17 @@ var escapeReplacements2 = {
   "'": "&#39;"
 };
 var getEscapeReplacement2 = (ch) => escapeReplacements2[ch];
-function escape2(html2, encode) {
+function escape3(html3, encode) {
   if (encode) {
-    if (escapeTest2.test(html2)) {
-      return html2.replace(escapeReplace2, getEscapeReplacement2);
+    if (escapeTest.test(html3)) {
+      return html3.replace(escapeReplace, getEscapeReplacement2);
     }
   } else {
-    if (escapeTestNoEncode2.test(html2)) {
-      return html2.replace(escapeReplaceNoEncode2, getEscapeReplacement2);
+    if (escapeTestNoEncode.test(html3)) {
+      return html3.replace(escapeReplaceNoEncode, getEscapeReplacement2);
     }
   }
-  return html2;
+  return html3;
 }
 
 // node_modules/github-slugger/regex.js
@@ -16348,14 +17333,14 @@ var BananaSlug = class {
    *   A unique slug string
    */
   slug(value, maintainCase) {
-    const self2 = this;
+    const self = this;
     let result = slug(value, maintainCase === true);
     const originalSlug = result;
-    while (own.call(self2.occurrences, result)) {
-      self2.occurrences[originalSlug]++;
-      result = originalSlug + "-" + self2.occurrences[originalSlug];
+    while (own.call(self.occurrences, result)) {
+      self.occurrences[originalSlug]++;
+      result = originalSlug + "-" + self.occurrences[originalSlug];
     }
-    self2.occurrences[result] = 0;
+    self.occurrences[result] = 0;
     return result;
   }
   /**
@@ -16368,37 +17353,145 @@ var BananaSlug = class {
   }
 };
 function slug(value, maintainCase) {
-  if (typeof value !== "string")
-    return "";
-  if (!maintainCase)
-    value = value.toLowerCase();
+  if (typeof value !== "string") return "";
+  if (!maintainCase) value = value.toLowerCase();
   return value.replace(regex, "").replace(/ /g, "-");
 }
 
 // node_modules/marked-gfm-heading-id/src/index.js
-var slugger;
+var slugger = new BananaSlug();
 var headings = [];
-function gfmHeadingId({ prefix = "" } = {}) {
+var unescapeTest = /&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/ig;
+function unescape(html3) {
+  return html3.replace(unescapeTest, (_, n) => {
+    n = n.toLowerCase();
+    if (n === "colon") return ":";
+    if (n.charAt(0) === "#") {
+      return n.charAt(1) === "x" ? String.fromCharCode(parseInt(n.substring(2), 16)) : String.fromCharCode(+n.substring(1));
+    }
+    return "";
+  });
+}
+function gfmHeadingId({ prefix = "", globalSlugs = false } = {}) {
   return {
     headerIds: false,
     // prevent deprecation warning; remove this once headerIds option is removed
     hooks: {
       preprocess(src) {
-        headings = [];
-        slugger = new BananaSlug();
+        if (!globalSlugs) {
+          resetHeadings();
+        }
         return src;
       }
     },
+    useNewRenderer: true,
     renderer: {
-      heading(text, level, raw) {
-        raw = raw.toLowerCase().trim().replace(/<[!\/a-z].*?>/gi, "");
-        const id = `${prefix}${slugger.slug(raw)}`;
-        const heading2 = { level, text, id };
+      heading({ tokens, depth }) {
+        const text2 = this.parser.parseInline(tokens);
+        const raw = unescape(text2).trim().replace(/<[!\/a-z].*?>/gi, "");
+        const level = depth;
+        const id = `${prefix}${slugger.slug(raw.toLowerCase())}`;
+        const heading2 = { level, text: text2, id, raw };
         headings.push(heading2);
-        return `<h${level} id="${id}">${text}</h${level}>
+        return `<h${level} id="${id}">${text2}</h${level}>
 `;
       }
     }
+  };
+}
+function resetHeadings() {
+  headings = [];
+  slugger = new BananaSlug();
+}
+
+// node_modules/marked-alert/dist/index.js
+var d = [
+  {
+    type: "note",
+    icon: '<svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>'
+  },
+  {
+    type: "tip",
+    icon: '<svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>'
+  },
+  {
+    type: "important",
+    icon: '<svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>'
+  },
+  {
+    type: "warning",
+    icon: '<svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>'
+  },
+  {
+    type: "caution",
+    icon: '<svg class="octicon octicon-stop mr-2" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>'
+  }
+];
+function m(a) {
+  return a.length ? Object.values(
+    [...d, ...a].reduce(
+      (i, s) => (i[s.type] = s, i),
+      {}
+    )
+  ) : d;
+}
+function u(a) {
+  return `^(?:\\[!${a.toUpperCase()}])\\s*?
+*`;
+}
+function x(a) {
+  return a.slice(0, 1).toUpperCase() + a.slice(1).toLowerCase();
+}
+function A(a = {}) {
+  const { className: i = "markdown-alert", variants: s = [] } = a, g = m(s);
+  return {
+    walkTokens(t) {
+      var e, h, p, v;
+      if (t.type !== "blockquote") return;
+      const c = g.find(
+        ({ type: n }) => new RegExp(u(n)).test(t.text)
+      );
+      if (c) {
+        const {
+          type: n,
+          icon: w,
+          title: Z = x(n),
+          titleClassName: f = `${i}-title`
+        } = c, o = new RegExp(u(n));
+        Object.assign(t, {
+          type: "alert",
+          meta: {
+            className: i,
+            variant: n,
+            icon: w,
+            title: Z,
+            titleClassName: f
+          }
+        });
+        const r = (e = t.tokens) == null ? void 0 : e[0];
+        if ((h = r.raw) == null ? void 0 : h.replace(o, "").trim()) {
+          const l = r.tokens[0];
+          Object.assign(l, {
+            raw: l.raw.replace(o, ""),
+            text: l.text.replace(o, "")
+          }), ((p = r.tokens[1]) == null ? void 0 : p.type) === "br" && r.tokens.splice(1, 1);
+        } else
+          (v = t.tokens) == null || v.shift();
+      }
+    },
+    extensions: [
+      {
+        name: "alert",
+        level: "block",
+        renderer({ meta: t, tokens: c = [] }) {
+          let e = `<div class="${t.className} ${t.className}-${t.variant}">
+`;
+          return e += `<p class="${t.titleClassName}">`, e += t.icon, e += t.title, e += `</p>
+`, e += this.parser.parse(c), e += `</div>
+`, e;
+        }
+      }
+    ]
   };
 }
 
@@ -16423,11 +17516,19 @@ function createMarkdownParser() {
     }
   }));
   parser2.use(gfmHeadingId({ prefix: "user-content-" }));
+  parser2.use(A({
+    variants: [
+      { type: "note", icon: '<span class="icon note"></span>' },
+      { type: "tip", icon: '<span class="icon tip"></span>' },
+      { type: "important", icon: '<span class="icon important"></span>' },
+      { type: "warning", icon: '<span class="icon warning"></span>' },
+      { type: "caution", icon: '<span class="icon caution"></span>' }
+    ]
+  }));
   return parser2;
 }
 
 // lib/toc.js
-var import_dompurify = __toESM(require_purify(), 1);
 var TableOfContent = class extends Set {
   constructor(headings2) {
     super();
@@ -16436,8 +17537,7 @@ var TableOfContent = class extends Set {
       heading2.id = id;
       heading2.title = textContent;
       heading2.level = +tagName.toLowerCase().at(1);
-      if (!heading2.id || !heading2.title)
-        continue;
+      if (!heading2.id || !heading2.title) continue;
       this.add(heading2);
     }
   }
@@ -16449,8 +17549,7 @@ var TableOfContent = class extends Set {
     let root = result;
     let previous = 1;
     for (const { level, id, title } of this) {
-      if (!floors.includes(level))
-        continue;
+      if (!floors.includes(level)) continue;
       if (level > previous) {
         for (let i = 0; i < level - previous; ++i) {
           const item2 = document.createElement("ul");
@@ -16470,7 +17569,7 @@ var TableOfContent = class extends Set {
       root.appendChild(item);
       previous = level;
     }
-    return (0, import_dompurify.sanitize)(result.outerHTML);
+    return purify.sanitize(result.outerHTML);
   }
 };
 
@@ -16484,9 +17583,8 @@ var Clipboard = class extends HTMLElement {
     button.part = "button";
     this.#button = this.shadowRoot.appendChild(button);
     const sheet = new CSSStyleSheet();
-    sheet.replace(":host { display: none; } button { all: unset; }").then(() => {
-      this.shadowRoot.adoptedStyleSheets = [sheet];
-    });
+    sheet.replaceSync(":host { display: none; } button { all: unset; }");
+    this.shadowRoot.adoptedStyleSheets = [sheet];
   }
   get copied() {
     return this.hasAttribute("copied");
@@ -16507,8 +17605,8 @@ var Clipboard = class extends HTMLElement {
     this.#button.disabled = true;
     try {
       this.removeAttribute("copied");
-      const text = this.parentNode.querySelector("code").textContent;
-      await navigator.clipboard.writeText(text);
+      const text2 = this.parentNode.querySelector("code").textContent;
+      await navigator.clipboard.writeText(text2);
       this.setAttribute("copied", "");
       this.dispatchEvent(new CustomEvent("copied"));
     } catch {
@@ -16570,12 +17668,11 @@ var Markdown = class extends HTMLElement {
     if (name === "src" && old !== value && value) {
       this.dispatchEvent(new CustomEvent("change"));
       this.#observer.disconnect();
-      if (this.manual === false)
-        this.#render(value);
+      if (this.manual === false) this.#render(value);
     }
   }
-  #watch(entries) {
-    entries.map((entry) => {
+  #watch(entries2) {
+    entries2.map((entry) => {
       if (entry.isIntersecting) {
         this.dispatchEvent(new CustomEvent("intersect", {
           detail: { id: entry.target.id }
@@ -16586,8 +17683,10 @@ var Markdown = class extends HTMLElement {
   //Rendering
   #postProcess() {
     [...this.querySelectorAll('a[href^="http"]')].forEach((href) => {
-      if (href.hostname !== location.hostname)
+      if (href.hostname !== location.hostname) {
         href.target = "_blank";
+        href.rel = "noopener noreferrer";
+      }
     });
     [...this.querySelectorAll("pre:has(code)")].forEach((codeBlock) => {
       codeBlock.appendChild(new Clipboard());
@@ -16601,16 +17700,14 @@ var Markdown = class extends HTMLElement {
       const res = await fetch(path, {
         integrity: this.integrity || ""
       });
-      if (!res.ok)
-        throw new Error("HTTP Code: " + res.status);
+      if (!res.ok) throw new Error("HTTP Code: " + res.status);
       const markdown = await res.text();
       this.dispatchEvent(new CustomEvent("render"));
-      const html2 = this.#parser.parse(markdown);
-      this.innerHTML = (0, import_dompurify2.sanitize)(html2);
+      const html3 = this.#parser.parse(markdown);
+      this.innerHTML = purify.sanitize(html3);
       this.setAttribute("rendered", "");
       [...this.querySelectorAll("h1, h2, h3, h4, h5, h6")].forEach((el) => {
-        if (el.id && el.textContent)
-          this.#observer.observe(el);
+        if (el.id && el.textContent) this.#observer.observe(el);
       });
       this.#postProcess();
       this.dispatchEvent(new CustomEvent("success"));
@@ -16625,12 +17722,19 @@ var Markdown = class extends HTMLElement {
   render() {
     return this.#render(this.src);
   }
+  estimateReadingTime(speed) {
+    const WPM = Number.isSafeInteger(speed) && speed > 0 ? speed : 265;
+    const text2 = this.innerText.trim();
+    const words = text2.split(/\s+/).length;
+    const time = Math.ceil(words / WPM);
+    return time;
+  }
 };
 export {
   Markdown
 };
 /*! Bundled license information:
 
-dompurify/dist/purify.js:
-  (*! @license DOMPurify 3.0.9 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.0.9/LICENSE *)
+dompurify/dist/purify.es.mjs:
+  (*! @license DOMPurify 3.2.6 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.2.6/LICENSE *)
 */

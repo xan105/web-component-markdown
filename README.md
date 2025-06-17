@@ -3,11 +3,12 @@ About
 
 Web-component to load an external markdown file (.md) and render it into sanitized HTML.
 
+- GFM (GitHub Flavored Markdown spec)
+- Light DOM CSS styling
+- Optional JavaScript API
 - Syntax highlighting
 - Table of contents
 - Copy code to clipboard
-- Light DOM CSS styling
-- Optional JavaScript API
 
 📦 Scoped `@xan105` packages are for my own personal use but feel free to use them.
 
