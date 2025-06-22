@@ -161,3 +161,9 @@ Autoconverted link https://google.com
 
 > [!CAUTION]
 > Negative potential consequences of an action.
+
+## Embedding images
+
+![](./icon.png)
+
+![Foo bar](./icon.png)
