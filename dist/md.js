@@ -17525,6 +17525,16 @@ function createMarkdownParser() {
       { type: "caution", icon: '<span class="icon caution"></span>' }
     ]
   }));
+  parser2.use({
+    renderer: {
+      image(token) {
+        let html3 = `<figure><img src="${token.href}" alt="${token.text}" />`;
+        if (token.text) html3 += `<figcaption>${token.text}</figcaption>`;
+        html3 += `</figure>`;
+        return html3;
+      }
+    }
+  });
   return parser2;
 }
 
