@@ -20,7 +20,7 @@ Example
 Import and define the Web-component:
 
 ```js
-import { Markdown } from "/path/to/md.js"
+import { Markdown } from "/path/to/markdown.js"
 customElements.define("mark-down", Markdown);
 ```
 
@@ -81,7 +81,7 @@ npm i @xan105/markdown
     <script type="importmap">
     {
       "imports": {
-        "@xan105/markdown": "./path/to/node_modules/@xan105/markdown/dist/md.min.js"
+        "@xan105/markdown": "./path/to/node_modules/@xan105/markdown/dist/markdown.min.js"
       }
     }
     </script>
@@ -134,7 +134,7 @@ API
 This is a Web-component as such you need to define it:
 
 ```js
-import { Markdown } from "/path/to/md.js"
+import { Markdown } from "/path/to/markdown.js"
 customElements.define("mark-down", Markdown);
 ```
 
