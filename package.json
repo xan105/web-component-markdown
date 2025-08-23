@@ -13,12 +13,12 @@
     "/lib"
   ],
   "engines": {
-    "node": ">=20.11.0"
+    "node": ">=22.18.0"
   },
   "scripts": {
     "lint": "eslint \"./lib/**/*.js\"",
     "bundle": "npm run-script bundle:pretty && npm run-script bundle:min && npm run-script bundle:style",
-    "bundle:pretty": "esbuild \"./lib/index.js\" --bundle --platform=browser --target=esnext --format=esm --outfile=\"./dist/md.js\"",
+    "bundle:pretty": "esbuild \"./lib/index.js\" --bundle --legal-comments=none --platform=browser --target=esnext --format=esm --outfile=\"./dist/md.js\"",
     "bundle:min": "esbuild \"./lib/index.js\" --bundle --minify --legal-comments=none --platform=browser --target=esnext --format=esm --outfile=\"./dist/md.min.js\"",
     "bundle:style": "esbuild \"./style/index.css\" --bundle --outfile=\"./dist/style.css\"",
     "test": "start http://localhost/test && websrv"
@@ -58,19 +58,19 @@
     }
   ],
   "devDependencies": {
-    "@eslint/js": "^9.10.0",
+    "@eslint/js": "^9.34.0",
     "@xan105/qwebsrv": "^1.0.5",
     "@xan105/vanilla-query": "^1.10.0",
-    "esbuild": "^0.25.5",
-    "eslint": "^9.10.0",
-    "globals": "^15.9.0"
+    "esbuild": "^0.25.9",
+    "eslint": "^9.34.0",
+    "globals": "^16.3.0"
   },
   "dependencies": {
     "dompurify": "^3.2.6",
     "highlight.js": "^11.11.1",
-    "marked": "^15.0.12",
+    "marked": "^16.2.0",
     "marked-alert": "^2.1.2",
-    "marked-gfm-heading-id": "^4.1.1",
-    "marked-highlight": "^2.2.1"
+    "marked-gfm-heading-id": "^4.1.2",
+    "marked-highlight": "^2.2.2"
   }
 }
