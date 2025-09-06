@@ -241,9 +241,11 @@ customElements.define("mark-down", Markdown);
     
 **Methods**
 
-  - `render(): Promise<void>`
+  - `render(sanitizeOptions?: object): Promise<void>`
 
     Load and render markdown into sanitized HTML.
+    
+    👷🔧 You can pass an optional [DOMPurify configuration](https://github.com/cure53/DOMPurify?tab=readme-ov-file#can-i-configure-dompurify) object to configure the sanitization.
     
     ✔️ Resolves when markdown has been sucesfully rendered.<br />
     ❌ Rejects on error
