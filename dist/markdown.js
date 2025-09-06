@@ -16525,7 +16525,7 @@ function createMarkdownParser() {
   parser.use({
     renderer: {
       image(token) {
-        let html2 = `<figure><img src="${token.href}" alt="${token.text}" />`;
+        let html2 = `<figure><img src="${token.href}" alt="${token.text}" loading="lazy"/>`;
         if (token.text) html2 += `<figcaption>${token.text}</figcaption>`;
         html2 += `</figure>`;
         return html2;
@@ -16699,7 +16699,7 @@ var Markdown = class extends HTMLElement {
       codeBlock.appendChild(new Clipboard());
     });
   }
-  async #render(path) {
+  async #render(path, sanitizeOptions) {
     try {
       if (!(typeof path === "string" && path.length > 0))
         throw new TypeError("Invalid path parameter");
@@ -16711,7 +16711,7 @@ var Markdown = class extends HTMLElement {
       const markdown = await res.text();
       this.dispatchEvent(new CustomEvent("render"));
       const html2 = this.#parser.parse(markdown);
-      this.innerHTML = purify.sanitize(html2);
+      this.innerHTML = purify.sanitize(html2, sanitizeOptions);
       this.setAttribute("rendered", "");
       [...this.querySelectorAll("h1, h2, h3, h4, h5, h6")].forEach((el) => {
         if (el.id && el.textContent) this.#observer.observe(el);
@@ -16726,8 +16726,8 @@ var Markdown = class extends HTMLElement {
       throw err;
     }
   }
-  render() {
-    return this.#render(this.src);
+  render(sanitizeOptions) {
+    return this.#render(this.src, sanitizeOptions);
   }
   estimateReadingTime(speed) {
     const WPM = Number.isSafeInteger(speed) && speed > 0 ? speed : 265;

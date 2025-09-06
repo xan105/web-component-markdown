@@ -1,6 +1,6 @@
 {
   "name": "@xan105/markdown",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Web-component to render markdown into html with syntax highlighting",
   "type": "module",
   "exports": "./lib/index.js",
