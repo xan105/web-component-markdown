@@ -162,8 +162,22 @@ Autoconverted link https://google.com
 > [!CAUTION]
 > Negative potential consequences of an action.
 
-## Embedding images
+## Media embedding
+
+### Image
 
 ![](./icon.png)
 
 ![Foo bar](./icon.png)
+
+### Video
+
+![](./mov_bbb.mp4)
+
+![Big Buck Bunny](./mov_bbb.mp4 "video/mp4")
+
+### Audio
+
+![](./horse.ogg)
+
+![Horse](./horse.ogg "audio/ogg")

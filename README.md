@@ -9,6 +9,7 @@ Web-component to load an external markdown file (.md) and render it into sanitiz
 - Syntax highlighting
 - Table of contents
 - Copy code to clipboard
+- Media embedding (image, audio, video)
 
 📦 Scoped `@xan105` packages are for my own personal use but feel free to use them.
 
@@ -85,16 +86,12 @@ npm i @xan105/markdown
       }
     }
     </script>
-    <script src="./index.js" type="module"></script>
+    <script type="module">
+      import { Markdown } from "@xan105/markdown"
+      customElements.define("mark-down", Markdown);
+    </script>
     </body>
   </html>
-  ```
-
-  index.js:
-
-  ```js
-  import { Markdown } from "@xan105/markdown"
-  customElements.define("mark-down", Markdown);
   ```
 
 Styling
@@ -121,6 +118,70 @@ clipboard-copy-code::part(button)::before { /*go nuts this also works*/ }
 You can target it via CSS and add a `timeout` (ms) attribute/property value if you wish to do some kind of animation on copy.
 
 `clipboard-copy-code` also fires a `copied` event just in case.
+
+Media embedding
+===============
+
+The markdown image syntax has been extended to support audio and video in addition to image.
+Media are represented inside a `<figure>` with an optional `<figcaption>` and rendered with their corresponding html tag.
+
+```md
+![text](url "mime")
+![text](url)
+![](url)
+```
+
+`url`: The URL of the media file. Can be an image, audio, or video file.
+`text` (optional): The text caption (also used as the `alt` text for images).
+`mime` (optional): The MIME type of the file (e.g., image/png, audio/ogg; codecs=opus, video/mp4).
+
+If the MIME type is omitted, this library will try to infer it from the file extension.
+If the file extension is ambiguous (e.g., .mp4, .webm, .ogg), it performs a `HEAD` request to fetch the `Content-Type` from the server.
+
+The "mime" attribute is mainly for audio/video containers, providing it:
+  - avoid extra network request for MIME detection.
+  - ensure correct codec/container handling for audio/video.
+  
+**Example**
+
+```md
+![Big Buck Bunny](./mov_bbb.mp4 "video/mp4")
+```
+
+Renders as:
+
+```html
+<figure>
+  <video controls preload="metadata">
+    <source src="./mov_bbb.mp4" type="video/mp4">
+  </video>
+  <figcaption>Big Buck Bunny</figcaption>
+</figure>
+```
+
+For more advanced media type (e.g., canvas, iframe, web-component) you should use the html _"as is"_ within the markdown file, and if necesarry, allow it in the `sanitizeOptions`  of the `render()` method (see below). 
+
+**Example**
+
+I personally do this for my STL renderer: [xan105/web-component-3DViewer](https://github.com/xan105/web-component-3DViewer) _(experimental)_.
+
+```js
+  const md = document.querySelector("mark-down");
+  await md.render({
+    CUSTOM_ELEMENT_HANDLING: {
+      tagNameCheck: /^stl-viewer$/,
+      attributeNameCheck: (attr) => ["src", "gizmos", "pan", "zoom", "rotate", "inertia"].includes(attr), 
+      allowCustomizedBuiltInElements: false
+    }
+  });
+  
+  //Conditional Import
+  if (document.querySelector("stl-viewer")) {
+    const { STLViewer } = await import("@xan105/3dviewer");
+    customElements.define("stl-viewer", STLViewer);
+    await customElements.whenDefined("stl-viewer")
+  }
+```
 
 API
 ===
