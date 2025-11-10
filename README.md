@@ -131,9 +131,12 @@ Media are represented inside a `<figure>` with an optional `<figcaption>` and re
 ![](url)
 ```
 
-`url`: The URL of the media file. Can be an image, audio, or video file.
-`text` (optional): The text caption (also used as the `alt` text for images).
-`mime` (optional): The MIME type of the file (e.g., image/png, audio/ogg; codecs=opus, video/mp4).
+- `url`: 
+  The URL of the media file. Can be an image, audio, or video file.
+- `text` (optional): 
+  The text caption (also used as the `alt` text for images).
+- `mime` (optional): 
+  The MIME type of the file (e.g., image/png, audio/ogg; codecs=opus, video/mp4).
 
 If the MIME type is omitted, this library will try to infer it from the file extension.
 If the file extension is ambiguous (e.g., .mp4, .webm, .ogg), it performs a `HEAD` request to fetch the `Content-Type` from the server.
