@@ -59,11 +59,12 @@ Optional JavaScript API:
   });
   
   //Table of contents
-  querySelector("#toc").innerHTML = el.headings.toHTML({ depth: 4 });
+  const toc = el.headings.toHTML({ depth: 4 });
+  document.querySelector("#toc").replaceWith(toc);
   
   el.addEventListener("intersect", ({detail})=>{
     //Do something when a heading (h1, h2, ...) has entered the top of the viewport
-    querySelector(`#toc a[href="#${detail.id}"]`).classList.add("active");
+    document.querySelector(`#toc a[href="#${detail.id}"]`).classList.add("active");
   });
 ```
 
@@ -285,9 +286,9 @@ customElements.define("mark-down", Markdown);
     
     The returned `Set` is _extended_ with an additional `toHTML()` function:
     
-    + `toHTML(options?: object): string`
+    + `toHTML(options?: object): HTMLElement`
     
-      Which returns sanitized HTML string representing the table of contents from the headings (nested list).
+      Which returns a HTMLElement representing the table of contents from the headings (nested list).
       
       ```html
         <ul>
