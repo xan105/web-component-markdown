@@ -128,7 +128,9 @@ The markdown image syntax has been extended to support audio and video in additi
 Media are represented inside a `<figure>` with an optional `<figcaption>` and rendered with their corresponding html tag.
 
 ```md
+![text](url "mime @size")
 ![text](url "mime")
+![text](url "@size")
 ![text](url)
 ![](url)
 ```
@@ -137,27 +139,31 @@ Media are represented inside a `<figure>` with an optional `<figcaption>` and re
   The URL of the media file. Can be an image, audio, or video file.
 - `text` (optional): 
   The text caption (also used as the `alt` text for images).
+- `@size` (optional):
+  Size override **in pixels** as `width` x `height`.
+  
+  _For advanced sizing requirements, consider using CSS instead._
 - `mime` (optional): 
   The MIME type of the file (e.g., image/png, audio/ogg; codecs=opus, video/mp4).
 
-If the MIME type is omitted, this library will try to infer it from the file extension.
-If the file extension is ambiguous (e.g., .mp4, .webm, .ogg), it performs a `HEAD` request to fetch the `Content-Type` from the server.
+  If the MIME type is omitted, this library will try to infer it from the file extension.
+  If the file extension is ambiguous (e.g., .mp4, .webm, .ogg), it performs a `HEAD` request to fetch the `Content-Type` from the server.
 
-The "mime" attribute is mainly for audio/video containers, providing it:
-  - avoid extra network request for MIME detection.
-  - ensure correct codec/container handling for audio/video.
-  
+  The "mime" attribute is mainly for audio/video containers, providing it:
+    - avoid extra network request for MIME detection.
+    - ensure correct codec/container handling for audio/video.
+
 **Example**
 
 ```md
-![Big Buck Bunny](./mov_bbb.mp4 "video/mp4")
+![Big Buck Bunny](./mov_bbb.mp4 "video/mp4 @640x480")
 ```
 
 Renders as:
 
 ```html
 <figure>
-  <video controls preload="metadata">
+  <video controls preload="metadata" width="640px" height="480px">
     <source src="./mov_bbb.mp4" type="video/mp4">
   </video>
   <figcaption>Big Buck Bunny</figcaption>

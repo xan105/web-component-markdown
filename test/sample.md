@@ -170,11 +170,19 @@ Autoconverted link https://google.com
 
 ![Foo bar](./icon.png)
 
+![image/png](./icon.png "image/png")
+
+![32x32](./icon.png "@32x32")
+
+![image/png 32x32](./icon.png "image/png @32x32")
+
 ### Video
 
 ![](./mov_bbb.mp4)
 
 ![Big Buck Bunny](./mov_bbb.mp4 "video/mp4")
+
+![640x352](./mov_bbb.mp4 "video/mp4 @640x352")
 
 ### Audio
 
