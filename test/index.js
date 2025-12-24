@@ -25,6 +25,6 @@ console.timeEnd("render");
 
 const headings = el.headings;
 console.log(headings);
-$select("#toc").innerHTML = headings.toHTML({depth: 2});
+$select("#toc ul").replaceWith(headings.createElement({depth: 2}));
 
 console.log(el.estimateReadingTime() + " min to read");

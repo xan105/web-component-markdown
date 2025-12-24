@@ -59,7 +59,7 @@ Optional JavaScript API:
   });
   
   //Table of contents
-  const toc = el.headings.toHTML({ depth: 4 });
+  const toc = el.headings.createElement({ depth: 4 });
   document.querySelector("#toc").replaceWith(toc);
   
   el.addEventListener("intersect", ({detail})=>{
@@ -284,12 +284,26 @@ customElements.define("mark-down", Markdown);
       { id: "user-content-links", title: "Links", level: 2 }
     ```
     
-    The returned `Set` is _extended_ with an additional `toHTML()` function:
+    The returned `Set` is _extended_ with additional functions: `createElement()` and `toHTML()`:
     
-    + `toHTML(options?: object): HTMLElement`
+    + `createElement(options?: object): HTMLElement`
     
-      Which returns a HTMLElement representing the table of contents from the headings (nested list).
-      
+      Returns a HTMLElement representing the table of contents from the headings (nested list).
+
+      Options:
+
+        - `ordered?: boolean` (false)
+        
+          Whether to use `ul` (false) or `ol` (true) as HTMLElement.
+          
+        - `depth?: number` (6)
+        
+          How deep to list ? Headings start from 1 to 6.
+     
+     + `toHTML(options?: object): string`    
+     
+       Same as above but returns the list as a raw HTML string, eg:
+ 
       ```html
         <ul>
           <li><a href="#id">title</a></li>
@@ -301,16 +315,6 @@ customElements.define("mark-down", Markdown);
           </li>
         <ul/>
       ```
-      
-      Options:
-      
-        - `depth?: number` (6)
-        
-          How deep to list ? Headings start from 1 to 6.
-          
-        - `ordered?: boolean` (false)
-        
-          When set to false the root of the list is `ul` otherwise `ol`.
     
 **Methods**
 
