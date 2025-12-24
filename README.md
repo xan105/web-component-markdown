@@ -1,6 +1,10 @@
 About
 =====
 
+<p align="center">
+  <img align="center" width="753" height="306" src="https://github.com/xan105/web-component-markdown/raw/main/banner.png">
+</p>
+
 Web-component to load an external markdown file (.md) and render it into sanitized HTML.
 
 - GFM (GitHub Flavored Markdown spec)
