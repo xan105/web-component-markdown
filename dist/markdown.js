@@ -16594,13 +16594,16 @@ async function getMimeType(url) {
   }
 }
 function image(token) {
+  const size = [];
+  if (token.width) size.push(`width="${token.width}px"`);
+  if (token.height) size.push(`height="${token.height}px"`);
   const tags = ["<figure>"];
   if (token.mime && token.mime.startsWith("video/")) {
-    tags.push(`<video controls preload="metadata"><source src="${token.href}" type="${token.mime}"/></video>`);
+    tags.push(`<video controls preload="metadata" ${size.join(" ")}><source src="${token.href}" type="${token.mime}"/></video>`);
   } else if (token.mime && token.mime.startsWith("audio/")) {
     tags.push(`<audio controls preload="metadata"><source src="${token.href}" type="${token.mime}"/></audio>`);
   } else {
-    tags.push(`<img src="${token.href}" alt="${token.text}" loading="lazy"/>`);
+    tags.push(`<img src="${token.href}" alt="${token.text}" loading="lazy" ${size.join(" ")}/>`);
   }
   if (token.text) tags.push(`<figcaption>${token.text}</figcaption>`);
   tags.push("</figure>");
@@ -16609,13 +16612,22 @@ function image(token) {
 var ExtendImageRenderer = {
   async: true,
   async walkTokens(token) {
-    if (token.type === "image") {
-      if (token.title) {
-        token.mime = token.title.trim();
+    if (token.type !== "image") return;
+    if (token.title) {
+      const pos = token.title.lastIndexOf("@");
+      if (pos !== -1) {
+        const size = token.title.substring(pos + 1);
+        const [, width, height] = size.match(/^(\d+)\s*x\s*(\d+)\s*$/);
+        token.width = +width;
+        token.height = +height;
+        token.mime = token.title.substring(0, pos).trim();
       } else {
-        const ext = getFileExtFrom(token.href);
-        token.mime = MIME[ext] ?? await getMimeType(token.href);
+        token.mime = token.title.trim();
       }
+    }
+    if (!token.mime) {
+      const ext = getFileExtFrom(token.href);
+      token.mime = MIME[ext] ?? await getMimeType(token.href);
     }
   },
   renderer: { image }
@@ -16664,7 +16676,7 @@ var TableOfContent = class extends Set {
       this.add(heading);
     }
   }
-  toHTML(options = {}) {
+  createElement(options = {}) {
     const depth = Number.isSafeInteger(options?.depth) && options.depth >= 1 && options.depth <= 6 ? options.depth : 6;
     const floors = [...Array(depth).keys()].map((i) => i + 1);
     const tag = options?.ordered === true ? "ol" : "ul";
@@ -16675,7 +16687,7 @@ var TableOfContent = class extends Set {
       if (!floors.includes(level)) continue;
       if (level > previous) {
         for (let i = 0; i < level - previous; ++i) {
-          const item2 = document.createElement("ul");
+          const item2 = document.createElement(tag);
           root.appendChild(item2);
           root = item2;
         }
@@ -16692,7 +16704,10 @@ var TableOfContent = class extends Set {
       root.appendChild(item);
       previous = level;
     }
-    return purify.sanitize(result.outerHTML);
+    return result;
+  }
+  toHTML(options) {
+    return this.createElement(options).outerHTML();
   }
 };
 
