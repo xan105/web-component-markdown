@@ -175,21 +175,31 @@ Renders as:
 </figure>
 ```
 
-For more advanced media type (e.g., canvas, iframe, web-component) you should use the html _"as is"_ within the markdown file, and if necesarry, allow it in the `sanitizeOptions`  of the `render()` method (see below). 
+For more advanced media type (e.g., canvas, iframe, web-component) you should use the html _"as is"_ within the markdown file, and if necesarry, allow it in the _sanitizer_ of the `render()` method (see below). 
 
 **Example**
 
 I personally do this for my STL renderer: [xan105/web-component-3DViewer](https://github.com/xan105/web-component-3DViewer) _(experimental)_.
 
 ```js
-  const md = document.querySelector("mark-down");
-  await md.render({
-    CUSTOM_ELEMENT_HANDLING: {
-      tagNameCheck: /^stl-viewer$/,
-      attributeNameCheck: (attr) => ["src", "gizmos", "pan", "zoom", "rotate", "inertia"].includes(attr), 
-      allowCustomizedBuiltInElements: false
-    }
+  const sanitizer = new Sanitizer({
+    allowElements: ["stl-viewer"],
+    allowAttributes: {
+      "stl-viewer": [
+        "src",
+        "gizmos",
+        "pan",
+        "zoom",
+        "rotate",
+        "inertia"
+      ]
+    },
+    allowCustomElements: true,
+    allowCustomizedBuiltInElements: false
   });
+  
+  const md = document.querySelector("mark-down");
+  await md.render(sanitizer);
   
   //Conditional Import
   if (document.querySelector("stl-viewer")) {
@@ -322,11 +332,13 @@ customElements.define("mark-down", Markdown);
     
 **Methods**
 
-  - `render(sanitizeOptions?: object): Promise<void>`
+  - `render(sanitizer?: Sanitizer | SanitizerConfig): Promise<void>`
 
     Load and render markdown into sanitized HTML.
-    
-    👷🔧 You can pass an optional [DOMPurify configuration](https://github.com/cure53/DOMPurify?tab=readme-ov-file#can-i-configure-dompurify) object to configure the sanitization.
+
+    ⚙️ This method can be passed an optional [Sanitizer](https://developer.mozilla.org/en-US/docs/Web/API/Sanitizer) or [SanitizerConfig](https://developer.mozilla.org/en-US/docs/Web/API/SanitizerConfig) object which defines what elements of the input will be allowed or removed.
+    If not specified, the default browser sanitizer configuration is used.<br />
+    📖 For more details, please kindly see the [HTML Sanitizer API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API).
     
     ✔️ Resolves when markdown has been sucesfully rendered.<br />
     ❌ Rejects on error

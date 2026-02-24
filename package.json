@@ -62,7 +62,6 @@
     "globals": "^16.5.0"
   },
   "dependencies": {
-    "dompurify": "^3.3.0",
     "highlight.js": "^11.11.1",
     "marked": "^17.0.0",
     "marked-alert": "^2.1.2",
