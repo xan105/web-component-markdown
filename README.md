@@ -175,31 +175,26 @@ Renders as:
 </figure>
 ```
 
-For more advanced media type (e.g., canvas, iframe, web-component) you should use the html _"as is"_ within the markdown file, and if necesarry, allow it in the _sanitizer_ of the `render()` method (see below). 
+For more advanced media type (e.g., canvas, iframe, web-component) you should use the html _"as is"_ within the markdown file, and if necesarry, allow it in the _html sanitizer_ (see below). 
 
 **Example**
 
 I personally do this for my STL renderer: [xan105/web-component-3DViewer](https://github.com/xan105/web-component-3DViewer) _(experimental)_.
 
 ```js
-  const sanitizer = new Sanitizer({
-    allowElements: ["stl-viewer"],
-    allowAttributes: {
-      "stl-viewer": [
-        "src",
-        "gizmos",
-        "pan",
-        "zoom",
-        "rotate",
-        "inertia"
-      ]
-    },
-    allowCustomElements: true,
-    allowCustomizedBuiltInElements: false
-  });
-  
   const md = document.querySelector("mark-down");
-  await md.render(sanitizer);
+  md.sanitizer.allowElement({
+    name: "stl-viewer",
+    attributes: [
+      "src",
+      "gizmos",
+      "pan",
+      "zoom",
+      "rotate",
+      "inertia"
+    ]
+  });
+  await md.render();
   
   //Conditional Import
   if (document.querySelector("stl-viewer")) {
@@ -278,6 +273,31 @@ customElements.define("mark-down", Markdown);
     Whether the markdown was succesfuly rendered or not. You can use `:not([rendered])` in your CSS to style the element differently before rendering.
     
 **Property**
+
+  - `sanitizer: Sanitizer` _(Read-only)_
+  
+    Expose the [HTML Sanitizer](https://developer.mozilla.org/en-US/docs/Web/API/Sanitizer) used when rendering markdown into HTML.
+    
+    The sanitizer defines what elements of the input will be allowed or removed.
+    
+    By default the sanitizer is set to the default configuration of the spec, extended to allow media embedding and syntax highlighting among other things.
+    
+    You may find yourself in a situation where you'd like to modify or add some elements / attributes.
+    
+    Example:
+    
+    _A common use case is to allow a web-component_
+    
+    ```js
+    const md = document.querySelector("mark-down");
+    md.sanitizer.allowElement({
+      name: "foo-bar",
+      attributes: ["baz"]
+    });
+    await md.render();
+    ```
+
+    📖 For more details, please kindly see the [HTML Sanitizer API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API).
     
   - `headings: Set<object>` _(Read-only)_
   
@@ -336,14 +356,49 @@ customElements.define("mark-down", Markdown);
 
     Load and render markdown into sanitized HTML.
 
-    ⚙️ This method can be passed an optional [Sanitizer](https://developer.mozilla.org/en-US/docs/Web/API/Sanitizer) or [SanitizerConfig](https://developer.mozilla.org/en-US/docs/Web/API/SanitizerConfig) object which defines what elements of the input will be allowed or removed.
-    If not specified, the default browser sanitizer configuration is used.<br />
-    📖 For more details, please kindly see the [HTML Sanitizer API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API).
-    
     ✔️ Resolves when markdown has been sucesfully rendered.<br />
     ❌ Rejects on error
     
     💡 Invoking this method still triggers related events.
+
+    **👷 Sanitizer**
+    
+    You can override the sanitizer used when rendering markdown into HTML by passing a [Sanitizer](https://developer.mozilla.org/en-US/docs/Web/API/Sanitizer) or [SanitizerConfig](https://developer.mozilla.org/en-US/docs/Web/API/SanitizerConfig) object which defines what elements of the input will be allowed or removed.
+    
+    _Example_
+    
+    ```js
+    await md.render({
+      elements: ["p", "span", "pre", "code"],
+      attributes: ["id", "class"]
+    });
+    ```
+    
+    If omitted, the sanitizer used is the one exposed by the `sanitizer` property of the `Markdown` class _(see above)_ which is set to the default configuration of the spec, extended to allow media embedding and syntax highlighting among other things.
+
+    > [!NOTE]  
+    > If you just want to modify or add to the default sanitizer configuration, you should use the `sanitizer` property instead of overriding the whole thing.
+    
+    ```js
+    // Yes ✔️
+    md.sanitizer.allowElement({
+      name: "foo",
+      attributes: ["bar"]
+    });
+    await md.render();
+    // This adds the "foo" element to the sanitizer
+    
+    // No ❌
+    await md.render({
+      elements: [{
+        name: "foo",
+        attributes: ["bar"]
+      }]
+    });
+    // This allows only the foo element
+    ```
+
+    📖 For more details, please kindly see the [HTML Sanitizer API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API).
     
   - `estimateReadingTime(speed?: number): number`
   
