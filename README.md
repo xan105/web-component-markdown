@@ -43,6 +43,9 @@ Optional JavaScript API:
 
 ```js
   const el = document.querySelector("mark-down");
+  // or
+  const el = document.appendChild(new Markdown);
+  
   el.addEventListener("load", ()=>{
     console.log("loading...");
   });
@@ -360,6 +363,20 @@ customElements.define("mark-down", Markdown);
 
     ✔️ Resolves when markdown has been sucesfully rendered.<br />
     ❌ Rejects on error
+    
+    ⚠️ You only need to call this function when you are in _"manual"_ mode:
+    
+    ```html
+    <mark-down src="/path/to/md" manual></mark-down>
+    ```
+    
+    or
+    
+    ```js
+    const md = document.appendChild(new Markdown);
+    md.manual = true;
+    md.src = "/path/to/md";
+    ```
     
     💡 Invoking this method still triggers related events.
 
