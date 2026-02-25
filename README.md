@@ -15,6 +15,8 @@ Web-component to load an external markdown file (.md) and render it into sanitiz
 - Copy code to clipboard
 - Media embedding (image, audio, video)
 
+🛠 Under the hood it's powered by [Marked](https://github.com/markedjs/marked) and [Highlight.js](https://github.com/highlightjs/highlight.js).
+
 📦 Scoped `@xan105` packages are for my own personal use but feel free to use them.
 
 🤔 Curious to see it in real use? This package powers [my personal blog](https://xan105.com/).
@@ -376,8 +378,7 @@ customElements.define("mark-down", Markdown);
     
     If omitted, the sanitizer used is the one exposed by the `sanitizer` property of the `Markdown` class _(see above)_ which is set to the default configuration of the spec, extended to allow media embedding and code syntax highlighting among other things.
 
-    > [!NOTE]  
-    > If you just want to modify or add to the default sanitizer configuration, you should use the `sanitizer` property instead of overriding the whole thing.
+    ️> ⚠️ If you just want to modify or add to the default sanitizer configuration, you should use the `sanitizer` property instead of overriding the whole thing.
     
     ```js
     // Yes ✔️
@@ -404,3 +405,33 @@ customElements.define("mark-down", Markdown);
   
     Estimate the _"time to read"_ of the markdown's content in minutes.<br />
     By default `speed` is `265` words per minute; the average reading speed of an adult (English).
+    
+  - `unsafeExtend(...extensions)`
+
+    > ⚠️ Advanced: Extending the Markdown parser (unsafe).
+  
+    This component uses a scoped instance of [Marked](https://github.com/markedjs/marked).
+    
+    Marked can be [extended using custom extensions](https://marked.js.org/using_advanced#extensions) via [marked.use(...)](https://marked.js.org/using_pro#use) (recommended way).
+    
+    This is a shorthand to the underlying Marked instance `marked.use(...)` method. 
+  
+    👷 This is unsafe because extensions can override renderers, tokenizers, hooks, or options which may break built-in features and/or guarantees of this component.
+
+    ➡️ So basically if something breaks, you are on your own 🙃.
+
+    Example:
+    
+    _Render katex code (math typesetting)_
+    
+    ```js
+    import markedKatex from "marked-katex-extension";
+    
+    const md = document.querySelector("mark-down");
+    md.unsafeExtend(markedKatex({
+      throwOnError: false
+    }));
+    await md.render();
+    ```
+    
+    📖 For more details, please kindly see the [marked documentation](https://marked.js.org).
