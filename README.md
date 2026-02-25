@@ -10,7 +10,7 @@ Web-component to load an external markdown file (.md) and render it into sanitiz
 - GFM (GitHub Flavored Markdown spec)
 - Light DOM CSS styling
 - Optional JavaScript API
-- Syntax highlighting
+- Code syntax highlighting
 - Table of contents
 - Copy code to clipboard
 - Media embedding (image, audio, video)
@@ -107,7 +107,7 @@ Styling
 Markdown is rendered into the light DOM without any predefined CSS styling, **this is by design**.<br/>
 Use regular selectors to style just like you would for the rest of the page.
 
-For syntax highlighting you can use one of the many [hljs themes](https://github.com/highlightjs/highlight.js/tree/main/src/styles) available.
+For code syntax highlighting you can use one of the many [hljs themes](https://github.com/highlightjs/highlight.js/tree/main/src/styles) available.
 
 💡That being said, there is a basic CSS style with Github-like syntax highlighting available in the `./dist` folder to get you started.
 
@@ -175,7 +175,7 @@ Renders as:
 </figure>
 ```
 
-For more advanced media type (e.g., canvas, iframe, web-component) you should use the html _"as is"_ within the markdown file, and if necesarry, allow it in the _html sanitizer_ (see below). 
+For more advanced media type (e.g., canvas, iframe, web-component) you should use the raw html _"as is"_ within the markdown file, and if necesarry, allow the corresponding element(s) / attribute(s) in the _HTML sanitizer_ (see below). 
 
 **Example**
 
@@ -280,7 +280,7 @@ customElements.define("mark-down", Markdown);
     
     The sanitizer defines what elements of the input will be allowed or removed.
     
-    By default the sanitizer is set to the default configuration of the spec, extended to allow media embedding and syntax highlighting among other things.
+    By default the sanitizer is set to the default configuration of the spec, extended to allow media embedding and code syntax highlighting among other things.
     
     You may find yourself in a situation where you'd like to modify or add some elements / attributes.
     
@@ -361,7 +361,7 @@ customElements.define("mark-down", Markdown);
     
     💡 Invoking this method still triggers related events.
 
-    **👷 Sanitizer**
+    **👷🛠 Sanitizer** (Advanced)
     
     You can override the sanitizer used when rendering markdown into HTML by passing a [Sanitizer](https://developer.mozilla.org/en-US/docs/Web/API/Sanitizer) or [SanitizerConfig](https://developer.mozilla.org/en-US/docs/Web/API/SanitizerConfig) object which defines what elements of the input will be allowed or removed.
     
@@ -374,7 +374,7 @@ customElements.define("mark-down", Markdown);
     });
     ```
     
-    If omitted, the sanitizer used is the one exposed by the `sanitizer` property of the `Markdown` class _(see above)_ which is set to the default configuration of the spec, extended to allow media embedding and syntax highlighting among other things.
+    If omitted, the sanitizer used is the one exposed by the `sanitizer` property of the `Markdown` class _(see above)_ which is set to the default configuration of the spec, extended to allow media embedding and code syntax highlighting among other things.
 
     > [!NOTE]  
     > If you just want to modify or add to the default sanitizer configuration, you should use the `sanitizer` property instead of overriding the whole thing.
