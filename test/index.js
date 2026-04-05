@@ -20,6 +20,9 @@ el.$on("intersect", ({ detail })=>{
 });
 
 console.time("render");
+el.unsafeExtend(markedKatex({
+  throwOnError: false
+}));
 await el.render().catch(console.error);
 console.timeEnd("render");
 

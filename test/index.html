@@ -5,12 +5,21 @@
     <meta name="author" content="Anthony Beaumont">
     <meta http-equiv="Content-Security-Policy" content="
       default-src 'self';
-      script-src 'self' 'unsafe-inline';
+      script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
       img-src 'self' data:;
+      style-src 'self' https://cdn.jsdelivr.net;
+      font-src 'self' https://cdn.jsdelivr.net;
     ">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../dist/style.css">
     <link rel="stylesheet" type="text/css" href="style.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/mhchem.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked-katex-extension/lib/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
   </head>
   <body>
     <main>

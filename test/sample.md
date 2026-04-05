@@ -189,3 +189,15 @@ Autoconverted link https://google.com
 ![](./horse.ogg)
 
 ![Horse](./horse.ogg "audio/ogg")
+
+## Unsafe Extension
+
+Katex code:
+
+$$
+c = \\pm\\sqrt{a^2 + b^2}
+$$
+
+$$
+x = x^2
+$$

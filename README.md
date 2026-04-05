@@ -439,11 +439,9 @@ customElements.define("mark-down", Markdown);
 
     Example:
     
-    _Render katex code (math typesetting)_
+    _Render katex code (math typesetting) with [marked-katex-extension](https://github.com/UziTech/marked-katex-extension)_
     
     ```js
-    import markedKatex from "marked-katex-extension";
-    
     const md = document.querySelector("mark-down");
     md.unsafeExtend(markedKatex({
       throwOnError: false
