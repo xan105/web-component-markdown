@@ -15650,6 +15650,47 @@ function createMarkdownParser() {
   return parser;
 }
 
+// lib/sanitizer.js
+function createSanitizer() {
+  const sanitizer = new Sanitizer("default");
+  sanitizer.allowAttribute("id");
+  sanitizer.allowAttribute("class");
+  sanitizer.allowElement({
+    name: "audio",
+    attributes: [
+      "controls",
+      "preload"
+    ]
+  });
+  sanitizer.allowElement({
+    name: "video",
+    attributes: [
+      "controls",
+      "preload",
+      "width",
+      "height"
+    ]
+  });
+  sanitizer.allowElement({
+    name: "source",
+    attributes: [
+      "src",
+      "type"
+    ]
+  });
+  sanitizer.allowElement({
+    name: "img",
+    attributes: [
+      "src",
+      "alt",
+      "loading",
+      "width",
+      "height"
+    ]
+  });
+  return sanitizer;
+}
+
 // lib/toc.js
 var TableOfContent = class extends Set {
   constructor(headings2) {
@@ -15746,10 +15787,12 @@ customElements.define("clipboard-copy-code", Clipboard);
 // lib/index.js
 var Markdown = class extends HTMLElement {
   #parser;
+  #sanitizer;
   #observer;
   constructor() {
     super();
     this.#parser = createMarkdownParser();
+    this.#sanitizer = createSanitizer();
     this.#observer = new IntersectionObserver(this.#watch.bind(this), {
       threshold: 0.8,
       rootMargin: "0% 0% -80% 0%"
@@ -15785,6 +15828,9 @@ var Markdown = class extends HTMLElement {
     const result = new TableOfContent(headings2);
     return result;
   }
+  get sanitizer() {
+    return this.#sanitizer;
+  }
   //Observed
   static get observedAttributes() {
     return ["src"];
@@ -15817,7 +15863,7 @@ var Markdown = class extends HTMLElement {
       codeBlock.appendChild(new Clipboard());
     });
   }
-  async #render(path, sanitizer) {
+  async #render(path, sanitizer = null) {
     try {
       if (!(typeof path === "string" && path.length > 0))
         throw new TypeError("Invalid path parameter");
@@ -15829,7 +15875,9 @@ var Markdown = class extends HTMLElement {
       const markdown = await res.text();
       this.dispatchEvent(new CustomEvent("render"));
       const html = await this.#parser.parse(markdown);
-      this.setHTML(html, { sanitizer });
+      this.setHTML(html, {
+        sanitizer: sanitizer ?? this.#sanitizer
+      });
       this.setAttribute("rendered", "");
       [...this.querySelectorAll("h1, h2, h3, h4, h5, h6")].forEach((el) => {
         if (el.id && el.textContent) this.#observer.observe(el);
@@ -15844,15 +15892,19 @@ var Markdown = class extends HTMLElement {
       throw err;
     }
   }
-  render(sanitizeOptions) {
-    return this.#render(this.src, sanitizeOptions);
+  render(sanitizer) {
+    return this.#render(this.src, sanitizer);
   }
+  // Misc
   estimateReadingTime(speed) {
     const WPM = Number.isSafeInteger(speed) && speed > 0 ? speed : 265;
     const text = this.innerText.trim();
     const words = text.split(/\s+/).length;
     const time = Math.ceil(words / WPM);
     return time;
+  }
+  unsafeExtend(...extensions) {
+    this.#parser.use(...extensions);
   }
 };
 export {
