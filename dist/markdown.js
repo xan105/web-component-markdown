@@ -6007,8 +6007,8 @@ var require_javascript = __commonJS({
     function javascript(hljs) {
       const regex2 = hljs.regex;
       const hasClosingTag = (match, { after }) => {
-        const tag = "</" + match[0].slice(1);
-        const pos = match.input.indexOf(tag, after);
+        const tag2 = "</" + match[0].slice(1);
+        const pos = match.input.indexOf(tag2, after);
         return pos !== -1;
       };
       const IDENT_RE$1 = IDENT_RE;
@@ -13340,8 +13340,8 @@ var require_typescript = __commonJS({
     function javascript(hljs) {
       const regex2 = hljs.regex;
       const hasClosingTag = (match, { after }) => {
-        const tag = "</" + match[0].slice(1);
-        const pos = match.input.indexOf(tag, after);
+        const tag2 = "</" + match[0].slice(1);
+        const pos = match.input.indexOf(tag2, after);
         return pos !== -1;
       };
       const IDENT_RE$1 = IDENT_RE;
@@ -16114,15 +16114,15 @@ var TableOfContent = class extends Set {
   createElement(options = {}) {
     const depth = Number.isSafeInteger(options?.depth) && options.depth >= 1 && options.depth <= 6 ? options.depth : 6;
     const floors = [...Array(depth).keys()].map((i) => i + 1);
-    const tag = options?.ordered === true ? "ol" : "ul";
-    const result = document.createElement(tag);
+    const tag2 = options?.ordered === true ? "ol" : "ul";
+    const result = document.createElement(tag2);
     let root = result;
     let previous = 1;
     for (const { level, id, title } of this) {
       if (!floors.includes(level)) continue;
       if (level > previous) {
         for (let i = 0; i < level - previous; ++i) {
-          const item2 = document.createElement(tag);
+          const item2 = document.createElement(tag2);
           root.appendChild(item2);
           root = item2;
         }
@@ -16149,6 +16149,7 @@ var TableOfContent = class extends Set {
 // lib/clipboard.js
 var Clipboard = class extends HTMLElement {
   #button;
+  #copy;
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -16158,6 +16159,7 @@ var Clipboard = class extends HTMLElement {
     const sheet = new CSSStyleSheet();
     sheet.replaceSync(":host { display: none; } button { all: unset; }");
     this.shadowRoot.adoptedStyleSheets = [sheet];
+    this.#copy = this.copy.bind(this);
   }
   get copied() {
     return this.hasAttribute("copied");
@@ -16169,10 +16171,10 @@ var Clipboard = class extends HTMLElement {
     this.setAttribute("timeout", value.toString());
   }
   connectedCallback() {
-    this.#button.addEventListener("click", this.copy.bind(this));
+    this.#button.addEventListener("click", this.#copy);
   }
   disconnectedCallback() {
-    this.#button.removeEventListener("click", this.copy.bind(this));
+    this.#button.removeEventListener("click", this.#copy);
   }
   async copy() {
     this.#button.disabled = true;
@@ -16189,7 +16191,10 @@ var Clipboard = class extends HTMLElement {
     this.#button.disabled = false;
   }
 };
-customElements.define("clipboard-copy-code", Clipboard);
+var tag = "clipboard-copy-code";
+if (!customElements.get(tag)) {
+  customElements.define(tag, Clipboard);
+}
 
 // lib/index.js
 var Markdown = class extends HTMLElement {
@@ -16288,7 +16293,8 @@ var Markdown = class extends HTMLElement {
       });
       if (!res.ok) throw new Error("HTTP Code: " + res.status);
       const markdown = await res.text();
-      this.#parser.use(baseUrl(path.slice(0, path.lastIndexOf("/") + 1)));
+      const prefix = path.slice(0, path.lastIndexOf("/") + 1);
+      this.#parser.use(baseUrl(prefix));
       this.dispatchEvent(new CustomEvent("render"));
       const html = await this.#parser.parse(markdown);
       this.setHTML(html, {
